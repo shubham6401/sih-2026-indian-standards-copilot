@@ -56,6 +56,13 @@ export const generateProcurementReportPdf = (analysis) => {
     }
   };
 
+  const stdsToDisplay = allStandards.length > 0 ? allStandards.slice(0, 5) : [
+    { standardNumber: 'IS 10322 (Part 5/Sec 3)', title: 'Luminaires: Particular requirements - Luminaires for road and street lighting', relationshipType: 'Primary Product', relevanceScore: 94 },
+    { standardNumber: 'IS 16107 (Part 2/Sec 2)', title: 'LED Luminaires for General Lighting - Performance Requirements & Photometry', relationshipType: 'Testing Standard', relevanceScore: 89 },
+    { standardNumber: 'IS 15885 (Part 2/Sec 13)', title: 'Lamp Controlgear: Safety Requirements for DC or AC Supplied Electronic Controlgear', relationshipType: 'Safety Standard', relevanceScore: 86 },
+    { standardNumber: 'IS/IEC 60529', title: 'Degrees of Protection Provided by Enclosures (IP Code) - Sealing & Verification', relationshipType: 'Normative Reference', relevanceScore: 82 }
+  ];
+
   const score = readiness.totalScore || 78;
   const breakdown = readiness.breakdown || {
     standardsCoverage: 90,
@@ -503,12 +510,6 @@ export const generateProcurementReportPdf = (analysis) => {
     pdf.text('Relevance', pageWidth - margin - 4, yPos + 5.5, { align: 'right' });
 
     yPos += 8;
-    const stdsToDisplay = allStandards.length > 0 ? allStandards.slice(0, 5) : [
-      { standardNumber: 'IS 10322 (Part 5/Sec 3)', title: 'Luminaires: Particular requirements - Luminaires for road and street lighting', relationshipType: 'Primary Product', relevanceScore: 94 },
-      { standardNumber: 'IS 16107 (Part 2/Sec 2)', title: 'LED Luminaires for General Lighting - Performance Requirements & Photometry', relationshipType: 'Testing Standard', relevanceScore: 89 },
-      { standardNumber: 'IS 15885 (Part 2/Sec 13)', title: 'Lamp Controlgear: Safety Requirements for DC or AC Supplied Electronic Controlgear', relationshipType: 'Safety Standard', relevanceScore: 86 },
-      { standardNumber: 'IS/IEC 60529', title: 'Degrees of Protection Provided by Enclosures (IP Code) - Sealing & Verification', relationshipType: 'Normative Reference', relevanceScore: 82 }
-    ];
 
     stdsToDisplay.forEach((s, idx) => {
       pdf.setFillColor(idx % 2 === 0 ? 255 : 248, idx % 2 === 0 ? 255 : 250, idx % 2 === 0 ? 255 : 252);
