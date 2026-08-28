@@ -66,9 +66,31 @@ export const RecommendationResultPage = () => {
       if (!id) return;
       try {
         setLoading(true);
-        const data = await api.getAnalysisById(id);
-        setAnalysis(data);
-        setCurrentAnalysis(data);
+        setError('');
+        let data = null;
+        try {
+          data = await api.getAnalysisById(id);
+        } catch (apiErr) {
+          console.warn('API getAnalysisById failed, falling back to local history store:', apiErr.message);
+        }
+
+        if (!data) {
+          // Fallback to history in localStorage or initial demo list
+          const localStored = localStorage.getItem('is_analysis_history');
+          if (localStored) {
+            try {
+              const list = JSON.parse(localStored);
+              data = list.find(item => String(item._id) === String(id));
+            } catch (e) {}
+          }
+        }
+
+        if (data) {
+          setAnalysis(data);
+          setCurrentAnalysis(data);
+        } else {
+          setError('Could not locate this recommendation report in the local or remote database.');
+        }
       } catch (err) {
         setError(err.message || 'Failed to load analysis report');
       } finally {
@@ -76,7 +98,7 @@ export const RecommendationResultPage = () => {
       }
     };
 
-    if (!analysis || analysis._id !== id) {
+    if (!analysis || String(analysis._id) !== String(id)) {
       fetchAnalysis();
     }
   }, [id]);

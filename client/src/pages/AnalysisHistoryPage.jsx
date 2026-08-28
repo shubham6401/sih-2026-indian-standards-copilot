@@ -34,8 +34,16 @@ export const AnalysisHistoryPage = () => {
 
     try {
       setDeletingId(id);
-      await api.deleteAnalysis(id);
-      await loadHistory();
+      try {
+        await api.deleteAnalysis(id);
+      } catch (err) {}
+      setHistory(prev => {
+        const next = prev.filter(item => String(item._id) !== String(id));
+        try {
+          localStorage.setItem('is_analysis_history', JSON.stringify(next));
+        } catch (e) {}
+        return next;
+      });
       showToast('Analysis removed from history.', 'info');
     } catch (err) {
       showToast('Failed to delete analysis: ' + err.message, 'error');
