@@ -199,7 +199,8 @@ export const createAnalysis = async (req, res) => {
       alternativeStandards: aiResult.alternativeStandards || [],
       tenderGaps: aiResult.tenderGaps || [],
       outdatedReferences: aiResult.outdatedReferences || [],
-      certificationRequirements: aiResult.certificationRequirements || [],
+      certifications: aiResult.certifications || aiResult.certificationRequirements || [],
+      certificationRequirements: aiResult.certifications || aiResult.certificationRequirements || [],
       procurementReadiness: aiResult.procurementReadiness || { totalScore: 80, statusLabel: 'Readiness Evaluated', actionCount: 1 },
       improvedSpecification: aiResult.improvedSpecification || null,
       createdAt: new Date().toISOString()

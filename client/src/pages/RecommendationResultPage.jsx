@@ -497,7 +497,10 @@ export const RecommendationResultPage = () => {
         {activeTab === 'certification' && (
           <div className="space-y-6 animate-fade-in">
             {/* Certification & Compliance Assessment */}
-            <CertificationSection certifications={analysis.certifications || []} />
+            <CertificationSection
+              certifications={analysis.certifications || analysis.certificationRequirements || []}
+              standards={allStandardsCombined}
+            />
 
             {/* AI Explanation & Matched Requirements */}
             <AIExplanationCard
