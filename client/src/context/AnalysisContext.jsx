@@ -257,6 +257,35 @@ export const AnalysisProvider = ({ children }) => {
     }
   };
 
+  const deleteAnalysisRecord = async (id) => {
+    if (!id) return;
+    try {
+      try {
+        await api.deleteAnalysis(id);
+      } catch (err) {
+        console.warn('Backend delete analysis notice:', err.message);
+      }
+
+      setHistory(prev => {
+        const next = prev.filter(item => String(item._id) !== String(id));
+        try {
+          localStorage.setItem(LOCAL_STORAGE_HISTORY_KEY, JSON.stringify(next));
+        } catch (e) {}
+        return next;
+      });
+
+      if (currentAnalysis && String(currentAnalysis._id) === String(id)) {
+        setCurrentAnalysis(null);
+      }
+
+      showToast('Report deleted successfully.', 'success');
+      return true;
+    } catch (err) {
+      showToast('Failed to delete report: ' + err.message, 'error');
+      throw err;
+    }
+  };
+
   return (
     <AnalysisContext.Provider
       value={{
@@ -265,6 +294,7 @@ export const AnalysisProvider = ({ children }) => {
         history,
         setHistory,
         loadHistory,
+        deleteAnalysisRecord,
         savedStandards,
         savedStandardNumbers,
         toggleSaveStandard,

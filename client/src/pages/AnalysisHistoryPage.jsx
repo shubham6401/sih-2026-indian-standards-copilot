@@ -22,7 +22,7 @@ import { api } from '../services/api';
 
 export const AnalysisHistoryPage = () => {
   const navigate = useNavigate();
-  const { history, setHistory, loadHistory, showToast } = useAnalysis();
+  const { history, loadHistory, deleteAnalysisRecord } = useAnalysis();
   const [search, setSearch] = useState('');
   const [itemToDelete, setItemToDelete] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -32,7 +32,7 @@ export const AnalysisHistoryPage = () => {
   }, []);
 
   const openDeleteModal = (item, e) => {
-    e.stopPropagation();
+    if (e && e.stopPropagation) e.stopPropagation();
     setItemToDelete(item);
   };
 
@@ -41,25 +41,10 @@ export const AnalysisHistoryPage = () => {
     setIsDeleting(true);
 
     try {
-      const id = itemToDelete._id;
-      try {
-        await api.deleteAnalysis(id);
-      } catch (err) {
-        console.warn('API delete error notice:', err.message);
-      }
-
-      setHistory(prev => {
-        const next = prev.filter(item => String(item._id) !== String(id));
-        try {
-          localStorage.setItem('is_analysis_history', JSON.stringify(next));
-        } catch (e) {}
-        return next;
-      });
-
-      showToast('Analysis removed from audit history.', 'success');
+      await deleteAnalysisRecord(itemToDelete._id);
       setItemToDelete(null);
     } catch (err) {
-      showToast('Failed to delete analysis: ' + err.message, 'error');
+      // Handled in context toast
     } finally {
       setIsDeleting(false);
     }

@@ -25,7 +25,7 @@ import { api } from '../services/api';
 
 export const ReportsPage = () => {
   const navigate = useNavigate();
-  const { history, setHistory, loadHistory, showToast } = useAnalysis();
+  const { history, loadHistory, deleteAnalysisRecord } = useAnalysis();
   const [search, setSearch] = useState('');
   const [reportToDelete, setReportToDelete] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -35,7 +35,7 @@ export const ReportsPage = () => {
   }, []);
 
   const openDeleteModal = (rep, e) => {
-    e.stopPropagation();
+    if (e && e.stopPropagation) e.stopPropagation();
     setReportToDelete(rep);
   };
 
@@ -44,26 +44,10 @@ export const ReportsPage = () => {
     setIsDeleting(true);
 
     try {
-      const id = reportToDelete._id;
-      try {
-        await api.deleteReport(id);
-      } catch (err) {
-        console.warn('API delete report notice:', err.message);
-      }
-
-      // Update local state and persistent localStorage
-      setHistory(prev => {
-        const next = prev.filter(item => String(item._id) !== String(id));
-        try {
-          localStorage.setItem('is_analysis_history', JSON.stringify(next));
-        } catch (e) {}
-        return next;
-      });
-
-      showToast('Report deleted successfully.', 'success');
+      await deleteAnalysisRecord(reportToDelete._id);
       setReportToDelete(null);
     } catch (err) {
-      showToast('Failed to delete report: ' + err.message, 'error');
+      // Handled in context toast
     } finally {
       setIsDeleting(false);
     }
