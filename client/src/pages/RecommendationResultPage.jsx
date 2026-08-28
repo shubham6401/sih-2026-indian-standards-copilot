@@ -41,11 +41,11 @@ import { AlternativeStandardsCard } from '../components/analysis/AlternativeStan
 import { BeforeAfterComparisonView } from '../components/analysis/BeforeAfterComparisonView';
 import { GeneratedSpecificationCard } from '../components/analysis/GeneratedSpecificationCard';
 import { KnowledgeBaseTransparencyModal } from '../components/analysis/KnowledgeBaseTransparencyModal';
+import { ExecutivePdfReport } from '../components/reports/ExecutivePdfReport';
+import { exportExecutiveReportToPdf } from '../utils/generatePdfReport';
 import { useAnalysis } from '../context/AnalysisContext';
 import { api } from '../services/api';
 import confetti from 'canvas-confetti';
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
 
 export const RecommendationResultPage = () => {
   const { id } = useParams();
@@ -53,7 +53,7 @@ export const RecommendationResultPage = () => {
   const { currentAnalysis, setCurrentAnalysis, showToast } = useAnalysis();
 
   const [analysis, setAnalysis] = useState(currentAnalysis);
-  const [loading, setLoading] = useState(!currentAnalysis || currentAnalysis._id !== id);
+  const [loading, setLoading] = useState(!currentAnalysis || String(currentAnalysis._id) !== String(id));
   const [error, setError] = useState('');
   const [activeTab, setActiveTab] = useState('overview');
   const [selectedStandard, setSelectedStandard] = useState(null);
@@ -71,11 +71,11 @@ export const RecommendationResultPage = () => {
         try {
           data = await api.getAnalysisById(id);
         } catch (apiErr) {
-          console.warn('API getAnalysisById failed, falling back to local history store:', apiErr.message);
+          console.warn('API getAnalysisById fallback:', apiErr.message);
         }
 
         if (!data) {
-          // Fallback to history in localStorage or initial demo list
+          // Fallback to localStorage history
           const localStored = localStorage.getItem('is_analysis_history');
           if (localStored) {
             try {
@@ -89,7 +89,7 @@ export const RecommendationResultPage = () => {
           setAnalysis(data);
           setCurrentAnalysis(data);
         } else {
-          setError('Could not locate this recommendation report in the local or remote database.');
+          setError('Could not locate this recommendation report in the database.');
         }
       } catch (err) {
         setError(err.message || 'Failed to load analysis report');
@@ -114,36 +114,19 @@ export const RecommendationResultPage = () => {
 
   const handleDownloadPdf = async () => {
     setDownloadingPdf(true);
-    showToast('Generating official procurement PDF report...', 'info');
+    showToast('Synthesizing executive-grade A4 PDF report...', 'info');
 
     try {
-      const doc = new jsPDF('p', 'mm', 'a4');
-      const element = document.getElementById('printable-report');
-
-      if (element) {
-        const canvas = await html2canvas(element, { scale: 2, useCORS: true });
-        const imgData = canvas.toDataURL('image/png');
-        const imgWidth = 210;
-        const pageHeight = 295;
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
-        let heightLeft = imgHeight;
-        let position = 0;
-
-        doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-
-        while (heightLeft >= 0) {
-          position = heightLeft - imgHeight;
-          doc.addPage();
-          doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-          heightLeft -= pageHeight;
-        }
-
-        doc.save(`BIS-Procurement-Report-${analysis?.productName?.substring(0, 15) || 'Analysis'}.pdf`);
+      const container = document.getElementById('executive-pdf-document');
+      if (container) {
+        await exportExecutiveReportToPdf(container, analysis?.productName);
         confetti({ particleCount: 50, spread: 60 });
-        showToast('PDF downloaded successfully!');
+        showToast('Executive PDF Report downloaded successfully!');
+      } else {
+        window.print();
       }
     } catch (err) {
+      console.warn('PDF export error fallback to print:', err.message);
       window.print();
     } finally {
       setDownloadingPdf(false);
@@ -178,39 +161,28 @@ export const RecommendationResultPage = () => {
     year: 'numeric'
   });
 
+  const totalGapsCount = (analysis.tenderGaps || []).length;
   const allStandardsCombined = [
     ...(analysis.primaryStandards || []),
-    ...(analysis.relatedStandards || []),
-    ...(analysis.testingStandards || []),
-    ...(analysis.alternativeStandards || [])
+    ...(analysis.relatedStandards || [])
   ];
 
-  const totalGapsCount = (analysis.tenderGaps?.length || 0) + (analysis.outdatedReferences?.length || 0);
-
   return (
-    <div className="space-y-6 max-w-5xl mx-auto animate-fade-in pb-12">
-      {/* Top Action Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 no-print">
-        <button
-          type="button"
-          onClick={() => navigate('/dashboard')}
-          className="text-xs font-semibold text-slate-600 hover:text-slate-900 inline-flex items-center gap-1.5 self-start"
-        >
-          <ArrowLeft className="w-3.5 h-3.5" /> Back to Dashboard
-        </button>
+    <div className="space-y-6 max-w-6xl mx-auto animate-fade-in pb-16">
+      {/* Top Breadcrumb & Actions */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-slate-200 no-print">
+        <div className="flex items-center gap-2 text-xs text-slate-500">
+          <Link to="/dashboard" className="hover:text-slate-800 font-medium">Dashboard</Link>
+          <ChevronRight className="w-3.5 h-3.5" />
+          <Link to="/history" className="hover:text-slate-800 font-medium">Analysis History</Link>
+          <ChevronRight className="w-3.5 h-3.5" />
+          <span className="text-slate-900 font-bold truncate max-w-xs">{analysis.productName}</span>
+        </div>
 
-        <div className="flex flex-wrap items-center gap-2">
-          <button
-            type="button"
-            onClick={() => setIsKbModalOpen(true)}
-            className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 inline-flex items-center gap-1.5 shadow-2xs"
-          >
-            <Database className="w-3.5 h-3.5 text-gov-600" />
-            <span>KB Transparency</span>
-          </button>
+        <div className="flex items-center gap-2">
           <Button
             size="sm"
-            variant="secondary"
+            variant="ghost"
             icon={Printer}
             onClick={handlePrint}
           >
@@ -238,11 +210,12 @@ export const RecommendationResultPage = () => {
       {/* Navigation Tabs */}
       <div className="flex overflow-x-auto gap-2 p-1.5 bg-slate-100/90 rounded-2xl border border-slate-200 no-print text-xs font-semibold">
         {[
-          { id: 'overview', label: 'Full Report Overview', icon: Sparkles },
+          { id: 'overview', label: 'Full Dossier Overview', icon: Sparkles },
           { id: 'standards', label: 'Standards & Relationship Graph', icon: Layers },
           { id: 'gaps', label: `Tender Gap Analysis (${totalGapsCount})`, icon: ShieldAlert, highlight: totalGapsCount > 0 },
           { id: 'spec', label: 'AI Improved Specification & Diff', icon: FileText },
-          { id: 'certification', label: 'Certifications & Provenance', icon: Award }
+          { id: 'certification', label: 'Certifications & Provenance', icon: Award },
+          { id: 'a4_preview', label: 'Executive A4 PDF Preview', icon: Printer, highlight: true }
         ].map((tab) => {
           const Icon = tab.icon;
           return (
@@ -264,188 +237,260 @@ export const RecommendationResultPage = () => {
         })}
       </div>
 
-      {/* Main Printable Report Wrapper */}
-      <div id="printable-report" className="space-y-6">
-        {/* Report Header Card */}
-        <div className="bg-white rounded-2xl border border-slate-200/90 p-6 sm:p-8 shadow-sm">
-          <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 pb-6 border-b border-slate-200">
-            <div className="space-y-2 max-w-2xl">
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="text-[10px] font-extrabold uppercase tracking-wider bg-gov-600 text-white px-2.5 py-0.5 rounded shadow-2xs">
-                  AI Procurement Standards Dossier
-                </span>
-                <Badge variant={analysis.inputType === 'tender_pdf' ? 'mandate' : 'primary'} size="xs">
-                  {analysis.inputType === 'tender_pdf' ? 'Tender PDF Ingestion' : 'Specification Input'}
-                </Badge>
-                <span className="text-xs text-slate-500 font-medium">
-                  Analysis Date: {analysisDate}
-                </span>
-              </div>
-
-              <h1 className="text-2xl sm:text-3xl font-black text-slate-900 font-outfit tracking-tight">
-                Standards Recommendation & Gap Report
-              </h1>
-
-              <div className="text-xs text-slate-700 space-y-1 pt-1">
-                <p>
-                  <strong className="text-slate-900">Procurement Product / Item: </strong>
-                  <span className="font-semibold text-gov-800">{analysis.productName}</span>
-                </p>
-                <p>
-                  <strong className="text-slate-900">Category: </strong>
-                  <span>{analysis.productCategory}</span>
-                  {analysis.quantity && (
-                    <span className="ml-3">
-                      <strong>Quantity: </strong> {analysis.quantity}
-                    </span>
-                  )}
-                </p>
-                {analysis.detectedLanguage && (
-                  <p className="text-slate-500 text-[11px]">
-                    Input Language: <span className="font-semibold text-slate-700">{analysis.detectedLanguage}</span>
-                  </p>
-                )}
-              </div>
-            </div>
-
-            {/* Confidence Score Widget */}
-            <div className="shrink-0 flex sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-2 bg-slate-50 sm:bg-transparent p-4 sm:p-0 rounded-xl border sm:border-0 border-slate-200">
-              <ScoreIndicator
-                score={analysis.confidenceScore || 92}
-                label={analysis.confidenceLabel || 'Highly Relevant'}
-                size="lg"
-              />
-            </div>
-          </div>
-
-          {/* Specification Excerpt Box */}
-          <div className="mt-5 p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 leading-relaxed">
-            <span className="font-bold text-slate-900 block mb-1">Evaluated Procurement Specification:</span>
-            <p className="italic text-slate-600">"{analysis.rawInput}"</p>
-            {analysis.additionalRequirements && (
-              <p className="mt-2 text-slate-600">
-                <strong>Additional Criteria: </strong> {analysis.additionalRequirements}
+      {/* TAB: EXECUTIVE A4 PDF PREVIEW */}
+      {activeTab === 'a4_preview' ? (
+        <div className="space-y-6">
+          <div className="p-4 bg-amber-50 border border-amber-200 rounded-xl flex items-center justify-between">
+            <div>
+              <h3 className="text-xs font-bold text-amber-900">Executive A4 Multi-Page Print Preview</h3>
+              <p className="text-[11px] text-amber-700">
+                This shows the exact 8-page paginated executive report generated for government procurement officers and SIH evaluators.
               </p>
-            )}
+            </div>
+            <Button
+              size="sm"
+              variant="primary"
+              icon={Download}
+              loading={downloadingPdf}
+              onClick={handleDownloadPdf}
+            >
+              Download PDF Report
+            </Button>
           </div>
+
+          <ExecutivePdfReport analysis={analysis} />
         </div>
-
-        {/* TAB 1: OVERVIEW / ALL */}
-        {(activeTab === 'overview' || activeTab === 'standards') && (
-          <>
-            {/* Extracted Structured Requirements */}
-            <ExtractedRequirementsCard
-              structuredRequirements={analysis.structuredRequirements || []}
-              detectedLanguage={analysis.detectedLanguage}
-            />
-
-            {/* Primary Recommended Standards */}
-            <section className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h2 className="text-lg font-bold text-slate-900 font-outfit flex items-center gap-2">
-                    <Sparkles className="w-5 h-5 text-amber-500" />
-                    <span>Primary Applicable Indian Standards</span>
-                  </h2>
-                  <p className="text-xs text-slate-500">
-                    Core product standards establishing mandatory physical, electrical, and dimensional criteria
-                  </p>
+      ) : (
+        /* Main Interactive Dashboard View */
+        <div id="printable-report" className="space-y-6">
+          {/* Report Header Card */}
+          <div className="bg-white rounded-2xl border border-slate-200/90 p-6 sm:p-8 shadow-sm">
+            <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 pb-6 border-b border-slate-200">
+              <div className="space-y-2 max-w-2xl">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-[10px] font-extrabold uppercase tracking-wider bg-gov-600 text-white px-2.5 py-0.5 rounded shadow-2xs">
+                    AI Procurement Standards Dossier
+                  </span>
+                  <Badge variant={analysis.inputType === 'tender_pdf' ? 'mandate' : 'primary'} size="xs">
+                    {analysis.inputType === 'tender_pdf' ? 'Tender PDF Ingestion' : 'Specification Input'}
+                  </Badge>
+                  <span className="text-xs text-slate-500 font-medium">
+                    Analysis Date: {analysisDate}
+                  </span>
                 </div>
-                <span className="text-xs font-semibold text-slate-500 bg-slate-100 px-2.5 py-1 rounded-lg">
-                  {analysis.primaryStandards?.length || 0} Standards Identified
+
+                <h1 className="text-2xl sm:text-3xl font-black text-slate-900 font-outfit tracking-tight">
+                  Standards Recommendation & Gap Report
+                </h1>
+
+                <div className="text-xs text-slate-700 space-y-1 pt-1">
+                  <p>
+                    <strong className="text-slate-900">Procurement Product / Item: </strong>
+                    <span className="font-semibold text-gov-800">{analysis.productName}</span>
+                  </p>
+                  <p>
+                    <strong className="text-slate-900">Category: </strong>
+                    <span>{analysis.productCategory}</span>
+                    {analysis.quantity && (
+                      <span className="ml-3">
+                        <strong>Quantity: </strong> {analysis.quantity}
+                      </span>
+                    )}
+                  </p>
+                  {analysis.detectedLanguage && (
+                    <p className="text-slate-500 text-[11px]">
+                      Input Language: <span className="font-semibold text-slate-700">{analysis.detectedLanguage}</span>
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              {/* Confidence Score Widget */}
+              <div className="shrink-0 flex sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-2 bg-slate-50 sm:bg-transparent p-4 sm:p-0 rounded-xl border sm:border-0 border-slate-200">
+                <ScoreIndicator
+                  score={analysis.confidenceScore || 92}
+                  label={analysis.confidenceLabel || 'Highly Relevant'}
+                  size="lg"
+                />
+              </div>
+            </div>
+
+            {/* Quick Action Bar inside header */}
+            <div className="pt-4 flex flex-wrap items-center justify-between gap-3 text-xs">
+              <div className="flex items-center gap-4 text-slate-600">
+                <span className="flex items-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                  <strong>{(analysis.primaryStandards || []).length}</strong> Primary Standards
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <Layers className="w-4 h-4 text-gov-600" />
+                  <strong>{(analysis.relatedStandards || []).length}</strong> Allied Standards
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <Award className="w-4 h-4 text-amber-600" />
+                  <strong>{(analysis.certifications || []).length || 2}</strong> Mandates
                 </span>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {(analysis.primaryStandards || []).map((std, idx) => (
-                  <StandardCard
-                    key={idx}
-                    standard={std}
-                    isPrimary={true}
-                    onViewDetails={handleOpenStandard}
-                  />
-                ))}
-              </div>
-            </section>
+              <button
+                type="button"
+                onClick={() => setIsKbModalOpen(true)}
+                className="text-gov-700 hover:text-gov-900 font-bold flex items-center gap-1 text-[11px] underline"
+              >
+                <Database className="w-3.5 h-3.5" />
+                <span>Knowledge Base Transparency & Provenance</span>
+              </button>
+            </div>
+          </div>
 
-            {/* Standards Relationship Hierarchy Graph */}
-            {analysis.primaryStandards?.[0] && (
+          {/* TAB 1: OVERVIEW */}
+          {(activeTab === 'overview' || activeTab === 'gaps') && (
+            <>
+              {/* Procurement Specification Readiness Score (0-100 Gauge) */}
+              <ProcurementReadinessScore
+                readiness={analysis.procurementReadiness}
+                gaps={analysis.tenderGaps || []}
+              />
+
+              {/* Tender Gap Analysis Card */}
+              <TenderGapAnalysisCard gaps={analysis.tenderGaps || []} />
+
+              {/* Extracted Structured Requirements */}
+              <ExtractedRequirementsCard
+                requirements={analysis.structuredRequirements || {}}
+                productName={analysis.productName}
+                onSaveRequirements={(updated) => {
+                  setAnalysis(prev => ({ ...prev, structuredRequirements: updated }));
+                  showToast('Updated structured requirements cached for tender generator!');
+                }}
+              />
+            </>
+          )}
+
+          {/* TAB 2: STANDARDS & RELATIONSHIPS */}
+          {(activeTab === 'overview' || activeTab === 'standards') && (
+            <>
+              {/* Primary Standards Section */}
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2.5 h-6 bg-gov-600 rounded-full" />
+                    <h2 className="text-lg font-black text-slate-900 font-outfit">
+                      Primary Applicable Indian Standards (IS)
+                    </h2>
+                  </div>
+                  <Badge variant="primary" size="sm">
+                    {(analysis.primaryStandards || []).length} Verified Standards
+                  </Badge>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {(analysis.primaryStandards || []).map((std) => (
+                    <StandardCard
+                      key={std.standardNumber || std._id}
+                      standard={std}
+                      isPrimary={true}
+                      onClick={() => handleOpenStandard(std)}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* Interactive Standards Relationship Hierarchy Graph */}
               <StandardRelationshipGraph
-                primaryStandard={analysis.primaryStandards[0]}
+                primaryStandards={analysis.primaryStandards || []}
                 relatedStandards={analysis.relatedStandards || []}
                 onSelectStandard={handleOpenStandard}
               />
-            )}
 
-            {/* Alternative Standards Analysis */}
-            <AlternativeStandardsCard
-              primaryStandards={analysis.primaryStandards || []}
-              alternativeStandards={analysis.alternativeStandards || []}
-              onViewDetails={handleOpenStandard}
-            />
-          </>
-        )}
+              {/* Alternative Standards Disambiguation Card */}
+              <AlternativeStandardsCard
+                alternatives={analysis.alternativeStandards || []}
+                onSelectStandard={handleOpenStandard}
+              />
 
-        {/* TAB 3: TENDER GAPS & READINESS SCORE */}
-        {(activeTab === 'overview' || activeTab === 'gaps') && (
-          <>
-            {/* Procurement Readiness Score */}
-            <ProcurementReadinessScore readiness={analysis.procurementReadiness || {}} />
+              {/* Allied / Normative Standards Grid */}
+              {(analysis.relatedStandards || []).length > 0 && (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span className="w-2.5 h-6 bg-amber-500 rounded-full" />
+                      <h2 className="text-lg font-black text-slate-900 font-outfit">
+                        Allied, Testing & Normative Companion Standards
+                      </h2>
+                    </div>
+                    <Badge variant="warning" size="sm">
+                      {(analysis.relatedStandards || []).length} Companion Standards
+                    </Badge>
+                  </div>
 
-            {/* Tender Gap Analysis Card */}
-            <TenderGapAnalysisCard
-              gaps={analysis.tenderGaps || []}
-              outdated={analysis.outdatedReferences || []}
-            />
-          </>
-        )}
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {(analysis.relatedStandards || []).map((std) => (
+                      <StandardCard
+                        key={std.standardNumber || std._id}
+                        standard={std}
+                        isPrimary={false}
+                        onClick={() => handleOpenStandard(std)}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+            </>
+          )}
 
-        {/* TAB 4: SPECIFICATION & BEFORE/AFTER DIFF */}
-        {(activeTab === 'overview' || activeTab === 'spec') && (
-          <>
-            {/* Before vs After Split Comparison View */}
-            <BeforeAfterComparisonView
-              rawInput={analysis.rawInput}
-              improvedSpecification={analysis.improvedSpecification}
-              outdated={analysis.outdatedReferences || []}
-              gaps={analysis.tenderGaps || []}
-            />
+          {/* TAB 4: SPECIFICATION & BEFORE/AFTER DIFF */}
+          {(activeTab === 'overview' || activeTab === 'spec') && (
+            <>
+              {/* Before vs After Split Comparison View */}
+              <BeforeAfterComparisonView
+                rawInput={analysis.rawInput}
+                improvedSpecification={analysis.improvedSpecification}
+                outdated={analysis.outdatedReferences || []}
+                gaps={analysis.tenderGaps || []}
+              />
 
-            {/* AI Generated Tender Specification Schedule */}
-            <GeneratedSpecificationCard
-              specification={analysis.improvedSpecification}
-              productName={analysis.productName}
-            />
-          </>
-        )}
+              {/* AI Generated Tender Specification Schedule */}
+              <GeneratedSpecificationCard
+                specification={analysis.improvedSpecification}
+                productName={analysis.productName}
+              />
+            </>
+          )}
 
-        {/* TAB 5: CERTIFICATIONS, VERSIONS & EXPLANATION */}
-        {(activeTab === 'overview' || activeTab === 'certification') && (
-          <>
-            {/* Certification & Compliance Assessment */}
-            <CertificationSection certifications={analysis.certifications || []} />
+          {/* TAB 5: CERTIFICATIONS, VERSIONS & EXPLANATION */}
+          {(activeTab === 'overview' || activeTab === 'certification') && (
+            <>
+              {/* Certification & Compliance Assessment */}
+              <CertificationSection certifications={analysis.certifications || []} />
 
-            {/* AI Explanation & Matched Requirements */}
-            <AIExplanationCard
-              explanation={analysis.aiExplanation}
-              extractedRequirements={analysis.extractedRequirements || []}
-            />
+              {/* AI Explanation & Matched Requirements */}
+              <AIExplanationCard
+                explanation={analysis.aiExplanation}
+                extractedRequirements={analysis.extractedRequirements || []}
+              />
 
-            {/* Standard Editions & Amendments Tracker */}
-            <VersionAmendmentCard standards={allStandardsCombined} />
-          </>
-        )}
+              {/* Standard Editions & Amendments Tracker */}
+              <VersionAmendmentCard standards={allStandardsCombined} />
+            </>
+          )}
 
-        {/* Verification Disclaimer */}
-        <div className="p-5 rounded-2xl bg-amber-50/70 border border-amber-200 text-xs text-amber-950 space-y-2">
-          <div className="flex items-center gap-2 font-bold text-amber-900 text-sm">
-            <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0" />
-            <span>Official Tender Verification Disclaimer</span>
+          {/* Verification Disclaimer */}
+          <div className="p-5 rounded-2xl bg-amber-50/70 border border-amber-200 text-xs text-amber-950 space-y-2">
+            <div className="flex items-center gap-2 font-bold text-amber-900 text-sm">
+              <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0" />
+              <span>Official Tender Verification Disclaimer</span>
+            </div>
+            <p className="leading-relaxed">
+              This recommendation report was synthesized by the AI Indian Standards Procurement Copilot. Indenting officers must independently verify the active edition of the standard, validity of notified amendments, and the supplier's valid BIS License / CRS registration on the official BIS portal (<strong>manakonline.in</strong> / <strong>bis.gov.in</strong>) before issuing binding tenders.
+            </p>
           </div>
-          <p className="leading-relaxed">
-            This recommendation report was synthesized by the AI Indian Standards Procurement Copilot. Indenting officers must independently verify the active edition of the standard, validity of notified amendments, and the supplier's valid BIS License / CRS registration on the official BIS portal (<strong>manakonline.in</strong> / <strong>bis.gov.in</strong>) before issuing binding tenders.
-          </p>
         </div>
+      )}
+
+      {/* Offscreen Container for Clean PDF Generation (Always Rendered) */}
+      <div className="hidden" aria-hidden="true">
+        <ExecutivePdfReport analysis={analysis} />
       </div>
 
       {/* Standard Detail Modal */}
