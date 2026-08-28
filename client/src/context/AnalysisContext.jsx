@@ -26,8 +26,65 @@ const INITIAL_DEMO_HISTORY = [
     tenderGaps: [
       { category: 'Testing & Verification Gap', severity: 'HIGH', title: 'No Explicit Test Method Cited', description: 'Missing laboratory type test report clause.', remedy: 'Include IS 16107 testing.' }
     ],
+    certifications: [
+      {
+        type: 'Compulsory Registration Scheme (CRS)',
+        status: 'Applicable',
+        standardNumber: 'IS 10322 (Part 5/Sec 3) & IS 15885 (Part 2/Sec 13)',
+        authority: 'Ministry of Electronics & Information Technology (MeitY)',
+        mandateReason: 'Covered under Electronics and IT Goods (Requirement for Compulsory Registration) Order. Mandatory for all LED luminaires and controlgear.',
+        verificationNote: 'Verify valid MeitY CRS R-Number on the official BIS CRS portal.'
+      },
+      {
+        type: 'BEE Star Labeling Energy Rating',
+        status: 'Applicable',
+        standardNumber: 'IS 16107 (Part 2/Sec 1)',
+        authority: 'Bureau of Energy Efficiency (BEE), Ministry of Power',
+        mandateReason: 'Mandatory energy efficiency star rating label under the Energy Conservation Act.',
+        verificationNote: 'Check valid BEE Star rating certificate on the BEE online portal.'
+      }
+    ],
     procurementReadiness: { totalScore: 78, statusLabel: 'Readiness Evaluated', actionCount: 2 },
     createdAt: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString()
+  },
+  {
+    _id: 'demo_analysis_pump_04',
+    productName: '5 HP Solar Submersible Water Pump Set',
+    productCategory: 'Water Pumps & Motors',
+    rawInput: '5 HP (3.7 kW) Solar Submersible Water Pump Set with 100m total head, stainless steel impeller, and MPPT inverter.',
+    inputType: 'specification',
+    confidenceScore: 95,
+    confidenceLabel: 'Highly Relevant',
+    primaryStandards: [
+      { standardNumber: 'IS 8034: 2018', title: 'Submersible Pumpsets - Specification', relevanceScore: 95, edition: '3rd Revision', status: 'Current' },
+      { standardNumber: 'IS 8472: 2019', title: 'Pumps - Centrifugal Pumps for Clear Water', relevanceScore: 90, edition: '3rd Revision', status: 'Current' }
+    ],
+    relatedStandards: [
+      { standardNumber: 'IS 14286: 2010', title: 'Crystalline Silicon Terrestrial PV Modules', relationshipType: 'Testing Standard', relevanceScore: 88 }
+    ],
+    tenderGaps: [
+      { category: 'Installation & Workmanship Gap', severity: 'LOW', title: 'Installation Code of Practice Not Referenced', description: 'Tender does not tie contractor workmanship to published Indian Standard Codes of Practice.', remedy: 'Reference IS 9694 (Part 2).' }
+    ],
+    certifications: [
+      {
+        type: 'BIS ISI Product Certification (Scheme I)',
+        status: 'Applicable',
+        standardNumber: 'IS 8034: 2018',
+        authority: 'Ministry of Heavy Industries / DPIIT',
+        mandateReason: 'Covered under mandatory Submersible Pumps (Quality Control) Order. Procuring authority must ensure active BIS License.',
+        verificationNote: 'Verify valid 7-digit CML Number on official e-BIS portal (manakonline.in).'
+      },
+      {
+        type: 'BEE Star Labeling Energy Rating (Minimum 5-Star)',
+        status: 'Applicable',
+        standardNumber: 'Energy Conservation Act, 2001',
+        authority: 'Bureau of Energy Efficiency (BEE)',
+        mandateReason: 'Mandatory energy efficiency star rating label for agricultural water pumpsets.',
+        verificationNote: 'Check active BEE star certificate in the BEE portal.'
+      }
+    ],
+    procurementReadiness: { totalScore: 92, statusLabel: 'Tender Ready (High Quality)', actionCount: 1 },
+    createdAt: new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString()
   },
   {
     _id: 'demo_analysis_cement_02',
@@ -44,6 +101,16 @@ const INITIAL_DEMO_HISTORY = [
       { standardNumber: 'IS 456: 2000', title: 'Plain and Reinforced Concrete Code of Practice', relationshipType: 'Installation Standard', relevanceScore: 85 }
     ],
     tenderGaps: [],
+    certifications: [
+      {
+        type: 'BIS ISI Product Certification (Scheme I)',
+        status: 'Applicable',
+        standardNumber: 'IS 269: 2015',
+        authority: 'DPIIT / Ministry of Commerce & Industry',
+        mandateReason: 'Covered under mandatory Cement (Quality Control) Order, 2003. No cement can be manufactured, stored, sold, or procured in India without active ISI mark.',
+        verificationNote: 'Verify active 7-digit CML Number on official e-BIS portal (manakonline.in).'
+      }
+    ],
     procurementReadiness: { totalScore: 88, statusLabel: 'Tender Ready', actionCount: 0 },
     createdAt: new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString()
   },
@@ -60,6 +127,16 @@ const INITIAL_DEMO_HISTORY = [
     ],
     relatedStandards: [],
     tenderGaps: [],
+    certifications: [
+      {
+        type: 'BIS ISI Product Certification (Scheme I)',
+        status: 'Applicable',
+        standardNumber: 'IS 2925: 1984',
+        authority: 'DPIIT, Ministry of Commerce & Industry',
+        mandateReason: 'Covered under mandatory Personal Protective Equipment (Quality Control) Order. Industrial safety helmets must carry standard ISI mark.',
+        verificationNote: 'Verify active CML License on official BIS portal.'
+      }
+    ],
     procurementReadiness: { totalScore: 92, statusLabel: 'Tender Ready', actionCount: 0 },
     createdAt: new Date(Date.now() - 72 * 60 * 60 * 1000).toISOString()
   }

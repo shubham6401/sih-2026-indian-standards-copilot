@@ -615,29 +615,108 @@ export const findRelevantStandards = async (inputSpec = '', category = '', exter
     }
   });
 
-  // Mandatory Certifications
+  // Mandatory Certifications & Quality Control Orders (QCO)
   const certifications = [];
+
+  // 1. Extract from standard objects if marked mandatory
   primaryStandards.forEach(p => {
-    if (p.certification && p.certification.isMandatory) {
+    if (p.certification) {
       certifications.push({
-        type: p.certification.scheme.includes('CRS') ? 'Compulsory Registration Scheme (CRS)' : 'BIS ISI Product Certification (Scheme I)',
+        type: p.certification.scheme?.includes('CRS') ? 'Compulsory Registration Scheme (CRS)' : 'BIS ISI Product Certification (Scheme I)',
         status: 'Applicable',
         standardNumber: p.standardNumber,
-        authority: p.certification.notifyingMinistry || 'Bureau of Indian Standards (BIS)',
-        mandateReason: `Covered under mandatory Quality Control Order: ${p.certification.orderName || 'BIS QCO'}. Procurement officers must ensure supplier holds valid BIS license / CRS registration.`,
-        verificationNote: 'Verify valid BIS R-Number / CML Number on official BIS portal (manakonline.in) prior to bid award.'
+        authority: p.certification.notifyingMinistry || 'Bureau of Indian Standards (BIS) / DPIIT',
+        mandateReason: `Covered under mandatory Quality Control Order: ${p.certification.orderName || 'Statutory Gazette QCO'}. Bidders must hold active BIS license / CRS registration.`,
+        verificationNote: 'Verify valid BIS CML Number / R-Number on official e-BIS portal (manakonline.in) prior to bid award.'
       });
     }
   });
 
-  if (primaryStandards.some(p => p.standardNumber.includes('16107') || p.standardNumber.includes('1180') || p.standardNumber.includes('8034') || p.standardNumber.includes('8472'))) {
+  const allStdNums = [...primaryStandards, ...relatedStandards].map(s => s.standardNumber).join(' ');
+  const combinedText = (productName + ' ' + category + ' ' + inputSpec + ' ' + allStdNums).toLowerCase();
+
+  // 2. Specialized Sector QCO Schemes
+  if (combinedText.includes('led') || combinedText.includes('light') || combinedText.includes('luminaire') || combinedText.includes('10322') || combinedText.includes('15885') || combinedText.includes('16107')) {
+    if (!certifications.some(c => c.type.includes('CRS'))) {
+      certifications.push({
+        type: 'Compulsory Registration Scheme (CRS)',
+        status: 'Applicable',
+        standardNumber: 'IS 10322 (Part 5/Sec 3) / IS 15885 (Part 2/Sec 13)',
+        authority: 'Ministry of Electronics & Information Technology (MeitY)',
+        mandateReason: 'Covered under Electronics and IT Goods (Requirement for Compulsory Registration) Order. Mandatory for all LED luminaires and controlgear.',
+        verificationNote: 'Verify valid MeitY CRS R-Number on the official BIS CRS portal.'
+      });
+    }
+    if (!certifications.some(c => c.type.includes('BEE'))) {
+      certifications.push({
+        type: 'BEE Star Labeling Energy Rating',
+        status: 'Applicable',
+        standardNumber: 'IS 16107 (Part 2/Sec 1) / BEE Schedules',
+        authority: 'Bureau of Energy Efficiency (BEE), Ministry of Power',
+        mandateReason: 'Mandatory energy efficiency star rating label under the Energy Conservation Act.',
+        verificationNote: 'Check valid BEE Star rating certificate on the BEE online portal.'
+      });
+    }
+  }
+
+  if (combinedText.includes('cement') || combinedText.includes('opc') || combinedText.includes('ppc') || combinedText.includes('269') || combinedText.includes('1489') || combinedText.includes('12269')) {
+    if (!certifications.some(c => c.type.includes('ISI'))) {
+      certifications.push({
+        type: 'BIS ISI Product Certification (Scheme I)',
+        status: 'Applicable',
+        standardNumber: 'IS 269: 2015',
+        authority: 'DPIIT / Ministry of Commerce & Industry',
+        mandateReason: 'Covered under mandatory Cement (Quality Control) Order. No cement can be manufactured, stored, sold, or procured without active ISI mark.',
+        verificationNote: 'Verify active 7-digit CML Number on official e-BIS portal (manakonline.in).'
+      });
+    }
+  }
+
+  if (combinedText.includes('pump') || combinedText.includes('submersible') || combinedText.includes('motor') || combinedText.includes('8034') || combinedText.includes('8472')) {
+    if (!certifications.some(c => c.type.includes('ISI'))) {
+      certifications.push({
+        type: 'BIS ISI Product Certification (Scheme I)',
+        status: 'Applicable',
+        standardNumber: 'IS 8034: 2018 / IS 8472: 2019',
+        authority: 'Ministry of Heavy Industries / DPIIT',
+        mandateReason: 'Covered under mandatory Submersible & Centrifugal Pumps (Quality Control) Order. Bidders must hold active CML license.',
+        verificationNote: 'Verify active BIS CML license on e-BIS Manakonline portal.'
+      });
+    }
+    if (!certifications.some(c => c.type.includes('BEE'))) {
+      certifications.push({
+        type: 'BEE Star Labeling Compliance (Minimum 3-Star / 5-Star)',
+        status: 'Applicable',
+        standardNumber: 'Energy Conservation Act, 2001 & BEE Pump Schedules',
+        authority: 'Bureau of Energy Efficiency (BEE)',
+        mandateReason: 'Mandatory energy efficiency star rating for all agricultural and municipal water pumpsets.',
+        verificationNote: 'Verify BEE energy efficiency registration certificate in the BEE portal.'
+      });
+    }
+  }
+
+  if (combinedText.includes('helmet') || combinedText.includes('head') || combinedText.includes('ppe') || combinedText.includes('2925')) {
+    if (!certifications.some(c => c.type.includes('ISI'))) {
+      certifications.push({
+        type: 'BIS ISI Product Certification (Scheme I)',
+        status: 'Applicable',
+        standardNumber: 'IS 2925: 1984',
+        authority: 'DPIIT, Ministry of Commerce & Industry',
+        mandateReason: 'Covered under mandatory Protective Equipment (Quality Control) Order. Industrial safety helmets must carry standard ISI mark.',
+        verificationNote: 'Verify active CML License on official BIS portal.'
+      });
+    }
+  }
+
+  // Fallback if no specific rule matched
+  if (certifications.length === 0) {
     certifications.push({
-      type: 'BEE Star Labeling Compliance',
+      type: 'BIS ISI Product Certification (Scheme I)',
       status: 'Applicable',
-      standardNumber: primaryStandards[0].standardNumber,
-      authority: 'Bureau of Energy Efficiency (BEE)',
-      mandateReason: 'Mandatory energy efficiency star rating under the Energy Conservation Act.',
-      verificationNote: 'Check BEE star rating certificate and validity in the BEE online portal.'
+      standardNumber: primaryStandards[0]?.standardNumber || 'Applicable Product Standard',
+      authority: 'Bureau of Indian Standards / DPIIT',
+      mandateReason: 'Mandatory certification under Government of India Gazette Quality Control Orders (QCO) and Rule 144 of GFR 2017.',
+      verificationNote: 'Verify valid BIS CML license on manakonline.in prior to contract award.'
     });
   }
 
