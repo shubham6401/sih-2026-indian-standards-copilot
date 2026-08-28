@@ -1,15 +1,7 @@
 import jsPDF from 'jspdf';
 
-/**
- * PURE VECTOR PDF DOCUMENT GENERATOR
- * Generates an executive-grade 8-page A4 procurement compliance report directly from analysis JSON data.
- * ZERO DOM dependency, ZERO html2canvas, ZERO screenshotting, ZERO webpage UI leakage.
- */
-
-export const generateProcurementReportPdf = (analysis) => {
-  if (!analysis) {
-    throw new Error('Analysis data is required to generate the procurement report.');
-  }
+export const generateProcurementReportPdf = (analysis = {}) => {
+  const safeAnalysis = analysis || {};
 
   const pdf = new jsPDF({
     orientation: 'portrait',
@@ -23,27 +15,36 @@ export const generateProcurementReportPdf = (analysis) => {
   const contentWidth = pageWidth - margin * 2; // 182mm
   const totalPages = 8;
 
-  const reportId = `IS-REP-${String(analysis._id || '2026').slice(-8).toUpperCase()}`;
-  const dateStr = new Date(analysis.createdAt || Date.now()).toLocaleDateString('en-IN', {
+  const reportId = `IS-REP-${String(safeAnalysis._id || '2026').slice(-8).toUpperCase()}`;
+  const dateStr = new Date(safeAnalysis.createdAt || Date.now()).toLocaleDateString('en-IN', {
     day: '2-digit',
     month: 'long',
     year: 'numeric'
   });
 
-  const productName = analysis.productName || 'Procurement Item';
-  const category = analysis.productCategory || 'General Equipment';
-  const inputType = analysis.inputType === 'tender_pdf' ? 'Tender Document (PDF Ingestion)' : 'Technical Specification';
-  const language = analysis.detectedLanguage || analysis.language || 'English (en)';
+  const productName = safeAnalysis.productName || 'Procurement Item';
+  const category = safeAnalysis.productCategory || 'General Equipment';
+  const inputType = safeAnalysis.inputType === 'tender_pdf' ? 'Tender Document (PDF Ingestion)' : 'Technical Specification';
+  const language = safeAnalysis.detectedLanguage || safeAnalysis.language || 'English (en)';
 
-  const primaryStandards = analysis.primaryStandards || [];
-  const relatedStandards = analysis.relatedStandards || [];
+  const primaryStandards = Array.isArray(safeAnalysis.primaryStandards) ? safeAnalysis.primaryStandards : [];
+  const relatedStandards = Array.isArray(safeAnalysis.relatedStandards) ? safeAnalysis.relatedStandards : [];
   const allStandards = [...primaryStandards, ...relatedStandards];
-  const gaps = analysis.tenderGaps || [];
-  const outdated = analysis.outdatedReferences || [];
-  const certs = analysis.certificationRequirements || analysis.certifications || [];
-  const reqs = analysis.structuredRequirements || {};
+  const gaps = Array.isArray(safeAnalysis.tenderGaps) ? safeAnalysis.tenderGaps : [];
+  const outdated = Array.isArray(safeAnalysis.outdatedReferences) ? safeAnalysis.outdatedReferences : [];
+  const certs = Array.isArray(safeAnalysis.certificationRequirements || safeAnalysis.certifications)
+    ? (safeAnalysis.certificationRequirements || safeAnalysis.certifications)
+    : [];
+  const reqs = safeAnalysis.structuredRequirements || {};
 
-  const readiness = analysis.procurementReadiness || {
+  const stdsToDisplay = allStandards.length > 0 ? allStandards.slice(0, 5) : [
+    { standardNumber: 'IS 10322 (Part 5/Sec 3)', title: 'Luminaires: Particular requirements - Luminaires for road and street lighting', relationshipType: 'Primary Product', relevanceScore: 94 },
+    { standardNumber: 'IS 16107 (Part 2/Sec 2)', title: 'LED Luminaires for General Lighting - Performance Requirements & Photometry', relationshipType: 'Testing Standard', relevanceScore: 89 },
+    { standardNumber: 'IS 15885 (Part 2/Sec 13)', title: 'Lamp Controlgear: Safety Requirements for DC or AC Supplied Electronic Controlgear', relationshipType: 'Safety Standard', relevanceScore: 86 },
+    { standardNumber: 'IS/IEC 60529', title: 'Degrees of Protection Provided by Enclosures (IP Code) - Sealing & Verification', relationshipType: 'Normative Reference', relevanceScore: 82 }
+  ];
+
+  const readiness = safeAnalysis.procurementReadiness || {
     totalScore: 78,
     statusLabel: 'Readiness Evaluated — Action Required',
     breakdown: {
@@ -55,13 +56,6 @@ export const generateProcurementReportPdf = (analysis) => {
       technicalCompleteness: 72
     }
   };
-
-  const stdsToDisplay = allStandards.length > 0 ? allStandards.slice(0, 5) : [
-    { standardNumber: 'IS 10322 (Part 5/Sec 3)', title: 'Luminaires: Particular requirements - Luminaires for road and street lighting', relationshipType: 'Primary Product', relevanceScore: 94 },
-    { standardNumber: 'IS 16107 (Part 2/Sec 2)', title: 'LED Luminaires for General Lighting - Performance Requirements & Photometry', relationshipType: 'Testing Standard', relevanceScore: 89 },
-    { standardNumber: 'IS 15885 (Part 2/Sec 13)', title: 'Lamp Controlgear: Safety Requirements for DC or AC Supplied Electronic Controlgear', relationshipType: 'Safety Standard', relevanceScore: 86 },
-    { standardNumber: 'IS/IEC 60529', title: 'Degrees of Protection Provided by Enclosures (IP Code) - Sealing & Verification', relationshipType: 'Normative Reference', relevanceScore: 82 }
-  ];
 
   const score = readiness.totalScore || 78;
   const breakdown = readiness.breakdown || {
