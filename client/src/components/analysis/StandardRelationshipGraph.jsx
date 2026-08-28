@@ -4,15 +4,20 @@ import { Badge } from '../common/Badge';
 
 export const StandardRelationshipGraph = ({
   primaryStandard,
+  primaryStandards,
   relatedStandards = [],
   onSelectStandard
 }) => {
-  if (!primaryStandard) return null;
+  const primary = Array.isArray(primaryStandards) && primaryStandards.length > 0
+    ? primaryStandards[0]
+    : (primaryStandard || (primaryStandards && typeof primaryStandards === 'object' ? primaryStandards : null));
 
-  const testing = relatedStandards.filter(s => s.relationshipType === 'Testing Standard');
-  const safety = relatedStandards.filter(s => s.relationshipType === 'Safety Standard');
+  if (!primary) return null;
+
+  const testing = relatedStandards.filter(s => s.relationshipType?.toLowerCase().includes('test'));
+  const safety = relatedStandards.filter(s => s.relationshipType?.toLowerCase().includes('safety'));
   const otherAllied = relatedStandards.filter(
-    s => s.relationshipType !== 'Testing Standard' && s.relationshipType !== 'Safety Standard'
+    s => !s.relationshipType?.toLowerCase().includes('test') && !s.relationshipType?.toLowerCase().includes('safety')
   );
 
   return (
@@ -36,23 +41,23 @@ export const StandardRelationshipGraph = ({
             Primary Specification
           </div>
           <p className="text-sm font-black text-gov-800 mt-1 font-outfit truncate">
-            {primaryStandard.standardNumber}
+            {primary.standardNumber}
           </p>
           <p className="text-xs font-semibold text-slate-700 mt-1 line-clamp-2">
-            {primaryStandard.title}
+            {primary.title}
           </p>
           <div className="mt-3 flex justify-center">
             <Badge variant="primary" size="xs">
-              {primaryStandard.relevanceScore || 94}% Relevance
+              {primary.relevanceScore || 94}% Relevance
             </Badge>
           </div>
           {onSelectStandard && (
             <button
               type="button"
-              onClick={() => onSelectStandard(primaryStandard)}
-              className="mt-3 text-[11px] font-bold text-gov-600 hover:text-gov-800 underline"
+              onClick={() => onSelectStandard(primary)}
+              className="mt-3 text-[11px] font-bold text-gov-600 hover:text-gov-800 underline cursor-pointer"
             >
-              View Scope
+              View Scope Details
             </button>
           )}
         </div>
@@ -121,7 +126,7 @@ export const StandardRelationshipGraph = ({
                 ))}
               </div>
             ) : (
-              <p className="text-[11px] text-slate-400 italic">Photobiological and insulation safety defined in baseline spec.</p>
+              <p className="text-[11px] text-slate-400 italic">Insulation and environmental safety defined in baseline spec.</p>
             )}
           </div>
 
@@ -141,9 +146,9 @@ export const StandardRelationshipGraph = ({
                   >
                     <div className="flex justify-between items-center text-xs">
                       <span className="font-bold text-slate-900">{std.standardNumber}</span>
-                      <Badge variant="mandate" size="xs">
-                        {std.relationshipType}
-                      </Badge>
+                      <span className="text-[10px] font-semibold text-indigo-700">
+                        {std.relevanceScore || 82}%
+                      </span>
                     </div>
                     <p className="text-[11px] text-slate-600 truncate mt-0.5">{std.title}</p>
                   </div>

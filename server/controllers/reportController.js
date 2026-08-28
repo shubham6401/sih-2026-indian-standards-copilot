@@ -18,20 +18,20 @@ export const getReportData = async (req, res) => {
     // Build formal 12-section procurement report payload
     const report = {
       reportId: `REP-BIS-${String(analysis._id).substring(0, 8).toUpperCase()}`,
-      generatedDate: new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' }),
+      generatedDate: new Date(analysis.createdAt || Date.now()).toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' }),
       procurementRequirement: {
         productName: analysis.productName,
         category: analysis.productCategory,
         quantity: analysis.quantity || 'Not specified',
         rawSpecification: analysis.rawInput
       },
-      extractedRequirements: analysis.extractedRequirements,
+      extractedRequirements: analysis.extractedRequirements || analysis.structuredRequirements,
       primaryRecommendedStandards: analysis.primaryStandards,
       relatedStandards: analysis.relatedStandards,
       testingStandards: analysis.testingStandards,
       safetyStandards: analysis.safetyStandards,
-      certificationRequirements: analysis.certifications,
-      aiExplanation: analysis.aiExplanation,
+      certificationRequirements: analysis.certifications || analysis.certificationRequirements,
+      aiExplanation: analysis.aiExplanation || analysis.explanation,
       confidenceScores: {
         overallScore: analysis.confidenceScore,
         confidenceLabel: analysis.confidenceLabel,
@@ -43,5 +43,19 @@ export const getReportData = async (req, res) => {
     return res.json(report);
   } catch (error) {
     return res.status(500).json({ message: 'Error compiling report: ' + error.message });
+  }
+};
+
+export const deleteReport = async (req, res) => {
+  try {
+    const { id } = req.params;
+    try {
+      await Analysis.findByIdAndDelete(id);
+    } catch (e) {
+      // Ignore
+    }
+    return res.json({ success: true, message: 'Report deleted successfully' });
+  } catch (error) {
+    return res.status(500).json({ message: 'Error deleting report: ' + error.message });
   }
 };

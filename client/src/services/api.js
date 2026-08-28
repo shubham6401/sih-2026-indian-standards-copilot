@@ -159,5 +159,15 @@ export const api = {
     const data = await res.json();
     if (!res.ok) throw new Error(data.message || 'Failed to fetch report');
     return data;
+  },
+
+  deleteReport: async (id) => {
+    const res = await fetch(`${API_BASE}/reports/${id}`, {
+      method: 'DELETE',
+      headers: getAuthHeaders()
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || 'Failed to delete report');
+    return data;
   }
 };
