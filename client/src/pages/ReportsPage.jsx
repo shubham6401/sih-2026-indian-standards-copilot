@@ -21,6 +21,7 @@ import { Badge } from '../components/common/Badge';
 import { ScoreIndicator } from '../components/common/ScoreIndicator';
 import { Modal } from '../components/common/Modal';
 import { useAnalysis } from '../context/AnalysisContext';
+import { generateProcurementReportPdf } from '../utils/generatePdfReport';
 import { api } from '../services/api';
 
 export const ReportsPage = () => {
@@ -171,6 +172,17 @@ export const ReportsPage = () => {
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
+
+                    <Button
+                      size="xs"
+                      variant="ghost"
+                      icon={Download}
+                      onClick={() => {
+                        generateProcurementReportPdf(rep);
+                      }}
+                    >
+                      PDF
+                    </Button>
 
                     <Button
                       size="xs"

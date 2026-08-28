@@ -42,7 +42,7 @@ import { BeforeAfterComparisonView } from '../components/analysis/BeforeAfterCom
 import { GeneratedSpecificationCard } from '../components/analysis/GeneratedSpecificationCard';
 import { KnowledgeBaseTransparencyModal } from '../components/analysis/KnowledgeBaseTransparencyModal';
 import { ExecutivePdfReport } from '../components/reports/ExecutivePdfReport';
-import { exportExecutiveReportToPdf } from '../utils/generatePdfReport';
+import { generateProcurementReportPdf } from '../utils/generatePdfReport';
 import { useAnalysis } from '../context/AnalysisContext';
 import { api } from '../services/api';
 import confetti from 'canvas-confetti';
@@ -109,25 +109,23 @@ export const RecommendationResultPage = () => {
   };
 
   const handlePrint = () => {
-    window.print();
+    // Pure vector PDF generator
+    handleDownloadPdf();
   };
 
   const handleDownloadPdf = async () => {
+    if (!analysis) return;
     setDownloadingPdf(true);
-    showToast('Synthesizing executive-grade A4 PDF report...', 'info');
+    showToast('Synthesizing executive A4 PDF procurement dossier...', 'info');
 
     try {
-      const container = document.getElementById('executive-pdf-document');
-      if (container) {
-        await exportExecutiveReportToPdf(container, analysis?.productName);
-        confetti({ particleCount: 50, spread: 60 });
-        showToast('Executive PDF Report downloaded successfully!');
-      } else {
-        window.print();
-      }
+      // Pure data-to-PDF generator: ZERO DOM dependency, ZERO screenshotting
+      generateProcurementReportPdf(analysis);
+      confetti({ particleCount: 50, spread: 60 });
+      showToast('Official A4 Procurement Dossier downloaded successfully!', 'success');
     } catch (err) {
-      console.warn('PDF export error fallback to print:', err.message);
-      window.print();
+      console.error('PDF export error:', err);
+      showToast('Failed to generate PDF report: ' + err.message, 'error');
     } finally {
       setDownloadingPdf(false);
     }
