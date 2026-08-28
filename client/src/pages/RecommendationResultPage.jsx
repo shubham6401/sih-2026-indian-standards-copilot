@@ -133,6 +133,11 @@ export const RecommendationResultPage = () => {
     }
   };
 
+  const handleTabChange = (tabId) => {
+    setActiveTab(tabId);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   if (loading) {
     return (
       <div className="py-20 text-center space-y-4">
@@ -218,16 +223,18 @@ export const RecommendationResultPage = () => {
           { id: 'a4_preview', label: 'Executive A4 PDF Preview', icon: Printer, highlight: true }
         ].map((tab) => {
           const Icon = tab.icon;
+          const isActive = activeTab === tab.id;
           return (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`px-3.5 py-2 rounded-xl transition-all flex items-center gap-1.5 shrink-0 ${
-                activeTab === tab.id
-                  ? 'bg-gov-700 text-white shadow-xs font-bold'
+              type="button"
+              onClick={() => handleTabChange(tab.id)}
+              className={`px-3.5 py-2.5 rounded-xl transition-all flex items-center gap-1.5 shrink-0 cursor-pointer ${
+                isActive
+                  ? 'bg-gov-800 text-white shadow-sm ring-2 ring-gov-600 font-bold'
                   : tab.highlight
                   ? 'text-amber-900 bg-amber-200/60 hover:bg-amber-200'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
+                  : 'text-slate-700 hover:text-slate-900 hover:bg-white/80'
               }`}
             >
               <Icon className="w-3.5 h-3.5" />
@@ -237,7 +244,7 @@ export const RecommendationResultPage = () => {
         })}
       </div>
 
-      {/* TAB: EXECUTIVE A4 PDF PREVIEW */}
+      {/* TAB 6: EXECUTIVE A4 PDF PREVIEW */}
       {activeTab === 'a4_preview' ? (
         <div className="space-y-6">
           <div className="p-4 bg-amber-50 border border-amber-200 rounded-xl flex items-center justify-between">
@@ -335,7 +342,7 @@ export const RecommendationResultPage = () => {
               <button
                 type="button"
                 onClick={() => setIsKbModalOpen(true)}
-                className="text-gov-700 hover:text-gov-900 font-bold flex items-center gap-1 text-[11px] underline"
+                className="text-gov-700 hover:text-gov-900 font-bold flex items-center gap-1 text-[11px] underline cursor-pointer"
               >
                 <Database className="w-3.5 h-3.5" />
                 <span>Knowledge Base Transparency & Provenance</span>
@@ -344,32 +351,59 @@ export const RecommendationResultPage = () => {
           </div>
 
           {/* TAB 1: OVERVIEW */}
-          {(activeTab === 'overview' || activeTab === 'gaps') && (
-            <>
+          {activeTab === 'overview' && (
+            <div className="space-y-6">
               {/* Procurement Specification Readiness Score (0-100 Gauge) */}
               <ProcurementReadinessScore
                 readiness={analysis.procurementReadiness}
                 gaps={analysis.tenderGaps || []}
               />
 
+              {/* Primary Standards Section */}
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2.5 h-6 bg-gov-600 rounded-full" />
+                    <h2 className="text-lg font-black text-slate-900 font-outfit">
+                      Primary Applicable Indian Standards (IS)
+                    </h2>
+                  </div>
+                  <Badge variant="primary" size="sm">
+                    {(analysis.primaryStandards || []).length} Verified Standards
+                  </Badge>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {(analysis.primaryStandards || []).map((std) => (
+                    <StandardCard
+                      key={std.standardNumber || std._id}
+                      standard={std}
+                      isPrimary={true}
+                      onClick={() => handleOpenStandard(std)}
+                    />
+                  ))}
+                </div>
+              </div>
+
               {/* Tender Gap Analysis Card */}
               <TenderGapAnalysisCard gaps={analysis.tenderGaps || []} />
 
-              {/* Extracted Structured Requirements */}
-              <ExtractedRequirementsCard
-                requirements={analysis.structuredRequirements || {}}
-                productName={analysis.productName}
-                onSaveRequirements={(updated) => {
-                  setAnalysis(prev => ({ ...prev, structuredRequirements: updated }));
-                  showToast('Updated structured requirements cached for tender generator!');
-                }}
+              {/* Before vs After Split Comparison View */}
+              <BeforeAfterComparisonView
+                rawInput={analysis.rawInput}
+                improvedSpecification={analysis.improvedSpecification}
+                outdated={analysis.outdatedReferences || []}
+                gaps={analysis.tenderGaps || []}
               />
-            </>
+
+              {/* Certification & Compliance Assessment */}
+              <CertificationSection certifications={analysis.certifications || []} />
+            </div>
           )}
 
           {/* TAB 2: STANDARDS & RELATIONSHIPS */}
-          {(activeTab === 'overview' || activeTab === 'standards') && (
-            <>
+          {activeTab === 'standards' && (
+            <div className="space-y-6">
               {/* Primary Standards Section */}
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
@@ -436,12 +470,36 @@ export const RecommendationResultPage = () => {
                   </div>
                 </div>
               )}
-            </>
+            </div>
+          )}
+
+          {/* TAB 3: GAPS & REQUIREMENTS */}
+          {activeTab === 'gaps' && (
+            <div className="space-y-6">
+              {/* Procurement Specification Readiness Score (0-100 Gauge) */}
+              <ProcurementReadinessScore
+                readiness={analysis.procurementReadiness}
+                gaps={analysis.tenderGaps || []}
+              />
+
+              {/* Tender Gap Analysis Card */}
+              <TenderGapAnalysisCard gaps={analysis.tenderGaps || []} />
+
+              {/* Extracted Structured Requirements */}
+              <ExtractedRequirementsCard
+                requirements={analysis.structuredRequirements || {}}
+                productName={analysis.productName}
+                onSaveRequirements={(updated) => {
+                  setAnalysis(prev => ({ ...prev, structuredRequirements: updated }));
+                  showToast('Updated structured requirements cached for tender generator!');
+                }}
+              />
+            </div>
           )}
 
           {/* TAB 4: SPECIFICATION & BEFORE/AFTER DIFF */}
-          {(activeTab === 'overview' || activeTab === 'spec') && (
-            <>
+          {activeTab === 'spec' && (
+            <div className="space-y-6">
               {/* Before vs After Split Comparison View */}
               <BeforeAfterComparisonView
                 rawInput={analysis.rawInput}
@@ -455,12 +513,12 @@ export const RecommendationResultPage = () => {
                 specification={analysis.improvedSpecification}
                 productName={analysis.productName}
               />
-            </>
+            </div>
           )}
 
           {/* TAB 5: CERTIFICATIONS, VERSIONS & EXPLANATION */}
-          {(activeTab === 'overview' || activeTab === 'certification') && (
-            <>
+          {activeTab === 'certification' && (
+            <div className="space-y-6">
               {/* Certification & Compliance Assessment */}
               <CertificationSection certifications={analysis.certifications || []} />
 
@@ -472,7 +530,7 @@ export const RecommendationResultPage = () => {
 
               {/* Standard Editions & Amendments Tracker */}
               <VersionAmendmentCard standards={allStandardsCombined} />
-            </>
+            </div>
           )}
 
           {/* Verification Disclaimer */}
