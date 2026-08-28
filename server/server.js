@@ -70,8 +70,9 @@ const startServer = async () => {
     console.log(`🚀 Indian Standards Recommendation Engine API running`);
     console.log(`📡 Port: http://localhost:${PORT}`);
     console.log(`🏛️ Bureau of Indian Standards Knowledge Base: Active`);
-    console.log(`=======================================================`);
-  });
-};
+if (process.env.NODE_ENV !== 'production' || process.env.VERCEL !== '1') {
+  startServer();
+}
 
-startServer();
+export default app;
+export { app, startServer };
