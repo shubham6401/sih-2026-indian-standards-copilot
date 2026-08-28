@@ -100,20 +100,24 @@ export const NewAnalysisPage = () => {
       });
 
       if (result.requiresClarification) {
-        setAmbiguityData(result.ambiguityDetails);
+        setAmbiguityData({
+          clarificationMessage: result.clarificationMessage,
+          clarificationQuestions: result.clarificationQuestions,
+          detectedEntity: result.detectedEntity,
+          ...result.ambiguityDetails
+        });
         setAnalyzing(false);
         return;
       }
 
-      if (!result.success) {
+      if (result.analysis) {
+        setCurrentAnalysis(result.analysis);
+        showToast('Standards recommendation report generated successfully!');
+        navigate(`/analysis/result/${result.analysis._id}`);
+      } else {
         setError(result.message || 'No matching Indian Standards identified.');
         setAnalyzing(false);
-        return;
       }
-
-      setCurrentAnalysis(result.analysis);
-      showToast('Standards recommendation report generated successfully!');
-      navigate(`/analysis/result/${result.analysis._id}`);
     } catch (err) {
       setError(err.message || 'Analysis failed. Please retry.');
       setAnalyzing(false);
@@ -143,20 +147,24 @@ export const NewAnalysisPage = () => {
 
       // Handle Ambiguity / Missing Information (Scenario 3)
       if (result.requiresClarification) {
-        setAmbiguityData(result.ambiguityDetails);
+        setAmbiguityData({
+          clarificationMessage: result.clarificationMessage,
+          clarificationQuestions: result.clarificationQuestions,
+          detectedEntity: result.detectedEntity,
+          ...result.ambiguityDetails
+        });
         setAnalyzing(false);
         return;
       }
 
-      if (!result.success) {
+      if (result.analysis) {
+        setCurrentAnalysis(result.analysis);
+        showToast('Standards recommendation report generated successfully!');
+        navigate(`/analysis/result/${result.analysis._id}`);
+      } else {
         setError(result.message || 'No matching Indian Standards identified. Please refine your technical requirements.');
         setAnalyzing(false);
-        return;
       }
-
-      setCurrentAnalysis(result.analysis);
-      showToast('Standards recommendation report generated successfully!');
-      navigate(`/analysis/result/${result.analysis._id}`);
     } catch (err) {
       setError(err.message || 'Analysis failed. Please check network or retry.');
       setAnalyzing(false);

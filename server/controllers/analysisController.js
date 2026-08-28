@@ -218,6 +218,7 @@ export const createAnalysis = async (req, res) => {
     memoryAnalyses.unshift(savedAnalysis);
 
     return res.status(201).json({
+      success: true,
       message: 'Analysis completed successfully',
       analysis: savedAnalysis
     });
