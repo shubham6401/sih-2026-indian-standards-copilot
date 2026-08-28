@@ -1,21 +1,31 @@
 import mongoose from 'mongoose';
 
 let isConnected = false;
-let isInMemoryFallback = false;
+let isInMemoryFallback = true;
 
 export const connectDB = async () => {
-  const uri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/indian_standards_db';
-  
+  const uri = process.env.MONGODB_URI;
+
+  // On serverless / Vercel without cloud MongoDB URI, use instant in-memory mode
+  if (!uri || (process.env.VERCEL === '1' && uri.includes('127.0.0.1'))) {
+    console.log('[Database] Operating in Zero-Dependency In-Memory Mode with authentic Indian Standards corpus.');
+    isConnected = false;
+    isInMemoryFallback = true;
+    return false;
+  }
+
   try {
+    mongoose.set('bufferCommands', false);
     const conn = await mongoose.connect(uri, {
-      serverSelectionTimeoutMS: 2500, // Quick timeout to fall back gracefully if local daemon is not running
+      serverSelectionTimeoutMS: 1500,
     });
     isConnected = true;
+    isInMemoryFallback = false;
     console.log(`[Database] MongoDB Connected: ${conn.connection.host}`);
     return true;
   } catch (error) {
-    console.warn(`[Database] MongoDB connection could not be established (${error.message}).`);
-    console.log(`[Database] Activating Resilient Embedded In-Memory Store for instant zero-dependency execution.`);
+    console.warn(`[Database] MongoDB connection bypassed (${error.message}).`);
+    isConnected = false;
     isInMemoryFallback = true;
     return false;
   }

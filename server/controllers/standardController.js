@@ -3,6 +3,8 @@ import { INDIAN_STANDARDS_DATABASE } from '../services/standardsData.js';
 
 export const seedStandardsIfEmpty = async () => {
   try {
+    const { isConnected } = await import('../config/db.js').then(m => m.getDBStatus());
+    if (!isConnected) return;
     const count = await Standard.countDocuments();
     if (count === 0 || count < INDIAN_STANDARDS_DATABASE.length) {
       console.log(`[Seed] Updating / Seeding ${INDIAN_STANDARDS_DATABASE.length} authentic Indian Standards into database...`);
@@ -11,7 +13,7 @@ export const seedStandardsIfEmpty = async () => {
       console.log(`[Seed] Database synchronized successfully.`);
     }
   } catch (error) {
-    console.warn(`[Seed] Could not seed MongoDB (${error.message}). Working from in-memory standards dataset.`);
+    console.warn(`[Seed] Notice: Operating from in-memory standards dataset.`);
   }
 };
 
