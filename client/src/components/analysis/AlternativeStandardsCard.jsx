@@ -1,0 +1,98 @@
+import React from 'react';
+import { Layers, HelpCircle, ChevronRight, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Badge } from '../common/Badge';
+import { ScoreIndicator } from '../common/ScoreIndicator';
+
+export const AlternativeStandardsCard = ({
+  primaryStandards = [],
+  alternativeStandards = [],
+  onViewDetails
+}) => {
+  return (
+    <div className="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-sm my-6 space-y-5">
+      <div className="pb-4 border-b border-slate-100">
+        <div className="flex items-center gap-2">
+          <span className="text-[10px] font-extrabold uppercase tracking-wider bg-gov-100 text-gov-800 px-2 py-0.5 rounded border border-gov-200">
+            Ambiguity & Boundary Reasoning
+          </span>
+          <span className="text-xs text-slate-500 font-medium">Multi-Standard Disambiguation</span>
+        </div>
+        <h3 className="text-base font-bold text-slate-900 font-outfit mt-1 flex items-center gap-2">
+          <Layers className="w-5 h-5 text-gov-600" />
+          <span>Primary vs. Alternative Standard Comparison</span>
+        </h3>
+        <p className="text-xs text-slate-500 mt-0.5">
+          Explainable AI reasoning on why candidate standards were ranked as primary vs. specialized alternatives
+        </p>
+      </div>
+
+      <div className="space-y-4">
+        {/* Primary Standards */}
+        {primaryStandards.slice(0, 1).map((prim, idx) => (
+          <div key={idx} className="p-4 rounded-xl bg-gov-50/70 border-2 border-gov-500/80 space-y-2">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-extrabold uppercase bg-gov-600 text-white px-2 py-0.5 rounded shadow-2xs">
+                  PRIMARY RECOMMENDATION
+                </span>
+                <span className="font-bold text-sm text-slate-900">{prim.standardNumber}</span>
+              </div>
+              <ScoreIndicator score={prim.relevanceScore || 94} label="Primary Match" size="sm" />
+            </div>
+            <p className="text-xs font-semibold text-slate-800">{prim.title}</p>
+            <p className="text-xs text-slate-600 italic">
+              <strong>Core Fit: </strong> {prim.whyRecommended}
+            </p>
+          </div>
+        ))}
+
+        {/* Alternative Standards */}
+        {alternativeStandards.length > 0 && (
+          <div className="space-y-3 pt-2">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-700">
+              Evaluated Alternatives & Specialized Standards:
+            </h4>
+
+            {alternativeStandards.map((alt, idx) => (
+              <div
+                key={idx}
+                className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs space-y-2 hover:border-slate-300 transition-all"
+              >
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] font-bold uppercase bg-slate-200 text-slate-700 px-2 py-0.5 rounded">
+                      ALTERNATIVE MATCH
+                    </span>
+                    <span className="font-bold text-slate-900">{alt.standardNumber}</span>
+                  </div>
+                  <ScoreIndicator score={alt.relevanceScore || 78} label="Alternative" size="sm" />
+                </div>
+                <p className="text-xs font-medium text-slate-700">{alt.title}</p>
+
+                {/* Explicit Reason why NOT primary */}
+                <div className="p-2.5 bg-amber-50/80 rounded-lg border border-amber-100 text-[11px] text-amber-950">
+                  <span className="font-bold block text-amber-900">
+                    Why is this not the primary recommendation?
+                  </span>
+                  <p className="mt-0.5">{alt.whyAlternative}</p>
+                </div>
+
+                {onViewDetails && (
+                  <div className="pt-2 flex justify-end">
+                    <button
+                      type="button"
+                      onClick={() => onViewDetails(alt)}
+                      className="text-[11px] font-bold text-gov-600 hover:text-gov-800 underline inline-flex items-center gap-1"
+                    >
+                      Inspect Alternative Standard <ChevronRight className="w-3 h-3" />
+                    </button>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
