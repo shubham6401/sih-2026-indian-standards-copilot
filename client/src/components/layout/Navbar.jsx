@@ -363,7 +363,7 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                             : 'hover:bg-slate-200/60 text-slate-700'
                         }`}
                       >
-                        <span>Procurement Officer (CPWD)</span>
+                        <span>Rajesh Kumar (CPWD)</span>
                         {userRoleKey === 'procurement_officer' && <span className="text-[10px] text-gov-700 font-extrabold">Active</span>}
                       </button>
                       <button
@@ -379,7 +379,7 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                             : 'hover:bg-slate-200/60 text-slate-700'
                         }`}
                       >
-                        <span>Govt Department (MoHUA)</span>
+                        <span>Priya Sharma (Public Works)</span>
                         {userRoleKey === 'government_department' && <span className="text-[10px] text-gov-700 font-extrabold">Active</span>}
                       </button>
                       <button
@@ -395,7 +395,7 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                             : 'hover:bg-slate-200/60 text-slate-700'
                         }`}
                       >
-                        <span>PSU Executive (NTPC)</span>
+                        <span>Amit Verma (Energy PSU)</span>
                         {userRoleKey === 'psu' && <span className="text-[10px] text-gov-700 font-extrabold">Active</span>}
                       </button>
                       <button
@@ -411,7 +411,7 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                             : 'hover:bg-slate-200/60 text-slate-700'
                         }`}
                       >
-                        <span>Platform Admin (BIS HQ)</span>
+                        <span>Anveshak Admin (Platform)</span>
                         {userRoleKey === 'admin' && <span className="text-[10px] text-gov-700 font-extrabold">Active</span>}
                       </button>
                     </div>

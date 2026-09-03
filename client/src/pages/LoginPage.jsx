@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Shield, Lock, Mail, ArrowRight, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { Button } from '../components/common/Button';
+import { Badge } from '../components/common/Badge';
 import { useAuth } from '../context/AuthContext';
+import { DEMO_PERSONAS } from '../config/roleConfig';
 
 export const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const { login, demoLogin, switchRole, isAuthenticated } = useAuth();
+  const { login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,13 +35,20 @@ export const LoginPage = () => {
     }
   };
 
-  const handleQuickDemo = (role) => {
-    if (switchRole) {
-      switchRole(role);
-    } else {
-      demoLogin(role);
+  const handleUseDemoAccount = async (persona) => {
+    setEmail(persona.email);
+    setPassword(persona.password);
+    setError('');
+    setLoading(true);
+
+    try {
+      await login(persona.email, persona.password);
+      navigate('/dashboard');
+    } catch (err) {
+      setError(err.message || 'Demo authentication failed.');
+    } finally {
+      setLoading(false);
     }
-    navigate('/dashboard');
   };
 
   return (
@@ -119,44 +128,52 @@ export const LoginPage = () => {
             </Button>
           </form>
 
-          {/* Quick Demo Sign In Roles */}
-          <div className="mt-6 pt-5 border-t border-slate-100">
-            <p className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider text-center mb-2.5">
-              One-Click Evaluator Demo Personas
-            </p>
-            <div className="grid grid-cols-2 gap-2">
-              <button
-                type="button"
-                onClick={() => handleQuickDemo('Procurement Officer')}
-                className="p-2.5 rounded-xl bg-slate-50 hover:bg-gov-50 border border-slate-200 hover:border-gov-300 text-left transition-all cursor-pointer"
-              >
-                <div className="text-[9px] text-gov-700 font-extrabold uppercase tracking-wider">CPWD</div>
-                <div className="text-xs font-bold text-slate-900 mt-0.5">Procurement Officer</div>
-              </button>
-              <button
-                type="button"
-                onClick={() => handleQuickDemo('Government Department')}
-                className="p-2.5 rounded-xl bg-slate-50 hover:bg-gov-50 border border-slate-200 hover:border-gov-300 text-left transition-all cursor-pointer"
-              >
-                <div className="text-[9px] text-blue-700 font-extrabold uppercase tracking-wider">MoHUA</div>
-                <div className="text-xs font-bold text-slate-900 mt-0.5">Govt Department</div>
-              </button>
-              <button
-                type="button"
-                onClick={() => handleQuickDemo('PSU')}
-                className="p-2.5 rounded-xl bg-slate-50 hover:bg-gov-50 border border-slate-200 hover:border-gov-300 text-left transition-all cursor-pointer"
-              >
-                <div className="text-[9px] text-amber-700 font-extrabold uppercase tracking-wider">NTPC</div>
-                <div className="text-xs font-bold text-slate-900 mt-0.5">PSU Executive</div>
-              </button>
-              <button
-                type="button"
-                onClick={() => handleQuickDemo('Organization/Admin')}
-                className="p-2.5 rounded-xl bg-slate-50 hover:bg-gov-50 border border-slate-200 hover:border-gov-300 text-left transition-all cursor-pointer"
-              >
-                <div className="text-[9px] text-purple-700 font-extrabold uppercase tracking-wider">BIS HQ</div>
-                <div className="text-xs font-bold text-slate-900 mt-0.5">Platform Admin</div>
-              </button>
+          {/* Official SIH 2026 Demo Accounts Section */}
+          <div className="mt-8 pt-6 border-t border-slate-200">
+            <div className="flex items-center justify-between mb-3">
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-gov-800 bg-gov-100 px-2 py-0.5 rounded border border-gov-200">
+                  SIH 2026 Evaluation
+                </span>
+                <h3 className="text-xs font-black text-slate-900 mt-1 uppercase tracking-wider font-outfit">
+                  Role-Based Demo Accounts
+                </h3>
+              </div>
+              <span className="text-[11px] font-mono text-slate-400">Pass: Demo@12345</span>
+            </div>
+
+            <div className="space-y-2.5">
+              {DEMO_PERSONAS.map((persona) => (
+                <div
+                  key={persona.email}
+                  className="p-3 rounded-xl bg-slate-50/90 hover:bg-slate-100/80 border border-slate-200/90 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-2.5"
+                >
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-bold text-slate-900">{persona.name}</span>
+                      <Badge variant={persona.badgeVariant} size="xs">
+                        {persona.role}
+                      </Badge>
+                    </div>
+                    <div className="text-[11px] text-slate-500 font-medium truncate mt-0.5">
+                      {persona.organization}
+                    </div>
+                    <div className="text-[10px] font-mono text-slate-400 mt-0.5">
+                      {persona.email}
+                    </div>
+                  </div>
+
+                  <Button
+                    size="xs"
+                    variant="secondary"
+                    className="shrink-0 font-bold self-start sm:self-auto"
+                    loading={loading && email === persona.email}
+                    onClick={() => handleUseDemoAccount(persona)}
+                  >
+                    Use Demo Account
+                  </Button>
+                </div>
+              ))}
             </div>
           </div>
 

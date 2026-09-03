@@ -43,6 +43,28 @@ const analysisSchema = new mongoose.Schema({
     type: String,
     default: 'General',
   },
+  status: {
+    type: String,
+    enum: ['Completed', 'Under Review', 'Needs Attention', 'Compliance Risk', 'Draft'],
+    default: 'Completed'
+  },
+  reportType: {
+    type: String,
+    default: 'Procurement Standards Compliance Report'
+  },
+  isDemo: {
+    type: Boolean,
+    default: false,
+    index: true
+  },
+  demoKey: {
+    type: String,
+    sparse: true
+  },
+  organization: {
+    type: String,
+    default: ''
+  },
   quantity: {
     type: String,
     default: '',

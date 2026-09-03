@@ -12,17 +12,12 @@ export const AuthProvider = ({ children }) => {
     } catch {}
     // Default demo officer profile
     const defaultDemo = {
-      _id: 'officer_cpwd_01',
-      name: 'Sh. Rajesh Kumar',
-      email: 'officer@cpwd.gov.in',
-      organization: 'Central Public Works Department (CPWD)',
+      _id: 'user_demo_po_01',
+      name: 'Rajesh Kumar',
+      email: 'demo.procurement@anveshak.demo',
+      organization: 'CPWD — Central Public Works Department',
       role: 'Procurement Officer'
     };
-    try {
-      localStorage.setItem('is_auth_user', JSON.stringify(defaultDemo));
-      localStorage.setItem('is_auth_token', 'demo_active_token_2026');
-    } catch {}
-    return defaultDemo;
   });
 
   const [loading, setLoading] = useState(false);
@@ -96,57 +91,51 @@ export const AuthProvider = ({ children }) => {
   };
 
   const demoLogin = (role = 'Procurement Officer') => {
-    const demo = {
-      _id: 'demo_' + Date.now(),
-      name: 'Sh. Rajesh Kumar',
-      email: 'rajesh.kumar@gov.in',
-      organization: 'Ministry of Housing & Urban Affairs (MoHUA)',
-      role
-    };
-    setUser(demo);
-    localStorage.setItem('is_auth_token', 'demo_active_token_2026');
-    localStorage.setItem('is_auth_user', JSON.stringify(demo));
-    return demo;
+    return switchRole(role);
   };
 
   const switchRole = (role, email, organization, name) => {
     const roleProfiles = {
       'Procurement Officer': {
-        name: name || 'Sh. Rajesh Kumar',
-        email: email || 'officer@cpwd.gov.in',
-        organization: organization || 'Central Public Works Department (CPWD)',
-        role: 'Procurement Officer'
+        _id: 'user_demo_po_01',
+        name: name || 'Rajesh Kumar',
+        email: email || 'demo.procurement@anveshak.demo',
+        organization: organization || 'CPWD — Central Public Works Department',
+        role: 'Procurement Officer',
+        isDemo: true
       },
       'Government Department': {
-        name: name || 'Dr. Anita Sharma',
-        email: email || 'director.procurement@mohua.gov.in',
-        organization: organization || 'Ministry of Housing & Urban Affairs (MoHUA)',
-        role: 'Government Department'
+        _id: 'user_demo_dept_02',
+        name: name || 'Priya Sharma',
+        email: email || 'demo.department@anveshak.demo',
+        organization: organization || 'Department of Public Works',
+        role: 'Government Department',
+        isDemo: true
       },
       'PSU': {
-        name: name || 'Er. Vikram Malhotra',
-        email: email || 'v.malhotra@ntpc.co.in',
-        organization: organization || 'National Thermal Power Corporation (NTPC)',
-        role: 'PSU'
+        _id: 'user_demo_psu_03',
+        name: name || 'Amit Verma',
+        email: email || 'demo.psu@anveshak.demo',
+        organization: organization || 'National Energy Infrastructure Corporation',
+        role: 'PSU',
+        isDemo: true
       },
       'Organization/Admin': {
-        name: name || 'Smt. Preeti Verma',
-        email: email || 'admin@bis-copilot.gov.in',
-        organization: organization || 'Bureau of Indian Standards (BIS) Directorate',
-        role: 'Organization/Admin'
+        _id: 'user_demo_admin_04',
+        name: name || 'Anveshak Administrator',
+        email: email || 'demo.admin@anveshak.demo',
+        organization: organization || 'Anveshak Platform',
+        role: 'Organization/Admin',
+        isDemo: true
       }
     };
 
     const targetProfile = roleProfiles[role] || roleProfiles['Procurement Officer'];
-    const updatedUser = {
-      _id: 'user_' + (targetProfile.role.replace(/[^a-zA-Z]/g, '').toLowerCase()) + '_01',
-      ...targetProfile
-    };
 
-    setUser(updatedUser);
+    setUser(targetProfile);
     localStorage.setItem('is_auth_token', 'demo_active_token_2026');
-    localStorage.setItem('is_auth_user', JSON.stringify(updatedUser));
-    return updatedUser;
+    localStorage.setItem('is_auth_user', JSON.stringify(targetProfile));
+    return targetProfile;
   };
 
   const logout = () => {

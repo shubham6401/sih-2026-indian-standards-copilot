@@ -31,6 +31,7 @@ export const ReportsPage = () => {
 
   const urlSearch = searchParams.get('search') || '';
   const [search, setSearch] = useState(urlSearch);
+  const [statusFilter, setStatusFilter] = useState('ALL');
   const [reportToDelete, setReportToDelete] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
   const [openingId, setOpeningId] = useState(null);
@@ -64,7 +65,7 @@ export const ReportsPage = () => {
     if (!id) return;
     setOpeningId(id);
     setCurrentAnalysis(rep);
-    navigate(`/reports/${id}`);
+    navigate(`/analysis/result/${id}`);
   };
 
   const openDeleteModal = (rep, e) => {
@@ -87,16 +88,39 @@ export const ReportsPage = () => {
   };
 
   const filteredReports = useMemo(() => {
-    if (!search.trim()) return history;
-    const query = search.toLowerCase();
-    return history.filter((rep) => {
-      return (
-        (rep.productName || '').toLowerCase().includes(query) ||
-        (rep.productCategory || '').toLowerCase().includes(query) ||
-        (rep.rawInput || '').toLowerCase().includes(query)
-      );
-    });
-  }, [history, search]);
+    let result = history;
+
+    if (statusFilter !== 'ALL') {
+      result = result.filter(rep => (rep.status || 'Completed').toLowerCase() === statusFilter.toLowerCase());
+    }
+
+    if (search.trim()) {
+      const query = search.toLowerCase();
+      result = result.filter((rep) => {
+        return (
+          (rep.productName || '').toLowerCase().includes(query) ||
+          (rep.productCategory || '').toLowerCase().includes(query) ||
+          (rep.rawInput || '').toLowerCase().includes(query) ||
+          (rep.reportType || '').toLowerCase().includes(query)
+        );
+      });
+    }
+
+    return result;
+  }, [history, search, statusFilter]);
+
+  const statusOptions = ['ALL', 'Completed', 'Under Review', 'Needs Attention', 'Compliance Risk', 'Draft'];
+
+  const getStatusBadgeVariant = (status) => {
+    switch ((status || '').toLowerCase()) {
+      case 'completed': return 'success';
+      case 'under review': return 'secondary';
+      case 'needs attention': return 'warning';
+      case 'compliance risk': return 'danger';
+      case 'draft': return 'neutral';
+      default: return 'primary';
+    }
+  };
 
   return (
     <div className="space-y-6 animate-fade-in pb-12">
@@ -127,16 +151,37 @@ export const ReportsPage = () => {
         </Button>
       </div>
 
-      {/* Search Input */}
-      <div className="relative">
-        <input
-          type="text"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="Filter reports by product name, category, or requirement keywords..."
-          className="w-full pl-10 pr-4 py-2.5 text-xs rounded-xl border border-slate-300 bg-white focus:ring-2 focus:ring-gov-500 focus:outline-none"
-        />
-        <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
+      {/* Filter and Search Bar */}
+      <div className="flex flex-col sm:flex-row sm:items-center gap-3 justify-between">
+        {/* Status Filter Pills */}
+        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
+          {statusOptions.map((st) => (
+            <button
+              key={st}
+              type="button"
+              onClick={() => setStatusFilter(st)}
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
+                statusFilter === st
+                  ? 'bg-gov-700 text-white shadow-xs'
+                  : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
+              }`}
+            >
+              {st}
+            </button>
+          ))}
+        </div>
+
+        {/* Search Input */}
+        <div className="relative flex-1 max-w-md">
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search reports by keyword, product, or standard..."
+            className="w-full pl-10 pr-4 py-2 text-xs rounded-xl border border-slate-300 bg-white focus:ring-2 focus:ring-gov-500 focus:outline-none"
+          />
+          <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
+        </div>
       </div>
 
       {/* Reports Grid */}
@@ -151,10 +196,13 @@ export const ReportsPage = () => {
               >
                 <div>
                   <div className="flex items-start justify-between gap-2 mb-3">
-                    <div className="flex items-center gap-2">
+                    <div className="flex flex-wrap items-center gap-1.5">
                       <span className="text-[10px] font-mono font-bold bg-slate-100 text-slate-700 px-2 py-0.5 rounded border border-slate-200">
                         {reportId}
                       </span>
+                      <Badge variant={getStatusBadgeVariant(rep.status)} size="xs">
+                        {rep.status || 'Completed'}
+                      </Badge>
                       <Badge variant="primary" size="xs">
                         {rep.productCategory}
                       </Badge>
@@ -164,6 +212,10 @@ export const ReportsPage = () => {
                       label={rep.confidenceLabel || 'Highly Relevant'}
                       size="sm"
                     />
+                  </div>
+
+                  <div className="text-[11px] font-bold text-gov-700 uppercase tracking-wider mb-1">
+                    {rep.reportType || 'Procurement Standards Compliance Report'}
                   </div>
 
                   <h3 className="text-base font-bold text-slate-900 font-outfit">

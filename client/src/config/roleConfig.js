@@ -39,8 +39,8 @@ export const ROLE_CONFIG = {
     displayName: 'Procurement Officer',
     badgeTitle: 'Procurement Officer',
     badgeVariant: 'primary',
-    organizationExample: 'Central Public Works Department (CPWD)',
-    dashboardTitle: 'Procurement Decision Support',
+    organizationExample: 'CPWD — Central Public Works Department',
+    dashboardTitle: 'Procurement Intelligence Dashboard',
     dashboardSubtitle: 'Analyze procurement specifications, verify applicable Indian Standards, and eliminate compliance gaps.',
     primaryActions: [
       { label: 'New AI Analysis', path: '/analysis/new', icon: Sparkles, variant: 'primary' },
@@ -92,7 +92,7 @@ export const ROLE_CONFIG = {
     displayName: 'Government Department',
     badgeTitle: 'Department Director',
     badgeVariant: 'mandate',
-    organizationExample: 'Ministry of Housing & Urban Affairs (MoHUA)',
+    organizationExample: 'Department of Public Works',
     dashboardTitle: 'Department Procurement Intelligence',
     dashboardSubtitle: 'Department-wide procurement oversight, statutory Quality Control Order compliance, and tender analytics.',
     primaryActions: [
@@ -144,7 +144,7 @@ export const ROLE_CONFIG = {
     displayName: 'Public Sector Undertaking (PSU)',
     badgeTitle: 'PSU Compliance',
     badgeVariant: 'warning',
-    organizationExample: 'National Thermal Power Corporation (NTPC)',
+    organizationExample: 'National Energy Infrastructure Corporation',
     dashboardTitle: 'PSU Procurement Compliance Dashboard',
     dashboardSubtitle: 'High-value technical procurement compliance, specialized equipment verification, and tender risk audits.',
     primaryActions: [
@@ -243,3 +243,46 @@ export const ROLE_CONFIG = {
     permissions: ['admin:manage_users', 'admin:view_all_analytics', 'admin:manage_standards', 'reports:view_all']
   }
 };
+
+export const DEMO_PERSONAS = [
+  {
+    role: 'Procurement Officer',
+    roleKey: ROLE_KEYS.PROCUREMENT_OFFICER,
+    name: 'Rajesh Kumar',
+    organization: 'CPWD — Central Public Works Department',
+    email: 'demo.procurement@anveshak.demo',
+    password: 'Demo@12345',
+    description: 'Operational procurement analyses, tender vetting, and standards compliance',
+    badgeVariant: 'primary'
+  },
+  {
+    role: 'Government Department',
+    roleKey: ROLE_KEYS.GOVERNMENT_DEPARTMENT,
+    name: 'Priya Sharma',
+    organization: 'Department of Public Works',
+    email: 'demo.department@anveshak.demo',
+    password: 'Demo@12345',
+    description: 'Department-wide procurement oversight, QCO mandates, and tender analytics',
+    badgeVariant: 'mandate'
+  },
+  {
+    role: 'Public Sector Undertaking (PSU)',
+    roleKey: ROLE_KEYS.PSU,
+    name: 'Amit Verma',
+    organization: 'National Energy Infrastructure Corporation',
+    email: 'demo.psu@anveshak.demo',
+    password: 'Demo@12345',
+    description: 'Heavy industrial procurement, high-voltage verification, and technical audits',
+    badgeVariant: 'warning'
+  },
+  {
+    role: 'Organization / Admin',
+    roleKey: ROLE_KEYS.ADMIN,
+    name: 'Anveshak Administrator',
+    organization: 'Anveshak Platform',
+    email: 'demo.admin@anveshak.demo',
+    password: 'Demo@12345',
+    description: 'Platform management, user governance, audit telemetry, and knowledge base',
+    badgeVariant: 'danger'
+  }
+];

@@ -29,6 +29,10 @@ const userSchema = new mongoose.Schema({
     enum: ['Procurement Officer', 'Government Department', 'PSU', 'Organization/Admin'],
     default: 'Procurement Officer',
   },
+  isDemo: {
+    type: Boolean,
+    default: false,
+  },
   createdAt: {
     type: Date,
     default: Date.now,

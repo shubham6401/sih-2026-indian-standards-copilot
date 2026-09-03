@@ -4,41 +4,7 @@ import { Standard } from '../models/Standard.js';
 import { memoryAnalyses } from './analysisController.js';
 import { INDIAN_STANDARDS_DATABASE } from '../services/standardsData.js';
 
-// Seed demo users in memory if database is disconnected
-const MEMORY_USERS = [
-  {
-    _id: 'user_po_01',
-    name: 'Sh. Rajesh Kumar',
-    email: 'officer@cpwd.gov.in',
-    organization: 'Central Public Works Department (CPWD)',
-    role: 'Procurement Officer',
-    createdAt: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString()
-  },
-  {
-    _id: 'user_dept_02',
-    name: 'Dr. Anita Sharma',
-    email: 'director.procurement@mohua.gov.in',
-    organization: 'Ministry of Housing & Urban Affairs (MoHUA)',
-    role: 'Government Department',
-    createdAt: new Date(Date.now() - 20 * 24 * 60 * 60 * 1000).toISOString()
-  },
-  {
-    _id: 'user_psu_03',
-    name: 'Er. Vikram Malhotra',
-    email: 'v.malhotra@ntpc.co.in',
-    organization: 'National Thermal Power Corporation (NTPC)',
-    role: 'PSU',
-    createdAt: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString()
-  },
-  {
-    _id: 'user_admin_04',
-    name: 'Smt. Preeti Verma',
-    email: 'admin@bis-copilot.gov.in',
-    organization: 'Bureau of Indian Standards (BIS) Directorate',
-    role: 'Organization/Admin',
-    createdAt: new Date(Date.now() - 60 * 24 * 60 * 60 * 1000).toISOString()
-  }
-];
+import { DEMO_USERS } from '../seed/demoData.js';
 
 export const getUsers = async (req, res) => {
   try {
@@ -46,17 +12,42 @@ export const getUsers = async (req, res) => {
     try {
       users = await User.find({}).select('-password').sort({ createdAt: -1 });
     } catch (e) {
-      users = MEMORY_USERS;
+      users = DEMO_USERS;
     }
 
     if (!users || users.length === 0) {
-      users = MEMORY_USERS;
+      users = DEMO_USERS;
     }
+
+    // Compute dynamic analysis counts per user
+    const userList = await Promise.all(
+      users.map(async (u) => {
+        const uObj = u.toObject ? u.toObject() : { ...u };
+        let count = 0;
+        try {
+          count = await Analysis.countDocuments({
+            $or: [
+              { userId: u._id },
+              { userEmail: u.email }
+            ]
+          });
+        } catch (cntErr) {
+          count = memoryAnalyses.filter(a => a.userEmail === u.email).length;
+        }
+        if (count === 0) {
+          count = memoryAnalyses.filter(a => a.userEmail === u.email).length;
+        }
+        return {
+          ...uObj,
+          analysesCount: count
+        };
+      })
+    );
 
     return res.json({
       success: true,
-      count: users.length,
-      users
+      count: userList.length,
+      users: userList
     });
   } catch (error) {
     return res.status(500).json({ message: 'Error retrieving platform users: ' + error.message });
@@ -65,7 +56,7 @@ export const getUsers = async (req, res) => {
 
 export const getPlatformStats = async (req, res) => {
   try {
-    let totalUsers = MEMORY_USERS.length;
+    let totalUsers = DEMO_USERS.length;
     let totalAnalyses = memoryAnalyses.length;
     let totalStandards = INDIAN_STANDARDS_DATABASE.length;
 
@@ -127,15 +118,23 @@ export const getSystemActivity = async (req, res) => {
         id: 'act-3',
         event: 'Tender Specification Analysis Completed',
         description: 'Analysis completed for 100W Outdoor LED Street Light (IS 10322 Part 5/Sec 3).',
-        actor: 'officer@cpwd.gov.in',
+        actor: 'Rajesh Kumar (CPWD)',
         timestamp: new Date(Date.now() - 6 * 3600 * 1000).toISOString(),
         severity: 'success'
       },
       {
         id: 'act-4',
-        event: 'New Department Registered',
-        description: 'Ministry of Housing & Urban Affairs (MoHUA) onboarded onto Anveshak.',
-        actor: 'director.procurement@mohua.gov.in',
+        event: 'Department Procurement Plan Verified',
+        description: 'Highway Paving Bitumen VG-30 compliance verified against IS 73: 2013.',
+        actor: 'Priya Sharma (Public Works)',
+        timestamp: new Date(Date.now() - 14 * 3600 * 1000).toISOString(),
+        severity: 'success'
+      },
+      {
+        id: 'act-5',
+        event: 'High Voltage Equipment Audit Completed',
+        description: '33kV/11kV 5 MVA Power Transformer verified against IS 2026: 2011 and QCO norms.',
+        actor: 'Amit Verma (Energy PSU)',
         timestamp: new Date(Date.now() - 24 * 3600 * 1000).toISOString(),
         severity: 'info'
       }
@@ -167,7 +166,7 @@ export const updateUserRole = async (req, res) => {
       }
     } catch (e) {}
 
-    const memUser = MEMORY_USERS.find(u => u._id === id);
+    const memUser = DEMO_USERS.find(u => u._id === id || u.demoKey === id);
     if (memUser) {
       memUser.role = role;
       return res.json({ success: true, message: 'User role updated successfully', user: memUser });

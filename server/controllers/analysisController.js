@@ -1,253 +1,8 @@
 import { Analysis } from '../models/Analysis.js';
 import { findRelevantStandards } from '../services/aiService.js';
+import { DEMO_ANALYSES } from '../seed/demoData.js';
 
-export const memoryAnalyses = [
-  {
-    _id: 'demo_analysis_led_01',
-    productName: '100W Outdoor LED Street Light',
-    productCategory: 'LED Lighting',
-    rawInput: '100W outdoor LED street lights for municipal roads with IP66 waterproof housing, energy efficacy above 120 lm/W and surge protection up to 10kV.',
-    inputType: 'specification',
-    confidenceScore: 94,
-    confidenceLabel: 'Highly Relevant',
-    explanation: 'The specification was analyzed against the Indian Standards Knowledge Base. Primary standards IS 10322 (luminaire safety) and IS 15885 (LED driver controlgear) were mapped with high confidence based on municipal road lighting parameters.',
-    structuredRequirements: {
-      product: 'LED Street Light',
-      category: 'Outdoor Lighting',
-      application: 'Municipal Roads',
-      powerRating: '100W',
-      environment: 'Outdoor Heavy Ingress',
-      protection: 'IP66 Waterproof & Dustproof',
-      safety: 'Class I Electrical & 10kV Surge Protection',
-      performance: 'Luminous Efficacy >= 120 lm/W'
-    },
-    primaryStandards: [
-      {
-        standardNumber: 'IS 10322 (Part 5/Sec 3): 2012',
-        title: 'Luminaires - Particular Requirements - Section 3: Luminaires for Road and Street Lighting',
-        relevanceScore: 95,
-        edition: '3rd Revision',
-        year: 2012,
-        status: 'Current',
-        category: 'LED Lighting',
-        scope: 'Specifies requirements for road, street, and public thoroughfare lighting luminaires using electrical light sources on supply voltages not exceeding 1000V.',
-        whyRecommended: 'Explicitly governs outdoor luminaires deployed on public highways and municipal roads.',
-        keyRequirements: ['IP66 ingress protection', '10kV surge immunity', 'Optical efficiency', 'Thermal dissipation']
-      },
-      {
-        standardNumber: 'IS 15885 (Part 2/Sec 13): 2012',
-        title: 'Safety of Lamp Controlgear - Part 2: Particular Requirements - Section 13: d.c. or a.c. Supplied Electronic Controlgear for LED Modules',
-        relevanceScore: 91,
-        edition: '1st Revision',
-        year: 2012,
-        status: 'Current',
-        category: 'LED Lighting',
-        scope: 'Particular safety requirements for electronic controlgear (LED drivers) for use on d.c. supplies up to 250V and a.c. supplies up to 1000V at 50Hz/60Hz.',
-        whyRecommended: 'Mandatory driver safety compliance under MeitY Compulsory Registration Scheme (CRS).'
-      }
-    ],
-    relatedStandards: [
-      {
-        standardNumber: 'IS 16107 (Part 2/Sec 1): 2012',
-        title: 'Luminaires Performance - Part 2: Particular Requirements - Section 1: LED Luminaires',
-        relationshipType: 'Testing Standard',
-        relevanceScore: 88,
-        importance: 'Mandatory Photometric & Energy Performance'
-      },
-      {
-        standardNumber: 'IS/IEC 60529: 2001',
-        title: 'Degrees of Protection Provided by Enclosures (IP Code)',
-        relationshipType: 'Normative Reference',
-        relevanceScore: 86,
-        importance: 'Ingress Protection Verification (IP66)'
-      }
-    ],
-    tenderGaps: [
-      {
-        category: 'Testing & Verification Gap',
-        severity: 'HIGH',
-        title: 'Absence of Laboratory Type Test Standard (IS 16107)',
-        description: 'The requirement specifies 120 lm/W efficacy but omits testing clauses for lumen maintenance and photometric distribution as per IS 16107.',
-        remedy: 'Mandate NABL-accredited test reports verifying IS 16107 (Part 2/Sec 1) compliance prior to batch dispatch.'
-      }
-    ],
-    procurementReadiness: {
-      totalScore: 82,
-      statusLabel: 'Readiness Evaluated — Minor Gaps',
-      actionCount: 1,
-      breakdown: {
-        standardsCoverage: 95,
-        testingCoverage: 75,
-        safetyCoverage: 90,
-        certificationCompleteness: 85,
-        versionCurrency: 100,
-        technicalCompleteness: 80
-      }
-    },
-    improvedSpecification: {
-      title: 'Technical Procurement Schedule — 100W Outdoor LED Luminaire',
-      productDescription: '100W Outdoor High-Efficacy LED Luminaire for Municipal & Highway Lighting',
-      technicalRequirements: 'Operating Voltage: 120V - 277V AC, 50Hz. Total Power: 100W ± 5%. Ingress: IP66 minimum.',
-      testingRequirements: 'Type tests in accordance with IS 10322 (Part 5/Sec 3) and IS 16107 (Part 2/Sec 1).',
-      applicableStandardsList: 'IS 10322 (Part 5/Sec 3): 2012, IS 15885 (Part 2/Sec 13): 2012, IS 16107 (Part 2/Sec 1): 2012'
-    },
-    createdAt: new Date(Date.now() - 3600000).toISOString()
-  },
-  {
-    _id: 'demo_analysis_cement_02',
-    productName: 'Ordinary Portland Cement (53 Grade)',
-    productCategory: 'Cement & Building Materials',
-    rawInput: '53 Grade Ordinary Portland Cement for high-load bridge pier construction requiring 53 MPa 28-day compressive strength.',
-    inputType: 'specification',
-    confidenceScore: 92,
-    confidenceLabel: 'Highly Relevant',
-    explanation: 'Mapped to unified standard IS 269:2015 which unifies 33G, 43G, and 53G Ordinary Portland Cement. Flags mandatory DPIIT Cement Quality Control Order.',
-    structuredRequirements: {
-      product: 'Ordinary Portland Cement',
-      category: 'Structural Construction Material',
-      grade: '53 Grade',
-      application: 'High-Load Bridge Construction'
-    },
-    primaryStandards: [
-      {
-        standardNumber: 'IS 269: 2015',
-        title: 'Ordinary Portland Cement - Specification (33 Grade, 43 Grade and 53 Grade)',
-        relevanceScore: 95,
-        edition: '6th Revision',
-        year: 2015,
-        status: 'Current',
-        category: 'Cement & Concrete',
-        whyRecommended: 'Primary Indian Standard for all structural 53 Grade Ordinary Portland Cement.'
-      }
-    ],
-    relatedStandards: [
-      {
-        standardNumber: 'IS 4031 (Parts 1 to 15)',
-        title: 'Methods of Physical Tests for Hydraulic Cement',
-        relationshipType: 'Testing Standard',
-        relevanceScore: 90,
-        importance: 'Mandatory Compressive & Setting Time Tests'
-      }
-    ],
-    tenderGaps: [],
-    procurementReadiness: {
-      totalScore: 90,
-      statusLabel: 'Tender Ready',
-      actionCount: 0,
-      breakdown: {
-        standardsCoverage: 95,
-        testingCoverage: 90,
-        safetyCoverage: 90,
-        certificationCompleteness: 95,
-        versionCurrency: 100,
-        technicalCompleteness: 88
-      }
-    },
-    createdAt: new Date(Date.now() - 7200000).toISOString()
-  },
-  {
-    _id: 'demo_analysis_pump_04',
-    productName: '5 HP Solar Submersible Water Pump Set',
-    productCategory: 'Water Pumps & Motors',
-    rawInput: '5 HP (3.7 kW) Solar Submersible Water Pump Set with 100m total head, stainless steel impeller, and MPPT inverter.',
-    inputType: 'specification',
-    confidenceScore: 95,
-    confidenceLabel: 'Highly Relevant',
-    explanation: 'Mapped to primary standard IS 8034 (submersible pumpsets) and IS 8472 (centrifugal pumps). Flags mandatory Submersible Pumps QCO.',
-    primaryStandards: [
-      {
-        standardNumber: 'IS 8034: 2018',
-        title: 'Submersible Pumpsets - Specification',
-        relevanceScore: 95,
-        edition: '3rd Revision',
-        status: 'Current',
-        category: 'Pumps & Hydraulics',
-        whyRecommended: 'Core standard governing submersible motor pumpsets for agricultural and municipal supply.'
-      },
-      {
-        standardNumber: 'IS 8472: 2019',
-        title: 'Pumps - Centrifugal Pumps for Clear Water',
-        relevanceScore: 90,
-        edition: '3rd Revision',
-        status: 'Current',
-        category: 'Pumps & Hydraulics',
-        whyRecommended: 'Hydraulic and head performance testing standard.'
-      }
-    ],
-    relatedStandards: [
-      {
-        standardNumber: 'IS 14286: 2010',
-        title: 'Crystalline Silicon Terrestrial PV Modules',
-        relationshipType: 'Testing Standard',
-        relevanceScore: 88
-      }
-    ],
-    tenderGaps: [
-      {
-        category: 'Installation & Workmanship Gap',
-        severity: 'LOW',
-        title: 'Installation Code of Practice Not Referenced',
-        description: 'Tender does not tie contractor workmanship to published Indian Standard Codes of Practice.',
-        remedy: 'Reference IS 9694 (Part 2).'
-      }
-    ],
-    certifications: [
-      {
-        type: 'BIS ISI Product Certification (Scheme I)',
-        status: 'Applicable',
-        standardNumber: 'IS 8034: 2018',
-        authority: 'Ministry of Heavy Industries / DPIIT',
-        mandateReason: 'Covered under mandatory Submersible Pumps (Quality Control) Order. Procuring authority must ensure active BIS License.',
-        verificationNote: 'Verify valid 7-digit CML Number on official e-BIS portal (manakonline.in).'
-      }
-    ],
-    procurementReadiness: {
-      totalScore: 92,
-      statusLabel: 'Tender Ready (High Quality)',
-      actionCount: 1
-    },
-    createdAt: new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString()
-  },
-  {
-    _id: 'demo_analysis_helmet_03',
-    productName: 'Industrial Safety Helmets (Non-Metallic)',
-    productCategory: 'Personal Protective Equipment',
-    rawInput: 'Industrial Safety Helmets for construction labor with shock absorption, electrical insulation up to 440V, and chin strap.',
-    inputType: 'specification',
-    confidenceScore: 93,
-    confidenceLabel: 'Highly Relevant',
-    explanation: 'Mapped to IS 2925 for industrial safety helmets. Flags mandatory BIS ISI Certification under Protective Helmets QCO.',
-    primaryStandards: [
-      {
-        standardNumber: 'IS 2925: 1984',
-        title: 'Specification for Industrial Safety Helmets',
-        relevanceScore: 96,
-        edition: '2nd Revision',
-        status: 'Current',
-        category: 'Personal Protective Equipment',
-        whyRecommended: 'Primary Indian Standard specifying construction and penetration tests.'
-      }
-    ],
-    relatedStandards: [],
-    tenderGaps: [],
-    certifications: [
-      {
-        type: 'BIS ISI Product Certification (Scheme I)',
-        status: 'Applicable',
-        standardNumber: 'IS 2925: 1984',
-        authority: 'Ministry of Heavy Industries / DPIIT',
-        mandateReason: 'Quality Control Order prohibits manufacture, import, or tender of uncertified industrial helmets.',
-        verificationNote: 'Verify valid 7-digit CML Number on official e-BIS portal (manakonline.in).'
-      }
-    ],
-    procurementReadiness: {
-      totalScore: 95,
-      statusLabel: 'Tender Ready',
-      actionCount: 0
-    },
-    createdAt: new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString()
-  }
-];
+export const memoryAnalyses = [...DEMO_ANALYSES];
 
 export const createAnalysis = async (req, res) => {
   try {
@@ -346,24 +101,50 @@ export const getAnalyses = async (req, res) => {
       query = {};
     } else if (normRole.includes('department') || normRole.includes('government')) {
       // Government Department: department-wide intelligence
-      query = org ? { $or: [{ organization: new RegExp(org.substring(0, 8), 'i') }, { userId }, { userId: null }] } : {};
+      query = {
+        $or: [
+          { userId },
+          { userEmail: 'demo.department@anveshak.demo' },
+          { organization: new RegExp('Department of Public Works|MoHUA', 'i') }
+        ]
+      };
     } else if (normRole.includes('psu')) {
       // PSU: PSU-wide technical procurement reviews
-      query = org ? { $or: [{ organization: new RegExp(org.substring(0, 8), 'i') }, { userId }, { userId: null }] } : {};
+      query = {
+        $or: [
+          { userId },
+          { userEmail: 'demo.psu@anveshak.demo' },
+          { organization: new RegExp('Energy|NTPC|PSU', 'i') }
+        ]
+      };
     } else {
       // Procurement Officer: officer-scoped records
-      query = userId ? { $or: [{ userId }, { userId: null }] } : {};
+      query = {
+        $or: [
+          { userId },
+          { userEmail: 'demo.procurement@anveshak.demo' },
+          { organization: new RegExp('CPWD', 'i') }
+        ]
+      };
     }
 
     let list = [];
     try {
-      list = await Analysis.find(query).sort({ createdAt: -1 }).limit(50);
+      list = await Analysis.find(query).sort({ createdAt: -1 }).limit(100);
     } catch (dbErr) {
-      list = memoryAnalyses;
+      list = [];
     }
 
     if (!list || list.length === 0) {
-      list = memoryAnalyses;
+      if (normRole.includes('admin')) {
+        list = memoryAnalyses;
+      } else if (normRole.includes('department') || normRole.includes('government')) {
+        list = memoryAnalyses.filter(a => a.userEmail?.includes('department') || a.organization?.includes('Public Works'));
+      } else if (normRole.includes('psu')) {
+        list = memoryAnalyses.filter(a => a.userEmail?.includes('psu') || a.organization?.includes('Energy'));
+      } else {
+        list = memoryAnalyses.filter(a => a.userEmail?.includes('procurement') || a.organization?.includes('CPWD'));
+      }
     }
 
     return res.json(list);
@@ -384,7 +165,13 @@ export const getAnalysisById = async (req, res) => {
     }
 
     if (!analysis) {
-      analysis = memoryAnalyses.find(a => String(a._id) === String(id));
+      try {
+        analysis = await Analysis.findOne({ demoKey: id });
+      } catch (e) {}
+    }
+
+    if (!analysis) {
+      analysis = memoryAnalyses.find(a => String(a._id) === String(id) || a.demoKey === id);
     }
 
     if (!analysis) {
