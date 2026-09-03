@@ -414,8 +414,9 @@ export const calculateProcurementReadinessScore = (gaps = [], outdated = [], pri
 /**
  * Generate Complete Improved Procurement Specification Text
  */
-export const generateImprovedTenderSpecification = (productName, category, primaryStandards = [], testingStandards = [], certifications = [], structured = {}) => {
-  const prim = primaryStandards[0] || { standardNumber: 'IS Standard', title: productName };
+export const generateImprovedTenderSpecification = (productName = 'Procurement Item', category = 'General', primaryStandards = [], testingStandards = [], certifications = [], structured = {}) => {
+  const safeProductName = productName || 'Procurement Item';
+  const prim = primaryStandards[0] || { standardNumber: 'IS Standard', title: safeProductName };
   const primList = primaryStandards.map(s => `• ${s.standardNumber} (${s.title})`).join('\n');
   const testList = (testingStandards.length > 0 ? testingStandards : primaryStandards)
     .map(s => `• ${s.testingStandards?.[0] || s.standardNumber} — Method of Verification & Type Test`)
@@ -425,13 +426,13 @@ export const generateImprovedTenderSpecification = (productName, category, prima
 
   return `TECHNICAL SPECIFICATION & PROCUREMENT SCHEDULE
 ================================================================================
-TENDER ITEM: ${productName.toUpperCase()}
+TENDER ITEM: ${safeProductName.toUpperCase()}
 CLASSIFICATION: ${category}
 STATUTORY BASELINE: BUREAU OF INDIAN STANDARDS (BIS) CONFORMITY
 
 1. PRODUCT DEFINITION & SCOPE OF SUPPLY
 --------------------------------------------------------------------------------
-The scope covers manufacture, testing at factory, supply, and delivery of ${productName} strictly complying with active Indian Standards and statutory Quality Control Orders.
+The scope covers manufacture, testing at factory, supply, and delivery of ${safeProductName} strictly complying with active Indian Standards and statutory Quality Control Orders.
 
 2. MANDATORY APPLICABLE INDIAN STANDARDS
 --------------------------------------------------------------------------------
@@ -475,7 +476,7 @@ AI-generated draft technical schedule. Indenting Officers must verify the active
 /**
  * Main Hybrid RAG & AI Recommendation Pipeline
  */
-export const findRelevantStandards = async (inputSpec = '', category = '', externalApiKey = '') => {
+export const findRelevantStandards = async (inputSpec = '', category = '', externalApiKey = '', productName = '') => {
   const detectedLang = detectLanguage(inputSpec);
   const normalizedText = normalizeBilingualInput(inputSpec);
   
@@ -633,7 +634,8 @@ export const findRelevantStandards = async (inputSpec = '', category = '', exter
   });
 
   const allStdNums = [...primaryStandards, ...relatedStandards].map(s => s.standardNumber).join(' ');
-  const combinedText = (productName + ' ' + category + ' ' + inputSpec + ' ' + allStdNums).toLowerCase();
+  const resolvedProductName = productName || structuredData?.detectedProduct || '';
+  const combinedText = (resolvedProductName + ' ' + (category || '') + ' ' + (inputSpec || '') + ' ' + allStdNums).toLowerCase();
 
   // 2. Specialized Sector QCO Schemes
   if (combinedText.includes('led') || combinedText.includes('light') || combinedText.includes('luminaire') || combinedText.includes('10322') || combinedText.includes('15885') || combinedText.includes('16107')) {

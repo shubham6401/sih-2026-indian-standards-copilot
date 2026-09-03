@@ -1,8 +1,8 @@
 import React from 'react';
-import { Sparkles, HelpCircle, Building2, Zap, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Sparkles, HelpCircle, Building2, Zap, ArrowRight, ShieldCheck, Play } from 'lucide-react';
 import { Badge } from '../common/Badge';
 
-export const DemoScenarioSelector = ({ onSelectScenario, activeScenario = null }) => {
+export const DemoScenarioSelector = ({ onSelectScenario, onRunScenario, activeScenario = null }) => {
   const scenarios = [
     {
       id: 'scenario1',
@@ -53,7 +53,7 @@ export const DemoScenarioSelector = ({ onSelectScenario, activeScenario = null }
         {scenarios.map((sc) => (
           <div
             key={sc.id}
-            onClick={() => onSelectScenario(sc)}
+            onClick={() => onSelectScenario(sc, false)}
             className={`p-4 rounded-xl border transition-all cursor-pointer flex flex-col justify-between group ${
               activeScenario === sc.id
                 ? 'bg-gov-700/90 border-amber-400 ring-2 ring-amber-400/50 shadow-md'
@@ -73,9 +73,21 @@ export const DemoScenarioSelector = ({ onSelectScenario, activeScenario = null }
               </p>
             </div>
 
-            <div className="mt-3 pt-2.5 border-t border-white/10 flex justify-between items-center text-[10px] text-slate-400 font-semibold">
-              <span>Click to load scenario</span>
-              <span className="text-amber-300 font-bold group-hover:underline">Load & Test →</span>
+            <div className="mt-3 pt-2.5 border-t border-white/10 flex justify-between items-center text-[10px] gap-2">
+              <span className="text-slate-400 font-medium">Click to populate</span>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (onRunScenario) onRunScenario(sc);
+                  else onSelectScenario(sc, true);
+                }}
+                className="px-2.5 py-1 rounded-lg bg-amber-400 hover:bg-amber-300 text-slate-950 font-black flex items-center gap-1 transition-all shadow-xs hover:scale-105 cursor-pointer shrink-0"
+                title={`Instantly test ${sc.title}`}
+              >
+                <Play className="w-2.5 h-2.5 fill-slate-950" />
+                <span>Run Test Now</span>
+              </button>
             </div>
           </div>
         ))}

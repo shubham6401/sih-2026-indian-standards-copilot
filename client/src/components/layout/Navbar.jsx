@@ -28,6 +28,54 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [showKbModal, setShowKbModal] = useState(false);
   const [navSearch, setNavSearch] = useState('');
+  const [notifications, setNotifications] = useState([
+    {
+      id: 'notif-1',
+      title: 'DPIIT Quality Control Order Update',
+      desc: 'Mandatory certification updated for Electrical Appliances & Footwear.',
+      time: 'Just now',
+      unread: true,
+      category: 'QCO Mandate',
+      route: '/explorer?certification=Mandatory'
+    },
+    {
+      id: 'notif-2',
+      title: 'LED Street Lighting Norms Reaffirmed',
+      desc: 'IS 10322 (Part 5/Sec 3) benchmark guidelines updated.',
+      time: '1h ago',
+      unread: true,
+      category: 'Standards',
+      route: '/standards/IS%2010322'
+    },
+    {
+      id: 'notif-3',
+      title: 'Cement Gazette Quality Mandate',
+      desc: 'Mandatory BIS Scheme I license verification for IS 269:2015 active.',
+      time: '3h ago',
+      unread: false,
+      category: 'Compliance',
+      route: '/standards/IS%20269'
+    }
+  ]);
+
+  const unreadCount = notifications.filter(n => n.unread).length;
+
+  const markAllRead = () => {
+    setNotifications(prev => prev.map(n => ({ ...n, unread: false })));
+  };
+
+  const handleNotificationClick = (notif) => {
+    setNotifications(prev => prev.map(n => n.id === notif.id ? { ...n, unread: false } : n));
+    setShowNotifications(false);
+    if (notif.route) {
+      navigate(notif.route);
+    }
+  };
+
+  const handleDismissNotification = (e, notifId) => {
+    e.stopPropagation();
+    setNotifications(prev => prev.filter(n => n.id !== notifId));
+  };
 
   const profileRef = useRef(null);
   const notifRef = useRef(null);
@@ -163,24 +211,81 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                 aria-label="Procurement notifications"
               >
                 <Bell className="w-4 h-4" />
-                <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-gov-600 rounded-full ring-2 ring-white" />
+                {unreadCount > 0 && (
+                  <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-rose-500 rounded-full ring-2 ring-white animate-pulse" />
+                )}
               </button>
 
               {showNotifications && (
-                <div className="absolute right-0 mt-2 w-72 sm:w-80 bg-white rounded-2xl shadow-xl border border-slate-200 p-3 z-50 animate-fade-in">
-                  <div className="flex items-center justify-between pb-2 border-b border-slate-100">
-                    <h4 className="text-xs font-bold text-slate-900">Procurement Alerts</h4>
-                    <span className="text-[10px] bg-gov-50 text-gov-700 px-1.5 py-0.5 rounded font-bold">2 Notified</span>
+                <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-white rounded-2xl shadow-2xl border border-slate-200 p-3.5 z-50 animate-fade-in">
+                  <div className="flex items-center justify-between pb-2.5 border-b border-slate-100">
+                    <div className="flex items-center gap-2">
+                      <h4 className="text-xs font-bold text-slate-900">Procurement Alerts</h4>
+                      {unreadCount > 0 ? (
+                        <span className="text-[10px] bg-gov-100 text-gov-800 px-2 py-0.5 rounded-full font-bold">
+                          {unreadCount} New
+                        </span>
+                      ) : (
+                        <span className="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full font-bold">
+                          All caught up
+                        </span>
+                      )}
+                    </div>
+                    {unreadCount > 0 && (
+                      <button
+                        type="button"
+                        onClick={markAllRead}
+                        className="text-[11px] font-semibold text-gov-700 hover:text-gov-900 hover:underline cursor-pointer"
+                      >
+                        Mark all read
+                      </button>
+                    )}
                   </div>
-                  <div className="py-2 space-y-2 text-xs">
-                    <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-100">
-                      <p className="font-semibold text-slate-800 text-[11px]">DPIIT Quality Control Order Update</p>
-                      <p className="text-[10px] text-slate-500 mt-0.5 leading-snug">Mandatory certification updated for Electrical Appliances & Footwear.</p>
-                    </div>
-                    <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-100">
-                      <p className="font-semibold text-slate-800 text-[11px]">LED Street Lighting Norms Reaffirmed</p>
-                      <p className="text-[10px] text-slate-500 mt-0.5 leading-snug">IS 10322 (Part 5/Sec 3) benchmark guidelines updated.</p>
-                    </div>
+
+                  <div className="py-2 space-y-2 max-h-72 overflow-y-auto">
+                    {notifications.length === 0 ? (
+                      <div className="text-center py-6 text-slate-400 text-xs">
+                        No active procurement alerts
+                      </div>
+                    ) : (
+                      notifications.map(n => (
+                        <div
+                          key={n.id}
+                          onClick={() => handleNotificationClick(n)}
+                          className={`p-2.5 rounded-xl border transition-all cursor-pointer flex items-start justify-between gap-2 group ${
+                            n.unread
+                              ? 'bg-gov-50/50 hover:bg-gov-50 border-gov-200/80 shadow-2xs'
+                              : 'bg-slate-50/60 hover:bg-slate-100/80 border-slate-100'
+                          }`}
+                        >
+                          <div className="min-w-0 flex-1">
+                            <div className="flex items-center gap-1.5 mb-1">
+                              {n.unread && <span className="w-1.5 h-1.5 rounded-full bg-gov-600 shrink-0" />}
+                              <span className="text-[10px] font-extrabold uppercase tracking-wider text-gov-700 bg-white border border-gov-200 px-1.5 py-0.2 rounded">
+                                {n.category}
+                              </span>
+                              <span className="text-[10px] text-slate-400 font-medium ml-auto">
+                                {n.time}
+                              </span>
+                            </div>
+                            <p className="font-bold text-slate-900 text-xs leading-snug group-hover:text-gov-800 transition-colors">
+                              {n.title}
+                            </p>
+                            <p className="text-[11px] text-slate-600 mt-0.5 leading-snug">
+                              {n.desc}
+                            </p>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={(e) => handleDismissNotification(e, n.id)}
+                            className="p-1 text-slate-300 hover:text-slate-600 hover:bg-slate-200/60 rounded-md transition-colors cursor-pointer shrink-0 mt-0.5"
+                            title="Dismiss alert"
+                          >
+                            <X className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      ))
+                    )}
                   </div>
                 </div>
               )}

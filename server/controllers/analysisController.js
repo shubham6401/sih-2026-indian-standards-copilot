@@ -270,7 +270,7 @@ export const createAnalysis = async (req, res) => {
     const fullSpec = `${productName ? productName + '. ' : ''}${rawInput || ''} ${additionalRequirements || ''}`.trim();
 
     // Run AI / RAG Copilot Recommendation Engine
-    const aiResult = await findRelevantStandards(fullSpec, productCategory, customApiKey);
+    const aiResult = await findRelevantStandards(fullSpec, productCategory, customApiKey, productName);
 
     // If ambiguous (Scenario 3 / Missing info), return clarification dialog immediately
     if (aiResult.requiresClarification) {
