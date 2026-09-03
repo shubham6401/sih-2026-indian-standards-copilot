@@ -41,6 +41,30 @@ export const optionalAuth = async (req, res, next) => {
   next();
 };
 
+export const normalizeRoleKey = (role = '') => {
+  const r = String(role).trim().toLowerCase();
+  if (r.includes('admin') || r.includes('organization/admin')) return 'admin';
+  if (r.includes('department') || r.includes('government department')) return 'government_department';
+  if (r.includes('psu') || r.includes('public sector')) return 'psu';
+  return 'procurement_officer';
+};
+
+export const authorizeRoles = (...allowedRoles) => {
+  return (req, res, next) => {
+    if (!req.user) {
+      return res.status(401).json({ message: 'Authentication required' });
+    }
+    const userRoleKey = normalizeRoleKey(req.user.role);
+    const normalizedAllowed = allowedRoles.map(r => normalizeRoleKey(r));
+    if (!normalizedAllowed.includes(userRoleKey)) {
+      return res.status(403).json({
+        message: `Forbidden: role '${req.user.role}' does not have authorization to access this resource`
+      });
+    }
+    next();
+  };
+};
+
 export const generateToken = (user) => {
   return jwt.sign(
     { id: user._id, name: user.name, email: user.email, role: user.role, organization: user.organization },

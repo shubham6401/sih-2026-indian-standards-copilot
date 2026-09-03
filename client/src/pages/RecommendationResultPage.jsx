@@ -15,7 +15,8 @@ import {
   Copy,
   Trash2,
   Network,
-  Check
+  Check,
+  ArrowLeft
 } from 'lucide-react';
 import { Button } from '../components/common/Button';
 import { Badge } from '../components/common/Badge';
@@ -288,12 +289,25 @@ export const RecommendationResultPage = () => {
     <div className="space-y-6 max-w-6xl mx-auto animate-fade-in pb-16">
       {/* Top Breadcrumb Navigation */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200 text-xs">
-        <div className="flex items-center gap-1.5 text-slate-500">
-          <Link to="/dashboard" className="hover:text-slate-800">Dashboard</Link>
-          <ChevronRight className="w-3.5 h-3.5" />
-          <Link to="/reports" className="hover:text-slate-800">Reports</Link>
-          <ChevronRight className="w-3.5 h-3.5" />
-          <span className="text-slate-900 font-bold truncate max-w-xs">{analysis.productName}</span>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => navigate(-1)}
+            className="inline-flex items-center gap-1 text-slate-600 hover:text-slate-900 font-semibold px-2 py-1 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
+            title="Go back to previous page"
+            aria-label="Go back"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span>Back</span>
+          </button>
+          <span className="text-slate-300">|</span>
+          <div className="flex items-center gap-1.5 text-slate-500">
+            <Link to="/dashboard" className="hover:text-slate-800">Dashboard</Link>
+            <ChevronRight className="w-3.5 h-3.5" />
+            <Link to="/reports" className="hover:text-slate-800">Reports</Link>
+            <ChevronRight className="w-3.5 h-3.5" />
+            <span className="text-slate-900 font-bold truncate max-w-xs">{analysis.productName}</span>
+          </div>
         </div>
 
         <div className="flex items-center gap-2">

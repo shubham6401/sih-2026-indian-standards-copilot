@@ -333,11 +333,30 @@ export const createAnalysis = async (req, res) => {
 
 export const getAnalyses = async (req, res) => {
   try {
-    const userId = req.user?._id;
-    let list = [];
+    const user = req.user;
+    const role = user?.role || 'Procurement Officer';
+    const org = user?.organization || '';
+    const userId = user?._id;
 
+    let query = {};
+    const normRole = (role || '').toLowerCase();
+
+    if (normRole.includes('admin')) {
+      // Platform Admin: platform-wide visibility
+      query = {};
+    } else if (normRole.includes('department') || normRole.includes('government')) {
+      // Government Department: department-wide intelligence
+      query = org ? { $or: [{ organization: new RegExp(org.substring(0, 8), 'i') }, { userId }, { userId: null }] } : {};
+    } else if (normRole.includes('psu')) {
+      // PSU: PSU-wide technical procurement reviews
+      query = org ? { $or: [{ organization: new RegExp(org.substring(0, 8), 'i') }, { userId }, { userId: null }] } : {};
+    } else {
+      // Procurement Officer: officer-scoped records
+      query = userId ? { $or: [{ userId }, { userId: null }] } : {};
+    }
+
+    let list = [];
     try {
-      const query = userId ? { $or: [{ userId }, { userId: null }] } : {};
       list = await Analysis.find(query).sort({ createdAt: -1 }).limit(50);
     } catch (dbErr) {
       list = memoryAnalyses;

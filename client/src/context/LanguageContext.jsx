@@ -100,11 +100,27 @@ export const translations = {
 };
 
 export const LanguageProvider = ({ children }) => {
-  const [lang, setLang] = useState('en');
+  const [lang, setLangState] = useState(() => {
+    try {
+      return localStorage.getItem('is_app_lang') || 'en';
+    } catch {
+      return 'en';
+    }
+  });
+
+  const setLang = (newLang) => {
+    setLangState(newLang);
+    try {
+      localStorage.setItem('is_app_lang', newLang);
+    } catch {}
+  };
 
   const toggleLanguage = (selectedLang) => {
-    if (selectedLang) setLang(selectedLang);
-    else setLang(prev => prev === 'en' ? 'hi' : 'en');
+    if (selectedLang) {
+      setLang(selectedLang);
+    } else {
+      setLang(lang === 'en' ? 'hi' : 'en');
+    }
   };
 
   const t = (key) => {

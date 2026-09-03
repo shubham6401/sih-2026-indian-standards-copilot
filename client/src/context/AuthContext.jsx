@@ -109,6 +109,46 @@ export const AuthProvider = ({ children }) => {
     return demo;
   };
 
+  const switchRole = (role, email, organization, name) => {
+    const roleProfiles = {
+      'Procurement Officer': {
+        name: name || 'Sh. Rajesh Kumar',
+        email: email || 'officer@cpwd.gov.in',
+        organization: organization || 'Central Public Works Department (CPWD)',
+        role: 'Procurement Officer'
+      },
+      'Government Department': {
+        name: name || 'Dr. Anita Sharma',
+        email: email || 'director.procurement@mohua.gov.in',
+        organization: organization || 'Ministry of Housing & Urban Affairs (MoHUA)',
+        role: 'Government Department'
+      },
+      'PSU': {
+        name: name || 'Er. Vikram Malhotra',
+        email: email || 'v.malhotra@ntpc.co.in',
+        organization: organization || 'National Thermal Power Corporation (NTPC)',
+        role: 'PSU'
+      },
+      'Organization/Admin': {
+        name: name || 'Smt. Preeti Verma',
+        email: email || 'admin@bis-copilot.gov.in',
+        organization: organization || 'Bureau of Indian Standards (BIS) Directorate',
+        role: 'Organization/Admin'
+      }
+    };
+
+    const targetProfile = roleProfiles[role] || roleProfiles['Procurement Officer'];
+    const updatedUser = {
+      _id: 'user_' + (targetProfile.role.replace(/[^a-zA-Z]/g, '').toLowerCase()) + '_01',
+      ...targetProfile
+    };
+
+    setUser(updatedUser);
+    localStorage.setItem('is_auth_token', 'demo_active_token_2026');
+    localStorage.setItem('is_auth_user', JSON.stringify(updatedUser));
+    return updatedUser;
+  };
+
   const logout = () => {
     setUser(null);
     localStorage.removeItem('is_auth_token');
@@ -116,7 +156,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, demoLogin, logout, isAuthenticated: !!user }}>
+    <AuthContext.Provider value={{ user, loading, login, register, demoLogin, switchRole, logout, isAuthenticated: !!user }}>
       {children}
     </AuthContext.Provider>
   );

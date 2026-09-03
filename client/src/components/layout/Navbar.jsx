@@ -19,15 +19,19 @@ import { useAuth } from '../../context/AuthContext';
 import { useLanguage } from '../../context/LanguageContext';
 import { LanguageToggle } from '../common/LanguageToggle';
 import { KnowledgeBaseTransparencyModal } from '../analysis/KnowledgeBaseTransparencyModal';
+import { normalizeRole, ROLE_CONFIG } from '../../config/roleConfig';
 
 export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
-  const { user, logout } = useAuth();
+  const { user, logout, switchRole } = useAuth();
   const { lang, t } = useLanguage();
   const navigate = useNavigate();
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [showKbModal, setShowKbModal] = useState(false);
   const [navSearch, setNavSearch] = useState('');
+
+  const userRoleKey = normalizeRole(user?.role);
+  const currentRoleConfig = ROLE_CONFIG[userRoleKey] || ROLE_CONFIG.procurement_officer;
   const [notifications, setNotifications] = useState([
     {
       id: 'notif-1',
@@ -308,8 +312,13 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                     {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
                   </div>
                   <div className="hidden sm:block text-left pr-1">
-                    <p className="text-xs font-bold text-slate-900 leading-tight truncate max-w-[110px]">{user.name}</p>
-                    <p className="text-[10px] text-slate-500 truncate max-w-[110px]">{user.organization || user.role}</p>
+                    <div className="flex items-center gap-1.5">
+                      <p className="text-xs font-bold text-slate-900 leading-tight truncate max-w-[110px]">{user.name}</p>
+                      <span className="text-[9px] font-extrabold uppercase tracking-wider px-1.5 py-0.2 rounded bg-gov-100 text-gov-800 shrink-0">
+                        {currentRoleConfig.badgeTitle}
+                      </span>
+                    </div>
+                    <p className="text-[10px] text-slate-500 truncate max-w-[130px]">{user.organization || currentRoleConfig.displayName}</p>
                   </div>
                   <ChevronDown className="w-3.5 h-3.5 text-slate-400 hidden sm:block shrink-0" />
                 </button>
@@ -323,62 +332,138 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
               )}
 
               {showProfileMenu && user && (
-                <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-slate-200 py-1.5 z-50 animate-fade-in">
-                  <div className="px-4 py-2.5 border-b border-slate-100">
-                    <p className="text-xs font-bold text-slate-900 truncate">{user.name}</p>
+                <div className="absolute right-0 mt-2 w-72 bg-white rounded-2xl shadow-2xl border border-slate-200 py-1.5 z-50 animate-fade-in divide-y divide-slate-100">
+                  <div className="px-4 py-2.5">
+                    <div className="flex items-center justify-between gap-1 mb-0.5">
+                      <p className="text-xs font-bold text-slate-900 truncate">{user.name}</p>
+                      <span className="text-[9px] font-extrabold uppercase px-1.5 py-0.2 rounded bg-gov-50 text-gov-700 border border-gov-200 shrink-0">
+                        {currentRoleConfig.displayName}
+                      </span>
+                    </div>
                     <p className="text-[11px] text-slate-500 truncate">{user.email}</p>
-                    <span className="inline-block mt-1 text-[10px] font-semibold bg-gov-50 text-gov-700 px-2 py-0.5 rounded">
-                      {user.role}
-                    </span>
+                    <p className="text-[10px] text-slate-400 truncate mt-0.5">{user.organization}</p>
                   </div>
-                  <Link
-                    to="/dashboard"
-                    onClick={() => setShowProfileMenu(false)}
-                    className="block px-4 py-2 text-xs text-slate-700 hover:bg-slate-50 font-medium"
-                  >
-                    Dashboard
-                  </Link>
-                  <Link
-                    to="/history"
-                    onClick={() => setShowProfileMenu(false)}
-                    className="block px-4 py-2 text-xs text-slate-700 hover:bg-slate-50 font-medium"
-                  >
-                    Analysis History
-                  </Link>
-                  <Link
-                    to="/saved"
-                    onClick={() => setShowProfileMenu(false)}
-                    className="block px-4 py-2 text-xs text-slate-700 hover:bg-slate-50 font-medium"
-                  >
-                    Saved Standards
-                  </Link>
-                  <Link
-                    to="/reports"
-                    onClick={() => setShowProfileMenu(false)}
-                    className="block px-4 py-2 text-xs text-slate-700 hover:bg-slate-50 font-medium"
-                  >
-                    Reports Repository
-                  </Link>
-                  <Link
-                    to="/settings"
-                    onClick={() => setShowProfileMenu(false)}
-                    className="block px-4 py-2 text-xs text-slate-700 hover:bg-slate-50 font-medium"
-                  >
-                    Settings
-                  </Link>
-                  <div className="border-t border-slate-100 my-1" />
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setShowProfileMenu(false);
-                      logout();
-                      navigate('/login');
-                    }}
-                    className="w-full text-left px-4 py-2 text-xs text-rose-600 hover:bg-rose-50 font-semibold flex items-center gap-1.5 cursor-pointer"
-                  >
-                    <LogOut className="w-3.5 h-3.5" />
-                    Sign Out
-                  </button>
+
+                  {/* One-Click Demo Role Switcher */}
+                  <div className="p-2 bg-slate-50/70">
+                    <p className="text-[9px] font-extrabold uppercase tracking-wider text-slate-400 px-2 mb-1.5">
+                      Switch Demo Stakeholder Persona
+                    </p>
+                    <div className="space-y-1 text-xs">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          switchRole('Procurement Officer');
+                          setShowProfileMenu(false);
+                          navigate('/dashboard');
+                        }}
+                        className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-between transition-colors cursor-pointer ${
+                          userRoleKey === 'procurement_officer'
+                            ? 'bg-gov-100 text-gov-900 font-bold'
+                            : 'hover:bg-slate-200/60 text-slate-700'
+                        }`}
+                      >
+                        <span>Procurement Officer (CPWD)</span>
+                        {userRoleKey === 'procurement_officer' && <span className="text-[10px] text-gov-700 font-extrabold">Active</span>}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          switchRole('Government Department');
+                          setShowProfileMenu(false);
+                          navigate('/dashboard');
+                        }}
+                        className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-between transition-colors cursor-pointer ${
+                          userRoleKey === 'government_department'
+                            ? 'bg-gov-100 text-gov-900 font-bold'
+                            : 'hover:bg-slate-200/60 text-slate-700'
+                        }`}
+                      >
+                        <span>Govt Department (MoHUA)</span>
+                        {userRoleKey === 'government_department' && <span className="text-[10px] text-gov-700 font-extrabold">Active</span>}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          switchRole('PSU');
+                          setShowProfileMenu(false);
+                          navigate('/dashboard');
+                        }}
+                        className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-between transition-colors cursor-pointer ${
+                          userRoleKey === 'psu'
+                            ? 'bg-gov-100 text-gov-900 font-bold'
+                            : 'hover:bg-slate-200/60 text-slate-700'
+                        }`}
+                      >
+                        <span>PSU Executive (NTPC)</span>
+                        {userRoleKey === 'psu' && <span className="text-[10px] text-gov-700 font-extrabold">Active</span>}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          switchRole('Organization/Admin');
+                          setShowProfileMenu(false);
+                          navigate('/dashboard');
+                        }}
+                        className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-between transition-colors cursor-pointer ${
+                          userRoleKey === 'admin'
+                            ? 'bg-gov-100 text-gov-900 font-bold'
+                            : 'hover:bg-slate-200/60 text-slate-700'
+                        }`}
+                      >
+                        <span>Platform Admin (BIS HQ)</span>
+                        {userRoleKey === 'admin' && <span className="text-[10px] text-gov-700 font-extrabold">Active</span>}
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="py-1">
+                    <Link
+                      to="/dashboard"
+                      onClick={() => setShowProfileMenu(false)}
+                      className="block px-4 py-2 text-xs text-slate-700 hover:bg-slate-50 font-medium"
+                    >
+                      Dashboard Overview
+                    </Link>
+                    {userRoleKey === 'admin' && (
+                      <Link
+                        to="/admin/users"
+                        onClick={() => setShowProfileMenu(false)}
+                        className="block px-4 py-2 text-xs text-gov-700 hover:bg-gov-50 font-bold"
+                      >
+                        User Directory (Admin)
+                      </Link>
+                    )}
+                    <Link
+                      to="/history"
+                      onClick={() => setShowProfileMenu(false)}
+                      className="block px-4 py-2 text-xs text-slate-700 hover:bg-slate-50 font-medium"
+                    >
+                      Analysis History
+                    </Link>
+                    <Link
+                      to="/settings"
+                      onClick={() => setShowProfileMenu(false)}
+                      className="block px-4 py-2 text-xs text-slate-700 hover:bg-slate-50 font-medium"
+                    >
+                      Settings
+                    </Link>
+                  </div>
+
+                  <div className="p-1.5">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setShowProfileMenu(false);
+                        logout();
+                        navigate('/login');
+                      }}
+                      className="w-full text-left px-3 py-1.5 text-xs text-rose-600 hover:bg-rose-50 rounded-lg font-semibold flex items-center gap-1.5 cursor-pointer"
+                    >
+                      <LogOut className="w-3.5 h-3.5" />
+                      Sign Out
+                    </button>
+                  </div>
                 </div>
               )}
             </div>

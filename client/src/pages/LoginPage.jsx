@@ -5,12 +5,12 @@ import { Button } from '../components/common/Button';
 import { useAuth } from '../context/AuthContext';
 
 export const LoginPage = () => {
-  const navigate = useNavigate();
-  const { login, demoLogin } = useAuth();
-  const [email, setEmail] = useState('demo@procure.gov.in');
-  const [password, setPassword] = useState('demo123');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const { login, demoLogin, switchRole } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,7 +28,11 @@ export const LoginPage = () => {
   };
 
   const handleQuickDemo = (role) => {
-    demoLogin(role);
+    if (switchRole) {
+      switchRole(role);
+    } else {
+      demoLogin(role);
+    }
     navigate('/dashboard');
   };
 
@@ -110,26 +114,42 @@ export const LoginPage = () => {
           </form>
 
           {/* Quick Demo Sign In Roles */}
-          <div className="mt-6 pt-6 border-t border-slate-100">
-            <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wider text-center mb-3">
-              One-Click Demo Officer Profiles
+          <div className="mt-6 pt-5 border-t border-slate-100">
+            <p className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider text-center mb-2.5">
+              One-Click Evaluator Demo Personas
             </p>
             <div className="grid grid-cols-2 gap-2">
               <button
                 type="button"
                 onClick={() => handleQuickDemo('Procurement Officer')}
-                className="p-2 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-left text-xs font-semibold text-slate-700 transition-colors"
+                className="p-2.5 rounded-xl bg-slate-50 hover:bg-gov-50 border border-slate-200 hover:border-gov-300 text-left transition-all cursor-pointer"
               >
-                <div className="text-[10px] text-gov-600 font-bold uppercase">CPWD</div>
-                <span>Procurement Officer</span>
+                <div className="text-[9px] text-gov-700 font-extrabold uppercase tracking-wider">CPWD</div>
+                <div className="text-xs font-bold text-slate-900 mt-0.5">Procurement Officer</div>
+              </button>
+              <button
+                type="button"
+                onClick={() => handleQuickDemo('Government Department')}
+                className="p-2.5 rounded-xl bg-slate-50 hover:bg-gov-50 border border-slate-200 hover:border-gov-300 text-left transition-all cursor-pointer"
+              >
+                <div className="text-[9px] text-blue-700 font-extrabold uppercase tracking-wider">MoHUA</div>
+                <div className="text-xs font-bold text-slate-900 mt-0.5">Govt Department</div>
               </button>
               <button
                 type="button"
                 onClick={() => handleQuickDemo('PSU')}
-                className="p-2 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-left text-xs font-semibold text-slate-700 transition-colors"
+                className="p-2.5 rounded-xl bg-slate-50 hover:bg-gov-50 border border-slate-200 hover:border-gov-300 text-left transition-all cursor-pointer"
               >
-                <div className="text-[10px] text-amber-600 font-bold uppercase">NTPC / BHEL</div>
-                <span>PSU Executive</span>
+                <div className="text-[9px] text-amber-700 font-extrabold uppercase tracking-wider">NTPC</div>
+                <div className="text-xs font-bold text-slate-900 mt-0.5">PSU Executive</div>
+              </button>
+              <button
+                type="button"
+                onClick={() => handleQuickDemo('Organization/Admin')}
+                className="p-2.5 rounded-xl bg-slate-50 hover:bg-gov-50 border border-slate-200 hover:border-gov-300 text-left transition-all cursor-pointer"
+              >
+                <div className="text-[9px] text-purple-700 font-extrabold uppercase tracking-wider">BIS HQ</div>
+                <div className="text-xs font-bold text-slate-900 mt-0.5">Platform Admin</div>
               </button>
             </div>
           </div>

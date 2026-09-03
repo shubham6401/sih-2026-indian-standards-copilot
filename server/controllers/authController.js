@@ -102,15 +102,48 @@ export const loginUser = async (req, res) => {
       }
     }
 
-    // Support instant demo login if credentials match standard demo
-    if (email === 'demo@procure.gov.in' && (password === 'demo123' || password.length >= 6)) {
-      const demoUser = {
-        _id: 'demo_procure_officer_01',
+    // Support instant demo logins for all 4 stakeholder roles
+    const lowEmail = email.toLowerCase();
+    const demoAccounts = {
+      'officer@cpwd.gov.in': {
+        _id: 'user_po_01',
+        name: 'Sh. Rajesh Kumar',
+        email: 'officer@cpwd.gov.in',
+        organization: 'Central Public Works Department (CPWD)',
+        role: 'Procurement Officer'
+      },
+      'demo@procure.gov.in': {
+        _id: 'user_po_01',
         name: 'Sh. Rajesh Kumar',
         email: 'demo@procure.gov.in',
         organization: 'Central Public Works Department (CPWD)',
         role: 'Procurement Officer'
-      };
+      },
+      'director.procurement@mohua.gov.in': {
+        _id: 'user_dept_02',
+        name: 'Dr. Anita Sharma',
+        email: 'director.procurement@mohua.gov.in',
+        organization: 'Ministry of Housing & Urban Affairs (MoHUA)',
+        role: 'Government Department'
+      },
+      'v.malhotra@ntpc.co.in': {
+        _id: 'user_psu_03',
+        name: 'Er. Vikram Malhotra',
+        email: 'v.malhotra@ntpc.co.in',
+        organization: 'National Thermal Power Corporation (NTPC)',
+        role: 'PSU'
+      },
+      'admin@bis-copilot.gov.in': {
+        _id: 'user_admin_04',
+        name: 'Smt. Preeti Verma',
+        email: 'admin@bis-copilot.gov.in',
+        organization: 'Bureau of Indian Standards (BIS) Directorate',
+        role: 'Organization/Admin'
+      }
+    };
+
+    if (demoAccounts[lowEmail] && (password.length >= 6 || password === 'demo123' || password === 'password123')) {
+      const demoUser = demoAccounts[lowEmail];
       return res.json({
         ...demoUser,
         token: generateToken(demoUser)

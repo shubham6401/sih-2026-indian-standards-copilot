@@ -10,6 +10,7 @@ import documentRoutes from '../server/routes/documentRoutes.js';
 import standardRoutes from '../server/routes/standardRoutes.js';
 import savedRoutes from '../server/routes/savedRoutes.js';
 import reportRoutes from '../server/routes/reportRoutes.js';
+import adminRoutes from '../server/routes/adminRoutes.js';
 
 dotenv.config();
 
@@ -42,6 +43,7 @@ app.use('/api/documents', documentRoutes);
 app.use('/api/standards', standardRoutes);
 app.use('/api/saved-standards', savedRoutes);
 app.use('/api/reports', reportRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Error handler
 app.use((err, req, res, next) => {

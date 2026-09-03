@@ -22,6 +22,8 @@ import { ReportsPage } from './pages/ReportsPage';
 import { ArchitecturePage } from './pages/ArchitecturePage';
 import { EvaluatorQuestionsPage } from './pages/EvaluatorQuestionsPage';
 import { SettingsPage } from './pages/SettingsPage';
+import { AdminUsersPage } from './pages/AdminUsersPage';
+import { RoleProtectedRoute } from './components/common/RoleProtectedRoute';
 
 export function App() {
   return (
@@ -52,6 +54,16 @@ export function App() {
                 <Route path="/architecture" element={<ArchitecturePage />} />
                 <Route path="/evaluator-faq" element={<EvaluatorQuestionsPage />} />
                 <Route path="/settings" element={<SettingsPage />} />
+
+                {/* Role-Protected Admin Routes */}
+                <Route
+                  path="/admin/users"
+                  element={
+                    <RoleProtectedRoute allowedRoles={['admin', 'Organization/Admin']}>
+                      <AdminUsersPage />
+                    </RoleProtectedRoute>
+                  }
+                />
               </Route>
 
               {/* Fallback */}

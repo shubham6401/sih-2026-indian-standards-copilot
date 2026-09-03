@@ -169,5 +169,44 @@ export const api = {
     const data = await res.json();
     if (!res.ok) throw new Error(data.message || 'Failed to delete report');
     return data;
+  },
+
+  // Admin Platform Operations
+  getAdminUsers: async () => {
+    const res = await fetch(`${API_BASE}/admin/users`, {
+      headers: getAuthHeaders()
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || 'Failed to load platform users');
+    return data;
+  },
+
+  getAdminStats: async () => {
+    const res = await fetch(`${API_BASE}/admin/stats`, {
+      headers: getAuthHeaders()
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || 'Failed to load platform stats');
+    return data;
+  },
+
+  getAdminActivity: async () => {
+    const res = await fetch(`${API_BASE}/admin/activity`, {
+      headers: getAuthHeaders()
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || 'Failed to load system activity');
+    return data;
+  },
+
+  updateAdminUserRole: async (id, role) => {
+    const res = await fetch(`${API_BASE}/admin/users/${id}/role`, {
+      method: 'PATCH',
+      headers: getAuthHeaders(),
+      body: JSON.stringify({ role })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || 'Failed to update user role');
+    return data;
   }
 };
