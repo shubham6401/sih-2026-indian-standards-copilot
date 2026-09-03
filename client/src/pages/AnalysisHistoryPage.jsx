@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import {
   History,
   Search,
@@ -22,8 +22,11 @@ import { api } from '../services/api';
 
 export const AnalysisHistoryPage = () => {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { history, loadHistory, deleteAnalysisRecord, setCurrentAnalysis } = useAnalysis();
-  const [search, setSearch] = useState('');
+
+  const urlSearch = searchParams.get('search') || '';
+  const [search, setSearch] = useState(urlSearch);
   const [itemToDelete, setItemToDelete] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
   const [openingId, setOpeningId] = useState(null);
@@ -31,6 +34,26 @@ export const AnalysisHistoryPage = () => {
   useEffect(() => {
     loadHistory();
   }, []);
+
+  useEffect(() => {
+    setSearch(urlSearch);
+  }, [urlSearch]);
+
+  const isInitialMount = useRef(true);
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
+    const timer = setTimeout(() => {
+      const next = new URLSearchParams();
+      if (search.trim()) next.set('search', search.trim());
+      if (next.toString() !== searchParams.toString()) {
+        setSearchParams(next, { replace: true });
+      }
+    }, 250);
+    return () => clearTimeout(timer);
+  }, [search, searchParams, setSearchParams]);
 
   const handleOpenItem = (item, e) => {
     if (e && e.stopPropagation) e.stopPropagation();
@@ -51,7 +74,7 @@ export const AnalysisHistoryPage = () => {
     setIsDeleting(true);
 
     try {
-      await deleteAnalysisRecord(itemToDelete._id);
+      await deleteAnalysisRecord(itemToDelete._id || itemToDelete.id);
       setItemToDelete(null);
     } catch (err) {
       // Handled in context toast
@@ -60,15 +83,17 @@ export const AnalysisHistoryPage = () => {
     }
   };
 
-  const filteredHistory = history.filter((item) => {
-    if (!search) return true;
+  const filteredHistory = useMemo(() => {
+    if (!search.trim()) return history;
     const query = search.toLowerCase();
-    return (
-      item.productName?.toLowerCase().includes(query) ||
-      item.productCategory?.toLowerCase().includes(query) ||
-      item.rawInput?.toLowerCase().includes(query)
-    );
-  });
+    return history.filter((item) => {
+      return (
+        (item.productName || '').toLowerCase().includes(query) ||
+        (item.productCategory || '').toLowerCase().includes(query) ||
+        (item.rawInput || '').toLowerCase().includes(query)
+      );
+    });
+  }, [history, search]);
 
   return (
     <div className="space-y-6 animate-fade-in pb-12">

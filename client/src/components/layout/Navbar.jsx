@@ -27,6 +27,7 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [showKbModal, setShowKbModal] = useState(false);
+  const [navSearch, setNavSearch] = useState('');
 
   const profileRef = useRef(null);
   const notifRef = useRef(null);
@@ -113,22 +114,31 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
             </Link>
           </div>
 
-          {/* Center: Search Field (Desktop Only, hidden on mobile) */}
-          <div className="hidden md:flex items-center flex-1 max-w-md mx-4">
-            <button
-              type="button"
-              onClick={() => navigate('/explorer')}
-              className="w-full flex items-center justify-between px-3.5 py-2 bg-slate-100/90 hover:bg-slate-200/80 border border-slate-200 rounded-xl text-xs text-slate-500 transition-colors text-left cursor-pointer"
-            >
-              <span className="flex items-center gap-2 truncate">
-                <Search className="w-4 h-4 text-slate-400 shrink-0" />
-                <span className="truncate">Search Indian Standards (IS 10322, Cement, Pumps)...</span>
-              </span>
-              <kbd className="hidden lg:inline-block px-1.5 py-0.5 text-[10px] font-mono bg-white border border-slate-300 rounded shadow-2xs shrink-0">
-                /
-              </kbd>
-            </button>
-          </div>
+          {/* Center: Interactive Search Field (Desktop Only, hidden on mobile) */}
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              const term = navSearch.trim();
+              if (term) {
+                navigate(`/explorer?q=${encodeURIComponent(term)}`);
+              } else {
+                navigate('/explorer');
+              }
+            }}
+            className="hidden md:flex items-center flex-1 max-w-md mx-4 relative"
+          >
+            <input
+              type="text"
+              value={navSearch}
+              onChange={(e) => setNavSearch(e.target.value)}
+              placeholder="Search Indian Standards (IS 10322, Cement, Pumps)..."
+              className="w-full pl-9 pr-8 py-2 bg-slate-100/90 focus:bg-white border border-slate-200 focus:border-gov-500 rounded-xl text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-gov-500/20 transition-all"
+            />
+            <Search className="w-4 h-4 text-slate-400 absolute left-3 pointer-events-none" />
+            <kbd className="hidden lg:inline-block absolute right-2.5 px-1.5 py-0.5 text-[10px] font-mono bg-white border border-slate-300 rounded shadow-2xs text-slate-500 pointer-events-none">
+              ↵
+            </kbd>
+          </form>
 
           {/* Right: Actions, Notifications & Profile */}
           <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">

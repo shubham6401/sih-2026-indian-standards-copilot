@@ -19,7 +19,7 @@ export const translations = {
     profile: 'Profile',
     settings: 'Settings',
     logout: 'Logout',
-    responsibleAiNotice: 'Decision-Support System: AI recommendations do not replace official BIS verification. Verify applicability on bis.gov.in prior to issuing tenders.',
+    responsibleAiNotice: 'AI recommendations do not replace official BIS verification. Verify applicability on bis.gov.in prior to issuing tenders.',
     totalAnalyses: 'Total Analyses',
     standardsFound: 'Standards Recommended',
     savedCount: 'Saved Standards',

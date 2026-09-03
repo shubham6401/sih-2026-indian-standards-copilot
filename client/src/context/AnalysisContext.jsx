@@ -204,9 +204,10 @@ export const AnalysisProvider = ({ children }) => {
     });
   };
 
-  const loadHistory = async () => {
+  let isFetchingHistory = false;
+  const loadHistory = async (force = false) => {
     try {
-      // 1. Load from localStorage
+      // 1. Load from localStorage immediately if history is empty
       let localItems = [];
       const stored = localStorage.getItem(LOCAL_STORAGE_HISTORY_KEY);
       if (stored) {
@@ -214,6 +215,17 @@ export const AnalysisProvider = ({ children }) => {
           localItems = JSON.parse(stored);
         } catch (e) {}
       }
+
+      if (localItems.length > 0 && history.length === 0) {
+        setHistory(localItems);
+      }
+
+      // If we already have items and not forcing, skip duplicate network call
+      if (!force && history.length > 0 && !isFetchingHistory) {
+        return;
+      }
+
+      isFetchingHistory = true;
 
       // 2. Fetch from backend API
       let remoteItems = [];
@@ -224,14 +236,14 @@ export const AnalysisProvider = ({ children }) => {
       // 3. Merge unique items by _id
       const idMap = new Map();
       (localItems || []).forEach(item => {
-        if (item && item._id) idMap.set(String(item._id), item);
+        if (item && (item._id || item.id)) idMap.set(String(item._id || item.id), item);
       });
       (remoteItems || []).forEach(item => {
-        if (item && item._id) idMap.set(String(item._id), item);
+        if (item && (item._id || item.id)) idMap.set(String(item._id || item.id), item);
       });
 
       if (idMap.size === 0) {
-        INITIAL_DEMO_HISTORY.forEach(item => idMap.set(String(item._id), item));
+        INITIAL_DEMO_HISTORY.forEach(item => idMap.set(String(item._id || item.id), item));
       }
 
       const merged = Array.from(idMap.values()).sort(
@@ -244,6 +256,8 @@ export const AnalysisProvider = ({ children }) => {
       } catch (e) {}
     } catch (e) {
       console.warn('Failed to load history:', e.message);
+    } finally {
+      isFetchingHistory = false;
     }
   };
 
@@ -344,14 +358,14 @@ export const AnalysisProvider = ({ children }) => {
       }
 
       setHistory(prev => {
-        const next = prev.filter(item => String(item._id) !== String(id));
+        const next = prev.filter(item => String(item._id || item.id) !== String(id));
         try {
           localStorage.setItem(LOCAL_STORAGE_HISTORY_KEY, JSON.stringify(next));
         } catch (e) {}
         return next;
       });
 
-      if (currentAnalysis && String(currentAnalysis._id) === String(id)) {
+      if (currentAnalysis && String(currentAnalysis._id || currentAnalysis.id) === String(id)) {
         setCurrentAnalysis(null);
       }
 

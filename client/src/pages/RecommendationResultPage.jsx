@@ -41,16 +41,38 @@ import confetti from 'canvas-confetti';
 export const RecommendationResultPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { currentAnalysis, setCurrentAnalysis, deleteAnalysisRecord, showToast } = useAnalysis();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const tabParam = searchParams.get('tab') || 'overview';
+  const { currentAnalysis, setCurrentAnalysis, history, deleteAnalysisRecord, showToast } = useAnalysis();
 
-  const [analysis, setAnalysis] = useState(
-    currentAnalysis && (String(currentAnalysis._id) === String(id) || String(currentAnalysis.id) === String(id))
-      ? currentAnalysis
-      : null
-  );
+  // Helper to synchronously find item from any available memory layer
+  const resolveInitialAnalysis = useCallback(() => {
+    if (currentAnalysis && (String(currentAnalysis._id) === String(id) || String(currentAnalysis.id) === String(id))) {
+      return currentAnalysis;
+    }
+    if (history && history.length > 0) {
+      const found = history.find(item => String(item._id) === String(id) || String(item.id) === String(id));
+      if (found) return found;
+    }
+    try {
+      const localStored = localStorage.getItem('is_analysis_history');
+      if (localStored) {
+        const list = JSON.parse(localStored);
+        const found = list.find(item => String(item._id) === String(id) || String(item.id) === String(id));
+        if (found) return found;
+      }
+    } catch {}
+    if (INITIAL_DEMO_HISTORY) {
+      const demo = INITIAL_DEMO_HISTORY.find(item => String(item._id) === String(id) || String(item.id) === String(id));
+      if (demo) return demo;
+    }
+    return null;
+  }, [id, currentAnalysis, history]);
+
+  const [analysis, setAnalysis] = useState(() => resolveInitialAnalysis());
   const [loading, setLoading] = useState(!analysis);
   const [error, setError] = useState('');
-  const [activeTab, setActiveTab] = useState('overview');
+  const [activeTab, setActiveTab] = useState(tabParam);
   const [selectedStandard, setSelectedStandard] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isKbModalOpen, setIsKbModalOpen] = useState(false);
@@ -59,8 +81,29 @@ export const RecommendationResultPage = () => {
   const [copiedSpec, setCopiedSpec] = useState(false);
   const [standardsFilter, setStandardsFilter] = useState('');
 
-  // Fetch report data by URL param id with multi-layered fallback
+  // Synchronize activeTab when URL tab parameter changes (e.g. Browser Back/Forward navigation)
   useEffect(() => {
+    if (tabParam && tabParam !== activeTab) {
+      setActiveTab(tabParam);
+    }
+  }, [tabParam]);
+
+  const handleTabChange = (tabId) => {
+    setActiveTab(tabId);
+    setSearchParams({ tab: tabId }, { replace: true });
+  };
+
+  // Immediate synchronous hydration + async fallback for direct URL access
+  useEffect(() => {
+    const syncItem = resolveInitialAnalysis();
+    if (syncItem) {
+      setAnalysis(syncItem);
+      setCurrentAnalysis(syncItem);
+      setLoading(false);
+      setError('');
+      return;
+    }
+
     const fetchAnalysis = async () => {
       if (!id) return;
       try {
@@ -128,10 +171,8 @@ export const RecommendationResultPage = () => {
       }
     };
 
-    if (!analysis || (String(analysis._id) !== String(id) && String(analysis.id) !== String(id))) {
-      fetchAnalysis();
-    }
-  }, [id, analysis, setCurrentAnalysis]);
+    fetchAnalysis();
+  }, [id, resolveInitialAnalysis, setCurrentAnalysis]);
 
   const handleOpenStandard = (std) => {
     setSelectedStandard(std);
@@ -328,7 +369,7 @@ export const RecommendationResultPage = () => {
             <button
               key={tab.id}
               type="button"
-              onClick={() => setActiveTab(tab.id)}
+              onClick={() => handleTabChange(tab.id)}
               className={`px-3 py-2 rounded-lg transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap ${
                 isActive
                   ? 'bg-gov-700 text-white shadow-2xs font-bold'

@@ -24,15 +24,48 @@ export const StandardDetailsPage = () => {
   const navigate = useNavigate();
   const { savedStandardNumbers, savedStandards, history, toggleSaveStandard } = useAnalysis();
 
-  const [standard, setStandard] = useState(null);
-  const [loading, setLoading] = useState(true);
+  // Instant in-memory resolver
+  const resolveInMemoryStandard = () => {
+    if (!id) return null;
+    const decodedId = decodeURIComponent(id).toLowerCase().replace(/[:\s]+/g, ' ').trim();
+
+    // Check saved standards
+    const foundSaved = (savedStandards || []).find(s => {
+      const sNum = (s.standardNumber || '').toLowerCase().replace(/[:\s]+/g, ' ').trim();
+      return sNum.includes(decodedId) || decodedId.includes(sNum) || String(s._id) === String(id) || String(s.id) === String(id);
+    });
+    if (foundSaved) return foundSaved.standardDetails || foundSaved;
+
+    // Check analysis history
+    if (history && history.length > 0) {
+      for (const rep of history) {
+        const allStds = [...(rep.primaryStandards || []), ...(rep.relatedStandards || [])];
+        const found = allStds.find(s => {
+          const sNum = (s.standardNumber || '').toLowerCase().replace(/[:\s]+/g, ' ').trim();
+          return sNum.includes(decodedId) || decodedId.includes(sNum) || String(s._id) === String(id) || String(s.id) === String(id);
+        });
+        if (found) return found;
+      }
+    }
+    return null;
+  };
+
+  const [standard, setStandard] = useState(() => resolveInMemoryStandard());
+  const [loading, setLoading] = useState(!standard);
   const [error, setError] = useState('');
 
   useEffect(() => {
+    const memoryMatch = resolveInMemoryStandard();
+    if (memoryMatch) {
+      setStandard(memoryMatch);
+      setLoading(false);
+      setError('');
+    }
+
     const fetchStandard = async () => {
       if (!id) return;
       try {
-        setLoading(true);
+        if (!memoryMatch) setLoading(true);
         setError('');
         let data = null;
         try {
@@ -41,47 +74,20 @@ export const StandardDetailsPage = () => {
           console.warn('API getStandardById fallback:', apiErr.message);
         }
 
-        // Layer 2: Check saved standards in context or localStorage
-        if (!data) {
-          const decodedId = decodeURIComponent(id).toLowerCase().replace(/[:\s]+/g, ' ').trim();
-          const foundSaved = (savedStandards || []).find(s => {
-            const sNum = (s.standardNumber || '').toLowerCase().replace(/[:\s]+/g, ' ').trim();
-            return sNum.includes(decodedId) || decodedId.includes(sNum) || String(s._id) === String(id) || String(s.id) === String(id);
-          });
-          if (foundSaved) {
-            data = foundSaved.standardDetails || foundSaved;
-          }
-        }
-
-        // Layer 3: Check standards from analysis history
-        if (!data && history && history.length > 0) {
-          const decodedId = decodeURIComponent(id).toLowerCase().replace(/[:\s]+/g, ' ').trim();
-          for (const rep of history) {
-            const allStds = [...(rep.primaryStandards || []), ...(rep.relatedStandards || [])];
-            const found = allStds.find(s => {
-              const sNum = (s.standardNumber || '').toLowerCase().replace(/[:\s]+/g, ' ').trim();
-              return sNum.includes(decodedId) || decodedId.includes(sNum) || String(s._id) === String(id) || String(s.id) === String(id);
-            });
-            if (found) {
-              data = found;
-              break;
-            }
-          }
-        }
-
         if (data) {
           setStandard(data);
-        } else {
+        } else if (!memoryMatch) {
           setError(`Standard '${decodeURIComponent(id)}' could not be found in active registry.`);
         }
       } catch (err) {
-        setError(err.message || 'Failed to load standard details');
+        if (!memoryMatch) setError(err.message || 'Failed to load standard details');
       } finally {
         setLoading(false);
       }
     };
+
     fetchStandard();
-  }, [id, savedStandards, history]);
+  }, [id]);
 
   if (loading) {
     return (

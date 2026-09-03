@@ -39,16 +39,18 @@ export const SavedStandardsPage = () => {
     setTimeout(() => setOpeningId(null), 250);
   };
 
-  const filtered = savedStandards.filter((s) => {
-    if (!search) return true;
+  const filtered = useMemo(() => {
+    if (!search) return savedStandards;
     const q = search.toLowerCase();
-    return (
-      s.standardNumber?.toLowerCase().includes(q) ||
-      s.title?.toLowerCase().includes(q) ||
-      s.category?.toLowerCase().includes(q) ||
-      s.notes?.toLowerCase().includes(q)
-    );
-  });
+    return savedStandards.filter((s) => {
+      return (
+        s.standardNumber?.toLowerCase().includes(q) ||
+        s.title?.toLowerCase().includes(q) ||
+        s.category?.toLowerCase().includes(q) ||
+        s.notes?.toLowerCase().includes(q)
+      );
+    });
+  }, [savedStandards, search]);
 
   return (
     <div className="space-y-6 animate-fade-in pb-12">

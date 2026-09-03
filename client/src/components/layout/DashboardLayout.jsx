@@ -4,6 +4,7 @@ import { Navbar } from './Navbar';
 import { Sidebar } from './Sidebar';
 import { Footer } from './Footer';
 import { DisclaimerBanner } from '../common/DisclaimerBanner';
+import { ScrollToTop } from '../common/ScrollToTop';
 import { useAnalysis } from '../../context/AnalysisContext';
 
 export const DashboardLayout = () => {
@@ -12,6 +13,7 @@ export const DashboardLayout = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col overflow-x-hidden">
+      <ScrollToTop />
       <Navbar
         onToggleSidebar={() => setIsSidebarOpen(prev => !prev)}
         isSidebarOpen={isSidebarOpen}
