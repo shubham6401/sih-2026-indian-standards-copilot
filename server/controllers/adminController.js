@@ -1,17 +1,21 @@
+import mongoose from 'mongoose';
 import { User } from '../models/User.js';
 import { Analysis } from '../models/Analysis.js';
 import { Standard } from '../models/Standard.js';
 import { memoryAnalyses } from './analysisController.js';
 import { INDIAN_STANDARDS_DATABASE } from '../services/standardsData.js';
-
 import { DEMO_USERS } from '../seed/demoData.js';
 
 export const getUsers = async (req, res) => {
   try {
     let users = [];
-    try {
-      users = await User.find({}).select('-password').sort({ createdAt: -1 });
-    } catch (e) {
+    if (mongoose.connection?.readyState === 1) {
+      try {
+        users = await User.find({}).select('-password').sort({ createdAt: -1 });
+      } catch (e) {
+        users = DEMO_USERS;
+      }
+    } else {
       users = DEMO_USERS;
     }
 
@@ -20,23 +24,30 @@ export const getUsers = async (req, res) => {
     }
 
     // Compute dynamic analysis counts per user
+    const isDbReady = mongoose.connection?.readyState === 1;
     const userList = await Promise.all(
       users.map(async (u) => {
         const uObj = u.toObject ? u.toObject() : { ...u };
         let count = 0;
-        try {
-          count = await Analysis.countDocuments({
-            $or: [
-              { userId: u._id },
-              { userEmail: u.email }
-            ]
-          });
-        } catch (cntErr) {
+        if (isDbReady) {
+          try {
+            count = await Analysis.countDocuments({
+              $or: [
+                { userId: u._id },
+                { userEmail: u.email }
+              ]
+            });
+          } catch (cntErr) {
+            count = memoryAnalyses.filter(a => a.userEmail === u.email).length;
+          }
+        } else {
           count = memoryAnalyses.filter(a => a.userEmail === u.email).length;
         }
+
         if (count === 0) {
           count = memoryAnalyses.filter(a => a.userEmail === u.email).length;
         }
+
         return {
           ...uObj,
           analysesCount: count

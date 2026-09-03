@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import { Analysis } from '../models/Analysis.js';
 import { findRelevantStandards } from '../services/aiService.js';
 import { DEMO_ANALYSES } from '../seed/demoData.js';
@@ -129,10 +130,12 @@ export const getAnalyses = async (req, res) => {
     }
 
     let list = [];
-    try {
-      list = await Analysis.find(query).sort({ createdAt: -1 }).limit(100);
-    } catch (dbErr) {
-      list = [];
+    if (mongoose.connection?.readyState === 1) {
+      try {
+        list = await Analysis.find(query).sort({ createdAt: -1 }).limit(100);
+      } catch (dbErr) {
+        list = [];
+      }
     }
 
     if (!list || list.length === 0) {
@@ -158,16 +161,18 @@ export const getAnalysisById = async (req, res) => {
     const { id } = req.params;
     let analysis = null;
 
-    try {
-      analysis = await Analysis.findById(id);
-    } catch (dbErr) {
-      // Fallback
-    }
-
-    if (!analysis) {
+    if (mongoose.connection?.readyState === 1) {
       try {
-        analysis = await Analysis.findOne({ demoKey: id });
-      } catch (e) {}
+        analysis = await Analysis.findById(id);
+      } catch (dbErr) {
+        // Fallback
+      }
+
+      if (!analysis) {
+        try {
+          analysis = await Analysis.findOne({ demoKey: id });
+        } catch (e) {}
+      }
     }
 
     if (!analysis) {
