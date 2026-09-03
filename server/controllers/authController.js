@@ -75,35 +75,8 @@ export const loginUser = async (req, res) => {
       return res.status(400).json({ message: 'Please provide both email and password.' });
     }
 
-    try {
-      const user = await User.findOne({ email: email.toLowerCase() });
-      if (user && (await user.matchPassword(password))) {
-        return res.json({
-          _id: user._id,
-          name: user.name,
-          email: user.email,
-          organization: user.organization,
-          role: user.role,
-          token: generateToken(user)
-        });
-      }
-    } catch (dbErr) {
-      // Memory fallback check
-      const memUser = memoryUsers.find(u => u.email === email.toLowerCase() && u.password === password);
-      if (memUser) {
-        return res.json({
-          _id: memUser._id,
-          name: memUser.name,
-          email: memUser.email,
-          organization: memUser.organization,
-          role: memUser.role,
-          token: generateToken(memUser)
-        });
-      }
-    }
-
-    // Support instant demo logins for all 4 stakeholder roles
-    const lowEmail = email.toLowerCase();
+    // Check verified demo accounts FIRST for instant 0ms response without DB lag
+    const lowEmail = email.toLowerCase().trim();
     const demoAccounts = {
       'demo.procurement@anveshak.demo': {
         _id: 'user_demo_po_01',
@@ -178,6 +151,33 @@ export const loginUser = async (req, res) => {
         ...demoUser,
         token: generateToken(demoUser)
       });
+    }
+
+    try {
+      const user = await User.findOne({ email: lowEmail });
+      if (user && (await user.matchPassword(password))) {
+        return res.json({
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          organization: user.organization,
+          role: user.role,
+          token: generateToken(user)
+        });
+      }
+    } catch (dbErr) {
+      // Memory fallback check
+      const memUser = memoryUsers.find(u => u.email === lowEmail && u.password === password);
+      if (memUser) {
+        return res.json({
+          _id: memUser._id,
+          name: memUser.name,
+          email: memUser.email,
+          organization: memUser.organization,
+          role: memUser.role,
+          token: generateToken(memUser)
+        });
+      }
     }
 
     return res.status(401).json({ message: 'Invalid email or password.' });
