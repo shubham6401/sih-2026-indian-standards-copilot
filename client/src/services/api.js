@@ -3,9 +3,16 @@ const API_BASE = '/api';
 // Helper to get auth header
 const getAuthHeaders = () => {
   const token = localStorage.getItem('is_auth_token');
+  let user = null;
+  try {
+    user = JSON.parse(localStorage.getItem('is_auth_user') || 'null');
+  } catch (e) {}
+
   return {
     'Content-Type': 'application/json',
-    ...(token ? { Authorization: `Bearer ${token}` } : {})
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    ...(user?.role ? { 'x-user-role': user.role } : {}),
+    ...(user?.email ? { 'x-user-email': user.email } : {})
   };
 };
 

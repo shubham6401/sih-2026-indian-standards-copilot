@@ -90,11 +90,11 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const demoLogin = (role = 'Procurement Officer') => {
-    return switchRole(role);
+  const demoLogin = async (role = 'Procurement Officer') => {
+    return await switchRole(role);
   };
 
-  const switchRole = (role, email, organization, name) => {
+  const switchRole = async (role, email, organization, name) => {
     const roleProfiles = {
       'Procurement Officer': {
         _id: 'user_demo_po_01',
@@ -133,8 +133,18 @@ export const AuthProvider = ({ children }) => {
     const targetProfile = roleProfiles[role] || roleProfiles['Procurement Officer'];
 
     setUser(targetProfile);
-    localStorage.setItem('is_auth_token', 'demo_active_token_2026');
     localStorage.setItem('is_auth_user', JSON.stringify(targetProfile));
+
+    // Authenticate via login endpoint to receive signed JWT token
+    try {
+      const res = await api.login({ email: targetProfile.email, password: 'Demo@12345' });
+      if (res && res.token) {
+        localStorage.setItem('is_auth_token', res.token);
+        return targetProfile;
+      }
+    } catch (e) {}
+
+    localStorage.setItem('is_auth_token', 'demo_active_token_2026');
     return targetProfile;
   };
 
