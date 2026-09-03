@@ -26,10 +26,21 @@ export const AnalysisHistoryPage = () => {
   const [search, setSearch] = useState('');
   const [itemToDelete, setItemToDelete] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [openingId, setOpeningId] = useState(null);
 
   useEffect(() => {
     loadHistory();
   }, []);
+
+  const handleOpenItem = (item, e) => {
+    if (e && e.stopPropagation) e.stopPropagation();
+    const id = item._id || item.id;
+    if (!id || openingId) return;
+    setOpeningId(id);
+    setTimeout(() => {
+      navigate(`/reports/${id}`);
+    }, 150);
+  };
 
   const openDeleteModal = (item, e) => {
     if (e && e.stopPropagation) e.stopPropagation();
@@ -119,121 +130,132 @@ export const AnalysisHistoryPage = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
-                  {filteredHistory.map((item) => (
-                    <tr
-                      key={item._id}
-                      onClick={() => navigate(`/analysis/result/${item._id}`)}
-                      className="hover:bg-slate-50/70 transition-colors cursor-pointer"
+                    {filteredHistory.map((item) => {
+                      const id = item._id || item.id;
+                      const isOpeningThis = openingId === id;
+                      return (
+                        <tr
+                          key={id}
+                          onClick={(e) => handleOpenItem(item, e)}
+                          className="hover:bg-slate-50/70 transition-colors cursor-pointer"
+                        >
+                          <td className="py-3.5 px-4 font-bold text-slate-900">
+                            <div className="flex items-center gap-2">
+                              <FileText className="w-4 h-4 text-gov-600 shrink-0" />
+                              <div>
+                                <span className="text-slate-900 hover:underline">{item.productName}</span>
+                                <span className="text-[10px] text-slate-400 font-normal block">
+                                  {item.productCategory}
+                                </span>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="py-3.5 px-4">
+                            <Badge variant={item.inputType === 'tender_pdf' ? 'mandate' : 'default'} size="xs">
+                              {item.inputType === 'tender_pdf' ? 'Tender PDF' : 'Specification'}
+                            </Badge>
+                          </td>
+                          <td className="py-3.5 px-4 font-semibold text-slate-700">
+                            {(item.primaryStandards?.length || 0) + (item.relatedStandards?.length || 0)} Standards
+                          </td>
+                          <td className="py-3.5 px-4">
+                            <ScoreIndicator
+                              score={item.confidenceScore || 90}
+                              label={item.confidenceLabel || 'Highly Relevant'}
+                              size="sm"
+                            />
+                          </td>
+                          <td className="py-3.5 px-4 text-slate-500 text-[11px]">
+                            {new Date(item.createdAt || Date.now()).toLocaleDateString('en-IN', {
+                              day: '2-digit',
+                              month: 'short',
+                              year: 'numeric'
+                            })}
+                          </td>
+                          <td className="py-3.5 px-4 text-right">
+                            <div className="flex items-center justify-end gap-1.5" onClick={(e) => e.stopPropagation()}>
+                              <Button
+                                size="xs"
+                                variant="ghost"
+                                disabled={isOpeningThis}
+                                onClick={(e) => handleOpenItem(item, e)}
+                              >
+                                <Eye className="w-3.5 h-3.5 mr-1" />
+                                {isOpeningThis ? 'Opening...' : 'View'}
+                              </Button>
+                              <button
+                                type="button"
+                                onClick={(e) => openDeleteModal(item, e)}
+                                className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer"
+                                title="Delete record"
+                                aria-label="Delete analysis record"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Mobile Card List View (Phones) */}
+              <div className="md:hidden divide-y divide-slate-100">
+                {filteredHistory.map((item) => {
+                  const id = item._id || item.id;
+                  const isOpeningThis = openingId === id;
+                  return (
+                    <div
+                      key={id}
+                      onClick={(e) => handleOpenItem(item, e)}
+                      className="p-4 space-y-3 hover:bg-slate-50 transition-colors cursor-pointer"
                     >
-                      <td className="py-3.5 px-4 font-bold text-slate-900">
-                        <div className="flex items-center gap-2">
-                          <FileText className="w-4 h-4 text-gov-600 shrink-0" />
-                          <div>
-                            <span className="text-slate-900 hover:underline">{item.productName}</span>
-                            <span className="text-[10px] text-slate-400 font-normal block">
-                              {item.productCategory}
-                            </span>
-                          </div>
+                      <div className="flex items-start justify-between gap-2">
+                        <div>
+                          <h3 className="text-sm font-bold text-slate-900">{item.productName}</h3>
+                          <p className="text-[11px] text-slate-400">{item.productCategory}</p>
                         </div>
-                      </td>
-                      <td className="py-3.5 px-4">
-                        <Badge variant={item.inputType === 'tender_pdf' ? 'mandate' : 'default'} size="xs">
-                          {item.inputType === 'tender_pdf' ? 'Tender PDF' : 'Specification'}
-                        </Badge>
-                      </td>
-                      <td className="py-3.5 px-4 font-semibold text-slate-700">
-                        {(item.primaryStandards?.length || 0) + (item.relatedStandards?.length || 0)} Standards
-                      </td>
-                      <td className="py-3.5 px-4">
                         <ScoreIndicator
                           score={item.confidenceScore || 90}
                           label={item.confidenceLabel || 'Highly Relevant'}
                           size="sm"
                         />
-                      </td>
-                      <td className="py-3.5 px-4 text-slate-500 text-[11px]">
-                        {new Date(item.createdAt || Date.now()).toLocaleDateString('en-IN', {
-                          day: '2-digit',
-                          month: 'short',
-                          year: 'numeric'
-                        })}
-                      </td>
-                      <td className="py-3.5 px-4 text-right">
-                        <div className="flex items-center justify-end gap-1.5" onClick={(e) => e.stopPropagation()}>
-                          <Button
-                            size="xs"
-                            variant="ghost"
-                            onClick={() => navigate(`/analysis/result/${item._id}`)}
-                          >
-                            <Eye className="w-3.5 h-3.5 mr-1" /> View
-                          </Button>
+                      </div>
+
+                      <p className="text-xs text-slate-600 line-clamp-2 italic">
+                        "{item.rawInput}"
+                      </p>
+
+                      <div className="flex items-center justify-between pt-2 border-t border-slate-100 text-[11px] text-slate-500">
+                        <span>
+                          {(item.primaryStandards?.length || 0) + (item.relatedStandards?.length || 0)} Standards Mapped
+                        </span>
+                        <div className="flex items-center gap-1" onClick={(e) => e.stopPropagation()}>
                           <button
                             type="button"
                             onClick={(e) => openDeleteModal(item, e)}
-                            className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer"
+                            className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg"
                             title="Delete record"
-                            aria-label="Delete analysis record"
+                            aria-label="Delete record"
                           >
-                            <Trash2 className="w-3.5 h-3.5" />
+                            <Trash2 className="w-4 h-4" />
                           </button>
+                          <Button
+                            size="xs"
+                            variant="primary"
+                            disabled={isOpeningThis}
+                            onClick={(e) => handleOpenItem(item, e)}
+                          >
+                            {isOpeningThis ? 'Opening...' : 'View Report'}
+                          </Button>
                         </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
-            {/* Mobile Card List View (Phones) */}
-            <div className="md:hidden divide-y divide-slate-100">
-              {filteredHistory.map((item) => (
-                <div
-                  key={item._id}
-                  onClick={() => navigate(`/analysis/result/${item._id}`)}
-                  className="p-4 space-y-3 hover:bg-slate-50 transition-colors cursor-pointer"
-                >
-                  <div className="flex items-start justify-between gap-2">
-                    <div>
-                      <h3 className="text-sm font-bold text-slate-900">{item.productName}</h3>
-                      <p className="text-[11px] text-slate-400">{item.productCategory}</p>
+                      </div>
                     </div>
-                    <ScoreIndicator
-                      score={item.confidenceScore || 90}
-                      label={item.confidenceLabel || 'Highly Relevant'}
-                      size="sm"
-                    />
-                  </div>
-
-                  <p className="text-xs text-slate-600 line-clamp-2 italic">
-                    "{item.rawInput}"
-                  </p>
-
-                  <div className="flex items-center justify-between pt-2 border-t border-slate-100 text-[11px] text-slate-500">
-                    <span>
-                      {(item.primaryStandards?.length || 0) + (item.relatedStandards?.length || 0)} Standards Mapped
-                    </span>
-                    <div className="flex items-center gap-1" onClick={(e) => e.stopPropagation()}>
-                      <button
-                        type="button"
-                        onClick={(e) => openDeleteModal(item, e)}
-                        className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg"
-                        title="Delete record"
-                        aria-label="Delete record"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                      <Button
-                        size="xs"
-                        variant="primary"
-                        onClick={() => navigate(`/analysis/result/${item._id}`)}
-                      >
-                        View Report
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+                  );
+                })}
+              </div>
           </>
         ) : (
           <div className="py-14 text-center text-xs text-slate-500 space-y-3">

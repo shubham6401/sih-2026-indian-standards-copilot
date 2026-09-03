@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   FileText,
@@ -28,165 +28,188 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [showKbModal, setShowKbModal] = useState(false);
 
+  const profileRef = useRef(null);
+  const notifRef = useRef(null);
+
+  // Close popovers on click outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (profileRef.current && !profileRef.current.contains(e.target)) {
+        setShowProfileMenu(false);
+      }
+      if (notifRef.current && !notifRef.current.contains(e.target)) {
+        setShowNotifications(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   return (
     <>
-      <header className="sticky top-0 z-40 bg-white border-b border-slate-200/90 shadow-sm">
-        {/* Top Government Banner */}
-        <div className="bg-gov-900 text-white text-[11px] px-4 py-1 flex items-center justify-between border-b border-gov-800">
-          <div className="flex items-center gap-2 max-w-7xl mx-auto w-full justify-between">
-            <div className="flex items-center gap-2">
-              <span className="font-semibold text-amber-400">Government of India / National Procurement Copilot</span>
-              <span className="hidden md:inline text-slate-400">|</span>
-              <span className="hidden md:inline text-slate-300">Bureau of Indian Standards (BIS) Aligned</span>
+      <header className="sticky top-0 z-30 bg-white border-b border-slate-200/90 shadow-2xs">
+        {/* Top Government Micro-Banner */}
+        <div className="bg-gov-900 text-white text-[11px] px-3 sm:px-4 py-1 border-b border-gov-800">
+          <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2 truncate">
+              <span className="font-semibold text-amber-400 shrink-0">National Procurement Copilot</span>
+              <span className="hidden sm:inline text-slate-400">|</span>
+              <span className="hidden sm:inline text-slate-300 truncate">Bureau of Indian Standards (BIS) Aligned</span>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3 shrink-0 text-[10px]">
               <button
                 type="button"
                 onClick={() => setShowKbModal(true)}
-                className="text-amber-300 hover:text-white inline-flex items-center gap-1 text-[10px] font-bold"
+                className="hidden sm:inline-flex text-amber-300 hover:text-white items-center gap-1 font-bold transition-colors cursor-pointer"
+                title="View Knowledge Base Details"
               >
                 <Database className="w-2.5 h-2.5" />
-                <span>Knowledge Base Info</span>
+                <span>Knowledge Base</span>
               </button>
               <a
                 href="https://manakonline.in"
                 target="_blank"
                 rel="noreferrer"
-                className="text-slate-300 hover:text-white inline-flex items-center gap-1 text-[10px]"
+                className="hidden md:inline-flex text-slate-300 hover:text-white items-center gap-1 transition-colors"
               >
-                e-BIS Manakonline <ExternalLink className="w-2.5 h-2.5" />
+                e-BIS <ExternalLink className="w-2.5 h-2.5" />
               </a>
               <LanguageToggle />
             </div>
           </div>
         </div>
 
-        {/* Main Header */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
-          {/* Left: Mobile Toggle & Logo */}
-          <div className="flex items-center gap-3">
+        {/* Main Application Header */}
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2 sm:gap-4">
+          {/* Left: Universal 3-line Hamburger Menu Button + Brand Logo */}
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
             <button
               type="button"
               onClick={onToggleSidebar}
-              className="lg:hidden p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg"
+              className="p-2 -ml-1 text-slate-700 hover:text-gov-800 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-gov-500"
+              aria-label={isSidebarOpen ? "Close navigation menu" : "Open navigation menu"}
+              title={isSidebarOpen ? "Close navigation menu" : "Open navigation menu"}
             >
               {isSidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
 
-            <Link to="/" className="flex items-center gap-2.5 group">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-gov-600 to-gov-800 flex items-center justify-center text-white shadow-md shadow-gov-900/10 group-hover:scale-105 transition-transform">
-                <Shield className="w-5 h-5 text-amber-400" />
+            <Link to="/dashboard" className="flex items-center gap-2 sm:gap-2.5 group min-w-0">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-gov-600 to-gov-800 flex items-center justify-center text-white shadow-xs shrink-0 group-hover:scale-105 transition-transform">
+                <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
               </div>
-              <div>
+              <div className="min-w-0">
                 <div className="flex items-center gap-1.5">
-                  <span className="font-extrabold text-slate-900 text-base sm:text-lg tracking-tight font-outfit">
-                    BIS Standards Copilot
+                  <span className="font-extrabold text-slate-900 text-sm sm:text-base lg:text-lg tracking-tight font-outfit truncate">
+                    BIS Copilot
                   </span>
-                  <span className="text-[10px] font-bold uppercase tracking-wider bg-gov-50 text-gov-700 border border-gov-200 px-1.5 py-0.2 rounded">
+                  <span className="text-[10px] font-bold uppercase tracking-wider bg-gov-50 text-gov-700 border border-gov-200 px-1.5 py-0.5 rounded shrink-0 hidden xs:inline-block">
                     SIH 2026
                   </span>
                 </div>
-                <p className="text-[10px] text-slate-500 font-medium -mt-1 hidden sm:block">
+                <p className="text-[10px] text-slate-500 font-medium -mt-1 hidden md:block truncate">
                   AI Procurement Intelligence & Gap Analysis Engine
                 </p>
               </div>
             </Link>
           </div>
 
-          {/* Center: Quick search button */}
+          {/* Center: Search Field (Desktop Only, hidden on mobile) */}
           <div className="hidden md:flex items-center flex-1 max-w-md mx-4">
             <button
+              type="button"
               onClick={() => navigate('/explorer')}
-              className="w-full flex items-center justify-between px-3.5 py-2 bg-slate-100/90 hover:bg-slate-200/80 border border-slate-200 rounded-xl text-xs text-slate-500 transition-colors text-left"
+              className="w-full flex items-center justify-between px-3.5 py-2 bg-slate-100/90 hover:bg-slate-200/80 border border-slate-200 rounded-xl text-xs text-slate-500 transition-colors text-left cursor-pointer"
             >
-              <span className="flex items-center gap-2">
-                <Search className="w-4 h-4 text-slate-400" />
-                <span>Search Indian Standards (e.g. IS 10322, Cement, Pumps)...</span>
+              <span className="flex items-center gap-2 truncate">
+                <Search className="w-4 h-4 text-slate-400 shrink-0" />
+                <span className="truncate">Search Indian Standards (IS 10322, Cement, Pumps)...</span>
               </span>
-              <kbd className="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono bg-white border border-slate-300 rounded shadow-sm">
+              <kbd className="hidden lg:inline-block px-1.5 py-0.5 text-[10px] font-mono bg-white border border-slate-300 rounded shadow-2xs shrink-0">
                 /
               </kbd>
             </button>
           </div>
 
-          {/* Right: Actions & Profile */}
-          <div className="flex items-center gap-2 sm:gap-3">
-            <Link
-              to="/architecture"
-              className="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-semibold"
-            >
-              <Workflow className="w-3.5 h-3.5 text-gov-600" />
-              <span>Architecture</span>
-            </Link>
-
+          {/* Right: Actions, Notifications & Profile */}
+          <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
             <Link
               to="/analysis/new"
-              className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-gov-600 hover:bg-gov-700 text-white text-xs font-semibold shadow-sm transition-all"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gov-600 hover:bg-gov-700 text-white text-xs font-semibold shadow-xs transition-all"
             >
               <Sparkles className="w-3.5 h-3.5 text-amber-300" />
               <span>New Analysis</span>
             </Link>
 
-            {/* Notifications */}
-            <div className="relative">
+            {/* Notifications Popover */}
+            <div className="relative" ref={notifRef}>
               <button
                 type="button"
-                onClick={() => setShowNotifications(!showNotifications)}
-                className="p-2 text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors relative"
+                onClick={() => {
+                  setShowNotifications(prev => !prev);
+                  setShowProfileMenu(false);
+                }}
+                className="p-2 text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-colors relative cursor-pointer"
+                title="Procurement notifications"
+                aria-label="Procurement notifications"
               >
                 <Bell className="w-4 h-4" />
                 <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-gov-600 rounded-full ring-2 ring-white" />
               </button>
 
               {showNotifications && (
-                <div className="absolute right-0 mt-2 w-72 bg-white rounded-xl shadow-xl border border-slate-200 p-3 z-50 animate-fade-in">
+                <div className="absolute right-0 mt-2 w-72 sm:w-80 bg-white rounded-2xl shadow-xl border border-slate-200 p-3 z-50 animate-fade-in">
                   <div className="flex items-center justify-between pb-2 border-b border-slate-100">
                     <h4 className="text-xs font-bold text-slate-900">Procurement Alerts</h4>
-                    <span className="text-[10px] bg-gov-50 text-gov-700 px-1.5 py-0.5 rounded font-semibold">2 New</span>
+                    <span className="text-[10px] bg-gov-50 text-gov-700 px-1.5 py-0.5 rounded font-bold">2 Notified</span>
                   </div>
                   <div className="py-2 space-y-2 text-xs">
-                    <div className="p-2 bg-slate-50 rounded-lg border border-slate-100">
+                    <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-100">
                       <p className="font-semibold text-slate-800 text-[11px]">DPIIT Quality Control Order Update</p>
-                      <p className="text-[10px] text-slate-500 mt-0.5">Mandatory certification updated for Electrical Appliances & Footwear.</p>
+                      <p className="text-[10px] text-slate-500 mt-0.5 leading-snug">Mandatory certification updated for Electrical Appliances & Footwear.</p>
                     </div>
-                    <div className="p-2 bg-slate-50 rounded-lg border border-slate-100">
+                    <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-100">
                       <p className="font-semibold text-slate-800 text-[11px]">LED Street Lighting Norms Reaffirmed</p>
-                      <p className="text-[10px] text-slate-500 mt-0.5">IS 10322 (Part 5/Sec 3) benchmark guidelines updated.</p>
+                      <p className="text-[10px] text-slate-500 mt-0.5 leading-snug">IS 10322 (Part 5/Sec 3) benchmark guidelines updated.</p>
                     </div>
                   </div>
                 </div>
               )}
             </div>
 
-            {/* User profile menu */}
-            <div className="relative">
+            {/* User Profile Menu */}
+            <div className="relative" ref={profileRef}>
               {user ? (
                 <button
                   type="button"
-                  onClick={() => setShowProfileMenu(!showProfileMenu)}
-                  className="flex items-center gap-2 p-1.5 pl-2 rounded-xl border border-slate-200 hover:bg-slate-50 transition-colors"
+                  onClick={() => {
+                    setShowProfileMenu(prev => !prev);
+                    setShowNotifications(false);
+                  }}
+                  className="flex items-center gap-1.5 sm:gap-2 p-1 sm:p-1.5 sm:pl-2 rounded-xl border border-slate-200 hover:bg-slate-50 transition-colors cursor-pointer"
+                  title="User profile menu"
+                  aria-label="User profile menu"
                 >
-                  <div className="w-7 h-7 rounded-lg bg-gov-100 text-gov-800 flex items-center justify-center font-bold text-xs">
-                    {user.name ? user.name.charAt(0) : 'U'}
+                  <div className="w-7 h-7 rounded-lg bg-gov-100 text-gov-800 flex items-center justify-center font-bold text-xs shrink-0">
+                    {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
                   </div>
-                  <div className="hidden md:block text-left pr-1">
-                    <p className="text-xs font-semibold text-slate-900 leading-tight truncate max-w-[120px]">{user.name}</p>
-                    <p className="text-[10px] text-slate-500 truncate max-w-[120px]">{user.organization || user.role}</p>
+                  <div className="hidden sm:block text-left pr-1">
+                    <p className="text-xs font-bold text-slate-900 leading-tight truncate max-w-[110px]">{user.name}</p>
+                    <p className="text-[10px] text-slate-500 truncate max-w-[110px]">{user.organization || user.role}</p>
                   </div>
-                  <ChevronDown className="w-3.5 h-3.5 text-slate-400 hidden sm:block" />
+                  <ChevronDown className="w-3.5 h-3.5 text-slate-400 hidden sm:block shrink-0" />
                 </button>
               ) : (
                 <Link
                   to="/login"
-                  className="px-3.5 py-1.5 rounded-lg border border-slate-300 text-slate-700 hover:bg-slate-50 text-xs font-semibold"
+                  className="px-3 py-1.5 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-50 text-xs font-semibold"
                 >
                   Sign In
                 </Link>
               )}
 
               {showProfileMenu && user && (
-                <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-slate-200 py-1.5 z-50 animate-fade-in">
-                  <div className="px-4 py-2 border-b border-slate-100">
+                <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-slate-200 py-1.5 z-50 animate-fade-in">
+                  <div className="px-4 py-2.5 border-b border-slate-100">
                     <p className="text-xs font-bold text-slate-900 truncate">{user.name}</p>
                     <p className="text-[11px] text-slate-500 truncate">{user.email}</p>
                     <span className="inline-block mt-1 text-[10px] font-semibold bg-gov-50 text-gov-700 px-2 py-0.5 rounded">
@@ -199,13 +222,6 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                     className="block px-4 py-2 text-xs text-slate-700 hover:bg-slate-50 font-medium"
                   >
                     Dashboard
-                  </Link>
-                  <Link
-                    to="/architecture"
-                    onClick={() => setShowProfileMenu(false)}
-                    className="block px-4 py-2 text-xs text-slate-700 hover:bg-slate-50 font-medium"
-                  >
-                    System Architecture
                   </Link>
                   <Link
                     to="/history"
@@ -222,6 +238,13 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                     Saved Standards
                   </Link>
                   <Link
+                    to="/reports"
+                    onClick={() => setShowProfileMenu(false)}
+                    className="block px-4 py-2 text-xs text-slate-700 hover:bg-slate-50 font-medium"
+                  >
+                    Reports Repository
+                  </Link>
+                  <Link
                     to="/settings"
                     onClick={() => setShowProfileMenu(false)}
                     className="block px-4 py-2 text-xs text-slate-700 hover:bg-slate-50 font-medium"
@@ -236,7 +259,7 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                       logout();
                       navigate('/login');
                     }}
-                    className="w-full text-left px-4 py-2 text-xs text-rose-600 hover:bg-rose-50 font-semibold flex items-center gap-1.5"
+                    className="w-full text-left px-4 py-2 text-xs text-rose-600 hover:bg-rose-50 font-semibold flex items-center gap-1.5 cursor-pointer"
                   >
                     <LogOut className="w-3.5 h-3.5" />
                     Sign Out

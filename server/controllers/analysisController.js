@@ -1,7 +1,7 @@
 import { Analysis } from '../models/Analysis.js';
 import { findRelevantStandards } from '../services/aiService.js';
 
-const memoryAnalyses = [
+export const memoryAnalyses = [
   {
     _id: 'demo_analysis_led_01',
     productName: '100W Outdoor LED Street Light',
@@ -144,6 +144,108 @@ const memoryAnalyses = [
       }
     },
     createdAt: new Date(Date.now() - 7200000).toISOString()
+  },
+  {
+    _id: 'demo_analysis_pump_04',
+    productName: '5 HP Solar Submersible Water Pump Set',
+    productCategory: 'Water Pumps & Motors',
+    rawInput: '5 HP (3.7 kW) Solar Submersible Water Pump Set with 100m total head, stainless steel impeller, and MPPT inverter.',
+    inputType: 'specification',
+    confidenceScore: 95,
+    confidenceLabel: 'Highly Relevant',
+    explanation: 'Mapped to primary standard IS 8034 (submersible pumpsets) and IS 8472 (centrifugal pumps). Flags mandatory Submersible Pumps QCO.',
+    primaryStandards: [
+      {
+        standardNumber: 'IS 8034: 2018',
+        title: 'Submersible Pumpsets - Specification',
+        relevanceScore: 95,
+        edition: '3rd Revision',
+        status: 'Current',
+        category: 'Pumps & Hydraulics',
+        whyRecommended: 'Core standard governing submersible motor pumpsets for agricultural and municipal supply.'
+      },
+      {
+        standardNumber: 'IS 8472: 2019',
+        title: 'Pumps - Centrifugal Pumps for Clear Water',
+        relevanceScore: 90,
+        edition: '3rd Revision',
+        status: 'Current',
+        category: 'Pumps & Hydraulics',
+        whyRecommended: 'Hydraulic and head performance testing standard.'
+      }
+    ],
+    relatedStandards: [
+      {
+        standardNumber: 'IS 14286: 2010',
+        title: 'Crystalline Silicon Terrestrial PV Modules',
+        relationshipType: 'Testing Standard',
+        relevanceScore: 88
+      }
+    ],
+    tenderGaps: [
+      {
+        category: 'Installation & Workmanship Gap',
+        severity: 'LOW',
+        title: 'Installation Code of Practice Not Referenced',
+        description: 'Tender does not tie contractor workmanship to published Indian Standard Codes of Practice.',
+        remedy: 'Reference IS 9694 (Part 2).'
+      }
+    ],
+    certifications: [
+      {
+        type: 'BIS ISI Product Certification (Scheme I)',
+        status: 'Applicable',
+        standardNumber: 'IS 8034: 2018',
+        authority: 'Ministry of Heavy Industries / DPIIT',
+        mandateReason: 'Covered under mandatory Submersible Pumps (Quality Control) Order. Procuring authority must ensure active BIS License.',
+        verificationNote: 'Verify valid 7-digit CML Number on official e-BIS portal (manakonline.in).'
+      }
+    ],
+    procurementReadiness: {
+      totalScore: 92,
+      statusLabel: 'Tender Ready (High Quality)',
+      actionCount: 1
+    },
+    createdAt: new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString()
+  },
+  {
+    _id: 'demo_analysis_helmet_03',
+    productName: 'Industrial Safety Helmets (Non-Metallic)',
+    productCategory: 'Personal Protective Equipment',
+    rawInput: 'Industrial Safety Helmets for construction labor with shock absorption, electrical insulation up to 440V, and chin strap.',
+    inputType: 'specification',
+    confidenceScore: 93,
+    confidenceLabel: 'Highly Relevant',
+    explanation: 'Mapped to IS 2925 for industrial safety helmets. Flags mandatory BIS ISI Certification under Protective Helmets QCO.',
+    primaryStandards: [
+      {
+        standardNumber: 'IS 2925: 1984',
+        title: 'Specification for Industrial Safety Helmets',
+        relevanceScore: 96,
+        edition: '2nd Revision',
+        status: 'Current',
+        category: 'Personal Protective Equipment',
+        whyRecommended: 'Primary Indian Standard specifying construction and penetration tests.'
+      }
+    ],
+    relatedStandards: [],
+    tenderGaps: [],
+    certifications: [
+      {
+        type: 'BIS ISI Product Certification (Scheme I)',
+        status: 'Applicable',
+        standardNumber: 'IS 2925: 1984',
+        authority: 'Ministry of Heavy Industries / DPIIT',
+        mandateReason: 'Quality Control Order prohibits manufacture, import, or tender of uncertified industrial helmets.',
+        verificationNote: 'Verify valid 7-digit CML Number on official e-BIS portal (manakonline.in).'
+      }
+    ],
+    procurementReadiness: {
+      totalScore: 95,
+      statusLabel: 'Tender Ready',
+      actionCount: 0
+    },
+    createdAt: new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString()
   }
 ];
 

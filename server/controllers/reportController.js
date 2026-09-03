@@ -1,4 +1,5 @@
 import { Analysis } from '../models/Analysis.js';
+import { memoryAnalyses } from './analysisController.js';
 
 export const getReportData = async (req, res) => {
   try {
@@ -9,6 +10,10 @@ export const getReportData = async (req, res) => {
       analysis = await Analysis.findById(id);
     } catch (e) {
       // Fallback
+    }
+
+    if (!analysis) {
+      analysis = memoryAnalyses.find(a => String(a._id) === String(id) || String(a.id) === String(id));
     }
 
     if (!analysis) {

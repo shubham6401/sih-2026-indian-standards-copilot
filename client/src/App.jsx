@@ -42,6 +42,8 @@ export function App() {
                 <Route path="/analysis/new" element={<NewAnalysisPage />} />
                 <Route path="/tender/upload" element={<TenderUploadPage />} />
                 <Route path="/analysis/result/:id" element={<RecommendationResultPage />} />
+                <Route path="/analysis/:id" element={<RecommendationResultPage />} />
+                <Route path="/reports/:id" element={<RecommendationResultPage />} />
                 <Route path="/explorer" element={<StandardsExplorerPage />} />
                 <Route path="/standards/:id" element={<StandardDetailsPage />} />
                 <Route path="/history" element={<AnalysisHistoryPage />} />

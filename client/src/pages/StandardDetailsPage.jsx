@@ -22,7 +22,7 @@ import { api } from '../services/api';
 export const StandardDetailsPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { savedStandardNumbers, toggleSaveStandard } = useAnalysis();
+  const { savedStandardNumbers, savedStandards, history, toggleSaveStandard } = useAnalysis();
 
   const [standard, setStandard] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -30,10 +30,50 @@ export const StandardDetailsPage = () => {
 
   useEffect(() => {
     const fetchStandard = async () => {
+      if (!id) return;
       try {
         setLoading(true);
-        const data = await api.getStandardById(id);
-        setStandard(data);
+        setError('');
+        let data = null;
+        try {
+          data = await api.getStandardById(id);
+        } catch (apiErr) {
+          console.warn('API getStandardById fallback:', apiErr.message);
+        }
+
+        // Layer 2: Check saved standards in context or localStorage
+        if (!data) {
+          const decodedId = decodeURIComponent(id).toLowerCase().replace(/[:\s]+/g, ' ').trim();
+          const foundSaved = (savedStandards || []).find(s => {
+            const sNum = (s.standardNumber || '').toLowerCase().replace(/[:\s]+/g, ' ').trim();
+            return sNum.includes(decodedId) || decodedId.includes(sNum) || String(s._id) === String(id) || String(s.id) === String(id);
+          });
+          if (foundSaved) {
+            data = foundSaved.standardDetails || foundSaved;
+          }
+        }
+
+        // Layer 3: Check standards from analysis history
+        if (!data && history && history.length > 0) {
+          const decodedId = decodeURIComponent(id).toLowerCase().replace(/[:\s]+/g, ' ').trim();
+          for (const rep of history) {
+            const allStds = [...(rep.primaryStandards || []), ...(rep.relatedStandards || [])];
+            const found = allStds.find(s => {
+              const sNum = (s.standardNumber || '').toLowerCase().replace(/[:\s]+/g, ' ').trim();
+              return sNum.includes(decodedId) || decodedId.includes(sNum) || String(s._id) === String(id) || String(s.id) === String(id);
+            });
+            if (found) {
+              data = found;
+              break;
+            }
+          }
+        }
+
+        if (data) {
+          setStandard(data);
+        } else {
+          setError(`Standard '${decodeURIComponent(id)}' could not be found in active registry.`);
+        }
       } catch (err) {
         setError(err.message || 'Failed to load standard details');
       } finally {
@@ -41,7 +81,7 @@ export const StandardDetailsPage = () => {
       }
     };
     fetchStandard();
-  }, [id]);
+  }, [id, savedStandards, history]);
 
   if (loading) {
     return (

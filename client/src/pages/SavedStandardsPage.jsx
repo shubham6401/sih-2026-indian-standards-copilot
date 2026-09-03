@@ -28,9 +28,15 @@ export const SavedStandardsPage = () => {
     loadSaved();
   }, []);
 
+  const [openingId, setOpeningId] = useState(null);
+
   const handleOpenStandard = (std) => {
+    const stdId = std.standardNumber || std._id || std.id;
+    if (openingId) return;
+    setOpeningId(stdId);
     setSelectedStandard(std.standardDetails || std);
     setIsModalOpen(true);
+    setTimeout(() => setOpeningId(null), 250);
   };
 
   const filtered = savedStandards.filter((s) => {
@@ -138,10 +144,11 @@ export const SavedStandardsPage = () => {
                   size="xs"
                   variant="ghost"
                   className="text-gov-700 font-bold"
-                  icon={ChevronRight}
+                  disabled={openingId === (std.standardNumber || std._id || std.id)}
+                  icon={openingId === (std.standardNumber || std._id || std.id) ? undefined : ChevronRight}
                   onClick={() => handleOpenStandard(std)}
                 >
-                  Inspect Standard
+                  {openingId === (std.standardNumber || std._id || std.id) ? 'Opening...' : 'Inspect Standard'}
                 </Button>
               </div>
             </div>

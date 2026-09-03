@@ -7,7 +7,7 @@ const LOCAL_STORAGE_HISTORY_KEY = 'is_analysis_history';
 const LOCAL_STORAGE_SAVED_KEY = 'is_saved_standards';
 
 // Initial starter history items so dashboard has realistic data on first load
-const INITIAL_DEMO_HISTORY = [
+export const INITIAL_DEMO_HISTORY = [
   {
     _id: 'demo_analysis_led_01',
     productName: '100W Outdoor LED Street Light',

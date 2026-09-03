@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   ExternalLink,
   Shield,
@@ -19,6 +20,7 @@ import { Button } from '../common/Button';
 import { useAnalysis } from '../../context/AnalysisContext';
 
 export const StandardDetailModal = ({ standard, isOpen, onClose }) => {
+  const navigate = useNavigate();
   const { savedStandardNumbers, toggleSaveStandard } = useAnalysis();
 
   if (!standard) return null;
@@ -190,7 +192,20 @@ export const StandardDetailModal = ({ standard, isOpen, onClose }) => {
         )}
 
         {/* Footer */}
-        <div className="pt-4 border-t border-slate-200 flex justify-end">
+        <div className="pt-4 border-t border-slate-200 flex items-center justify-between">
+          <Button
+            size="sm"
+            variant="ghost"
+            className="text-gov-700 font-bold"
+            icon={ExternalLink}
+            onClick={() => {
+              onClose();
+              navigate(`/standards/${encodeURIComponent(stdNumber)}`);
+            }}
+          >
+            Open Dedicated Page
+          </Button>
+
           <Button size="sm" variant="secondary" onClick={onClose}>
             Close
           </Button>

@@ -11,28 +11,33 @@ export const DashboardLayout = () => {
   const { toastMessage } = useAnalysis();
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
+    <div className="min-h-screen bg-slate-50 flex flex-col overflow-x-hidden">
       <Navbar
-        onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
+        onToggleSidebar={() => setIsSidebarOpen(prev => !prev)}
         isSidebarOpen={isSidebarOpen}
       />
 
-      <div className="flex-1 flex max-w-7xl w-full mx-auto">
+      <div className="flex-1 flex w-full">
         <Sidebar
           isOpen={isSidebarOpen}
           onClose={() => setIsSidebarOpen(false)}
         />
 
-        <main className="flex-1 lg:pl-64 min-w-0 transition-all duration-200">
-          <div className="p-4 sm:p-6 lg:p-8 max-w-6xl mx-auto">
+        {/* Main Content Area - Full width with clean responsive padding */}
+        <main className="flex-1 min-w-0 w-full transition-all duration-200">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
             {/* Disclaimer Callout at top of workspace */}
             <DisclaimerBanner compact />
 
-            {/* Toast Feedback */}
+            {/* Toast Feedback - Top-right on desktop, centered on mobile */}
             {toastMessage && (
-              <div className="fixed bottom-6 right-6 z-50 animate-bounce">
+              <div
+                role="status"
+                aria-live="polite"
+                className="fixed top-20 right-4 sm:right-6 z-50 max-w-sm animate-fade-in shadow-2xl"
+              >
                 <div
-                  className={`px-4 py-3 rounded-xl shadow-xl border text-xs font-bold text-white flex items-center gap-2 ${
+                  className={`px-4 py-3 rounded-xl border text-xs font-bold text-white flex items-center gap-2.5 shadow-lg ${
                     toastMessage.type === 'error'
                       ? 'bg-rose-600 border-rose-700'
                       : toastMessage.type === 'info'
@@ -40,7 +45,7 @@ export const DashboardLayout = () => {
                       : 'bg-emerald-600 border-emerald-700'
                   }`}
                 >
-                  <span>{toastMessage.msg}</span>
+                  <span className="leading-snug">{toastMessage.msg}</span>
                 </div>
               </div>
             )}

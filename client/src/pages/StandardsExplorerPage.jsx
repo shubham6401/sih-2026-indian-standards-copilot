@@ -95,9 +95,15 @@ export const StandardsExplorerPage = () => {
     });
   };
 
+  const [openingId, setOpeningId] = useState(null);
+
   const handleOpenStandard = (std) => {
+    const stdId = std.standardNumber || std._id || std.id;
+    if (openingId) return;
+    setOpeningId(stdId);
     setSelectedStandard(std);
     setIsModalOpen(true);
+    setTimeout(() => setOpeningId(null), 250);
   };
 
   return (
@@ -290,10 +296,11 @@ export const StandardsExplorerPage = () => {
                     size="xs"
                     variant="ghost"
                     className="text-gov-700 font-bold"
-                    icon={ChevronRight}
+                    disabled={openingId === (std.standardNumber || std._id || std.id)}
+                    icon={openingId === (std.standardNumber || std._id || std.id) ? undefined : ChevronRight}
                     onClick={() => handleOpenStandard(std)}
                   >
-                    View Details
+                    {openingId === (std.standardNumber || std._id || std.id) ? 'Opening...' : 'View Details'}
                   </Button>
                 </div>
               </div>

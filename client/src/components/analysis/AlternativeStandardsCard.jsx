@@ -1,15 +1,30 @@
-import React from 'react';
-import { Layers, HelpCircle, ChevronRight, CheckCircle2, AlertCircle } from 'lucide-react';
-import { Badge } from '../common/Badge';
+import React, { useState } from 'react';
+import { Layers, ChevronRight, Loader2 } from 'lucide-react';
 import { ScoreIndicator } from '../common/ScoreIndicator';
 
 export const AlternativeStandardsCard = ({
   primaryStandards = [],
   alternativeStandards = [],
-  onViewDetails
+  alternatives = [],
+  onViewDetails,
+  onSelectStandard
 }) => {
+  const [openingStd, setOpeningStd] = useState(null);
+  const altsList = alternativeStandards.length > 0 ? alternativeStandards : alternatives;
+  const handler = onViewDetails || onSelectStandard;
+
+  const handleOpen = async (alt) => {
+    if (!handler || openingStd) return;
+    setOpeningStd(alt.standardNumber);
+    try {
+      await handler(alt);
+    } finally {
+      setTimeout(() => setOpeningStd(null), 300);
+    }
+  };
+
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-sm my-6 space-y-5">
+    <div className="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-xs my-6 space-y-5">
       <div className="pb-4 border-b border-slate-100">
         <div className="flex items-center gap-2">
           <span className="text-[10px] font-extrabold uppercase tracking-wider bg-gov-100 text-gov-800 px-2 py-0.5 rounded border border-gov-200">
@@ -47,13 +62,13 @@ export const AlternativeStandardsCard = ({
         ))}
 
         {/* Alternative Standards */}
-        {alternativeStandards.length > 0 && (
+        {altsList.length > 0 && (
           <div className="space-y-3 pt-2">
             <h4 className="text-xs font-bold uppercase tracking-wider text-slate-700">
               Evaluated Alternatives & Specialized Standards:
             </h4>
 
-            {alternativeStandards.map((alt, idx) => (
+            {altsList.map((alt, idx) => (
               <div
                 key={idx}
                 className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs space-y-2 hover:border-slate-300 transition-all"
@@ -77,14 +92,26 @@ export const AlternativeStandardsCard = ({
                   <p className="mt-0.5">{alt.whyAlternative}</p>
                 </div>
 
-                {onViewDetails && (
+                {handler && (
                   <div className="pt-2 flex justify-end">
                     <button
                       type="button"
-                      onClick={() => onViewDetails(alt)}
-                      className="text-[11px] font-bold text-gov-600 hover:text-gov-800 underline inline-flex items-center gap-1"
+                      disabled={openingStd === alt.standardNumber}
+                      onClick={() => handleOpen(alt)}
+                      className="text-[11px] font-bold text-gov-600 hover:text-gov-800 underline inline-flex items-center gap-1 cursor-pointer disabled:opacity-60"
+                      aria-label={`Inspect alternative standard ${alt.standardNumber}`}
                     >
-                      Inspect Alternative Standard <ChevronRight className="w-3 h-3" />
+                      {openingStd === alt.standardNumber ? (
+                        <>
+                          <Loader2 className="w-3 h-3 animate-spin" />
+                          <span>Opening...</span>
+                        </>
+                      ) : (
+                        <>
+                          <span>Inspect Alternative Standard</span>
+                          <ChevronRight className="w-3 h-3" />
+                        </>
+                      )}
                     </button>
                   </div>
                 )}

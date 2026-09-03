@@ -30,10 +30,20 @@ export const ReportsPage = () => {
   const [search, setSearch] = useState('');
   const [reportToDelete, setReportToDelete] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [openingId, setOpeningId] = useState(null);
 
   useEffect(() => {
     loadHistory();
   }, []);
+
+  const handleOpenReport = (rep) => {
+    const id = rep._id || rep.id;
+    if (!id || openingId) return;
+    setOpeningId(id);
+    setTimeout(() => {
+      navigate(`/reports/${id}`);
+    }, 150);
+  };
 
   const openDeleteModal = (rep, e) => {
     if (e && e.stopPropagation) e.stopPropagation();
@@ -187,9 +197,11 @@ export const ReportsPage = () => {
                     <Button
                       size="xs"
                       variant="primary"
-                      onClick={() => navigate(`/analysis/result/${rep._id}`)}
+                      disabled={openingId === (rep._id || rep.id)}
+                      onClick={() => handleOpenReport(rep)}
                     >
-                      <Eye className="w-3.5 h-3.5 mr-1" /> View Full Report
+                      <Eye className="w-3.5 h-3.5 mr-1" />
+                      {openingId === (rep._id || rep.id) ? 'Opening...' : 'View Full Report'}
                     </Button>
                   </div>
                 </div>
