@@ -3,7 +3,12 @@ import {
   getUsers,
   getPlatformStats,
   getSystemActivity,
-  updateUserRole
+  updateUserRole,
+  getStandardsRegistry,
+  syncStandards,
+  approveStandardRevision,
+  getAuditLogs,
+  resetDemoData
 } from '../controllers/adminController.js';
 import { protect, authorizeRoles } from '../middleware/authMiddleware.js';
 
@@ -17,5 +22,14 @@ router.get('/users', getUsers);
 router.get('/stats', getPlatformStats);
 router.get('/activity', getSystemActivity);
 router.patch('/users/:id/role', updateUserRole);
+
+// Standards Intelligence Registry & Lifecycle Ingestion
+router.get('/standards', getStandardsRegistry);
+router.post('/standards/sync', syncStandards);
+router.patch('/standards/:id/approve', approveStandardRevision);
+
+// Enterprise Governance & Audit
+router.get('/audit-logs', getAuditLogs);
+router.post('/demo/reset', resetDemoData);
 
 export default router;

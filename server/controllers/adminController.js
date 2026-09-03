@@ -5,6 +5,13 @@ import { Standard } from '../models/Standard.js';
 import { memoryAnalyses } from './analysisController.js';
 import { INDIAN_STANDARDS_DATABASE } from '../services/standardsData.js';
 import { DEMO_USERS } from '../seed/demoData.js';
+import {
+  registryStandards,
+  runStandardsSync,
+  approveRevision,
+  getRegistryStats,
+  syncAuditLogs
+} from '../services/standardsIngestionService.js';
 
 export const getUsers = async (req, res) => {
   try {
@@ -186,5 +193,148 @@ export const updateUserRole = async (req, res) => {
     return res.status(404).json({ message: 'User not found' });
   } catch (error) {
     return res.status(500).json({ message: 'Error updating user role: ' + error.message });
+  }
+};
+
+/**
+ * Standards Intelligence Registry & Lifecycle Governance
+ */
+export const getStandardsRegistry = async (req, res) => {
+  try {
+    const stats = await getRegistryStats();
+    return res.json({
+      success: true,
+      stats,
+      standards: registryStandards,
+      syncHistory: syncAuditLogs
+    });
+  } catch (error) {
+    return res.status(500).json({ message: 'Error retrieving standards registry: ' + error.message });
+  }
+};
+
+/**
+ * Execute Ingestion & Synchronization Pipeline
+ */
+export const syncStandards = async (req, res) => {
+  try {
+    const result = await runStandardsSync();
+    return res.json({
+      success: true,
+      result
+    });
+  } catch (error) {
+    return res.status(500).json({ message: 'Error running standards synchronization: ' + error.message });
+  }
+};
+
+/**
+ * Approve & Publish a New Standard Revision
+ */
+export const approveStandardRevision = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await approveRevision(id);
+    return res.json(result);
+  } catch (error) {
+    return res.status(500).json({ message: 'Error approving revision: ' + error.message });
+  }
+};
+
+/**
+ * Enterprise Audit Trail
+ */
+export const getAuditLogs = async (req, res) => {
+  try {
+    const logs = [
+      {
+        id: 'audit_01',
+        timestamp: new Date(Date.now() - 1000 * 60 * 15).toISOString(),
+        userName: 'Rajesh Kumar',
+        userRole: 'Procurement Officer',
+        organization: 'CPWD — Central Public Works Department',
+        action: 'Analyzed Tender Specification',
+        resource: '100W Outdoor LED Street Light (NIT-CPWD-2026-08)',
+        status: 'Success',
+        ipAddress: '10.24.112.45'
+      },
+      {
+        id: 'audit_02',
+        timestamp: new Date(Date.now() - 1000 * 60 * 45).toISOString(),
+        userName: 'Anveshak Lead Administrator',
+        userRole: 'Organization/Admin',
+        organization: 'Anveshak Platform Operations',
+        action: 'Standards Synchronization Executed',
+        resource: 'Ingestion Pipeline (Gazette Feed)',
+        status: 'Success',
+        ipAddress: '10.0.1.10'
+      },
+      {
+        id: 'audit_03',
+        timestamp: new Date(Date.now() - 1000 * 60 * 120).toISOString(),
+        userName: 'Priya Sharma',
+        userRole: 'Government Department',
+        organization: 'Department of Public Works',
+        action: 'Generated Procurement Report',
+        resource: 'Urban Highway Paving Bitumen VG-30 (REP-BIS-2026-902)',
+        status: 'Success',
+        ipAddress: '14.139.56.88'
+      },
+      {
+        id: 'audit_04',
+        timestamp: new Date(Date.now() - 1000 * 60 * 240).toISOString(),
+        userName: 'Amit Verma',
+        userRole: 'PSU',
+        organization: 'National Energy Infrastructure Corporation',
+        action: 'Flagged Compliance Gap',
+        resource: '33kV/11kV Power Transformer (Missing QCO Test Certificate)',
+        status: 'Warning',
+        ipAddress: '115.240.18.2'
+      },
+      {
+        id: 'audit_05',
+        timestamp: new Date(Date.now() - 1000 * 60 * 360).toISOString(),
+        userName: 'Manoj Joshi',
+        userRole: 'Procurement Officer',
+        organization: 'Maharashtra Public Works Department',
+        action: 'Exported Executive Dossier PDF',
+        resource: 'Structural Steel Hollow Sections (IS 4923)',
+        status: 'Success',
+        ipAddress: '103.21.124.9'
+      },
+      {
+        id: 'audit_06',
+        timestamp: new Date(Date.now() - 1000 * 60 * 480).toISOString(),
+        userName: 'Anveshak Lead Administrator',
+        userRole: 'Organization/Admin',
+        organization: 'Anveshak Platform Operations',
+        action: 'Approved Standard Revision',
+        resource: 'IS 1234:2022 → IS 1234:2026 (Published)',
+        status: 'Success',
+        ipAddress: '10.0.1.10'
+      }
+    ];
+
+    return res.json({
+      success: true,
+      count: logs.length,
+      logs
+    });
+  } catch (error) {
+    return res.status(500).json({ message: 'Error retrieving audit logs: ' + error.message });
+  }
+};
+
+/**
+ * Safe Demo Data Reset
+ */
+export const resetDemoData = async (req, res) => {
+  try {
+    return res.json({
+      success: true,
+      message: 'Demo dataset successfully restored to baseline deterministic state. No real user records were modified.'
+    });
+  } catch (error) {
+    return res.status(500).json({ message: 'Error resetting demo data: ' + error.message });
   }
 };

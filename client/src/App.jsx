@@ -23,6 +23,9 @@ import { ArchitecturePage } from './pages/ArchitecturePage';
 import { EvaluatorQuestionsPage } from './pages/EvaluatorQuestionsPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { AdminUsersPage } from './pages/AdminUsersPage';
+import { AdminStandardsPage } from './pages/AdminStandardsPage';
+import { AdminAuditLogsPage } from './pages/AdminAuditLogsPage';
+import { AdminDemoManagementPage } from './pages/AdminDemoManagementPage';
 import { RoleProtectedRoute } from './components/common/RoleProtectedRoute';
 
 export function App() {
@@ -61,6 +64,30 @@ export function App() {
                   element={
                     <RoleProtectedRoute allowedRoles={['admin', 'Organization/Admin']}>
                       <AdminUsersPage />
+                    </RoleProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/standards"
+                  element={
+                    <RoleProtectedRoute allowedRoles={['admin', 'Organization/Admin']}>
+                      <AdminStandardsPage />
+                    </RoleProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/audit-logs"
+                  element={
+                    <RoleProtectedRoute allowedRoles={['admin', 'Organization/Admin']}>
+                      <AdminAuditLogsPage />
+                    </RoleProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/demo-data"
+                  element={
+                    <RoleProtectedRoute allowedRoles={['admin', 'Organization/Admin']}>
+                      <AdminDemoManagementPage />
                     </RoleProtectedRoute>
                   }
                 />

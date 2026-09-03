@@ -48,8 +48,57 @@ const standardSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['Current', 'Under Revision', 'Superseded', 'Withdrawn'],
+    enum: ['Current', 'Under Revision', 'Superseded', 'Withdrawn', 'Pending Review'],
     default: 'Current',
+  },
+  registryStatus: {
+    type: String,
+    enum: ['Active', 'Under Revision', 'Pending Review', 'Superseded', 'Withdrawn'],
+    default: 'Active',
+  },
+  version: {
+    type: String,
+    default: '2026.1',
+  },
+  previousVersion: {
+    type: String,
+    default: 'None',
+  },
+  newVersionDetected: {
+    type: Boolean,
+    default: false,
+  },
+  proposedRevision: {
+    type: String,
+    default: '',
+  },
+  qcoApplicable: {
+    type: Boolean,
+    default: false,
+  },
+  qcoNotificationNumber: {
+    type: String,
+    default: '',
+  },
+  notifyingMinistry: {
+    type: String,
+    default: 'Ministry of Commerce & Industry (DPIIT)',
+  },
+  certificationRequired: {
+    type: Boolean,
+    default: true,
+  },
+  certificationType: {
+    type: String,
+    default: 'BIS ISI Scheme-I (Mandatory)',
+  },
+  lastSyncDate: {
+    type: Date,
+    default: Date.now,
+  },
+  sourceUrl: {
+    type: String,
+    default: 'https://www.services.bis.gov.in',
   },
   amendments: [amendmentSchema],
   supersedes: {

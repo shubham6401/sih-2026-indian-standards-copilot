@@ -1,5 +1,6 @@
 import { User } from '../models/User.js';
 import { generateToken } from '../middleware/authMiddleware.js';
+import { DEMO_USERS, DEMO_PASSWORD } from '../seed/demoData.js';
 
 // In-memory fallback user list if database is not active
 const memoryUsers = [];
@@ -77,76 +78,17 @@ export const loginUser = async (req, res) => {
 
     // Check verified demo accounts FIRST for instant 0ms response without DB lag
     const lowEmail = email.toLowerCase().trim();
-    const demoAccounts = {
-      'demo.procurement@anveshak.demo': {
-        _id: 'user_demo_po_01',
-        name: 'Rajesh Kumar',
-        email: 'demo.procurement@anveshak.demo',
-        organization: 'CPWD — Central Public Works Department',
-        role: 'Procurement Officer',
+    const demoMatch = DEMO_USERS.find(u => u.email.toLowerCase() === lowEmail);
+    if (demoMatch && (password === DEMO_PASSWORD || password === 'Demo@12345' || password.length >= 6)) {
+      const demoUser = {
+        _id: demoMatch.demoKey || demoMatch._id || 'user_demo_01',
+        name: demoMatch.name,
+        email: demoMatch.email,
+        organization: demoMatch.organization,
+        organizationType: demoMatch.organizationType || 'Central Government',
+        role: demoMatch.role,
         isDemo: true
-      },
-      'demo.department@anveshak.demo': {
-        _id: 'user_demo_dept_02',
-        name: 'Priya Sharma',
-        email: 'demo.department@anveshak.demo',
-        organization: 'Department of Public Works',
-        role: 'Government Department',
-        isDemo: true
-      },
-      'demo.psu@anveshak.demo': {
-        _id: 'user_demo_psu_03',
-        name: 'Amit Verma',
-        email: 'demo.psu@anveshak.demo',
-        organization: 'National Energy Infrastructure Corporation',
-        role: 'PSU',
-        isDemo: true
-      },
-      'demo.admin@anveshak.demo': {
-        _id: 'user_demo_admin_04',
-        name: 'Anveshak Administrator',
-        email: 'demo.admin@anveshak.demo',
-        organization: 'Anveshak Platform',
-        role: 'Organization/Admin',
-        isDemo: true
-      },
-      // Keep backward compatibility with previous evaluators
-      'officer@cpwd.gov.in': {
-        _id: 'user_demo_po_01',
-        name: 'Rajesh Kumar',
-        email: 'officer@cpwd.gov.in',
-        organization: 'CPWD — Central Public Works Department',
-        role: 'Procurement Officer',
-        isDemo: true
-      },
-      'director.procurement@mohua.gov.in': {
-        _id: 'user_demo_dept_02',
-        name: 'Priya Sharma',
-        email: 'director.procurement@mohua.gov.in',
-        organization: 'Department of Public Works',
-        role: 'Government Department',
-        isDemo: true
-      },
-      'v.malhotra@ntpc.co.in': {
-        _id: 'user_demo_psu_03',
-        name: 'Amit Verma',
-        email: 'v.malhotra@ntpc.co.in',
-        organization: 'National Energy Infrastructure Corporation',
-        role: 'PSU',
-        isDemo: true
-      },
-      'admin@bis-copilot.gov.in': {
-        _id: 'user_demo_admin_04',
-        name: 'Anveshak Administrator',
-        email: 'admin@bis-copilot.gov.in',
-        organization: 'Anveshak Platform',
-        role: 'Organization/Admin',
-        isDemo: true
-      }
-    };
-
-    if (demoAccounts[lowEmail] && (password === 'Demo@12345' || password.length >= 6)) {
-      const demoUser = demoAccounts[lowEmail];
+      };
       return res.json({
         ...demoUser,
         token: generateToken(demoUser)

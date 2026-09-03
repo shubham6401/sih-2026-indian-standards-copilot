@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Mic, MicOff, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { Mic, MicOff, AlertCircle, CheckCircle2, Globe, Trash2, StopCircle, Play } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 
 export const VoiceInput = ({ onTranscript, className = '' }) => {
-  const { lang } = useLanguage();
+  const { lang: globalLang } = useLanguage();
+  const [selectedLang, setSelectedLang] = useState('auto'); // 'en-IN', 'hi-IN', 'auto'
   const [isListening, setIsListening] = useState(false);
   const [capturedRecently, setCapturedRecently] = useState(false);
+  const [transcriptPreview, setTranscriptPreview] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [isSupported, setIsSupported] = useState(true);
 
@@ -16,6 +18,10 @@ export const VoiceInput = ({ onTranscript, className = '' }) => {
     onTranscriptRef.current = onTranscript;
   }, [onTranscript]);
 
+  const effectiveLangCode = selectedLang === 'auto'
+    ? (globalLang === 'hi' ? 'hi-IN' : 'en-IN')
+    : selectedLang;
+
   useEffect(() => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) {
@@ -24,33 +30,37 @@ export const VoiceInput = ({ onTranscript, className = '' }) => {
     }
 
     const recognition = new SpeechRecognition();
-    recognition.continuous = false;
-    recognition.interimResults = false;
-    recognition.lang = lang === 'hi' ? 'hi-IN' : 'en-IN';
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    recognition.lang = effectiveLangCode;
 
     recognition.onresult = (event) => {
-      const transcript = event.results?.[0]?.[0]?.transcript;
-      if (transcript && onTranscriptRef.current) {
-        onTranscriptRef.current(transcript);
-        setCapturedRecently(true);
-        setTimeout(() => setCapturedRecently(false), 3000);
+      let currentText = '';
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        currentText += event.results[i][0].transcript;
       }
-      setIsListening(false);
-      setErrorMessage('');
+
+      if (currentText) {
+        setTranscriptPreview(currentText);
+        if (onTranscriptRef.current) {
+          onTranscriptRef.current(currentText);
+          setCapturedRecently(true);
+        }
+      }
     };
 
     recognition.onerror = (event) => {
       setIsListening(false);
       if (event.error === 'not-allowed') {
-        setErrorMessage('Microphone permission was denied. Please allow microphone access in your browser settings.');
+        setErrorMessage('Microphone access was denied. Please allow microphone permissions in your browser bar.');
       } else if (event.error === 'no-speech') {
-        setErrorMessage('No speech was detected. Please try speaking closer to the microphone.');
+        setErrorMessage('No speech detected. Please speak closer to the microphone.');
       } else if (event.error === 'network') {
-        setErrorMessage('Network error occurred during speech recognition. Please retry.');
+        setErrorMessage('Speech recognition network error. Please retry.');
       } else {
-        setErrorMessage(`Voice recognition notice: ${event.error}`);
+        setErrorMessage(`Speech recognition notice: ${event.error}`);
       }
-      setTimeout(() => setErrorMessage(''), 5000);
+      setTimeout(() => setErrorMessage(''), 6000);
     };
 
     recognition.onend = () => {
@@ -64,18 +74,11 @@ export const VoiceInput = ({ onTranscript, className = '' }) => {
         recognition.abort();
       } catch {}
     };
-  }, []);
-
-  // Synchronize language change immediately with recognition engine
-  useEffect(() => {
-    if (recognitionRef.current) {
-      recognitionRef.current.lang = lang === 'hi' ? 'hi-IN' : 'en-IN';
-    }
-  }, [lang]);
+  }, [effectiveLangCode]);
 
   const toggleListen = () => {
     if (!isSupported) {
-      alert('Voice input is not supported in this browser. Please use Google Chrome or Microsoft Edge, or type your specification manually.');
+      alert('Voice speech-to-text is not supported in this browser. Please use Chrome or Edge, or type your specification directly.');
       return;
     }
 
@@ -89,73 +92,108 @@ export const VoiceInput = ({ onTranscript, className = '' }) => {
     } else {
       setErrorMessage('');
       try {
-        recognitionRef.current.lang = lang === 'hi' ? 'hi-IN' : 'en-IN';
+        recognitionRef.current.lang = effectiveLangCode;
         recognitionRef.current.start();
         setIsListening(true);
       } catch (err) {
-        console.warn('Speech recognition start failed:', err.message);
+        console.warn('Recognition start failed:', err.message);
         setIsListening(false);
       }
     }
   };
 
+  const handleClearTranscript = (e) => {
+    e.stopPropagation();
+    setTranscriptPreview('');
+    setCapturedRecently(false);
+  };
+
   if (!isSupported) {
     return (
-      <button
-        type="button"
-        disabled
-        title="Voice input is not supported in this browser. Please use Chrome/Edge or type manually."
-        aria-label="Voice input not supported"
-        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 text-slate-400 bg-slate-50 text-xs font-semibold cursor-not-allowed opacity-60 ${className}`}
-      >
+      <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 text-slate-400 bg-slate-50 text-xs">
         <MicOff className="w-3.5 h-3.5" />
-        <span>Voice (Not Supported)</span>
-      </button>
+        <span>Voice (Not supported in this browser)</span>
+      </div>
     );
   }
 
   return (
-    <div className="relative inline-flex flex-col items-start">
-      <button
-        type="button"
-        onClick={toggleListen}
-        aria-label={isListening ? 'Stop voice input' : 'Start voice input'}
-        title={
-          isListening
-            ? 'Listening... Click to stop recording'
-            : `Speak specification in ${lang === 'hi' ? 'Hindi (हिंदी)' : 'English / Hinglish'}`
-        }
-        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-semibold transition-all cursor-pointer ${
-          isListening
-            ? 'bg-rose-50 border-rose-400 text-rose-700 animate-pulse ring-2 ring-rose-200 shadow-sm'
-            : capturedRecently
-            ? 'bg-emerald-50 border-emerald-300 text-emerald-700'
-            : 'bg-white hover:bg-slate-50 border-slate-300 text-slate-700 shadow-2xs hover:border-slate-400'
-        } ${className}`}
-      >
-        {isListening ? (
-          <>
-            <span className="w-2 h-2 rounded-full bg-rose-600 animate-ping shrink-0" />
-            <span>Listening ({lang === 'hi' ? 'हिंदी' : 'English'})...</span>
-          </>
-        ) : capturedRecently ? (
-          <>
-            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-            <span>Voice Captured!</span>
-          </>
-        ) : (
-          <>
-            <Mic className="w-3.5 h-3.5 text-gov-600 shrink-0" />
-            <span>Voice Input ({lang === 'hi' ? 'हिंदी' : 'EN'})</span>
-          </>
-        )}
-      </button>
+    <div className={`relative inline-flex flex-col items-start gap-1 ${className}`}>
+      <div className="flex items-center gap-1 bg-white p-1 rounded-xl border border-slate-200 shadow-2xs">
+        {/* Language selector */}
+        <div className="flex items-center gap-1 px-1.5 py-0.5 bg-slate-50 rounded-lg border border-slate-200 text-[11px] font-semibold text-slate-600">
+          <Globe className="w-3 h-3 text-slate-400" />
+          <select
+            value={selectedLang}
+            onChange={(e) => setSelectedLang(e.target.value)}
+            className="bg-transparent text-[11px] font-bold text-slate-700 outline-none cursor-pointer"
+            aria-label="Voice language"
+          >
+            <option value="auto">Auto ({globalLang === 'hi' ? 'हिंदी' : 'EN'})</option>
+            <option value="en-IN">English (India)</option>
+            <option value="hi-IN">हिन्दी (Hindi)</option>
+          </select>
+        </div>
 
-      {/* Floating Alert on Permission Denied or Speech Error */}
+        {/* Start / Stop Button */}
+        <button
+          type="button"
+          onClick={toggleListen}
+          aria-label={isListening ? 'Stop voice recording' : 'Start voice recording'}
+          className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+            isListening
+              ? 'bg-rose-600 text-white animate-pulse shadow-sm'
+              : capturedRecently
+              ? 'bg-emerald-600 text-white shadow-sm'
+              : 'bg-gov-700 text-white hover:bg-gov-800'
+          }`}
+        >
+          {isListening ? (
+            <>
+              <StopCircle className="w-3.5 h-3.5 animate-spin" />
+              <span>Stop Recording</span>
+            </>
+          ) : capturedRecently ? (
+            <>
+              <CheckCircle2 className="w-3.5 h-3.5" />
+              <span>Captured</span>
+            </>
+          ) : (
+            <>
+              <Mic className="w-3.5 h-3.5" />
+              <span>Voice Input</span>
+            </>
+          )}
+        </button>
+
+        {transcriptPreview && (
+          <button
+            type="button"
+            onClick={handleClearTranscript}
+            title="Clear preview"
+            aria-label="Clear preview"
+            className="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg transition-colors cursor-pointer"
+          >
+            <Trash2 className="w-3.5 h-3.5" />
+          </button>
+        )}
+      </div>
+
+      {/* Transcript Live Preview */}
+      {isListening && (
+        <div className="text-[11px] bg-amber-50 border border-amber-200 text-amber-900 px-3 py-1.5 rounded-xl flex items-center gap-2 max-w-md animate-fade-in shadow-xs">
+          <span className="w-2 h-2 rounded-full bg-rose-500 animate-ping shrink-0" />
+          <span className="font-semibold truncate">
+            {transcriptPreview ? `"${transcriptPreview}"` : `Listening in ${effectiveLangCode === 'hi-IN' ? 'Hindi (हिंदी)' : 'English'}... Speak clearly`}
+          </span>
+        </div>
+      )}
+
+      {/* Error alert */}
       {errorMessage && (
-        <div className="absolute top-full left-0 mt-1.5 z-50 p-2.5 bg-rose-50 border border-rose-200 text-rose-800 text-[11px] rounded-xl shadow-lg flex items-start gap-2 max-w-xs animate-fade-in">
-          <AlertCircle className="w-3.5 h-3.5 text-rose-600 shrink-0 mt-0.5" />
-          <span className="leading-snug">{errorMessage}</span>
+        <div className="text-[11px] bg-rose-50 border border-rose-200 text-rose-800 px-3 py-1.5 rounded-xl flex items-center gap-2 max-w-md animate-fade-in">
+          <AlertCircle className="w-3.5 h-3.5 text-rose-600 shrink-0" />
+          <span>{errorMessage}</span>
         </div>
       )}
     </div>

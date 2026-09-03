@@ -219,9 +219,11 @@ export const ROLE_CONFIG = {
       {
         title: 'Platform Governance',
         items: [
-          { label: 'User Management', path: '/admin/users', icon: Users, highlight: true },
-          { label: 'Platform Activity & Audit', path: '/history', icon: Activity },
-          { label: 'All Reports Generated', path: '/reports', icon: FileSpreadsheet }
+          { label: 'Standards Intelligence Registry', path: '/admin/standards', icon: Database, highlight: true },
+          { label: 'User Directory', path: '/admin/users', icon: Users },
+          { label: 'System Audit Trail', path: '/admin/audit-logs', icon: Activity },
+          { label: 'Demo Data Governance', path: '/admin/demo-data', icon: Shield },
+          { label: 'All Reports Archive', path: '/reports', icon: FileSpreadsheet }
         ]
       },
       {
@@ -250,7 +252,8 @@ export const DEMO_PERSONAS = [
     roleKey: ROLE_KEYS.PROCUREMENT_OFFICER,
     name: 'Rajesh Kumar',
     organization: 'CPWD — Central Public Works Department',
-    email: 'demo.procurement@anveshak.demo',
+    organizationType: 'Central Government',
+    email: 'procurement.demo1@anveshak.demo',
     password: 'Demo@12345',
     description: 'Operational procurement analyses, tender vetting, and standards compliance',
     badgeVariant: 'primary'
@@ -259,30 +262,33 @@ export const DEMO_PERSONAS = [
     role: 'Government Department',
     roleKey: ROLE_KEYS.GOVERNMENT_DEPARTMENT,
     name: 'Priya Sharma',
-    organization: 'Department of Public Works',
-    email: 'demo.department@anveshak.demo',
+    organization: 'Department of Public Works & Urban Development',
+    organizationType: 'State Government',
+    email: 'government.demo1@anveshak.demo',
     password: 'Demo@12345',
-    description: 'Department-wide procurement oversight, QCO mandates, and tender analytics',
-    badgeVariant: 'mandate'
+    description: 'Department-wide infrastructure oversight and statutory Quality Control Order compliance',
+    badgeVariant: 'secondary'
   },
   {
-    role: 'Public Sector Undertaking (PSU)',
+    role: 'PSU Executive',
     roleKey: ROLE_KEYS.PSU,
     name: 'Amit Verma',
-    organization: 'National Energy Infrastructure Corporation',
-    email: 'demo.psu@anveshak.demo',
+    organization: 'National Energy Infrastructure Corporation (NTPC-NEIC)',
+    organizationType: 'PSU',
+    email: 'psu.demo1@anveshak.demo',
     password: 'Demo@12345',
-    description: 'Heavy industrial procurement, high-voltage verification, and technical audits',
+    description: 'High-value power transmission equipment and industrial machinery technical audits',
     badgeVariant: 'warning'
   },
   {
-    role: 'Organization / Admin',
+    role: 'Platform Administrator',
     roleKey: ROLE_KEYS.ADMIN,
-    name: 'Anveshak Administrator',
-    organization: 'Anveshak Platform',
-    email: 'demo.admin@anveshak.demo',
+    name: 'Anveshak Lead Administrator',
+    organization: 'Anveshak Platform Operations',
+    organizationType: 'Autonomous Institution',
+    email: 'admin.demo1@anveshak.demo',
     password: 'Demo@12345',
-    description: 'Platform management, user governance, audit telemetry, and knowledge base',
-    badgeVariant: 'danger'
+    description: 'Continuous standards ingestion, revision approvals, user governance & system audit',
+    badgeVariant: 'mandate'
   }
 ];

@@ -7,77 +7,203 @@
 export const DEMO_PASSWORD = 'Demo@12345';
 
 export const DEMO_USERS = [
+  // Procurement Officers (5 Accounts across Central, State, Autonomous & Municipal)
   {
     demoKey: 'user_demo_po_01',
     name: 'Rajesh Kumar',
-    email: 'demo.procurement@anveshak.demo',
+    email: 'procurement.demo1@anveshak.demo',
     password: DEMO_PASSWORD,
     organization: 'CPWD — Central Public Works Department',
+    organizationType: 'Central Government',
     role: 'Procurement Officer',
+    isDemo: true
+  },
+  {
+    demoKey: 'user_demo_po_02',
+    name: 'Manoj Joshi',
+    email: 'procurement.demo2@anveshak.demo',
+    password: DEMO_PASSWORD,
+    organization: 'Maharashtra Public Works Department',
+    organizationType: 'State Government',
+    role: 'Procurement Officer',
+    isDemo: true
+  },
+  {
+    demoKey: 'user_demo_po_03',
+    name: 'Ramesh Chander',
+    email: 'procurement.demo3@anveshak.demo',
+    password: DEMO_PASSWORD,
+    organization: 'All India Institute of Medical Sciences (AIIMS) Engineering',
+    organizationType: 'Autonomous Institution',
+    role: 'Procurement Officer',
+    isDemo: true
+  },
+  {
+    demoKey: 'user_demo_po_04',
+    name: 'Sunil Mehta',
+    email: 'procurement.demo4@anveshak.demo',
+    password: DEMO_PASSWORD,
+    organization: 'Ministry of Housing & Urban Affairs (MoHUA)',
+    organizationType: 'Central Government',
+    role: 'Procurement Officer',
+    isDemo: true
+  },
+  {
+    demoKey: 'user_demo_po_05',
+    name: 'Deepak Verma',
+    email: 'procurement.demo5@anveshak.demo',
+    password: DEMO_PASSWORD,
+    organization: 'New Delhi Municipal Council (NDMC)',
+    organizationType: 'State Government',
+    role: 'Procurement Officer',
+    isDemo: true
+  },
+
+  // Government Departments (4 Accounts across Public Works, Power, Highway & Water)
+  {
+    demoKey: 'user_demo_dept_01',
+    name: 'Priya Sharma',
+    email: 'government.demo1@anveshak.demo',
+    password: DEMO_PASSWORD,
+    organization: 'Department of Public Works & Urban Development',
+    organizationType: 'State Government',
+    role: 'Government Department',
     isDemo: true
   },
   {
     demoKey: 'user_demo_dept_02',
-    name: 'Priya Sharma',
-    email: 'demo.department@anveshak.demo',
+    name: 'Sunita Rao',
+    email: 'government.demo2@anveshak.demo',
     password: DEMO_PASSWORD,
-    organization: 'Department of Public Works',
+    organization: 'Ministry of New and Renewable Energy (MNRE)',
+    organizationType: 'Central Government',
     role: 'Government Department',
+    isDemo: true
+  },
+  {
+    demoKey: 'user_demo_dept_03',
+    name: 'K. Ramanathan',
+    email: 'government.demo3@anveshak.demo',
+    password: DEMO_PASSWORD,
+    organization: 'National Highways Authority of India (NHAI)',
+    organizationType: 'Central Government',
+    role: 'Government Department',
+    isDemo: true
+  },
+  {
+    demoKey: 'user_demo_dept_04',
+    name: 'Arun Saxena',
+    email: 'government.demo4@anveshak.demo',
+    password: DEMO_PASSWORD,
+    organization: 'Department of Drinking Water and Sanitation',
+    organizationType: 'Central Government',
+    role: 'Government Department',
+    isDemo: true
+  },
+
+  // PSUs (4 Accounts across Energy, Heavy Electricals, Petroleum & Mining)
+  {
+    demoKey: 'user_demo_psu_01',
+    name: 'Amit Verma',
+    email: 'psu.demo1@anveshak.demo',
+    password: DEMO_PASSWORD,
+    organization: 'National Energy Infrastructure Corporation (NTPC-NEIC)',
+    organizationType: 'PSU',
+    role: 'PSU',
+    isDemo: true
+  },
+  {
+    demoKey: 'user_demo_psu_02',
+    name: 'Dr. Sanjay Sen',
+    email: 'psu.demo2@anveshak.demo',
+    password: DEMO_PASSWORD,
+    organization: 'Bharat Heavy Electricals & Power Gear Corporation',
+    organizationType: 'PSU',
+    role: 'PSU',
     isDemo: true
   },
   {
     demoKey: 'user_demo_psu_03',
-    name: 'Amit Verma',
-    email: 'demo.psu@anveshak.demo',
+    name: 'Vikram Malhotra',
+    email: 'psu.demo3@anveshak.demo',
     password: DEMO_PASSWORD,
-    organization: 'National Energy Infrastructure Corporation',
+    organization: 'Indian Petroleum & Natural Gas Infrastructure Ltd',
+    organizationType: 'PSU',
     role: 'PSU',
     isDemo: true
   },
   {
-    demoKey: 'user_demo_admin_04',
-    name: 'Anveshak Administrator',
-    email: 'demo.admin@anveshak.demo',
+    demoKey: 'user_demo_psu_04',
+    name: 'R. K. Nair',
+    email: 'psu.demo4@anveshak.demo',
     password: DEMO_PASSWORD,
-    organization: 'Anveshak Platform',
+    organization: 'National Mineral & Steel Development Corporation',
+    organizationType: 'PSU',
+    role: 'PSU',
+    isDemo: true
+  },
+
+  // Administrators (2 Accounts)
+  {
+    demoKey: 'user_demo_admin_01',
+    name: 'Anveshak Lead Administrator',
+    email: 'admin.demo1@anveshak.demo',
+    password: DEMO_PASSWORD,
+    organization: 'Anveshak Platform Operations',
+    organizationType: 'Autonomous Institution',
     role: 'Organization/Admin',
     isDemo: true
   },
-  // Additional platform demo team members for admin governance inspection
   {
-    demoKey: 'user_demo_team_05',
-    name: 'Dr. Sanjay Sen',
-    email: 'evaluator.tech@anveshak.demo',
+    demoKey: 'user_demo_admin_02',
+    name: 'BIS Compliance Auditor',
+    email: 'admin.demo2@anveshak.demo',
     password: DEMO_PASSWORD,
-    organization: 'National Energy Infrastructure Corporation',
-    role: 'PSU',
+    organization: 'Technical Standards Directorate',
+    organizationType: 'Central Government',
+    role: 'Organization/Admin',
+    isDemo: true
+  },
+
+  // Backwards compatibility aliases
+  {
+    demoKey: 'user_demo_po_alias',
+    name: 'Rajesh Kumar',
+    email: 'demo.procurement@anveshak.demo',
+    password: DEMO_PASSWORD,
+    organization: 'CPWD — Central Public Works Department',
+    organizationType: 'Central Government',
+    role: 'Procurement Officer',
     isDemo: true
   },
   {
-    demoKey: 'user_demo_team_06',
-    name: 'Sunita Rao',
-    email: 'compliance.reviewer@anveshak.demo',
+    demoKey: 'user_demo_dept_alias',
+    name: 'Priya Sharma',
+    email: 'demo.department@anveshak.demo',
     password: DEMO_PASSWORD,
     organization: 'Department of Public Works',
+    organizationType: 'State Government',
     role: 'Government Department',
     isDemo: true
   },
   {
-    demoKey: 'user_demo_team_07',
-    name: 'Manoj Joshi',
-    email: 'analyst.procurement@anveshak.demo',
+    demoKey: 'user_demo_psu_alias',
+    name: 'Amit Verma',
+    email: 'demo.psu@anveshak.demo',
     password: DEMO_PASSWORD,
-    organization: 'CPWD — Central Public Works Department',
-    role: 'Procurement Officer',
+    organization: 'National Energy Infrastructure Corporation',
+    organizationType: 'PSU',
+    role: 'PSU',
     isDemo: true
   },
   {
-    demoKey: 'user_demo_team_08',
-    name: 'Ramesh Chander',
-    email: 'admin.cpwd@anveshak.demo',
+    demoKey: 'user_demo_admin_alias',
+    name: 'Anveshak Administrator',
+    email: 'demo.admin@anveshak.demo',
     password: DEMO_PASSWORD,
-    organization: 'CPWD — Central Public Works Department',
-    role: 'Procurement Officer',
+    organization: 'Anveshak Platform',
+    organizationType: 'Autonomous Institution',
+    role: 'Organization/Admin',
     isDemo: true
   }
 ];

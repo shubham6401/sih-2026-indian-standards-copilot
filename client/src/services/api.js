@@ -215,5 +215,53 @@ export const api = {
     const data = await res.json();
     if (!res.ok) throw new Error(data.message || 'Failed to update user role');
     return data;
+  },
+
+  getAdminStandards: async () => {
+    const res = await fetch(`${API_BASE}/admin/standards`, {
+      headers: getAuthHeaders()
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || 'Failed to load standards registry');
+    return data;
+  },
+
+  syncAdminStandards: async () => {
+    const res = await fetch(`${API_BASE}/admin/standards/sync`, {
+      method: 'POST',
+      headers: getAuthHeaders()
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || 'Failed to synchronize standards');
+    return data;
+  },
+
+  approveStandardRevision: async (id) => {
+    const res = await fetch(`${API_BASE}/admin/standards/${id}/approve`, {
+      method: 'PATCH',
+      headers: getAuthHeaders()
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || 'Failed to approve standard revision');
+    return data;
+  },
+
+  getAdminAuditLogs: async () => {
+    const res = await fetch(`${API_BASE}/admin/audit-logs`, {
+      headers: getAuthHeaders()
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || 'Failed to load audit logs');
+    return data;
+  },
+
+  resetAdminDemoData: async () => {
+    const res = await fetch(`${API_BASE}/admin/demo/reset`, {
+      method: 'POST',
+      headers: getAuthHeaders()
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || 'Failed to reset demo data');
+    return data;
   }
 };
