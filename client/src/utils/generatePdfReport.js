@@ -1,9 +1,17 @@
 import jsPDF from 'jspdf';
 
+const getPdfConstructor = () => {
+  if (typeof jsPDF === 'function') return jsPDF;
+  if (jsPDF && typeof jsPDF.jsPDF === 'function') return jsPDF.jsPDF;
+  if (jsPDF && typeof jsPDF.default === 'function') return jsPDF.default;
+  return jsPDF;
+};
+
 export const generateProcurementReportPdf = (analysis = {}) => {
   const safeAnalysis = analysis || {};
+  const DocConstructor = getPdfConstructor();
 
-  const pdf = new jsPDF({
+  const pdf = new DocConstructor({
     orientation: 'portrait',
     unit: 'mm',
     format: 'a4'
@@ -1164,8 +1172,10 @@ export const generateProcurementReportPdf = (analysis = {}) => {
     drawPageFooter(8);
   }
 
-  // Save the PDF
+  // Save the PDF if in browser environment, always return pdf object
   const cleanName = productName.replace(/[^a-zA-Z0-9_-]/g, '_').substring(0, 25);
-  pdf.save(`BIS_Procurement_Report_${cleanName}.pdf`);
-  return true;
+  if (typeof window !== 'undefined' && typeof pdf.save === 'function') {
+    pdf.save(`BIS_Procurement_Report_${cleanName}.pdf`);
+  }
+  return pdf;
 };
