@@ -22,7 +22,7 @@ import { api } from '../services/api';
 
 export const AnalysisHistoryPage = () => {
   const navigate = useNavigate();
-  const { history, loadHistory, deleteAnalysisRecord } = useAnalysis();
+  const { history, loadHistory, deleteAnalysisRecord, setCurrentAnalysis } = useAnalysis();
   const [search, setSearch] = useState('');
   const [itemToDelete, setItemToDelete] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -35,11 +35,10 @@ export const AnalysisHistoryPage = () => {
   const handleOpenItem = (item, e) => {
     if (e && e.stopPropagation) e.stopPropagation();
     const id = item._id || item.id;
-    if (!id || openingId) return;
+    if (!id) return;
     setOpeningId(id);
-    setTimeout(() => {
-      navigate(`/reports/${id}`);
-    }, 150);
+    setCurrentAnalysis(item);
+    navigate(`/reports/${id}`);
   };
 
   const openDeleteModal = (item, e) => {

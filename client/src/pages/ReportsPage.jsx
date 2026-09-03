@@ -26,7 +26,7 @@ import { api } from '../services/api';
 
 export const ReportsPage = () => {
   const navigate = useNavigate();
-  const { history, loadHistory, deleteAnalysisRecord } = useAnalysis();
+  const { history, loadHistory, deleteAnalysisRecord, setCurrentAnalysis } = useAnalysis();
   const [search, setSearch] = useState('');
   const [reportToDelete, setReportToDelete] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -38,11 +38,10 @@ export const ReportsPage = () => {
 
   const handleOpenReport = (rep) => {
     const id = rep._id || rep.id;
-    if (!id || openingId) return;
+    if (!id) return;
     setOpeningId(id);
-    setTimeout(() => {
-      navigate(`/reports/${id}`);
-    }, 150);
+    setCurrentAnalysis(rep);
+    navigate(`/reports/${id}`);
   };
 
   const openDeleteModal = (rep, e) => {

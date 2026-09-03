@@ -26,7 +26,7 @@ import { useLanguage } from '../context/LanguageContext';
 
 export const DashboardPage = () => {
   const { user } = useAuth();
-  const { history, savedStandards, loadHistory } = useAnalysis();
+  const { history, savedStandards, loadHistory, setCurrentAnalysis } = useAnalysis();
   const { t } = useLanguage();
   const navigate = useNavigate();
 
@@ -43,11 +43,10 @@ export const DashboardPage = () => {
 
   const handleOpenReport = (item) => {
     const targetId = item._id || item.id;
-    if (!targetId || openingId) return;
+    if (!targetId) return;
     setOpeningId(targetId);
-    setTimeout(() => {
-      navigate(`/reports/${targetId}`);
-    }, 150);
+    setCurrentAnalysis(item);
+    navigate(`/reports/${targetId}`);
   };
 
   return (
