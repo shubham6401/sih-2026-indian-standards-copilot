@@ -8,11 +8,11 @@ export const CertificationSection = ({ certifications = [], standards = [] }) =>
 
   if (displayCerts.length === 0 && Array.isArray(standards) && standards.length > 0) {
     displayCerts = standards
-      .filter(s => s.certification && s.certification.isMandatory)
+      .filter(s => s && typeof s === 'object' && s.certification && s.certification.isMandatory)
       .map(s => ({
         type: s.certification.scheme?.includes('CRS') ? 'Compulsory Registration Scheme (CRS)' : 'BIS ISI Product Certification (Scheme I)',
         status: 'Applicable',
-        standardNumber: s.standardNumber,
+        standardNumber: s.standardNumber || 'Applicable Standard',
         authority: s.certification.notifyingMinistry || 'Bureau of Indian Standards (BIS) / DPIIT',
         mandateReason: `Covered under mandatory Quality Control Order: ${s.certification.orderName || 'BIS QCO'}. Bidders must hold active BIS License (CML / R-Number).`,
         verificationNote: 'Verify valid BIS License / CRS registration on official e-BIS portal (manakonline.in).'

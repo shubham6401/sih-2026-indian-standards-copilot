@@ -20,22 +20,28 @@ export const VersionAmendmentCard = ({ standards = [] }) => {
       </div>
 
       <div className="space-y-4">
-        {standards.map((std, idx) => (
+        {standards.map((rawStd, idx) => {
+          const std = typeof rawStd === 'string' ? { standardNumber: rawStd, status: 'Current' } : (rawStd || {});
+          return (
           <div key={idx} className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80">
             <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
               <div className="flex items-center gap-2">
-                <span className="font-bold text-sm text-slate-900">{std.standardNumber}</span>
+                <span className="font-bold text-sm text-slate-900">{std.standardNumber || 'IS Standard'}</span>
                 <Badge variant={std.status === 'Current' ? 'success' : 'warning'} size="xs">
-                  {std.status}
+                  {std.status || 'Current'}
                 </Badge>
               </div>
               <div className="text-xs text-slate-600 flex items-center gap-3">
-                <span>
-                  <strong>Publication Year:</strong> {std.publicationYear}
-                </span>
-                <span>
-                  <strong>Edition:</strong> {std.edition}
-                </span>
+                {std.publicationYear && (
+                  <span>
+                    <strong>Publication Year:</strong> {std.publicationYear}
+                  </span>
+                )}
+                {std.edition && (
+                  <span>
+                    <strong>Edition:</strong> {std.edition}
+                  </span>
+                )}
               </div>
             </div>
 
@@ -50,7 +56,7 @@ export const VersionAmendmentCard = ({ standards = [] }) => {
             )}
 
             {/* Amendments List */}
-            {std.amendments && std.amendments.length > 0 ? (
+            {Array.isArray(std.amendments) && std.amendments.length > 0 ? (
               <div className="mt-2 text-xs">
                 <p className="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">
                   Notified Amendments:
@@ -74,7 +80,8 @@ export const VersionAmendmentCard = ({ standards = [] }) => {
               </p>
             )}
           </div>
-        ))}
+        );
+      })}
       </div>
     </div>
   );

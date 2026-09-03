@@ -2,9 +2,10 @@ import React from 'react';
 import { Gauge, CheckCircle2, AlertTriangle, HelpCircle, ShieldCheck } from 'lucide-react';
 import { ScoreIndicator } from '../common/ScoreIndicator';
 
-export const ProcurementReadinessScore = ({ readiness = {} }) => {
-  const score = readiness.totalScore || 78;
-  const breakdown = readiness.breakdown || {
+export const ProcurementReadinessScore = ({ readiness }) => {
+  const safeReadiness = readiness && typeof readiness === 'object' ? readiness : {};
+  const score = safeReadiness.totalScore || 78;
+  const breakdown = (safeReadiness.breakdown && typeof safeReadiness.breakdown === 'object') ? safeReadiness.breakdown : {
     standardsCoverage: 90,
     testingCoverage: 72,
     safetyCoverage: 85,
@@ -14,12 +15,12 @@ export const ProcurementReadinessScore = ({ readiness = {} }) => {
   };
 
   const metrics = [
-    { label: 'Standards Coverage', value: breakdown.standardsCoverage, desc: 'Alignment with primary product standard' },
-    { label: 'Testing & Verification', value: breakdown.testingCoverage, desc: 'Presence of mandatory test standards' },
-    { label: 'Safety & Protection', value: breakdown.safetyCoverage, desc: 'Dielectric, photobiological & shock criteria' },
-    { label: 'Certification & QCO', value: breakdown.certificationCoverage, desc: 'Mandatory BIS ISI / CRS registration clause' },
-    { label: 'Version Currency', value: breakdown.versionCurrency, desc: 'Elimination of superseded standard editions' },
-    { label: 'Technical Completeness', value: breakdown.technicalCompleteness, desc: 'Comprehensive dimensional & electrical specs' }
+    { label: 'Standards Coverage', value: breakdown.standardsCoverage ?? 90, desc: 'Alignment with primary product standard' },
+    { label: 'Testing & Verification', value: breakdown.testingCoverage ?? 72, desc: 'Presence of mandatory test standards' },
+    { label: 'Safety & Protection', value: breakdown.safetyCoverage ?? 85, desc: 'Dielectric, photobiological & shock criteria' },
+    { label: 'Certification & QCO', value: breakdown.certificationCoverage ?? 65, desc: 'Mandatory BIS ISI / CRS registration clause' },
+    { label: 'Version Currency', value: breakdown.versionCurrency ?? 80, desc: 'Elimination of superseded standard editions' },
+    { label: 'Technical Completeness', value: breakdown.technicalCompleteness ?? 75, desc: 'Comprehensive dimensional & electrical specs' }
   ];
 
   return (
@@ -48,10 +49,10 @@ export const ProcurementReadinessScore = ({ readiness = {} }) => {
           </div>
           <div>
             <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-gov-600 text-white block text-center">
-              {readiness.statusLabel || 'Readiness Evaluated'}
+              {safeReadiness.statusLabel || 'Readiness Evaluated'}
             </span>
             <span className="text-[10px] text-slate-500 mt-0.5 block">
-              {readiness.actionCount || 3} areas require attention
+              {safeReadiness.actionCount || 3} areas require attention
             </span>
           </div>
         </div>

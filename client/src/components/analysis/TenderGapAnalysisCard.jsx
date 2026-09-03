@@ -2,8 +2,10 @@ import React from 'react';
 import { AlertTriangle, AlertCircle, ShieldAlert, CheckCircle2, ArrowRight, Wrench, ShieldCheck } from 'lucide-react';
 import { Badge } from '../common/Badge';
 
-export const TenderGapAnalysisCard = ({ gaps = [], outdated = [] }) => {
-  const allIssuesCount = gaps.length + outdated.length;
+export const TenderGapAnalysisCard = ({ gaps, outdated }) => {
+  const safeGaps = Array.isArray(gaps) ? gaps : [];
+  const safeOutdated = Array.isArray(outdated) ? outdated : [];
+  const allIssuesCount = safeGaps.length + safeOutdated.length;
 
   return (
     <div className="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-sm my-6 space-y-5">
@@ -32,14 +34,14 @@ export const TenderGapAnalysisCard = ({ gaps = [], outdated = [] }) => {
       </div>
 
       {/* Outdated Standards Alert Box */}
-      {outdated.length > 0 && (
+      {safeOutdated.length > 0 && (
         <div className="space-y-3">
           <h4 className="text-xs font-bold uppercase tracking-wider text-rose-700 flex items-center gap-1.5">
             <AlertTriangle className="w-4 h-4 text-rose-600" />
             <span>Critical: Outdated / Superseded Standard Citations</span>
           </h4>
 
-          {outdated.map((item, idx) => (
+          {safeOutdated.map((item, idx) => (
             <div key={idx} className="p-4 rounded-xl bg-rose-50/70 border border-rose-200 text-xs space-y-2">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
@@ -72,9 +74,9 @@ export const TenderGapAnalysisCard = ({ gaps = [], outdated = [] }) => {
           <span>Missing Technical Clauses & Compliance Items</span>
         </h4>
 
-        {gaps.length > 0 ? (
+        {safeGaps.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {gaps.map((gap, idx) => (
+            {safeGaps.map((gap, idx) => (
               <div key={idx} className="p-4 rounded-xl bg-slate-50 border border-slate-200/90 text-xs space-y-2 flex flex-col justify-between">
                 <div>
                   <div className="flex items-start justify-between gap-2 mb-1.5">

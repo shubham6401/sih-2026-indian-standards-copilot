@@ -18,7 +18,8 @@ export const StandardCard = ({
 
   if (!standard) return null;
 
-  const stdNumber = standard.standardNumber || 'IS Standard';
+  const safeStd = typeof standard === 'string' ? { standardNumber: standard, title: standard } : standard;
+  const stdNumber = safeStd.standardNumber || 'IS Standard';
   const isSaved = savedStandardNumbers.has(stdNumber);
 
   const handleAction = async (e) => {
@@ -30,12 +31,12 @@ export const StandardCard = ({
     const handler = onViewDetails || onClick;
     if (handler) {
       try {
-        await handler(standard);
+        await handler(safeStd);
       } finally {
         setTimeout(() => setIsOpening(false), 300);
       }
     } else {
-      const targetId = standard.standardNumber || standard._id || standard.id;
+      const targetId = safeStd.standardNumber || safeStd._id || safeStd.id;
       navigate(`/standards/${encodeURIComponent(targetId)}`);
       setTimeout(() => setIsOpening(false), 300);
     }
@@ -64,14 +65,14 @@ export const StandardCard = ({
               </Badge>
             )}
             <Badge variant="primary" size="xs">
-              {standard.category || 'General'}
+              {safeStd.category || 'General'}
             </Badge>
-            <Badge variant={standard.status === 'Current' ? 'success' : 'warning'} size="xs">
-              {standard.status || 'Current'}
+            <Badge variant={safeStd.status === 'Current' ? 'success' : 'warning'} size="xs">
+              {safeStd.status || 'Current'}
             </Badge>
-            {standard.edition && (
+            {safeStd.edition && (
               <span className="text-[11px] text-slate-500 font-medium">
-                Edition: {standard.edition}
+                Edition: {safeStd.edition}
               </span>
             )}
           </div>
@@ -82,7 +83,7 @@ export const StandardCard = ({
               type="button"
               onClick={(e) => {
                 e.stopPropagation();
-                toggleSaveStandard(standard);
+                toggleSaveStandard(safeStd);
               }}
               title={isSaved ? 'Remove from saved standards' : 'Save standard to repository'}
               aria-label={isSaved ? `Remove standard ${stdNumber}` : `Save standard ${stdNumber}`}
@@ -104,34 +105,34 @@ export const StandardCard = ({
               {stdNumber}
             </h4>
             <ScoreIndicator
-              score={standard.relevanceScore || 90}
-              label={standard.confidenceLabel || 'Relevant'}
+              score={safeStd.relevanceScore || 90}
+              label={safeStd.confidenceLabel || 'Relevant'}
               size="sm"
             />
           </div>
           <p className="text-xs sm:text-sm font-semibold text-slate-700 mt-1 line-clamp-2">
-            {standard.title}
+            {safeStd.title || stdNumber}
           </p>
         </div>
 
         {/* Why Recommended Explanation */}
-        {standard.whyRecommended && (
+        {safeStd.whyRecommended && (
           <div className="bg-slate-50 rounded-xl p-3 border border-slate-100 mb-4 text-xs">
             <div className="flex items-center gap-1 font-bold text-slate-800 mb-1 text-[11px]">
               <span className="w-1.5 h-1.5 rounded-full bg-gov-600" />
               <span>Why Recommended?</span>
             </div>
             <p className="text-slate-600 leading-relaxed italic">
-              "{standard.whyRecommended}"
+              "{safeStd.whyRecommended}"
             </p>
           </div>
         )}
 
         {/* Scope snippet */}
-        {standard.scope && (
+        {safeStd.scope && (
           <p className="text-xs text-slate-500 line-clamp-2 mb-4">
             <strong className="text-slate-700 font-medium">Scope: </strong>
-            {standard.scope}
+            {safeStd.scope}
           </p>
         )}
       </div>

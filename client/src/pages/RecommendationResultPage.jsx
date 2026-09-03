@@ -96,10 +96,12 @@ export const RecommendationResultPage = () => {
 
   // Immediate synchronous hydration + async fallback for direct URL access
   useEffect(() => {
+    let isMounted = true;
+
+    // Check synchronous memory / localStorage cache first
     const syncItem = resolveInitialAnalysis();
     if (syncItem) {
       setAnalysis(syncItem);
-      setCurrentAnalysis(syncItem);
       setLoading(false);
       setError('');
       return;
@@ -159,21 +161,26 @@ export const RecommendationResultPage = () => {
           data = INITIAL_DEMO_HISTORY.find(item => String(item._id) === String(id) || String(item.id) === String(id));
         }
 
+        if (!isMounted) return;
+
         if (data) {
           setAnalysis(data);
-          setCurrentAnalysis(data);
         } else {
           setError(`Report not found for ID: ${id}`);
         }
       } catch (err) {
-        setError(err.message || 'Report not found.');
+        if (isMounted) setError(err.message || 'Report not found.');
       } finally {
-        setLoading(false);
+        if (isMounted) setLoading(false);
       }
     };
 
     fetchAnalysis();
-  }, [id, resolveInitialAnalysis, setCurrentAnalysis]);
+
+    return () => {
+      isMounted = false;
+    };
+  }, [id]);
 
   const handleOpenStandard = (std) => {
     setSelectedStandard(std);
@@ -270,9 +277,9 @@ export const RecommendationResultPage = () => {
   const allStandards = [...primaryList, ...relatedList];
 
   // Gaps counts by severity
-  const highGaps = gapsList.filter(g => (g.severity || '').toUpperCase() === 'HIGH');
-  const medGaps = gapsList.filter(g => (g.severity || '').toUpperCase() === 'MEDIUM');
-  const lowGaps = gapsList.filter(g => (g.severity || '').toUpperCase() === 'LOW');
+  const highGaps = gapsList.filter(g => (g?.severity || '').toUpperCase() === 'HIGH');
+  const medGaps = gapsList.filter(g => (g?.severity || '').toUpperCase() === 'MEDIUM');
+  const lowGaps = gapsList.filter(g => (g?.severity || '').toUpperCase() === 'LOW');
 
   // 7 Clean Tabs per Requirements 22-29
   const tabItems = [
@@ -441,12 +448,12 @@ export const RecommendationResultPage = () => {
                 {gapsList.slice(0, 3).map((gap, idx) => (
                   <div key={idx} className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs space-y-1">
                     <div className="flex items-center justify-between">
-                      <span className="font-bold text-slate-900">{gap.title || gap.category}</span>
-                      <Badge variant={gap.severity === 'HIGH' ? 'mandate' : 'warning'} size="xs">
-                        {gap.severity}
+                      <span className="font-bold text-slate-900">{gap?.title || gap?.category || (typeof gap === 'string' ? gap : 'Compliance Gap')}</span>
+                      <Badge variant={gap?.severity === 'HIGH' ? 'mandate' : 'warning'} size="xs">
+                        {gap?.severity || 'MEDIUM'}
                       </Badge>
                     </div>
-                    <p className="text-slate-600 text-[11px]">{gap.description}</p>
+                    {gap?.description && <p className="text-slate-600 text-[11px]">{gap.description}</p>}
                   </div>
                 ))}
               </div>

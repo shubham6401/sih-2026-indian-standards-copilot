@@ -8,16 +8,23 @@ export const StandardRelationshipGraph = ({
   relatedStandards = [],
   onSelectStandard
 }) => {
-  const primary = Array.isArray(primaryStandards) && primaryStandards.length > 0
+  const rawPrimary = Array.isArray(primaryStandards) && primaryStandards.length > 0
     ? primaryStandards[0]
     : (primaryStandard || (primaryStandards && typeof primaryStandards === 'object' ? primaryStandards : null));
 
-  if (!primary) return null;
+  if (!rawPrimary) return null;
 
-  const testing = relatedStandards.filter(s => s.relationshipType?.toLowerCase().includes('test'));
-  const safety = relatedStandards.filter(s => s.relationshipType?.toLowerCase().includes('safety'));
-  const otherAllied = relatedStandards.filter(
-    s => !s.relationshipType?.toLowerCase().includes('test') && !s.relationshipType?.toLowerCase().includes('safety')
+  const primary = typeof rawPrimary === 'string'
+    ? { standardNumber: rawPrimary, title: rawPrimary, category: 'Primary Standard' }
+    : rawPrimary;
+
+  const safeRelated = Array.isArray(relatedStandards) ? relatedStandards : [];
+  const normalizedRelated = safeRelated.map(s => typeof s === 'string' ? { standardNumber: s, title: s } : (s || {}));
+
+  const testing = normalizedRelated.filter(s => (s.relationshipType || '').toLowerCase().includes('test'));
+  const safety = normalizedRelated.filter(s => (s.relationshipType || '').toLowerCase().includes('safety'));
+  const otherAllied = normalizedRelated.filter(
+    s => !(s.relationshipType || '').toLowerCase().includes('test') && !(s.relationshipType || '').toLowerCase().includes('safety')
   );
 
   return (

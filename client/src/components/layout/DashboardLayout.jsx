@@ -5,6 +5,7 @@ import { Sidebar } from './Sidebar';
 import { Footer } from './Footer';
 import { DisclaimerBanner } from '../common/DisclaimerBanner';
 import { ScrollToTop } from '../common/ScrollToTop';
+import { ErrorBoundary } from '../common/ErrorBoundary';
 import { useAnalysis } from '../../context/AnalysisContext';
 import { useAuth } from '../../context/AuthContext';
 
@@ -69,7 +70,9 @@ export const DashboardLayout = () => {
               </div>
             )}
 
-            <Outlet />
+            <ErrorBoundary>
+              <Outlet />
+            </ErrorBoundary>
           </div>
         </main>
       </div>
