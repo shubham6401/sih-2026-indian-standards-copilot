@@ -16,7 +16,13 @@ import { useAuth } from '../context/AuthContext';
 
 export const RegisterPage = () => {
   const navigate = useNavigate();
-  const { register } = useAuth();
+  const { register, isAuthenticated } = useAuth();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/dashboard', { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
 
   const [formData, setFormData] = useState({
     name: '',

@@ -1,15 +1,32 @@
 import React, { useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, Navigate } from 'react-router-dom';
 import { Navbar } from './Navbar';
 import { Sidebar } from './Sidebar';
 import { Footer } from './Footer';
 import { DisclaimerBanner } from '../common/DisclaimerBanner';
 import { ScrollToTop } from '../common/ScrollToTop';
 import { useAnalysis } from '../../context/AnalysisContext';
+import { useAuth } from '../../context/AuthContext';
 
 export const DashboardLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { toastMessage } = useAnalysis();
+  const { user, isAuthenticated, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <div className="text-center space-y-3">
+          <div className="w-10 h-10 border-4 border-gov-600 border-t-transparent rounded-full animate-spin mx-auto" />
+          <p className="text-xs text-slate-500 font-semibold">Verifying authorized session...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated && !user) {
+    return <Navigate to="/login" replace />;
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col overflow-x-hidden">

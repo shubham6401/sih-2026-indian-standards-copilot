@@ -17,6 +17,7 @@ import {
 import { Button } from '../components/common/Button';
 import { Badge } from '../components/common/Badge';
 import { StandardDetailModal } from '../components/standards/StandardDetailModal';
+import { VoiceInput } from '../components/common/VoiceInput';
 import { useAnalysis } from '../context/AnalysisContext';
 import { api } from '../services/api';
 
@@ -194,30 +195,36 @@ export const StandardsExplorerPage = () => {
 
       {/* Search and Filters Bar */}
       <div className="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 shadow-xs space-y-4">
-        {/* Search input (Clean SPA form, no full page reload) */}
-        <div className="relative">
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                e.preventDefault();
-              }
-            }}
-            placeholder="Search by IS number, title, keyword (e.g. IS 10322, LED street light, 53 grade cement, TMT, IP65, PPE)..."
-            className="w-full pl-10 pr-16 py-2.5 text-xs rounded-xl border border-slate-300 focus:ring-2 focus:ring-gov-500/20 focus:border-gov-500 focus:outline-none transition-all"
+        {/* Search input with Voice Recognition (SPA, no page reload) */}
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+          <div className="relative flex-1">
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                }
+              }}
+              placeholder="Search by IS number, title, keyword (e.g. IS 10322, LED street light, 53 grade cement, TMT, IP65, PPE)..."
+              className="w-full pl-10 pr-16 py-2.5 text-xs rounded-xl border border-slate-300 focus:ring-2 focus:ring-gov-500/20 focus:border-gov-500 focus:outline-none transition-all"
+            />
+            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3 pointer-events-none" />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery('')}
+                className="absolute right-3 top-2.5 text-xs text-slate-400 hover:text-slate-600 font-bold px-1.5 py-0.5 rounded hover:bg-slate-100 cursor-pointer"
+              >
+                Clear
+              </button>
+            )}
+          </div>
+          <VoiceInput
+            onTranscript={(text) => setSearchQuery(text)}
+            className="shrink-0"
           />
-          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3 pointer-events-none" />
-          {searchQuery && (
-            <button
-              type="button"
-              onClick={() => setSearchQuery('')}
-              className="absolute right-3 top-2.5 text-xs text-slate-400 hover:text-slate-600 font-bold px-1.5 py-0.5 rounded hover:bg-slate-100 cursor-pointer"
-            >
-              Clear
-            </button>
-          )}
         </div>
 
         {/* Filter Facets Grid */}
