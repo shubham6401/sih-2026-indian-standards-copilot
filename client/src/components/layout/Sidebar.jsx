@@ -126,24 +126,45 @@ export const Sidebar = ({ isOpen, onClose }) => {
 
         {/* Drawer Footer with Role Badge and Profile */}
         <div className="p-3 border-t border-slate-200 bg-slate-50/80 shrink-0">
-          <div className="flex items-center justify-between gap-2 mb-2.5">
-            <div className="min-w-0 flex-1">
-              <p className="text-xs font-bold text-slate-900 truncate">{user?.name || 'Authorized Officer'}</p>
-              <p className="text-[10px] text-slate-500 truncate">{user?.organization || 'Government of India'}</p>
-            </div>
-            <span className="text-[9px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded bg-gov-100 text-gov-800 shrink-0">
-              {currentRoleConfig.badgeTitle}
-            </span>
-          </div>
+          {user ? (
+            <>
+              <div className="flex items-center justify-between gap-2 mb-2.5">
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs font-bold text-slate-900 truncate">{user.name}</p>
+                  <p className="text-[10px] text-slate-500 truncate">{user.organization || 'Government of India'}</p>
+                </div>
+                <span className="text-[9px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded bg-gov-100 text-gov-800 shrink-0">
+                  {currentRoleConfig.badgeTitle}
+                </span>
+              </div>
 
-          <button
-            type="button"
-            onClick={logout}
-            className="w-full flex items-center justify-center gap-1.5 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-100 text-slate-600 hover:text-rose-600 text-xs font-semibold transition-colors cursor-pointer"
-          >
-            <LogOut className="w-3.5 h-3.5" />
-            <span>Sign Out</span>
-          </button>
+              <button
+                type="button"
+                onClick={logout}
+                className="w-full flex items-center justify-center gap-1.5 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-100 text-slate-600 hover:text-rose-600 text-xs font-semibold transition-colors cursor-pointer"
+              >
+                <LogOut className="w-3.5 h-3.5" />
+                <span>Sign Out</span>
+              </button>
+            </>
+          ) : (
+            <div className="space-y-1.5">
+              <Link
+                to="/login"
+                onClick={onClose}
+                className="w-full flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-100 text-xs font-semibold transition-colors"
+              >
+                Sign In to Account
+              </Link>
+              <Link
+                to="/register"
+                onClick={onClose}
+                className="w-full flex items-center justify-center py-2 px-3 rounded-xl bg-gov-700 hover:bg-gov-800 text-white text-xs font-bold transition-all shadow-xs"
+              >
+                Register New Profile
+              </Link>
+            </div>
+          )}
         </div>
       </aside>
     </>

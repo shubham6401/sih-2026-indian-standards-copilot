@@ -98,33 +98,36 @@ export const getAnalyses = async (req, res) => {
     const normRole = (role || '').toLowerCase();
 
     if (normRole.includes('admin')) {
-      // Platform Admin: platform-wide visibility
+      // Platform Admin: platform-wide visibility across all 128 analyses
       query = {};
     } else if (normRole.includes('department') || normRole.includes('government')) {
-      // Government Department: department-wide intelligence
+      // Government Department: department-wide intelligence (32 reports)
       query = {
         $or: [
           { userId },
-          { userEmail: 'demo.department@anveshak.demo' },
-          { organization: new RegExp('Department of Public Works|MoHUA', 'i') }
+          { userEmail: { $regex: 'department|government', $options: 'i' } },
+          { demoKey: { $regex: '^dept_', $options: 'i' } },
+          { reportType: { $regex: 'Government Department', $options: 'i' } }
         ]
       };
     } else if (normRole.includes('psu')) {
-      // PSU: PSU-wide technical procurement reviews
+      // PSU: PSU-wide technical procurement reviews (32 reports)
       query = {
         $or: [
           { userId },
-          { userEmail: 'demo.psu@anveshak.demo' },
-          { organization: new RegExp('Energy|NTPC|PSU', 'i') }
+          { userEmail: { $regex: 'psu', $options: 'i' } },
+          { demoKey: { $regex: '^psu_', $options: 'i' } },
+          { reportType: { $regex: 'PSU', $options: 'i' } }
         ]
       };
     } else {
-      // Procurement Officer: officer-scoped records
+      // Procurement Officer: officer-scoped records (32 reports)
       query = {
         $or: [
           { userId },
-          { userEmail: 'demo.procurement@anveshak.demo' },
-          { organization: new RegExp('CPWD', 'i') }
+          { userEmail: { $regex: 'procurement', $options: 'i' } },
+          { demoKey: { $regex: '^po_', $options: 'i' } },
+          { reportType: { $regex: 'Procurement Officer', $options: 'i' } }
         ]
       };
     }
@@ -132,7 +135,7 @@ export const getAnalyses = async (req, res) => {
     let list = [];
     if (mongoose.connection?.readyState === 1) {
       try {
-        list = await Analysis.find(query).sort({ createdAt: -1 }).limit(100);
+        list = await Analysis.find(query).sort({ createdAt: -1 }).limit(200);
       } catch (dbErr) {
         list = [];
       }
@@ -142,11 +145,11 @@ export const getAnalyses = async (req, res) => {
       if (normRole.includes('admin')) {
         list = memoryAnalyses;
       } else if (normRole.includes('department') || normRole.includes('government')) {
-        list = memoryAnalyses.filter(a => a.userEmail?.includes('department') || a.organization?.includes('Public Works'));
+        list = memoryAnalyses.filter(a => a.demoKey?.startsWith('dept_') || a.userEmail?.includes('department'));
       } else if (normRole.includes('psu')) {
-        list = memoryAnalyses.filter(a => a.userEmail?.includes('psu') || a.organization?.includes('Energy'));
+        list = memoryAnalyses.filter(a => a.demoKey?.startsWith('psu_') || a.userEmail?.includes('psu'));
       } else {
-        list = memoryAnalyses.filter(a => a.userEmail?.includes('procurement') || a.organization?.includes('CPWD'));
+        list = memoryAnalyses.filter(a => a.demoKey?.startsWith('po_') || a.userEmail?.includes('procurement'));
       }
     }
 

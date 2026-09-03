@@ -19,10 +19,14 @@ const getAuthHeaders = () => {
 export const api = {
   // Auth
   login: async (credentials) => {
+    const payload = {
+      email: (credentials.email || '').trim().toLowerCase(),
+      password: credentials.password || ''
+    };
     const res = await fetch(`${API_BASE}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(credentials)
+      body: JSON.stringify(payload)
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.message || 'Login failed');
@@ -30,10 +34,17 @@ export const api = {
   },
 
   register: async (userData) => {
+    const payload = {
+      name: (userData.name || '').trim(),
+      email: (userData.email || '').trim().toLowerCase(),
+      organization: (userData.organization || '').trim(),
+      role: userData.role || 'Procurement Officer',
+      password: userData.password || ''
+    };
     const res = await fetch(`${API_BASE}/auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(userData)
+      body: JSON.stringify(payload)
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.message || 'Registration failed');

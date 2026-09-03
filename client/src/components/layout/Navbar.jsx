@@ -120,12 +120,13 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                 <span>Knowledge Base</span>
               </button>
               <a
-                href="https://manakonline.in"
+                href="https://www.bis.gov.in"
                 target="_blank"
                 rel="noreferrer"
                 className="hidden md:inline-flex text-slate-300 hover:text-white items-center gap-1 transition-colors"
+                title="Official Bureau of Indian Standards (BIS) Portal"
               >
-                e-BIS <ExternalLink className="w-2.5 h-2.5" />
+                BIS Portal <ExternalLink className="w-2.5 h-2.5" />
               </a>
               <LanguageToggle />
             </div>
@@ -323,12 +324,20 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                   <ChevronDown className="w-3.5 h-3.5 text-slate-400 hidden sm:block shrink-0" />
                 </button>
               ) : (
-                <Link
-                  to="/login"
-                  className="px-3 py-1.5 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-50 text-xs font-semibold"
-                >
-                  Sign In
-                </Link>
+                <div className="flex items-center gap-2">
+                  <Link
+                    to="/login"
+                    className="px-3 py-1.5 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-50 text-xs font-semibold transition-colors"
+                  >
+                    Sign In
+                  </Link>
+                  <Link
+                    to="/register"
+                    className="px-3 py-1.5 rounded-xl bg-gov-700 hover:bg-gov-800 text-white text-xs font-bold transition-all shadow-xs"
+                  >
+                    Register
+                  </Link>
+                </div>
               )}
 
               {showProfileMenu && user && (

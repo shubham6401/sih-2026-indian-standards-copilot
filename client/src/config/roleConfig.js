@@ -247,48 +247,187 @@ export const ROLE_CONFIG = {
 };
 
 export const DEMO_PERSONAS = [
+  // --- Role 1: Procurement Officer (4 Accounts) ---
   {
     role: 'Procurement Officer',
     roleKey: ROLE_KEYS.PROCUREMENT_OFFICER,
-    name: 'Rajesh Kumar',
-    organization: 'CPWD — Central Public Works Department',
+    name: 'Sh. Rajesh Kumar',
+    organization: 'CPWD — Central Procurement Division',
     organizationType: 'Central Government',
-    email: 'procurement.demo1@anveshak.demo',
+    email: 'procurement1@anveshak.demo',
     password: 'Demo@12345',
-    description: 'Operational procurement analyses, tender vetting, and standards compliance',
+    description: 'Central government civil & electrical works procurement and tender vetting',
     badgeVariant: 'primary'
+  },
+  {
+    role: 'Procurement Officer',
+    roleKey: ROLE_KEYS.PROCUREMENT_OFFICER,
+    name: 'Smt. Sunita Rao',
+    organization: 'Maharashtra State PWD Infrastructure',
+    organizationType: 'State Government',
+    email: 'procurement2@anveshak.demo',
+    password: 'Demo@12345',
+    description: 'State highways, bridge construction, and regional civil projects',
+    badgeVariant: 'primary'
+  },
+  {
+    role: 'Procurement Officer',
+    roleKey: ROLE_KEYS.PROCUREMENT_OFFICER,
+    name: 'Sh. Manoj Joshi',
+    organization: 'Northern Railway Engineering & Stores',
+    organizationType: 'Central Government',
+    email: 'procurement3@anveshak.demo',
+    password: 'Demo@12345',
+    description: 'Railway track materials, electrical substations, and rolling stock stores',
+    badgeVariant: 'primary'
+  },
+  {
+    role: 'Procurement Officer',
+    roleKey: ROLE_KEYS.PROCUREMENT_OFFICER,
+    name: 'Col. Deepak Verma',
+    organization: 'Military Engineer Services (MES)',
+    organizationType: 'Central Government',
+    email: 'procurement4@anveshak.demo',
+    password: 'Demo@12345',
+    description: 'Defense cantonments, airfields, and tactical infrastructure procurement',
+    badgeVariant: 'primary'
+  },
+
+  // --- Role 2: Government Department (4 Accounts) ---
+  {
+    role: 'Government Department',
+    roleKey: ROLE_KEYS.GOVERNMENT_DEPARTMENT,
+    name: 'Dr. Priya Sharma',
+    organization: 'Ministry of Housing & Urban Affairs (MoHUA)',
+    organizationType: 'Central Government',
+    email: 'department1@anveshak.demo',
+    password: 'Demo@12345',
+    description: 'Smart City infrastructure, mass transit e-buses, and urban planning',
+    badgeVariant: 'secondary'
   },
   {
     role: 'Government Department',
     roleKey: ROLE_KEYS.GOVERNMENT_DEPARTMENT,
-    name: 'Priya Sharma',
-    organization: 'Department of Public Works & Urban Development',
-    organizationType: 'State Government',
-    email: 'government.demo1@anveshak.demo',
+    name: 'Sh. K. V. Raman',
+    organization: 'Ministry of Health & Family Welfare (MoHFW)',
+    organizationType: 'Central Government',
+    email: 'department2@anveshak.demo',
     password: 'Demo@12345',
-    description: 'Department-wide infrastructure oversight and statutory Quality Control Order compliance',
+    description: 'National hospital medical gas pipelines, PSA oxygen, and cold-chain vaccine networks',
     badgeVariant: 'secondary'
+  },
+  {
+    role: 'Government Department',
+    roleKey: ROLE_KEYS.GOVERNMENT_DEPARTMENT,
+    name: 'Smt. Ananya Sen',
+    organization: 'Department of School Education & Literacy',
+    organizationType: 'Central Government',
+    email: 'department3@anveshak.demo',
+    password: 'Demo@12345',
+    description: 'Educational institutional infrastructure, classroom ergonomics, and child safety',
+    badgeVariant: 'secondary'
+  },
+  {
+    role: 'Government Department',
+    roleKey: ROLE_KEYS.GOVERNMENT_DEPARTMENT,
+    name: 'Sh. Harish Chandra',
+    organization: 'Department of Drinking Water & Sanitation (Jal Jeevan)',
+    organizationType: 'Central Government',
+    email: 'department4@anveshak.demo',
+    password: 'Demo@12345',
+    description: 'Rural multi-village water supply schemes, HDPE distribution, and water testing labs',
+    badgeVariant: 'secondary'
+  },
+
+  // --- Role 3: PSU (4 Accounts) ---
+  {
+    role: 'PSU Executive',
+    roleKey: ROLE_KEYS.PSU,
+    name: 'Sh. Amit Verma',
+    organization: 'NTPC Energy & Thermal Generation Corporation',
+    organizationType: 'PSU',
+    email: 'psu1@anveshak.demo',
+    password: 'Demo@12345',
+    description: 'Supercritical boiler tubes, slurry pumps, and renewable battery energy storage (BESS)',
+    badgeVariant: 'warning'
   },
   {
     role: 'PSU Executive',
     roleKey: ROLE_KEYS.PSU,
-    name: 'Amit Verma',
-    organization: 'National Energy Infrastructure Corporation (NTPC-NEIC)',
+    name: 'Smt. Meenakshi Sundaram',
+    organization: 'GAIL & IOCL Hydrocarbon Pipeline Division',
     organizationType: 'PSU',
-    email: 'psu.demo1@anveshak.demo',
+    email: 'psu2@anveshak.demo',
     password: 'Demo@12345',
-    description: 'High-value power transmission equipment and industrial machinery technical audits',
+    description: 'Cross-country API 5L gas pipelines, Class 600 gate valves, and refinery pressure vessels',
     badgeVariant: 'warning'
   },
+  {
+    role: 'PSU Executive',
+    roleKey: ROLE_KEYS.PSU,
+    name: 'Sh. Rakesh Singhal',
+    organization: 'Power Grid Corporation of India (POWERGRID)',
+    organizationType: 'PSU',
+    email: 'psu3@anveshak.demo',
+    password: 'Demo@12345',
+    description: '765kV EHV transmission towers, 400kV SF6 gas insulated switchgear (GIS), and polymer insulators',
+    badgeVariant: 'warning'
+  },
+  {
+    role: 'PSU Executive',
+    roleKey: ROLE_KEYS.PSU,
+    name: 'Sh. Vikramaditya Rathore',
+    organization: 'Steel Authority of India Limited (SAIL)',
+    organizationType: 'PSU',
+    email: 'psu4@anveshak.demo',
+    password: 'Demo@12345',
+    description: 'Heavy steel mill EOT cranes, blast furnace refractories, and heavy plate manufacturing',
+    badgeVariant: 'warning'
+  },
+
+  // --- Role 4: Platform Administrator (4 Accounts) ---
   {
     role: 'Platform Administrator',
     roleKey: ROLE_KEYS.ADMIN,
     name: 'Anveshak Lead Administrator',
-    organization: 'Anveshak Platform Operations',
+    organization: 'Anveshak Platform Operations & Standards Governance',
     organizationType: 'Autonomous Institution',
-    email: 'admin.demo1@anveshak.demo',
+    email: 'admin1@anveshak.demo',
     password: 'Demo@12345',
     description: 'Continuous standards ingestion, revision approvals, user governance & system audit',
+    badgeVariant: 'mandate'
+  },
+  {
+    role: 'Platform Administrator',
+    roleKey: ROLE_KEYS.ADMIN,
+    name: 'Director General (Standards)',
+    organization: 'Bureau of Indian Standards Liaison Directorate',
+    organizationType: 'Central Government',
+    email: 'admin2@anveshak.demo',
+    password: 'Demo@12345',
+    description: 'National standards harmonization, gazette revision monitoring, and BIS certification audits',
+    badgeVariant: 'mandate'
+  },
+  {
+    role: 'Platform Administrator',
+    roleKey: ROLE_KEYS.ADMIN,
+    name: 'Chief Technical Examiner',
+    organization: 'DPIIT & QCO Regulatory Enforcement Cell',
+    organizationType: 'Central Government',
+    email: 'admin3@anveshak.demo',
+    password: 'Demo@12345',
+    description: 'Quality Control Order surveillance, market testing enforcement, and compliance investigations',
+    badgeVariant: 'mandate'
+  },
+  {
+    role: 'Platform Administrator',
+    roleKey: ROLE_KEYS.ADMIN,
+    name: 'National Procurement Auditor',
+    organization: 'GeM Public Procurement Harmonization Division',
+    organizationType: 'Autonomous Institution',
+    email: 'admin4@anveshak.demo',
+    password: 'Demo@12345',
+    description: 'Government e-Marketplace category alignment, technical parameter audits, and CVC vetting',
     badgeVariant: 'mandate'
   }
 ];

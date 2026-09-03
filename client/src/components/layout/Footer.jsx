@@ -38,12 +38,12 @@ export const Footer = () => {
               </li>
               <li>
                 <a
-                  href="https://manakonline.in"
+                  href="https://www.bis.gov.in"
                   target="_blank"
                   rel="noreferrer"
                   className="hover:text-white inline-flex items-center gap-1 transition-colors"
                 >
-                  e-BIS (Manakonline Portal) <ExternalLink className="w-3 h-3" />
+                  e-BIS (Official BIS Portal) <ExternalLink className="w-3 h-3" />
                 </a>
               </li>
               <li>

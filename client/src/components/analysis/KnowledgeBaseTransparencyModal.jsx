@@ -95,12 +95,12 @@ export const KnowledgeBaseTransparencyModal = ({ isOpen, onClose }) => {
         {/* Official Links */}
         <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-200">
           <a
-            href="https://manakonline.in"
+            href="https://www.bis.gov.in"
             target="_blank"
             rel="noreferrer"
-            className="text-xs font-semibold text-gov-600 hover:text-gov-800 inline-flex items-center gap-1"
+            className="text-xs font-semibold text-gov-600 hover:text-gov-800 inline-flex items-center gap-1 transition-colors"
           >
-            Visit Official BIS Manakonline Portal <ExternalLink className="w-3 h-3" />
+            Visit Official BIS Portal <ExternalLink className="w-3 h-3" />
           </a>
           <Button size="sm" variant="secondary" onClick={onClose}>
             Close

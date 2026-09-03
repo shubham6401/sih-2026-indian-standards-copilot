@@ -3,6 +3,31 @@ import { api } from '../services/api';
 
 const AuthContext = createContext();
 
+// Local accounts registry helper for offline resilience and fast login after registration
+const getLocalRegisteredUsers = () => {
+  try {
+    return JSON.parse(localStorage.getItem('anveshak_registered_users') || '[]');
+  } catch {
+    return [];
+  }
+};
+
+const saveLocalRegisteredUser = (userRecord) => {
+  try {
+    const list = getLocalRegisteredUsers();
+    const cleanEmail = (userRecord.email || '').trim().toLowerCase();
+    const filtered = list.filter(u => (u.email || '').trim().toLowerCase() !== cleanEmail);
+    filtered.push({
+      ...userRecord,
+      email: cleanEmail,
+      updatedAt: new Date().toISOString()
+    });
+    localStorage.setItem('anveshak_registered_users', JSON.stringify(filtered));
+  } catch (e) {
+    console.warn('Could not save local user account cache', e);
+  }
+};
+
 export const AuthProvider = ({ children }) => {
   // Synchronous initialization from localStorage for instant 0ms auth hydration
   const [user, setUser] = useState(() => {
@@ -10,14 +35,7 @@ export const AuthProvider = ({ children }) => {
       const savedUser = localStorage.getItem('is_auth_user');
       if (savedUser) return JSON.parse(savedUser);
     } catch {}
-    // Default demo officer profile
-    const defaultDemo = {
-      _id: 'user_demo_po_01',
-      name: 'Rajesh Kumar',
-      email: 'demo.procurement@anveshak.demo',
-      organization: 'CPWD — Central Public Works Department',
-      role: 'Procurement Officer'
-    };
+    return null;
   });
 
   const [loading, setLoading] = useState(false);
@@ -26,7 +44,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const verifyTokenInBackground = async () => {
       const token = localStorage.getItem('is_auth_token');
-      if (token && token !== 'demo_active_token_2026') {
+      if (token && token !== 'demo_active_token_2026' && !token.startsWith('local_')) {
         try {
           const freshUser = await api.getMe();
           if (freshUser) {
@@ -42,19 +60,54 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (email, password) => {
+    const cleanEmail = (email || '').trim().toLowerCase();
+    const cleanPass = password || '';
+
+    // 1. Try backend API first
     try {
-      const data = await api.login({ email, password });
+      const data = await api.login({ email: cleanEmail, password: cleanPass });
       setUser(data);
       localStorage.setItem('is_auth_token', data.token || 'demo_active_token_2026');
       localStorage.setItem('is_auth_user', JSON.stringify(data));
+      // Save locally to support offline sessions
+      saveLocalRegisteredUser({
+        _id: data._id,
+        name: data.name,
+        email: cleanEmail,
+        organization: data.organization,
+        role: data.role,
+        password: cleanPass
+      });
       return data;
     } catch (err) {
-      // Instant fallback for demo accounts if remote database is dormant
-      if (email.toLowerCase().includes('demo') || email.toLowerCase().includes('officer')) {
+      // 2. Check local accounts registry (offline / serverless / in-memory fallback)
+      const localUsers = getLocalRegisteredUsers();
+      const localMatch = localUsers.find(u => (u.email || '').trim().toLowerCase() === cleanEmail);
+
+      if (localMatch) {
+        if (localMatch.password === cleanPass) {
+          const authUser = {
+            _id: localMatch._id || 'user_' + Date.now(),
+            name: localMatch.name,
+            email: localMatch.email,
+            organization: localMatch.organization,
+            role: localMatch.role || 'Procurement Officer'
+          };
+          setUser(authUser);
+          localStorage.setItem('is_auth_token', 'local_active_token_2026');
+          localStorage.setItem('is_auth_user', JSON.stringify(authUser));
+          return authUser;
+        } else {
+          throw new Error('Invalid password. Please check your credentials.');
+        }
+      }
+
+      // 3. Check demo accounts fallback
+      if (cleanEmail.includes('demo') || cleanEmail.includes('officer') || cleanEmail.includes('cpwd')) {
         const fallbackDemo = {
           _id: 'officer_cpwd_01',
           name: 'Sh. Rajesh Kumar',
-          email: email.toLowerCase(),
+          email: cleanEmail,
           organization: 'Central Public Works Department (CPWD)',
           role: 'Procurement Officer'
         };
@@ -63,28 +116,57 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('is_auth_user', JSON.stringify(fallbackDemo));
         return fallbackDemo;
       }
+
       throw err;
     }
   };
 
   const register = async (userData) => {
+    const cleanEmail = (userData.email || '').trim().toLowerCase();
+    const cleanName = (userData.name || '').trim();
+    const cleanOrg = (userData.organization || '').trim();
+    const cleanRole = userData.role || 'Procurement Officer';
+
+    const normalizedData = {
+      name: cleanName,
+      email: cleanEmail,
+      organization: cleanOrg,
+      role: cleanRole,
+      password: userData.password
+    };
+
+    // Pre-save to local registry so account persists even if backend is sleeping or restarted
+    saveLocalRegisteredUser({
+      _id: 'user_' + Date.now(),
+      name: cleanName,
+      email: cleanEmail,
+      organization: cleanOrg,
+      role: cleanRole,
+      password: userData.password
+    });
+
     try {
-      const data = await api.register(userData);
+      const data = await api.register(normalizedData);
       setUser(data);
       localStorage.setItem('is_auth_token', data.token || 'demo_active_token_2026');
       localStorage.setItem('is_auth_user', JSON.stringify(data));
       return data;
     } catch (err) {
-      // Fallback for resilient registration during backend database sleep
+      // Re-throw duplicate user error so user is properly notified
+      if (err.message && err.message.toLowerCase().includes('already exists')) {
+        throw err;
+      }
+
+      // Resilient fallback session for offline or serverless environments
       const fallbackUser = {
         _id: 'user_' + Date.now(),
-        name: userData.name,
-        email: userData.email.toLowerCase(),
-        organization: userData.organization,
-        role: userData.role || 'Procurement Officer'
+        name: cleanName,
+        email: cleanEmail,
+        organization: cleanOrg,
+        role: cleanRole
       };
       setUser(fallbackUser);
-      localStorage.setItem('is_auth_token', 'demo_active_token_2026');
+      localStorage.setItem('is_auth_token', 'local_active_token_2026');
       localStorage.setItem('is_auth_user', JSON.stringify(fallbackUser));
       return fallbackUser;
     }

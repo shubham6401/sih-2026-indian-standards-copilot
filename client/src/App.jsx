@@ -28,18 +28,21 @@ import { AdminAuditLogsPage } from './pages/AdminAuditLogsPage';
 import { AdminDemoManagementPage } from './pages/AdminDemoManagementPage';
 import { RoleProtectedRoute } from './components/common/RoleProtectedRoute';
 
+import { ErrorBoundary } from './components/common/ErrorBoundary';
+
 export function App() {
   return (
     <Router>
       <AuthProvider>
         <LanguageProvider>
           <AnalysisProvider>
-            <Routes>
-              {/* Public Landing & Auth Routes */}
-              <Route path="/" element={<LandingPage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/register" element={<RegisterPage />} />
-              <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+            <ErrorBoundary>
+              <Routes>
+                {/* Public Landing & Auth Routes */}
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/register" element={<RegisterPage />} />
+                <Route path="/forgot-password" element={<ForgotPasswordPage />} />
 
               {/* Protected Dashboard & Operations Layout */}
               <Route element={<DashboardLayout />}>
@@ -96,7 +99,8 @@ export function App() {
               {/* Fallback */}
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
-          </AnalysisProvider>
+          </ErrorBoundary>
+        </AnalysisProvider>
         </LanguageProvider>
       </AuthProvider>
     </Router>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import {
   Shield,
@@ -10,19 +10,15 @@ import {
   Loader2,
   AlertCircle,
   Briefcase,
-  CheckCircle2
+  CheckCircle2,
+  Eye,
+  EyeOff
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export const RegisterPage = () => {
   const navigate = useNavigate();
-  const { register, isAuthenticated } = useAuth();
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/dashboard', { replace: true });
-    }
-  }, [isAuthenticated, navigate]);
+  const { user, register, isAuthenticated } = useAuth();
 
   const [formData, setFormData] = useState({
     name: '',
@@ -32,6 +28,8 @@ export const RegisterPage = () => {
     password: '',
     confirmPassword: '',
   });
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -72,13 +70,22 @@ export const RegisterPage = () => {
     e.preventDefault();
     setError('');
 
+    const trimmedName = formData.name.trim();
+    const trimmedEmail = formData.email.trim().toLowerCase();
+    const trimmedOrg = formData.organization.trim();
+
+    if (!trimmedName || !trimmedEmail || !trimmedOrg) {
+      setError('Please fill in all mandatory fields.');
+      return;
+    }
+
     if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
+      setError('Passwords do not match. Please verify.');
       return;
     }
 
     if (formData.password.length < 6) {
-      setError('Password must be at least 6 characters long');
+      setError('Password must be at least 6 characters long.');
       return;
     }
 
@@ -86,16 +93,16 @@ export const RegisterPage = () => {
 
     try {
       await register({
-        name: formData.name,
-        email: formData.email,
-        organization: formData.organization,
+        name: trimmedName,
+        email: trimmedEmail,
+        organization: trimmedOrg,
         role: formData.role,
         password: formData.password
       });
 
       navigate('/dashboard');
     } catch (err) {
-      setError(err.message || 'Registration failed. Please check details.');
+      setError(err.message || 'Registration failed. Please check your details.');
     } finally {
       setLoading(false);
     }
@@ -122,6 +129,23 @@ export const RegisterPage = () => {
 
       <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-xl">
         <div className="bg-white py-7 px-5 sm:px-8 shadow-md rounded-2xl border border-slate-200">
+          {isAuthenticated && user && (
+            <div className="mb-4 p-3 bg-blue-50 border border-blue-200 text-blue-900 text-xs rounded-xl flex items-center justify-between gap-2">
+              <div>
+                <span>Signed in as <strong>{user.name}</strong> ({user.role})</span>
+                <p className="text-[11px] text-blue-700 mt-0.5">
+                  Submitting this form will create and switch to your new profile.
+                </p>
+              </div>
+              <Link
+                to="/dashboard"
+                className="px-2.5 py-1 bg-white border border-blue-300 hover:bg-blue-100 rounded-lg font-bold text-[11px] text-blue-900 shadow-2xs shrink-0"
+              >
+                Dashboard →
+              </Link>
+            </div>
+          )}
+
           {error && (
             <div className="mb-4 p-3 bg-rose-50 border border-rose-200 text-rose-800 text-xs rounded-xl flex items-center gap-2">
               <AlertCircle className="w-4 h-4 shrink-0" />
@@ -230,15 +254,23 @@ export const RegisterPage = () => {
                 </label>
                 <div className="relative">
                   <input
-                    type="password"
+                    type={showPassword ? 'text' : 'password'}
                     required
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
-                    className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-300 focus:ring-2 focus:ring-gov-500/20 focus:border-gov-500"
+                    className="w-full pl-9 pr-9 py-2 text-xs rounded-xl border border-slate-300 focus:ring-2 focus:ring-gov-500/20 focus:border-gov-500"
                     placeholder="••••••••"
                   />
                   <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(prev => !prev)}
+                    className="absolute right-2.5 top-2.5 text-slate-400 hover:text-slate-600 focus:outline-none cursor-pointer"
+                    aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  >
+                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
                 </div>
               </div>
 
@@ -248,15 +280,23 @@ export const RegisterPage = () => {
                 </label>
                 <div className="relative">
                   <input
-                    type="password"
+                    type={showConfirmPassword ? 'text' : 'password'}
                     required
                     name="confirmPassword"
                     value={formData.confirmPassword}
                     onChange={handleChange}
-                    className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-300 focus:ring-2 focus:ring-gov-500/20 focus:border-gov-500"
+                    className="w-full pl-9 pr-9 py-2 text-xs rounded-xl border border-slate-300 focus:ring-2 focus:ring-gov-500/20 focus:border-gov-500"
                     placeholder="••••••••"
                   />
                   <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(prev => !prev)}
+                    className="absolute right-2.5 top-2.5 text-slate-400 hover:text-slate-600 focus:outline-none cursor-pointer"
+                    aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
+                  >
+                    {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
                 </div>
               </div>
             </div>

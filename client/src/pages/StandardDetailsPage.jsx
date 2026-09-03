@@ -155,10 +155,10 @@ export const StandardDetailsPage = () => {
               {isSaved ? 'Saved in Repo' : 'Save Standard'}
             </Button>
             <a
-              href="https://manakonline.in"
+              href="https://www.bis.gov.in"
               target="_blank"
               rel="noreferrer"
-              className="px-3 py-1.5 rounded-lg border border-slate-300 text-xs font-semibold text-slate-700 hover:bg-slate-50 inline-flex items-center gap-1"
+              className="px-3 py-1.5 rounded-lg border border-slate-300 text-xs font-semibold text-slate-700 hover:bg-slate-50 inline-flex items-center gap-1 transition-colors"
             >
               BIS Portal <ExternalLink className="w-3.5 h-3.5" />
             </a>

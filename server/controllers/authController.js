@@ -13,20 +13,42 @@ export const registerUser = async (req, res) => {
       return res.status(400).json({ message: 'Please provide all required registration fields.' });
     }
 
+    const cleanEmail = email.trim().toLowerCase();
+    const cleanName = name.trim();
+    const cleanOrg = organization.trim();
+    const cleanRole = role || 'Procurement Officer';
+
     // Try DB first
     try {
-      const userExists = await User.findOne({ email: email.toLowerCase() });
+      const userExists = await User.findOne({ email: cleanEmail });
       if (userExists) {
         return res.status(400).json({ message: 'A user with this email address already exists.' });
       }
 
       const user = await User.create({
-        name,
-        email: email.toLowerCase(),
+        name: cleanName,
+        email: cleanEmail,
         password,
-        organization,
-        role: role || 'Procurement Officer'
+        organization: cleanOrg,
+        role: cleanRole
       });
+
+      // Synchronize into memoryUsers cache for instant offline fallback
+      const memIdx = memoryUsers.findIndex(u => u.email === cleanEmail);
+      const memRecord = {
+        _id: user._id.toString(),
+        name: cleanName,
+        email: cleanEmail,
+        password,
+        organization: cleanOrg,
+        role: cleanRole,
+        createdAt: new Date()
+      };
+      if (memIdx >= 0) {
+        memoryUsers[memIdx] = memRecord;
+      } else {
+        memoryUsers.push(memRecord);
+      }
 
       return res.status(201).json({
         _id: user._id,
@@ -37,19 +59,19 @@ export const registerUser = async (req, res) => {
         token: generateToken(user)
       });
     } catch (dbErr) {
-      // Memory fallback
-      const existing = memoryUsers.find(u => u.email === email.toLowerCase());
+      // Memory fallback if DB is offline or in serverless fallback mode
+      const existing = memoryUsers.find(u => u.email === cleanEmail);
       if (existing) {
         return res.status(400).json({ message: 'A user with this email address already exists.' });
       }
 
       const newUser = {
         _id: 'mem_' + Date.now(),
-        name,
-        email: email.toLowerCase(),
+        name: cleanName,
+        email: cleanEmail,
         password,
-        organization,
-        role: role || 'Procurement Officer',
+        organization: cleanOrg,
+        role: cleanRole,
         createdAt: new Date()
       };
       memoryUsers.push(newUser);
@@ -76,8 +98,9 @@ export const loginUser = async (req, res) => {
       return res.status(400).json({ message: 'Please provide both email and password.' });
     }
 
-    // Check verified demo accounts FIRST for instant 0ms response without DB lag
     const lowEmail = email.toLowerCase().trim();
+
+    // 1. Check verified demo accounts FIRST for instant 0ms response without DB lag
     const demoMatch = DEMO_USERS.find(u => u.email.toLowerCase() === lowEmail);
     if (demoMatch && (password === DEMO_PASSWORD || password === 'Demo@12345' || password.length >= 6)) {
       const demoUser = {
@@ -95,8 +118,10 @@ export const loginUser = async (req, res) => {
       });
     }
 
+    // 2. Try DB lookup
+    let user = null;
     try {
-      const user = await User.findOne({ email: lowEmail });
+      user = await User.findOne({ email: lowEmail });
       if (user && (await user.matchPassword(password))) {
         return res.json({
           _id: user._id,
@@ -108,21 +133,28 @@ export const loginUser = async (req, res) => {
         });
       }
     } catch (dbErr) {
-      // Memory fallback check
-      const memUser = memoryUsers.find(u => u.email === lowEmail && u.password === password);
-      if (memUser) {
-        return res.json({
-          _id: memUser._id,
-          name: memUser.name,
-          email: memUser.email,
-          organization: memUser.organization,
-          role: memUser.role,
-          token: generateToken(memUser)
-        });
-      }
+      console.warn('[Auth] Database check bypassed for login:', dbErr.message);
     }
 
-    return res.status(401).json({ message: 'Invalid email or password.' });
+    // 3. Check memory fallback (checks if user registered in memory mode OR DB returned null)
+    const memUser = memoryUsers.find(u => u.email === lowEmail);
+    if (memUser && memUser.password === password) {
+      return res.json({
+        _id: memUser._id,
+        name: memUser.name,
+        email: memUser.email,
+        organization: memUser.organization,
+        role: memUser.role,
+        token: generateToken(memUser)
+      });
+    }
+
+    // Specific password failure feedback
+    if (user || (memUser && memUser.password !== password)) {
+      return res.status(401).json({ message: 'Invalid password. Please check your password.' });
+    }
+
+    return res.status(401).json({ message: 'Invalid official email or password.' });
   } catch (error) {
     return res.status(500).json({ message: 'Login failed: ' + error.message });
   }

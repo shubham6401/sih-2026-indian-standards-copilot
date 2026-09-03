@@ -85,12 +85,12 @@ export const DisclaimerBanner = ({ compact = false }) => {
               </span>
             </h4>
             <a
-              href="https://manakonline.in"
+              href="https://www.bis.gov.in"
               target="_blank"
               rel="noreferrer"
               className="text-xs font-semibold text-gov-700 hover:text-gov-900 inline-flex items-center gap-1"
             >
-              Verify on Manakonline BIS <ExternalLink className="w-3 h-3" />
+              Verify on Official BIS Portal <ExternalLink className="w-3 h-3" />
             </a>
           </div>
           <p className="text-xs text-slate-600 mt-1 leading-relaxed">

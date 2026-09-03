@@ -7,13 +7,18 @@ export const getReportData = async (req, res) => {
     let analysis = null;
 
     try {
-      analysis = await Analysis.findById(id);
+      if (id.match(/^[0-9a-fA-F]{24}$/)) {
+        analysis = await Analysis.findById(id);
+      }
+      if (!analysis) {
+        analysis = await Analysis.findOne({ demoKey: id });
+      }
     } catch (e) {
       // Fallback
     }
 
     if (!analysis) {
-      analysis = memoryAnalyses.find(a => String(a._id) === String(id) || String(a.id) === String(id));
+      analysis = memoryAnalyses.find(a => String(a._id) === String(id) || String(a.id) === String(id) || a.demoKey === id);
     }
 
     if (!analysis) {
@@ -21,8 +26,9 @@ export const getReportData = async (req, res) => {
     }
 
     // Build formal 12-section procurement report payload
+    const rawId = analysis._id || analysis.id || analysis.demoKey || id || 'REP001';
     const report = {
-      reportId: `REP-BIS-${String(analysis._id).substring(0, 8).toUpperCase()}`,
+      reportId: `REP-BIS-${String(rawId).replace(/[^a-zA-Z0-9]/g, '').slice(-8).toUpperCase()}`,
       generatedDate: new Date(analysis.createdAt || Date.now()).toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' }),
       procurementRequirement: {
         productName: analysis.productName,

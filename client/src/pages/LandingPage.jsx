@@ -199,18 +199,24 @@ export const LandingPage = () => {
             </Link>
           </div>
 
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-2 sm:gap-2.5">
             <Link
               to="/login"
-              className="px-3.5 py-1.5 rounded-lg border border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-bold transition-all shadow-2xs"
+              className="px-3 py-1.5 rounded-lg border border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-bold transition-all shadow-2xs"
             >
-              Sign In / Login
+              Sign In
+            </Link>
+            <Link
+              to="/register"
+              className="px-3.5 py-1.5 rounded-lg bg-gov-700 hover:bg-gov-800 text-white text-xs font-bold shadow-sm transition-all"
+            >
+              Register
             </Link>
             <Link
               to="/dashboard"
-              className="px-4 py-1.5 rounded-lg bg-gov-600 hover:bg-gov-700 text-white text-xs font-bold shadow-sm transition-all"
+              className="px-3.5 py-1.5 rounded-lg bg-gov-100 hover:bg-gov-200 text-gov-900 border border-gov-300 text-xs font-bold transition-all hidden sm:inline-flex"
             >
-              Open Dashboard
+              Dashboard
             </Link>
           </div>
         </div>
