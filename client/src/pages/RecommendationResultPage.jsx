@@ -52,23 +52,36 @@ export const RecommendationResultPage = () => {
 
   // Helper to synchronously find item from any available memory layer
   const resolveInitialAnalysis = useCallback(() => {
-    if (currentAnalysis && (String(currentAnalysis._id) === String(id) || String(currentAnalysis.id) === String(id))) {
+    if (currentAnalysis && (String(currentAnalysis._id) === String(id) || String(currentAnalysis.id) === String(id) || currentAnalysis.demoKey === id)) {
       return currentAnalysis;
     }
     if (history && history.length > 0) {
-      const found = history.find(item => String(item._id) === String(id) || String(item.id) === String(id));
+      const found = history.find(item => String(item._id) === String(id) || String(item.id) === String(id) || item.demoKey === id);
       if (found) return found;
     }
     try {
-      const localStored = localStorage.getItem('is_analysis_history');
-      if (localStored) {
-        const list = JSON.parse(localStored);
-        const found = list.find(item => String(item._id) === String(id) || String(item.id) === String(id));
-        if (found) return found;
+      const curStored = localStorage.getItem('is_current_analysis');
+      if (curStored) {
+        const parsed = JSON.parse(curStored);
+        if (parsed && (String(parsed._id) === String(id) || String(parsed.id) === String(id) || parsed.demoKey === id)) {
+          return parsed;
+        }
+      }
+    } catch {}
+    try {
+      for (let i = 0; i < localStorage.length; i++) {
+        const k = localStorage.key(i);
+        if (k && k.startsWith('is_analysis_history')) {
+          const list = JSON.parse(localStorage.getItem(k) || '[]');
+          if (Array.isArray(list)) {
+            const found = list.find(item => String(item._id) === String(id) || String(item.id) === String(id) || item.demoKey === id);
+            if (found) return found;
+          }
+        }
       }
     } catch {}
     if (INITIAL_DEMO_HISTORY) {
-      const demo = INITIAL_DEMO_HISTORY.find(item => String(item._id) === String(id) || String(item.id) === String(id));
+      const demo = INITIAL_DEMO_HISTORY.find(item => String(item._id) === String(id) || String(item.id) === String(id) || item.demoKey === id);
       if (demo) return demo;
     }
     return null;
@@ -149,20 +162,39 @@ export const RecommendationResultPage = () => {
           }
         }
 
-        // Layer 3: localStorage history
+        // Layer 3: localStorage current and history search
         if (!data) {
-          const localStored = localStorage.getItem('is_analysis_history');
-          if (localStored) {
-            try {
-              const list = JSON.parse(localStored);
-              data = list.find(item => String(item._id) === String(id) || String(item.id) === String(id));
-            } catch (_e) {}
-          }
+          try {
+            const curStored = localStorage.getItem('is_current_analysis');
+            if (curStored) {
+              const parsed = JSON.parse(curStored);
+              if (parsed && (String(parsed._id) === String(id) || String(parsed.id) === String(id) || parsed.demoKey === id)) {
+                data = parsed;
+              }
+            }
+          } catch (_e) {}
+        }
+        if (!data) {
+          try {
+            for (let i = 0; i < localStorage.length; i++) {
+              const k = localStorage.key(i);
+              if (k && k.startsWith('is_analysis_history')) {
+                const list = JSON.parse(localStorage.getItem(k) || '[]');
+                if (Array.isArray(list)) {
+                  const found = list.find(item => String(item._id) === String(id) || String(item.id) === String(id) || item.demoKey === id);
+                  if (found) {
+                    data = found;
+                    break;
+                  }
+                }
+              }
+            }
+          } catch (_e) {}
         }
 
         // Layer 4: In-memory demo baseline
         if (!data && INITIAL_DEMO_HISTORY) {
-          data = INITIAL_DEMO_HISTORY.find(item => String(item._id) === String(id) || String(item.id) === String(id));
+          data = INITIAL_DEMO_HISTORY.find(item => String(item._id) === String(id) || String(item.id) === String(id) || item.demoKey === id);
         }
 
         if (!isMounted) return;
@@ -209,9 +241,8 @@ export const RecommendationResultPage = () => {
   };
 
   const handleCopySpec = () => {
-    if (!analysis?.improvedSpecification) return;
-    const specText = formatSpecificationText(analysis.improvedSpecification);
-    navigator.clipboard.writeText(specText);
+    if (!safeImprovedSpecification) return;
+    navigator.clipboard.writeText(safeImprovedSpecification);
     setCopiedSpec(true);
     showToast('Tender specification copied to clipboard!');
     setTimeout(() => setCopiedSpec(false), 2000);
@@ -235,10 +266,6 @@ export const RecommendationResultPage = () => {
       year: 'numeric'
     });
   }, [analysis?.createdAt]);
-
-  const safeImprovedSpecification = useMemo(() => {
-    return formatSpecificationText(analysis?.improvedSpecification);
-  }, [analysis?.improvedSpecification]);
 
   // Loading Skeleton State
   if (loading) {
@@ -298,6 +325,74 @@ export const RecommendationResultPage = () => {
   const highGaps = gapsList.filter(g => (g?.severity || '').toUpperCase() === 'HIGH');
   const medGaps = gapsList.filter(g => (g?.severity || '').toUpperCase() === 'MEDIUM');
   const lowGaps = gapsList.filter(g => (g?.severity || '').toUpperCase() === 'LOW');
+
+  // GFR-Compliant Technical Clause Schedule with dynamic synthesis fallback
+  const safeImprovedSpecification = useMemo(() => {
+    const rawSpec = analysis?.improvedSpecification;
+    if (rawSpec && (typeof rawSpec === 'string' ? rawSpec.trim().length > 30 : Object.keys(rawSpec).length > 0)) {
+      return formatSpecificationText(rawSpec);
+    }
+
+    // High-fidelity fallback synthesis when improvedSpecification was not pre-computed or on document uploads
+    const pName = safeProductName;
+    const cat = safeProductCategory;
+    const primList = primaryList.length > 0
+      ? primaryList.map(s => `• ${s.standardNumber || 'IS Standard'} — ${s.title || 'Standard Specification'}`).join('\n')
+      : '• Applicable Indian Standard Baseline';
+    const testList = (analysis?.testingStandards?.length ? analysis.testingStandards : primaryList)
+      .map(s => `• ${s.testingStandards?.[0] || s.standardNumber || 'IS Test Protocol'} — Quality Assurance & Acceptance Testing`)
+      .join('\n') || '• Routine & Type Testing as per published Indian Standards';
+    const certList = certificationsList.length > 0
+      ? certificationsList.map(c => `• ${c.type || 'BIS Certification'} under ${c.authority || 'Statutory Authority'} (${c.mandateReason ? c.mandateReason.slice(0, 120) + '...' : 'Statutory Compliance'})`).join('\n')
+      : '• Mandatory BIS Standard Mark / License under Department Quality Control Orders (QCO)';
+
+    return `TECHNICAL SPECIFICATION & PROCUREMENT SCHEDULE
+================================================================================
+TENDER ITEM: ${pName.toUpperCase()}
+CLASSIFICATION: ${cat}
+STATUTORY BASELINE: BUREAU OF INDIAN STANDARDS (BIS) CONFORMITY
+
+1. PRODUCT DEFINITION & SCOPE OF SUPPLY
+--------------------------------------------------------------------------------
+The scope covers manufacture, testing at factory, supply, and delivery of ${pName} strictly complying with active Indian Standards and statutory Quality Control Orders.
+
+2. MANDATORY APPLICABLE INDIAN STANDARDS
+--------------------------------------------------------------------------------
+The equipment / material supplied shall strictly conform to the latest edition along with all published amendments of the following Indian Standards:
+
+${primList}
+• IS/IEC 60529: Degrees of Protection Provided by Enclosures (IP Code)
+• IS 3043: Code of Practice for Earthing & Electrical Safety
+
+3. TECHNICAL & PERFORMANCE REQUIREMENTS
+--------------------------------------------------------------------------------
+• Primary Construction: Heavy duty industrial grade conforming to relevant Indian Standards.
+• Ingress Protection: Minimum IP65 / IP66 enclosure sealing against dust & moisture where applicable.
+• Energy / Operating Efficacy: High efficiency design conforming to BEE star schedules / IS performance criteria.
+• Operating Temperature Range: Tropical Indian climatic endurance (-10°C to +50°C).
+
+4. QUALITY ASSURANCE & TESTING REQUIREMENTS
+--------------------------------------------------------------------------------
+The following tests shall be conducted as per mandatory Indian Standard test protocols:
+${testList}
+
+• Type Test Certificates: Supplier must provide Type Test reports from an ILAC/NABL accredited laboratory carried out within the last 3 years.
+• Acceptance Tests: Visual inspection, dimensional verification, and routine batch testing shall be witnessed by the Indenting Officer / Third Party Inspection Agency.
+
+5. STATUTORY CERTIFICATION & MANDATORY COMPLIANCE
+--------------------------------------------------------------------------------
+${certList}
+• The bidder MUST possess an active and valid BIS License (CML / R-Number) on the date of tender submission. Bids citing expired or non-compliant licenses shall be summarily rejected.
+
+6. INSTALLATION & WORKMANSHIP GUIDELINES
+--------------------------------------------------------------------------------
+Installation, handling, and jointing shall strictly adhere to relevant IS Codes of Practice and CPWD/State PWD guidelines.
+
+7. STATUTORY VERIFICATION NOTICE
+--------------------------------------------------------------------------------
+AI-generated draft technical schedule. Indenting Officers must verify the active edition, latest published amendments, and supplier BIS license status on manakonline.in prior to tender publication.
+================================================================================`;
+  }, [analysis?.improvedSpecification, safeProductName, safeProductCategory, primaryList, certificationsList, analysis?.testingStandards]);
 
   // 7 Clean Tabs per Requirements 22-29
   const tabItems = [

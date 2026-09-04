@@ -43,12 +43,18 @@ export const createAnalysis = async (req, res) => {
       });
     }
 
+    const isDemo = Boolean(req.user?.isDemo || req.user?.email?.includes('@anveshak.demo'));
+    const roleKey = normalizeRoleKey(req.user?.accountType || req.user?.role);
+    const rolePrefix = roleKey === 'government_department' ? 'dept' : (roleKey === 'psu' ? 'psu' : (roleKey === 'admin' ? 'admin' : 'po'));
+    const demoKey = isDemo ? `${rolePrefix}_analysis_${Date.now()}` : undefined;
+
     const analysisData = {
       userId: req.user?._id || null,
       userEmail: req.user?.email || '',
       organization: req.user?.organizationName || req.user?.organization || '',
       accountType: req.user?.accountType || 'procurement_officer',
-      isDemo: Boolean(req.user?.isDemo),
+      isDemo,
+      demoKey,
       productName: productName || aiResult.structuredRequirements?.product || 'Procurement Item',
       productCategory: productCategory !== 'General' ? productCategory : (aiResult.structuredRequirements?.category || 'General'),
       rawInput: rawInput || fullSpec,
@@ -76,14 +82,14 @@ export const createAnalysis = async (req, res) => {
     let savedAnalysis = null;
     try {
       savedAnalysis = await Analysis.create(analysisData);
+      const plainSaved = savedAnalysis.toObject ? savedAnalysis.toObject() : savedAnalysis;
+      memoryAnalyses.unshift(plainSaved);
     } catch (dbErr) {
       // In-memory fallback
       const memoryId = 'analysis_' + Date.now();
-      savedAnalysis = { _id: memoryId, ...analysisData };
+      savedAnalysis = { _id: memoryId, id: memoryId, ...analysisData };
+      memoryAnalyses.unshift(savedAnalysis);
     }
-
-    // Always store in memory array as well
-    memoryAnalyses.unshift(savedAnalysis);
 
     return res.status(201).json({
       success: true,
@@ -105,11 +111,12 @@ export const getAnalyses = async (req, res) => {
 
     const roleKey = normalizeRoleKey(user.accountType || user.role);
     const userId = user._id ? String(user._id) : null;
+    const userEmail = (user.email || '').toLowerCase().trim();
     const userOrg = (user.organizationName || user.organization || '').trim();
     const isDemo = Boolean(
       user.isDemo ||
-      user.email?.toLowerCase().includes('@anveshak.demo') ||
-      String(user._id).startsWith('user_demo_')
+      userEmail.includes('@anveshak.demo') ||
+      (userId && userId.startsWith('user_demo_'))
     );
 
     let list = [];
@@ -118,27 +125,32 @@ export const getAnalyses = async (req, res) => {
       try {
         let query = {};
 
+        const userIdentityFilters = [];
+        if (user._id) userIdentityFilters.push({ userId: user._id });
+        if (userId) userIdentityFilters.push({ userId: userId });
+        if (userEmail) userIdentityFilters.push({ userEmail: userEmail });
+
         if (isDemo) {
           // Demo users see their designated seeded records + any analyses created during demo
           if (roleKey === 'admin') {
             query = {
               $or: [
                 { isDemo: true },
-                { userId: user._id }
+                ...userIdentityFilters
               ]
             };
           } else if (roleKey === 'government_department') {
             query = {
               $or: [
                 { demoKey: { $regex: '^dept_', $options: 'i' } },
-                { userId: user._id }
+                ...userIdentityFilters
               ]
             };
           } else if (roleKey === 'psu') {
             query = {
               $or: [
                 { demoKey: { $regex: '^psu_', $options: 'i' } },
-                { userId: user._id }
+                ...userIdentityFilters
               ]
             };
           } else {
@@ -146,7 +158,7 @@ export const getAnalyses = async (req, res) => {
             query = {
               $or: [
                 { demoKey: { $regex: '^po_', $options: 'i' } },
-                { userId: user._id }
+                ...userIdentityFilters
               ]
             };
           }
@@ -155,12 +167,12 @@ export const getAnalyses = async (req, res) => {
           if (roleKey === 'procurement_officer') {
             // Procurement Officer: only their own created analyses
             query = {
-              userId: user._id,
+              $or: userIdentityFilters.length > 0 ? userIdentityFilters : [{ userId: user._id }],
               isDemo: { $ne: true }
             };
           } else if (roleKey === 'government_department' || roleKey === 'psu' || roleKey === 'admin') {
             // Organization/Department/PSU: records created by this user OR within their organization
-            const orgFilters = [{ userId: user._id }];
+            const orgFilters = [...userIdentityFilters];
             if (userOrg) {
               orgFilters.push({ organization: userOrg });
             }
@@ -179,21 +191,28 @@ export const getAnalyses = async (req, res) => {
 
     // Memory fallback if DB returned empty or DB is offline
     if (!list || list.length === 0) {
+      const matchesUser = (a) => {
+        if (!a) return false;
+        if (userEmail && a.userEmail && a.userEmail.toLowerCase() === userEmail) return true;
+        if (userId && a.userId && String(a.userId) === userId) return true;
+        return false;
+      };
+
       if (isDemo) {
         if (roleKey === 'admin') {
           list = memoryAnalyses;
         } else if (roleKey === 'government_department') {
-          list = memoryAnalyses.filter(a => a.demoKey?.startsWith('dept_') || String(a.userId) === userId);
+          list = memoryAnalyses.filter(a => a.demoKey?.startsWith('dept_') || matchesUser(a));
         } else if (roleKey === 'psu') {
-          list = memoryAnalyses.filter(a => a.demoKey?.startsWith('psu_') || String(a.userId) === userId);
+          list = memoryAnalyses.filter(a => a.demoKey?.startsWith('psu_') || matchesUser(a));
         } else {
-          list = memoryAnalyses.filter(a => a.demoKey?.startsWith('po_') || String(a.userId) === userId);
+          list = memoryAnalyses.filter(a => a.demoKey?.startsWith('po_') || matchesUser(a));
         }
       } else {
         // Real user in-memory fallback
         list = memoryAnalyses.filter(a => {
           if (a.isDemo) return false;
-          if (String(a.userId) === userId) return true;
+          if (matchesUser(a)) return true;
           if (roleKey !== 'procurement_officer' && userOrg && a.organization === userOrg) return true;
           return false;
         });
@@ -228,7 +247,7 @@ export const getAnalysisById = async (req, res) => {
     }
 
     if (!analysis) {
-      analysis = memoryAnalyses.find(a => String(a._id) === String(id) || a.demoKey === id);
+      analysis = memoryAnalyses.find(a => String(a._id) === String(id) || a.demoKey === id || String(a.id) === String(id));
     }
 
     if (!analysis) {
@@ -242,7 +261,8 @@ export const getAnalysisById = async (req, res) => {
       }
 
       const userId = String(req.user._id);
-      const isOwner = analysis.userId && String(analysis.userId) === userId;
+      const isOwner = (analysis.userId && String(analysis.userId) === userId) ||
+                      (analysis.userEmail && req.user.email && analysis.userEmail.toLowerCase() === req.user.email.toLowerCase());
       const userOrg = (req.user.organizationName || req.user.organization || '').trim();
       const userRoleKey = normalizeRoleKey(req.user.role || req.user.accountType);
       const isOrgMember = userOrg && analysis.organization === userOrg && userRoleKey !== 'procurement_officer';

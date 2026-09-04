@@ -185,20 +185,24 @@ export const AnalysisProvider = ({ children }) => {
       return;
     }
 
-    setCurrentAnalysisState(analysis);
+    const normalized = {
+      ...analysis,
+      _id: analysis._id || analysis.id || ('analysis_' + Date.now()),
+      id: analysis.id || analysis._id || ('analysis_' + Date.now())
+    };
+
+    setCurrentAnalysisState(normalized);
     try {
-      localStorage.setItem('is_current_analysis', JSON.stringify(analysis));
+      localStorage.setItem('is_current_analysis', JSON.stringify(normalized));
     } catch (e) {}
 
     // Add / Prepend to history
     setHistory(prev => {
-      const filtered = prev.filter(item => String(item._id || item.id) !== String(analysis._id || analysis.id));
-      const updated = [analysis, ...filtered];
-      if (userId) {
-        try {
-          localStorage.setItem(getHistoryKey(userId), JSON.stringify(updated));
-        } catch (e) {}
-      }
+      const filtered = prev.filter(item => String(item._id || item.id) !== String(normalized._id || normalized.id));
+      const updated = [normalized, ...filtered];
+      try {
+        localStorage.setItem(getHistoryKey(userId), JSON.stringify(updated));
+      } catch (e) {}
       return updated;
     });
   };
@@ -210,51 +214,71 @@ export const AnalysisProvider = ({ children }) => {
         return u ? JSON.parse(u) : null;
       } catch { return null; }
     })();
-    const activeUserId = activeUser?._id || activeUser?.id;
-    const activeIsDemo = Boolean(activeUser?.isDemo || activeUser?.email?.includes('@anveshak.demo'));
+    const activeUserId = activeUser?._id ? String(activeUser._id) : (activeUser?.id ? String(activeUser.id) : null);
+    const historyStorageKey = getHistoryKey(activeUserId);
 
-    if (!activeUserId && !activeIsDemo) {
-      setHistory([]);
-      return [];
-    }
-
-    try {
-      let remoteItems = [];
+    // 1. Load cached local history (so freshly analyzed items in this session are never wiped)
+    const localItems = (() => {
       try {
-        remoteItems = await api.getAnalyses();
-      } catch (e) {
-        console.warn('[AnalysisContext] Failed to fetch analyses from backend:', e.message);
-      }
-
-      const idMap = new Map();
-      (remoteItems || []).forEach(item => {
-        if (!item) return;
-        const id = item._id || item.id || item.demoKey;
-        if (id) {
-          const normalized = {
-            ...item,
-            _id: item._id || id,
-            id: item.id || id
-          };
-          idMap.set(String(id), normalized);
+        const raw = localStorage.getItem(historyStorageKey);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed)) return parsed;
         }
-      });
-
-      const merged = Array.from(idMap.values()).sort(
-        (a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0)
-      );
-
-      setHistory(merged);
-      if (activeUserId) {
-        try {
-          localStorage.setItem(getHistoryKey(activeUserId), JSON.stringify(merged));
-        } catch (e) {}
-      }
-      return merged;
-    } catch (e) {
-      console.warn('Failed to load history:', e.message);
+      } catch (e) {}
+      try {
+        const legacy = localStorage.getItem('is_analysis_history');
+        if (legacy) {
+          const parsed = JSON.parse(legacy);
+          if (Array.isArray(parsed)) return parsed;
+        }
+      } catch (e) {}
       return [];
+    })();
+
+    // 2. Fetch remote items from backend API
+    let remoteItems = [];
+    try {
+      remoteItems = await api.getAnalyses();
+    } catch (e) {
+      console.warn('[AnalysisContext] Failed to fetch analyses from backend:', e.message);
     }
+
+    // 3. Merge seamlessly: local items (retaining newest) + remote items
+    const idMap = new Map();
+
+    (localItems || []).forEach(item => {
+      if (!item) return;
+      const id = item._id || item.id || item.demoKey;
+      if (id) {
+        idMap.set(String(id), { ...item, _id: item._id || id, id: item.id || id });
+      }
+    });
+
+    (remoteItems || []).forEach(item => {
+      if (!item) return;
+      const id = item._id || item.id || item.demoKey;
+      if (id) {
+        idMap.set(String(id), { ...item, _id: item._id || id, id: item.id || id });
+      }
+    });
+
+    if (currentAnalysis) {
+      const cId = currentAnalysis._id || currentAnalysis.id || currentAnalysis.demoKey;
+      if (cId) {
+        idMap.set(String(cId), { ...currentAnalysis, _id: currentAnalysis._id || cId, id: currentAnalysis.id || cId });
+      }
+    }
+
+    const merged = Array.from(idMap.values()).sort(
+      (a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0)
+    );
+
+    setHistory(merged);
+    try {
+      localStorage.setItem(historyStorageKey, JSON.stringify(merged));
+    } catch (e) {}
+    return merged;
   };
 
   const loadSaved = async () => {
