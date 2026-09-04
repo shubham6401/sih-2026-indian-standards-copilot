@@ -127,10 +127,29 @@ const buildAnalysis = (t, index, roleName, prefix, userEmail) => {
   };
 };
 
-const poAnalyses = PO_TOPICS.map((t, i) => buildAnalysis(t, i, 'Procurement Officer', 'po', 'procurement1@anveshak.demo'));
-const deptAnalyses = DEPT_TOPICS.map((t, i) => buildAnalysis(t, i, 'Government Department', 'dept', 'department1@anveshak.demo'));
-const psuAnalyses = PSU_TOPICS.map((t, i) => buildAnalysis(t, i, 'PSU', 'psu', 'psu1@anveshak.demo'));
-const adminAnalyses = ADMIN_TOPICS.map((t, i) => buildAnalysis(t, i, 'Admin Governance', 'admin', 'admin1@anveshak.demo'));
+const poAnalyses = PO_TOPICS.map((t, i) => ({
+  ...buildAnalysis(t, i, 'Procurement Officer', 'po', 'procurement@anveshak.demo'),
+  accountType: 'procurement_officer',
+  organization: 'CPWD — Central Procurement Division'
+}));
+
+const deptAnalyses = DEPT_TOPICS.map((t, i) => ({
+  ...buildAnalysis(t, i, 'Government Department', 'dept', 'department@anveshak.demo'),
+  accountType: 'government_department',
+  organization: 'Ministry of Housing & Urban Affairs (MoHUA)'
+}));
+
+const psuAnalyses = PSU_TOPICS.map((t, i) => ({
+  ...buildAnalysis(t, i, 'PSU', 'psu', 'psu@anveshak.demo'),
+  accountType: 'psu',
+  organization: 'NTPC Energy & Thermal Generation Corporation'
+}));
+
+const adminAnalyses = ADMIN_TOPICS.map((t, i) => ({
+  ...buildAnalysis(t, i, 'Admin Governance', 'admin', 'admin@anveshak.demo'),
+  accountType: 'organization_admin',
+  organization: 'Bureau of Indian Standards (BIS) Directorate'
+}));
 
 const ALL_ANALYSES = [
   ...poAnalyses,
@@ -150,7 +169,7 @@ console.log(`Generated:
 const fileContent = `/**
  * Anveshak — SIH 2026 Hackathon Demo Dataset
  * Comprehensive verifiable Indian Standards procurement intelligence data
- * 4 Demo Accounts for EACH of the 4 Roles (16 accounts total + aliases)
+ * EXACTLY 4 Demo Accounts (1 for EACH Role)
  * 32 Comprehensive PDF Tender Reports for EACH Role (128 analyses total)
  */
 

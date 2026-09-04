@@ -161,15 +161,15 @@ export const LoginPage = () => {
             </Button>
           </form>
 
-          {/* Official SIH 2026 Demo Accounts Section */}
+          {/* Official SIH 2026 Demo Accounts Section (1 Per Role) */}
           <div className="mt-8 pt-6 border-t border-slate-200">
             <div className="flex items-center justify-between mb-3">
               <div>
                 <span className="text-[10px] font-black uppercase tracking-wider text-gov-800 bg-gov-100 px-2 py-0.5 rounded border border-gov-200">
-                  SIH 2026 Evaluation • 4 Accounts Per Role
+                  SIH 2026 Evaluation • 1 Account Per Role
                 </span>
                 <h3 className="text-xs font-black text-slate-900 mt-1 uppercase tracking-wider font-outfit">
-                  Role-Based Demo Accounts ({DEMO_PERSONAS.length} Total)
+                  Role-Based Demo Accounts ({DEMO_PERSONAS.length} Roles)
                 </h3>
               </div>
               <span className="text-[11px] font-mono text-gov-700 bg-gov-50 px-2 py-0.5 rounded border border-gov-200 font-bold">
@@ -177,32 +177,8 @@ export const LoginPage = () => {
               </span>
             </div>
 
-            {/* Role Tab Filter */}
-            <div className="flex flex-wrap gap-1.5 mb-3 p-1 bg-slate-100 rounded-xl border border-slate-200">
-              {[
-                { id: 'ALL', label: 'All Roles (16)' },
-                { id: 'Procurement Officer', label: 'Procurement (4)' },
-                { id: 'Government Department', label: 'Department (4)' },
-                { id: 'PSU', label: 'PSU (4)' },
-                { id: 'Platform Administrator', label: 'Admin (4)' }
-              ].map((tab) => (
-                <button
-                  key={tab.id}
-                  type="button"
-                  onClick={() => setActiveRoleTab(tab.id)}
-                  className={`px-2.5 py-1 text-[11px] font-bold rounded-lg transition-all ${
-                    activeRoleTab === tab.id
-                      ? 'bg-white text-gov-800 shadow-sm border border-slate-200/80 font-black'
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/60'
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
-
-            <div className="space-y-2 max-h-[380px] overflow-y-auto pr-1">
-              {DEMO_PERSONAS.filter((p) => activeRoleTab === 'ALL' || p.role === activeRoleTab || (activeRoleTab === 'PSU' && p.roleKey === 'psu')).map((persona) => (
+            <div className="space-y-2.5">
+              {DEMO_PERSONAS.map((persona) => (
                 <div
                   key={persona.email}
                   className="p-3 rounded-xl bg-slate-50/90 hover:bg-slate-100/90 border border-slate-200/90 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 hover:border-gov-300"
@@ -217,12 +193,17 @@ export const LoginPage = () => {
                     <div className="text-[11px] text-slate-600 font-medium truncate mt-0.5">
                       {persona.organization}
                     </div>
+                    <div className="text-[10px] text-slate-400 mt-0.5">
+                      {persona.description}
+                    </div>
                     <div className="text-[10px] font-mono text-gov-600 mt-0.5">
                       {persona.email}
                     </div>
                   </div>
 
                   <Button
+                    id={`demo-btn-${persona.roleKey}`}
+                    data-demo-email={persona.email}
                     size="xs"
                     variant="secondary"
                     className="shrink-0 font-bold self-start sm:self-auto hover:bg-gov-600 hover:text-white"

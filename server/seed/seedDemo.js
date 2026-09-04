@@ -46,12 +46,14 @@ export const seedDemoDatabase = async (cleanWipe = true) => {
         email: u.email.toLowerCase(),
         password: hashedPassword,
         organization: u.organization,
+        organizationName: u.organization,
+        accountType: u.accountType,
         role: u.role,
         isDemo: true
       });
 
       userMap.set(u.email.toLowerCase(), user);
-      console.log(`  ✓ Demo User Created: ${u.name} [${u.role}] -> ${u.email}`);
+      console.log(`  ✓ Demo User Created: ${u.name} [${u.accountType} / ${u.role}] -> ${u.email}`);
     }
 
     console.log(`[Seed] Seeding ${DEMO_ANALYSES.length} role-specific procurement analyses (32 per role)...`);

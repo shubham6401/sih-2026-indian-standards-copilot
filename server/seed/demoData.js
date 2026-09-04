@@ -1,7 +1,7 @@
 /**
  * Anveshak — SIH 2026 Hackathon Demo Dataset
  * Comprehensive verifiable Indian Standards procurement intelligence data
- * 4 Demo Accounts for EACH of the 4 Roles (16 accounts total + aliases)
+ * EXACTLY 4 Demo Accounts (1 for EACH Role)
  * 32 Comprehensive PDF Tender Reports for EACH Role (128 analyses total)
  */
 
@@ -9,242 +9,101 @@ export const DEMO_PASSWORD = 'Demo@12345';
 
 export const DEMO_USERS = [
   {
-    "demoKey": "user_demo_po_01",
+    "demoKey": "user_demo_po",
     "name": "Sh. Rajesh Kumar",
-    "email": "procurement1@anveshak.demo",
+    "email": "procurement@anveshak.demo",
     "password": "Demo@12345",
     "organization": "CPWD — Central Procurement Division",
     "organizationType": "Central Government",
+    "accountType": "procurement_officer",
     "role": "Procurement Officer",
     "isDemo": true
   },
   {
-    "demoKey": "user_demo_po_02",
-    "name": "Smt. Sunita Rao",
-    "email": "procurement2@anveshak.demo",
+    "demoKey": "user_demo_dept",
+    "name": "Dr. Priya Sharma",
+    "email": "department@anveshak.demo",
     "password": "Demo@12345",
-    "organization": "Maharashtra State PWD Infrastructure",
-    "organizationType": "State Government",
-    "role": "Procurement Officer",
-    "isDemo": true
-  },
-  {
-    "demoKey": "user_demo_po_03",
-    "name": "Sh. Manoj Joshi",
-    "email": "procurement3@anveshak.demo",
-    "password": "Demo@12345",
-    "organization": "Northern Railway Engineering & Stores",
+    "organization": "Ministry of Housing & Urban Affairs (MoHUA)",
     "organizationType": "Central Government",
-    "role": "Procurement Officer",
+    "accountType": "government_department",
+    "role": "Government Department",
     "isDemo": true
   },
   {
-    "demoKey": "user_demo_po_04",
-    "name": "Col. Deepak Verma",
-    "email": "procurement4@anveshak.demo",
+    "demoKey": "user_demo_psu",
+    "name": "Sh. Amit Verma",
+    "email": "psu@anveshak.demo",
     "password": "Demo@12345",
-    "organization": "Military Engineer Services (MES)",
+    "organization": "NTPC Energy & Thermal Generation Corporation",
+    "organizationType": "PSU",
+    "accountType": "psu",
+    "role": "PSU",
+    "isDemo": true
+  },
+  {
+    "demoKey": "user_demo_admin",
+    "name": "Anveshak Lead Administrator",
+    "email": "admin@anveshak.demo",
+    "password": "Demo@12345",
+    "organization": "Bureau of Indian Standards (BIS) Directorate",
     "organizationType": "Central Government",
-    "role": "Procurement Officer",
+    "accountType": "organization_admin",
+    "role": "Organization/Admin",
     "isDemo": true
   },
   {
     "demoKey": "user_demo_po_alias",
     "name": "Sh. Rajesh Kumar",
-    "email": "demo.procurement@anveshak.demo",
+    "email": "procurement1@anveshak.demo",
     "password": "Demo@12345",
-    "organization": "CPWD — Central Public Works Department",
+    "organization": "CPWD — Central Procurement Division",
     "organizationType": "Central Government",
+    "accountType": "procurement_officer",
     "role": "Procurement Officer",
-    "isDemo": true
-  },
-  {
-    "demoKey": "user_demo_po_alias2",
-    "name": "Sh. Rajesh Kumar",
-    "email": "procurement.demo1@anveshak.demo",
-    "password": "Demo@12345",
-    "organization": "CPWD — Central Public Works Department",
-    "organizationType": "Central Government",
-    "role": "Procurement Officer",
-    "isDemo": true
-  },
-  {
-    "demoKey": "user_demo_dept_01",
-    "name": "Dr. Priya Sharma",
-    "email": "department1@anveshak.demo",
-    "password": "Demo@12345",
-    "organization": "Ministry of Housing & Urban Affairs (MoHUA)",
-    "organizationType": "Central Government",
-    "role": "Government Department",
-    "isDemo": true
-  },
-  {
-    "demoKey": "user_demo_dept_02",
-    "name": "Sh. K. V. Raman",
-    "email": "department2@anveshak.demo",
-    "password": "Demo@12345",
-    "organization": "Ministry of Health & Family Welfare (MoHFW)",
-    "organizationType": "Central Government",
-    "role": "Government Department",
-    "isDemo": true
-  },
-  {
-    "demoKey": "user_demo_dept_03",
-    "name": "Smt. Ananya Sen",
-    "email": "department3@anveshak.demo",
-    "password": "Demo@12345",
-    "organization": "Department of School Education & Literacy",
-    "organizationType": "Central Government",
-    "role": "Government Department",
-    "isDemo": true
-  },
-  {
-    "demoKey": "user_demo_dept_04",
-    "name": "Sh. Harish Chandra",
-    "email": "department4@anveshak.demo",
-    "password": "Demo@12345",
-    "organization": "Department of Drinking Water & Sanitation (Jal Jeevan)",
-    "organizationType": "Central Government",
-    "role": "Government Department",
     "isDemo": true
   },
   {
     "demoKey": "user_demo_dept_alias",
     "name": "Dr. Priya Sharma",
-    "email": "demo.department@anveshak.demo",
+    "email": "department1@anveshak.demo",
     "password": "Demo@12345",
-    "organization": "Department of Public Works & Urban Development",
-    "organizationType": "State Government",
+    "organization": "Ministry of Housing & Urban Affairs (MoHUA)",
+    "organizationType": "Central Government",
+    "accountType": "government_department",
     "role": "Government Department",
     "isDemo": true
   },
   {
     "demoKey": "user_demo_dept_alias2",
     "name": "Dr. Priya Sharma",
-    "email": "government.demo1@anveshak.demo",
+    "email": "dept1@anveshak.demo",
     "password": "Demo@12345",
-    "organization": "Department of Public Works & Urban Development",
-    "organizationType": "State Government",
+    "organization": "Ministry of Housing & Urban Affairs (MoHUA)",
+    "organizationType": "Central Government",
+    "accountType": "government_department",
     "role": "Government Department",
-    "isDemo": true
-  },
-  {
-    "demoKey": "user_demo_psu_01",
-    "name": "Sh. Amit Verma",
-    "email": "psu1@anveshak.demo",
-    "password": "Demo@12345",
-    "organization": "NTPC Energy & Thermal Generation Corporation",
-    "organizationType": "PSU",
-    "role": "PSU",
-    "isDemo": true
-  },
-  {
-    "demoKey": "user_demo_psu_02",
-    "name": "Smt. Meenakshi Sundaram",
-    "email": "psu2@anveshak.demo",
-    "password": "Demo@12345",
-    "organization": "GAIL & IOCL Hydrocarbon Pipeline Division",
-    "organizationType": "PSU",
-    "role": "PSU",
-    "isDemo": true
-  },
-  {
-    "demoKey": "user_demo_psu_03",
-    "name": "Sh. Rakesh Singhal",
-    "email": "psu3@anveshak.demo",
-    "password": "Demo@12345",
-    "organization": "Power Grid Corporation of India (POWERGRID)",
-    "organizationType": "PSU",
-    "role": "PSU",
-    "isDemo": true
-  },
-  {
-    "demoKey": "user_demo_psu_04",
-    "name": "Sh. Vikramaditya Rathore",
-    "email": "psu4@anveshak.demo",
-    "password": "Demo@12345",
-    "organization": "Steel Authority of India Limited (SAIL)",
-    "organizationType": "PSU",
-    "role": "PSU",
     "isDemo": true
   },
   {
     "demoKey": "user_demo_psu_alias",
     "name": "Sh. Amit Verma",
-    "email": "demo.psu@anveshak.demo",
+    "email": "psu1@anveshak.demo",
     "password": "Demo@12345",
-    "organization": "National Energy Infrastructure Corporation (NTPC-NEIC)",
+    "organization": "NTPC Energy & Thermal Generation Corporation",
     "organizationType": "PSU",
+    "accountType": "psu",
     "role": "PSU",
-    "isDemo": true
-  },
-  {
-    "demoKey": "user_demo_psu_alias2",
-    "name": "Sh. Amit Verma",
-    "email": "psu.demo1@anveshak.demo",
-    "password": "Demo@12345",
-    "organization": "National Energy Infrastructure Corporation (NTPC-NEIC)",
-    "organizationType": "PSU",
-    "role": "PSU",
-    "isDemo": true
-  },
-  {
-    "demoKey": "user_demo_admin_01",
-    "name": "Anveshak Lead Administrator",
-    "email": "admin1@anveshak.demo",
-    "password": "Demo@12345",
-    "organization": "Anveshak Platform Operations & Standards Governance",
-    "organizationType": "Autonomous Institution",
-    "role": "Organization/Admin",
-    "isDemo": true
-  },
-  {
-    "demoKey": "user_demo_admin_02",
-    "name": "Director General (Standards)",
-    "email": "admin2@anveshak.demo",
-    "password": "Demo@12345",
-    "organization": "Bureau of Indian Standards Liaison Directorate",
-    "organizationType": "Central Government",
-    "role": "Organization/Admin",
-    "isDemo": true
-  },
-  {
-    "demoKey": "user_demo_admin_03",
-    "name": "Chief Technical Examiner",
-    "email": "admin3@anveshak.demo",
-    "password": "Demo@12345",
-    "organization": "DPIIT & QCO Regulatory Enforcement Cell",
-    "organizationType": "Central Government",
-    "role": "Organization/Admin",
-    "isDemo": true
-  },
-  {
-    "demoKey": "user_demo_admin_04",
-    "name": "National Procurement Auditor",
-    "email": "admin4@anveshak.demo",
-    "password": "Demo@12345",
-    "organization": "GeM Public Procurement Harmonization Division",
-    "organizationType": "Autonomous Institution",
-    "role": "Organization/Admin",
     "isDemo": true
   },
   {
     "demoKey": "user_demo_admin_alias",
-    "name": "Anveshak Platform Admin",
-    "email": "demo.admin@anveshak.demo",
+    "name": "Anveshak Lead Administrator",
+    "email": "admin1@anveshak.demo",
     "password": "Demo@12345",
-    "organization": "Anveshak Platform Central Operations",
-    "organizationType": "Autonomous Institution",
-    "role": "Organization/Admin",
-    "isDemo": true
-  },
-  {
-    "demoKey": "user_demo_admin_alias2",
-    "name": "Anveshak Platform Admin",
-    "email": "admin.demo1@anveshak.demo",
-    "password": "Demo@12345",
-    "organization": "Anveshak Platform Central Operations",
-    "organizationType": "Autonomous Institution",
+    "organization": "Bureau of Indian Standards (BIS) Directorate",
+    "organizationType": "Central Government",
+    "accountType": "organization_admin",
     "role": "Organization/Admin",
     "isDemo": true
   }
@@ -253,7 +112,7 @@ export const DEMO_USERS = [
 export const DEMO_ANALYSES = [
   {
     "demoKey": "po_analysis_01",
-    "userEmail": "procurement1@anveshak.demo",
+    "userEmail": "procurement@anveshak.demo",
     "productName": "100W Outdoor LED Street Light Luminaires",
     "productCategory": "Electrical & Lighting",
     "status": "Completed",
@@ -262,7 +121,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 88,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-09-02T17:49:14.867Z",
+    "createdAt": "2026-09-03T14:20:21.979Z",
     "rawInput": "Supply and installation of 100W pressure die-cast aluminium outdoor LED street light luminaires with IP66 ingress protection, system efficacy >= 130 lm/W, CRI > 70, CCT 5700K, and 10kV internal surge protection device.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 10322 (Part 5/Sec 3): 2012. Tender missing mandatory 10kV surge protection compliance under IS 10322 and NABL photobiological safety test report.",
     "documentMetadata": {
@@ -360,11 +219,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 86
       }
     },
-    "improvedSpecification": "Supply and installation of 100W pressure die-cast aluminium outdoor LED street light luminaires with IP66 ingress protection, system efficacy >= 130 lm/W, CRI > 70, CCT 5700K, and 10kV internal surge protection device. All materials and equipment shall be strictly manufactured in compliance with IS 10322 (Part 5/Sec 3): 2012 and IS 15885 (Part 2/Sec 13): 2012. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 16107 (Part 2/Sec 1): 2012."
+    "improvedSpecification": "Supply and installation of 100W pressure die-cast aluminium outdoor LED street light luminaires with IP66 ingress protection, system efficacy >= 130 lm/W, CRI > 70, CCT 5700K, and 10kV internal surge protection device. All materials and equipment shall be strictly manufactured in compliance with IS 10322 (Part 5/Sec 3): 2012 and IS 15885 (Part 2/Sec 13): 2012. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 16107 (Part 2/Sec 1): 2012.",
+    "accountType": "procurement_officer",
+    "organization": "CPWD — Central Procurement Division"
   },
   {
     "demoKey": "po_analysis_02",
-    "userEmail": "procurement1@anveshak.demo",
+    "userEmail": "procurement@anveshak.demo",
     "productName": "33/11kV Substation 5 MVA Power Transformer",
     "productCategory": "Power & Distribution",
     "status": "Completed",
@@ -373,7 +234,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 89,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-09-01T17:49:14.873Z",
+    "createdAt": "2026-09-02T14:20:21.985Z",
     "rawInput": "33/11kV, 5 MVA, 3-Phase, 50 Hz, ONAN cooled outdoor type oil-immersed power transformer with copper winding, on-load tap changer (+5% to -15%), and uninhibited mineral oil conforming to IS 335.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 2026 (Parts 1-5): 2011. Tender cites obsolete IS 2026: 1977 temperature limits and lacks BEE maximum loss capitalization formula.",
     "documentMetadata": {
@@ -471,11 +332,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 87
       }
     },
-    "improvedSpecification": "33/11kV, 5 MVA, 3-Phase, 50 Hz, ONAN cooled outdoor type oil-immersed power transformer with copper winding, on-load tap changer (+5% to -15%), and uninhibited mineral oil conforming to IS 335. All materials and equipment shall be strictly manufactured in compliance with IS 2026 (Parts 1-5): 2011 and IS 1180 (Part 1): 2014. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 335: 2018."
+    "improvedSpecification": "33/11kV, 5 MVA, 3-Phase, 50 Hz, ONAN cooled outdoor type oil-immersed power transformer with copper winding, on-load tap changer (+5% to -15%), and uninhibited mineral oil conforming to IS 335. All materials and equipment shall be strictly manufactured in compliance with IS 2026 (Parts 1-5): 2011 and IS 1180 (Part 1): 2014. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 335: 2018.",
+    "accountType": "procurement_officer",
+    "organization": "CPWD — Central Procurement Division"
   },
   {
     "demoKey": "po_analysis_03",
-    "userEmail": "procurement1@anveshak.demo",
+    "userEmail": "procurement@anveshak.demo",
     "productName": "High-Yield Strength TMT Reinforcement Steel Bars Fe 500D",
     "productCategory": "Structural Materials",
     "status": "Completed",
@@ -484,7 +347,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 90,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-31T17:49:14.873Z",
+    "createdAt": "2026-09-01T14:20:21.985Z",
     "rawInput": "Thermo-Mechanically Treated (TMT) high strength deformed steel reinforcement bars Grade Fe 500D (sizes 8mm to 32mm) with minimum 16% elongation and 1.10 TS/YS ratio for seismic zone IV.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 1786: 2008 (Reaffirmed 2023). Missing requirement for mandatory sulfur and phosphorus combined maximum limit of 0.075% for earthquake ductility.",
     "documentMetadata": {
@@ -582,11 +445,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 88
       }
     },
-    "improvedSpecification": "Thermo-Mechanically Treated (TMT) high strength deformed steel reinforcement bars Grade Fe 500D (sizes 8mm to 32mm) with minimum 16% elongation and 1.10 TS/YS ratio for seismic zone IV. All materials and equipment shall be strictly manufactured in compliance with IS 1786: 2008 (Reaffirmed 2023) and IS 2062: 2011. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 1608 (Part 1): 2018."
+    "improvedSpecification": "Thermo-Mechanically Treated (TMT) high strength deformed steel reinforcement bars Grade Fe 500D (sizes 8mm to 32mm) with minimum 16% elongation and 1.10 TS/YS ratio for seismic zone IV. All materials and equipment shall be strictly manufactured in compliance with IS 1786: 2008 (Reaffirmed 2023) and IS 2062: 2011. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 1608 (Part 1): 2018.",
+    "accountType": "procurement_officer",
+    "organization": "CPWD — Central Procurement Division"
   },
   {
     "demoKey": "po_analysis_04",
-    "userEmail": "procurement1@anveshak.demo",
+    "userEmail": "procurement@anveshak.demo",
     "productName": "Ordinary Portland Cement 53 Grade",
     "productCategory": "Cement & Concrete",
     "status": "Needs Attention",
@@ -595,7 +460,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 91,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-30T17:49:14.873Z",
+    "createdAt": "2026-08-31T14:20:21.985Z",
     "rawInput": "Supply of fresh 53 Grade Ordinary Portland Cement in 50 kg HDPE bags with minimum 28-day compressive strength of 53 MPa and initial setting time not less than 30 minutes.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 269: 2015 (Amended 2021). Tender cited withdrawn separate standard IS 12269: 1987 instead of current harmonized standard IS 269: 2015.",
     "documentMetadata": {
@@ -693,11 +558,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 89
       }
     },
-    "improvedSpecification": "Supply of fresh 53 Grade Ordinary Portland Cement in 50 kg HDPE bags with minimum 28-day compressive strength of 53 MPa and initial setting time not less than 30 minutes. All materials and equipment shall be strictly manufactured in compliance with IS 269: 2015 (Amended 2021) and IS 4031 (Parts 1-15). Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 4032: 1985."
+    "improvedSpecification": "Supply of fresh 53 Grade Ordinary Portland Cement in 50 kg HDPE bags with minimum 28-day compressive strength of 53 MPa and initial setting time not less than 30 minutes. All materials and equipment shall be strictly manufactured in compliance with IS 269: 2015 (Amended 2021) and IS 4031 (Parts 1-15). Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 4032: 1985.",
+    "accountType": "procurement_officer",
+    "organization": "CPWD — Central Procurement Division"
   },
   {
     "demoKey": "po_analysis_05",
-    "userEmail": "procurement1@anveshak.demo",
+    "userEmail": "procurement@anveshak.demo",
     "productName": "Microprocessor Addressable Fire Alarm & Smoke Detection System",
     "productCategory": "Fire Safety & Life Safety",
     "status": "Completed",
@@ -706,7 +573,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 92,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-29T17:49:14.873Z",
+    "createdAt": "2026-08-30T14:20:21.985Z",
     "rawInput": "Networked addressable 4-loop fire alarm control panel with dual-optical smoke sensors, multi-criteria thermal detectors, loop-powered sounder beacons (95 dB), and fault-tolerant BACnet interface.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 2189: 2008 (Reaffirmed 2019). Loop sounder circuit decibel ratings omitted; battery standby duration specified as only 4 hours instead of statutory 24 hours plus 30 mins alarm.",
     "documentMetadata": {
@@ -804,11 +671,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 90
       }
     },
-    "improvedSpecification": "Networked addressable 4-loop fire alarm control panel with dual-optical smoke sensors, multi-criteria thermal detectors, loop-powered sounder beacons (95 dB), and fault-tolerant BACnet interface. All materials and equipment shall be strictly manufactured in compliance with IS 2189: 2008 (Reaffirmed 2019) and IS 11360: 1985. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 12459: 2004."
+    "improvedSpecification": "Networked addressable 4-loop fire alarm control panel with dual-optical smoke sensors, multi-criteria thermal detectors, loop-powered sounder beacons (95 dB), and fault-tolerant BACnet interface. All materials and equipment shall be strictly manufactured in compliance with IS 2189: 2008 (Reaffirmed 2019) and IS 11360: 1985. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 12459: 2004.",
+    "accountType": "procurement_officer",
+    "organization": "CPWD — Central Procurement Division"
   },
   {
     "demoKey": "po_analysis_06",
-    "userEmail": "procurement1@anveshak.demo",
+    "userEmail": "procurement@anveshak.demo",
     "productName": "Ductile Iron K9 Pressure Pipes for Municipal Potable Water",
     "productCategory": "Piping & Water Supply",
     "status": "Under Review",
@@ -817,7 +686,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 93,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-28T17:49:14.873Z",
+    "createdAt": "2026-08-29T14:20:21.985Z",
     "rawInput": "Centrifugally cast Ductile Iron K9 spigot and socket pipes with internal sulphate resisting cement mortar lining and external metallic zinc coating with finishing bitumen layer as per IS 8329.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 8329: 2000 (Reaffirmed 2020). Internal Portland cement mortar lining thickness and hydraulic factory test pressure (5.0 MPa) unverified in inspection schedule.",
     "documentMetadata": {
@@ -915,11 +784,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 91
       }
     },
-    "improvedSpecification": "Centrifugally cast Ductile Iron K9 spigot and socket pipes with internal sulphate resisting cement mortar lining and external metallic zinc coating with finishing bitumen layer as per IS 8329. All materials and equipment shall be strictly manufactured in compliance with IS 8329: 2000 (Reaffirmed 2020) and IS 9523: 2000. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 5382: 2018."
+    "improvedSpecification": "Centrifugally cast Ductile Iron K9 spigot and socket pipes with internal sulphate resisting cement mortar lining and external metallic zinc coating with finishing bitumen layer as per IS 8329. All materials and equipment shall be strictly manufactured in compliance with IS 8329: 2000 (Reaffirmed 2020) and IS 9523: 2000. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 5382: 2018.",
+    "accountType": "procurement_officer",
+    "organization": "CPWD — Central Procurement Division"
   },
   {
     "demoKey": "po_analysis_07",
-    "userEmail": "procurement1@anveshak.demo",
+    "userEmail": "procurement@anveshak.demo",
     "productName": "Water-Cooled Centrifugal Chiller Plant 400 TR",
     "productCategory": "HVAC & Mechanical",
     "status": "Completed",
@@ -928,7 +799,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 94,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-27T17:49:14.873Z",
+    "createdAt": "2026-08-28T14:20:21.985Z",
     "rawInput": "400 TR high-efficiency water-cooled centrifugal liquid chillers with variable frequency drive (VFD), flooded evaporator, marine water boxes, and microchannel economizer achieving full load COP > 6.5.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 8148: 2003 (Reaffirmed 2019). Refrigerant GWP threshold omitted; Integrated Part Load Value (IPLV) not benchmarked against ECBC norms.",
     "documentMetadata": {
@@ -1026,11 +897,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 92
       }
     },
-    "improvedSpecification": "400 TR high-efficiency water-cooled centrifugal liquid chillers with variable frequency drive (VFD), flooded evaporator, marine water boxes, and microchannel economizer achieving full load COP > 6.5. All materials and equipment shall be strictly manufactured in compliance with IS 8148: 2003 (Reaffirmed 2019) and IS 1391 (Part 2): 2018. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 659: 1964."
+    "improvedSpecification": "400 TR high-efficiency water-cooled centrifugal liquid chillers with variable frequency drive (VFD), flooded evaporator, marine water boxes, and microchannel economizer achieving full load COP > 6.5. All materials and equipment shall be strictly manufactured in compliance with IS 8148: 2003 (Reaffirmed 2019) and IS 1391 (Part 2): 2018. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 659: 1964.",
+    "accountType": "procurement_officer",
+    "organization": "CPWD — Central Procurement Division"
   },
   {
     "demoKey": "po_analysis_08",
-    "userEmail": "procurement1@anveshak.demo",
+    "userEmail": "procurement@anveshak.demo",
     "productName": "Medical Gas Pipeline System (MGPS) for 500-Bed Govt Hospital",
     "productCategory": "Healthcare Infrastructure",
     "status": "Completed",
@@ -1039,7 +912,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 95,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-26T17:49:14.873Z",
+    "createdAt": "2026-08-27T14:20:21.985Z",
     "rawInput": "Turnkey medical gas pipeline distribution for Oxygen, Nitrous Oxide, Medical Air (4 bar & 7 bar), and Surgical Vacuum with seamless deoxidized copper tubing conforming to BS EN 13348 and IS 15001 gas terminal outlets.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 15001: 2002 (Reaffirmed 2021). Cross-connection safety protocol and terminal quick-connect non-interchangeability check not specified.",
     "documentMetadata": {
@@ -1137,11 +1010,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 93
       }
     },
-    "improvedSpecification": "Turnkey medical gas pipeline distribution for Oxygen, Nitrous Oxide, Medical Air (4 bar & 7 bar), and Surgical Vacuum with seamless deoxidized copper tubing conforming to BS EN 13348 and IS 15001 gas terminal outlets. All materials and equipment shall be strictly manufactured in compliance with IS 15001: 2002 (Reaffirmed 2021) and IS 7285 (Part 2): 2017. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 1239 (Part 1): 2004."
+    "improvedSpecification": "Turnkey medical gas pipeline distribution for Oxygen, Nitrous Oxide, Medical Air (4 bar & 7 bar), and Surgical Vacuum with seamless deoxidized copper tubing conforming to BS EN 13348 and IS 15001 gas terminal outlets. All materials and equipment shall be strictly manufactured in compliance with IS 15001: 2002 (Reaffirmed 2021) and IS 7285 (Part 2): 2017. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 1239 (Part 1): 2004.",
+    "accountType": "procurement_officer",
+    "organization": "CPWD — Central Procurement Division"
   },
   {
     "demoKey": "po_analysis_09",
-    "userEmail": "procurement1@anveshak.demo",
+    "userEmail": "procurement@anveshak.demo",
     "productName": "500kWp Grid-Connected Rooftop Solar PV Generation System",
     "productCategory": "Renewable Energy",
     "status": "Completed",
@@ -1150,7 +1025,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 96,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-25T17:49:14.873Z",
+    "createdAt": "2026-08-26T14:20:21.985Z",
     "rawInput": "500 kWp grid-interactive rooftop solar power plant with Monocrystalline PERC half-cut PV modules (minimum 540Wp, efficiency >= 21%) and multi-MPPT string inverters compliant with IS 16221 & IS 16169.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 14286: 2010 / IEC 61215: 2005. Solar modules ALMM (Approved List of Models and Manufacturers) mandate clause missing in tender BOQ.",
     "documentMetadata": {
@@ -1248,11 +1123,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 94
       }
     },
-    "improvedSpecification": "500 kWp grid-interactive rooftop solar power plant with Monocrystalline PERC half-cut PV modules (minimum 540Wp, efficiency >= 21%) and multi-MPPT string inverters compliant with IS 16221 & IS 16169. All materials and equipment shall be strictly manufactured in compliance with IS 14286: 2010 / IEC 61215: 2005 and IS 16221 (Part 2): 2015. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 16169: 2014 / IEC 62116."
+    "improvedSpecification": "500 kWp grid-interactive rooftop solar power plant with Monocrystalline PERC half-cut PV modules (minimum 540Wp, efficiency >= 21%) and multi-MPPT string inverters compliant with IS 16221 & IS 16169. All materials and equipment shall be strictly manufactured in compliance with IS 14286: 2010 / IEC 61215: 2005 and IS 16221 (Part 2): 2015. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 16169: 2014 / IEC 62116.",
+    "accountType": "procurement_officer",
+    "organization": "CPWD — Central Procurement Division"
   },
   {
     "demoKey": "po_analysis_10",
-    "userEmail": "procurement1@anveshak.demo",
+    "userEmail": "procurement@anveshak.demo",
     "productName": "Viscosity Grade VG-30 Paving Bitumen for Arterial Highway",
     "productCategory": "Highway & Roads",
     "status": "Completed",
@@ -1261,7 +1138,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 97,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-24T17:49:14.873Z",
+    "createdAt": "2026-08-25T14:20:21.986Z",
     "rawInput": "Bulk supply of Viscosity Grade VG-30 refinery-sourced paving bitumen with minimum softening point 47 deg C, penetration at 25 deg C >= 45, and absolute viscosity at 60 deg C >= 2400 Poises for Dense Bituminous Macadam.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 73: 2018. Penetration-graded bitumen cited in draft schedule instead of statutory Viscosity Graded (VG-30) as required by IS 73.",
     "documentMetadata": {
@@ -1359,11 +1236,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 95
       }
     },
-    "improvedSpecification": "Bulk supply of Viscosity Grade VG-30 refinery-sourced paving bitumen with minimum softening point 47 deg C, penetration at 25 deg C >= 45, and absolute viscosity at 60 deg C >= 2400 Poises for Dense Bituminous Macadam. All materials and equipment shall be strictly manufactured in compliance with IS 73: 2018 and IS 1201 to IS 1220: 1978. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 8887: 2018."
+    "improvedSpecification": "Bulk supply of Viscosity Grade VG-30 refinery-sourced paving bitumen with minimum softening point 47 deg C, penetration at 25 deg C >= 45, and absolute viscosity at 60 deg C >= 2400 Poises for Dense Bituminous Macadam. All materials and equipment shall be strictly manufactured in compliance with IS 73: 2018 and IS 1201 to IS 1220: 1978. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 8887: 2018.",
+    "accountType": "procurement_officer",
+    "organization": "CPWD — Central Procurement Division"
   },
   {
     "demoKey": "po_analysis_11",
-    "userEmail": "procurement1@anveshak.demo",
+    "userEmail": "procurement@anveshak.demo",
     "productName": "11kV Grade Cross-Linked Polyethylene (XLPE) Power Cables",
     "productCategory": "Cables & Conductors",
     "status": "Needs Attention",
@@ -1372,7 +1251,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 88,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-23T17:49:14.873Z",
+    "createdAt": "2026-08-24T14:20:21.986Z",
     "rawInput": "11kV (E) grade, 3-Core x 300 sq.mm stranded compact circular Aluminium conductor, screened, XLPE insulated, inner PVC taped, galvanized steel flat strip armoured, extruded FRLS PVC outer sheathed cable.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 7098 (Part 2): 2011. Flame retardant low smoke (FRLS) outer sheath test parameters and partial discharge limits omitted.",
     "documentMetadata": {
@@ -1470,11 +1349,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 86
       }
     },
-    "improvedSpecification": "11kV (E) grade, 3-Core x 300 sq.mm stranded compact circular Aluminium conductor, screened, XLPE insulated, inner PVC taped, galvanized steel flat strip armoured, extruded FRLS PVC outer sheathed cable. All materials and equipment shall be strictly manufactured in compliance with IS 7098 (Part 2): 2011 and IS 5831: 1984. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 10810 (Parts 1-64)."
+    "improvedSpecification": "11kV (E) grade, 3-Core x 300 sq.mm stranded compact circular Aluminium conductor, screened, XLPE insulated, inner PVC taped, galvanized steel flat strip armoured, extruded FRLS PVC outer sheathed cable. All materials and equipment shall be strictly manufactured in compliance with IS 7098 (Part 2): 2011 and IS 5831: 1984. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 10810 (Parts 1-64).",
+    "accountType": "procurement_officer",
+    "organization": "CPWD — Central Procurement Division"
   },
   {
     "demoKey": "po_analysis_12",
-    "userEmail": "procurement1@anveshak.demo",
+    "userEmail": "procurement@anveshak.demo",
     "productName": "16-Passenger High-Speed Gearless Lifts for Multi-Storey Complex",
     "productCategory": "Elevators & Escalators",
     "status": "Completed",
@@ -1483,7 +1364,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 89,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-22T17:49:14.873Z",
+    "createdAt": "2026-08-23T14:20:21.986Z",
     "rawInput": "16-passenger (1088 kg) high-speed 2.5 m/s machine-room-less (MRL) gearless permanent magnet synchronous motor (PMSM) traction elevators with regenerative drive, full collective microprocessor control, and ARD.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 14665 (Parts 1-5): 2000. Automatic Rescue Device (ARD) with audio-visual announcement and seismic counterweight retainer bracket omitted.",
     "documentMetadata": {
@@ -1581,11 +1462,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 87
       }
     },
-    "improvedSpecification": "16-passenger (1088 kg) high-speed 2.5 m/s machine-room-less (MRL) gearless permanent magnet synchronous motor (PMSM) traction elevators with regenerative drive, full collective microprocessor control, and ARD. All materials and equipment shall be strictly manufactured in compliance with IS 14665 (Parts 1-5): 2000 and IS 15785: 2007. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 14665 (Part 2/Sec 1)."
+    "improvedSpecification": "16-passenger (1088 kg) high-speed 2.5 m/s machine-room-less (MRL) gearless permanent magnet synchronous motor (PMSM) traction elevators with regenerative drive, full collective microprocessor control, and ARD. All materials and equipment shall be strictly manufactured in compliance with IS 14665 (Parts 1-5): 2000 and IS 15785: 2007. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 14665 (Part 2/Sec 1).",
+    "accountType": "procurement_officer",
+    "organization": "CPWD — Central Procurement Division"
   },
   {
     "demoKey": "po_analysis_13",
-    "userEmail": "procurement1@anveshak.demo",
+    "userEmail": "procurement@anveshak.demo",
     "productName": "Industrial Safety Helmets & Full Body Harness for Construction",
     "productCategory": "Personal Protective Equipment",
     "status": "Completed",
@@ -1594,7 +1477,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 90,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-21T17:49:14.873Z",
+    "createdAt": "2026-08-22T14:20:21.986Z",
     "rawInput": "Heavy-duty high-density polyethylene (HDPE) industrial safety helmets conforming to IS 2925 with 6-point textile cradle, adjustable ratchet nape, electrical insulation up to 2000V, and Class A full body safety harnesses.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 2925: 1984 (Reaffirmed 2019). Tender failed to mandate ISI mark on safety helmets and omitted shock absorption impact testing clause.",
     "documentMetadata": {
@@ -1692,11 +1575,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 88
       }
     },
-    "improvedSpecification": "Heavy-duty high-density polyethylene (HDPE) industrial safety helmets conforming to IS 2925 with 6-point textile cradle, adjustable ratchet nape, electrical insulation up to 2000V, and Class A full body safety harnesses. All materials and equipment shall be strictly manufactured in compliance with IS 2925: 1984 (Reaffirmed 2019) and IS 3521 (Part 1): 2021. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 15844: 2010."
+    "improvedSpecification": "Heavy-duty high-density polyethylene (HDPE) industrial safety helmets conforming to IS 2925 with 6-point textile cradle, adjustable ratchet nape, electrical insulation up to 2000V, and Class A full body safety harnesses. All materials and equipment shall be strictly manufactured in compliance with IS 2925: 1984 (Reaffirmed 2019) and IS 3521 (Part 1): 2021. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 15844: 2010.",
+    "accountType": "procurement_officer",
+    "organization": "CPWD — Central Procurement Division"
   },
   {
     "demoKey": "po_analysis_14",
-    "userEmail": "procurement1@anveshak.demo",
+    "userEmail": "procurement@anveshak.demo",
     "productName": "11kV 25kA Indoor Vacuum Circuit Breaker (VCB) Switchgear",
     "productCategory": "Electrical Switchgear",
     "status": "Completed",
@@ -1705,7 +1590,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 91,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-20T17:49:14.873Z",
+    "createdAt": "2026-08-21T14:20:21.986Z",
     "rawInput": "11kV, 1250A, 25kA for 3 seconds indoor metal-clad horizontal drawout vacuum circuit breaker panel with vacuum interrupters, internal arc classification IAC AFLR 25kA 1s, and multi-function numerical protection.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 13118: 1991 / IEC 62271-100. Internal arc classification (IAC AFLR 25kA 1 sec) omitted; numerical relay communication protocol not specified.",
     "documentMetadata": {
@@ -1803,11 +1688,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 89
       }
     },
-    "improvedSpecification": "11kV, 1250A, 25kA for 3 seconds indoor metal-clad horizontal drawout vacuum circuit breaker panel with vacuum interrupters, internal arc classification IAC AFLR 25kA 1s, and multi-function numerical protection. All materials and equipment shall be strictly manufactured in compliance with IS 13118: 1991 / IEC 62271-100 and IS 3427: 1997 / IEC 62271-200. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 12729: 1993."
+    "improvedSpecification": "11kV, 1250A, 25kA for 3 seconds indoor metal-clad horizontal drawout vacuum circuit breaker panel with vacuum interrupters, internal arc classification IAC AFLR 25kA 1s, and multi-function numerical protection. All materials and equipment shall be strictly manufactured in compliance with IS 13118: 1991 / IEC 62271-100 and IS 3427: 1997 / IEC 62271-200. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 12729: 1993.",
+    "accountType": "procurement_officer",
+    "organization": "CPWD — Central Procurement Division"
   },
   {
     "demoKey": "po_analysis_15",
-    "userEmail": "procurement1@anveshak.demo",
+    "userEmail": "procurement@anveshak.demo",
     "productName": "Hot-Rolled Galvanized Structural Steel Sections for Logistics Hub",
     "productCategory": "Structural Steel",
     "status": "Completed",
@@ -1816,7 +1703,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 92,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-19T17:49:14.873Z",
+    "createdAt": "2026-08-20T14:20:21.986Z",
     "rawInput": "Hot-rolled structural steel beams, channels, and angles conforming to IS 2062 Grade E250 BR with minimum yield strength 250 MPa, Charpy impact tested at 0 deg C, hot-dip galvanized to minimum 86 microns coating.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 2062: 2011 (Reaffirmed 2021). Minimum zinc coating thickness not specified; charpy V-notch impact testing at sub-zero temperatures omitted.",
     "documentMetadata": {
@@ -1914,11 +1801,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 90
       }
     },
-    "improvedSpecification": "Hot-rolled structural steel beams, channels, and angles conforming to IS 2062 Grade E250 BR with minimum yield strength 250 MPa, Charpy impact tested at 0 deg C, hot-dip galvanized to minimum 86 microns coating. All materials and equipment shall be strictly manufactured in compliance with IS 2062: 2011 (Reaffirmed 2021) and IS 4759: 1996. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 800: 2007."
+    "improvedSpecification": "Hot-rolled structural steel beams, channels, and angles conforming to IS 2062 Grade E250 BR with minimum yield strength 250 MPa, Charpy impact tested at 0 deg C, hot-dip galvanized to minimum 86 microns coating. All materials and equipment shall be strictly manufactured in compliance with IS 2062: 2011 (Reaffirmed 2021) and IS 4759: 1996. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 800: 2007.",
+    "accountType": "procurement_officer",
+    "organization": "CPWD — Central Procurement Division"
   },
   {
     "demoKey": "po_analysis_16",
-    "userEmail": "procurement1@anveshak.demo",
+    "userEmail": "procurement@anveshak.demo",
     "productName": "CPVC Pipes & Fittings for Hot and Cold Potable Water Plumbing",
     "productCategory": "Plumbing & Sanitation",
     "status": "Completed",
@@ -1927,7 +1816,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 93,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-18T17:49:14.873Z",
+    "createdAt": "2026-08-19T14:20:21.986Z",
     "rawInput": "Chlorinated Polyvinyl Chloride (CPVC) pipes for hot and cold internal domestic water distribution Class 1 (SDR 11) conforming to IS 15778 with solvent welded fittings matching ASTM F439.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 15778: 2007 (Reaffirmed 2022). Hydrostatic burst pressure test at 82 deg C and NSF/ANSI 61 toxicology compliance clause missing.",
     "documentMetadata": {
@@ -2025,11 +1914,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 91
       }
     },
-    "improvedSpecification": "Chlorinated Polyvinyl Chloride (CPVC) pipes for hot and cold internal domestic water distribution Class 1 (SDR 11) conforming to IS 15778 with solvent welded fittings matching ASTM F439. All materials and equipment shall be strictly manufactured in compliance with IS 15778: 2007 (Reaffirmed 2022) and IS 2465: 1984. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 12235 (Parts 1-19)."
+    "improvedSpecification": "Chlorinated Polyvinyl Chloride (CPVC) pipes for hot and cold internal domestic water distribution Class 1 (SDR 11) conforming to IS 15778 with solvent welded fittings matching ASTM F439. All materials and equipment shall be strictly manufactured in compliance with IS 15778: 2007 (Reaffirmed 2022) and IS 2465: 1984. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 12235 (Parts 1-19).",
+    "accountType": "procurement_officer",
+    "organization": "CPWD — Central Procurement Division"
   },
   {
     "demoKey": "po_analysis_17",
-    "userEmail": "procurement1@anveshak.demo",
+    "userEmail": "procurement@anveshak.demo",
     "productName": "Smart Three-Phase Static Prepaid Electricity Energy Meters",
     "productCategory": "Smart Metering & IoT",
     "status": "Under Review",
@@ -2038,7 +1929,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 94,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-17T17:49:14.873Z",
+    "createdAt": "2026-08-18T14:20:21.986Z",
     "rawInput": "Three-phase 4-wire static smart prepayment energy meters Class 1.0 accuracy conforming to IS 16444 (Part 1) with integrated 4G-LTE/NB-IoT modem, optical communication port, and bi-directional disconnect relay.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 16444 (Part 1): 2015. Cyber security cryptography standards and DLMS/COSEM communication interoperability tests missing.",
     "documentMetadata": {
@@ -2136,11 +2027,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 92
       }
     },
-    "improvedSpecification": "Three-phase 4-wire static smart prepayment energy meters Class 1.0 accuracy conforming to IS 16444 (Part 1) with integrated 4G-LTE/NB-IoT modem, optical communication port, and bi-directional disconnect relay. All materials and equipment shall be strictly manufactured in compliance with IS 16444 (Part 1): 2015 and IS 15959 (Part 2): 2016. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 13779: 1999."
+    "improvedSpecification": "Three-phase 4-wire static smart prepayment energy meters Class 1.0 accuracy conforming to IS 16444 (Part 1) with integrated 4G-LTE/NB-IoT modem, optical communication port, and bi-directional disconnect relay. All materials and equipment shall be strictly manufactured in compliance with IS 16444 (Part 1): 2015 and IS 15959 (Part 2): 2016. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 13779: 1999.",
+    "accountType": "procurement_officer",
+    "organization": "CPWD — Central Procurement Division"
   },
   {
     "demoKey": "po_analysis_18",
-    "userEmail": "procurement1@anveshak.demo",
+    "userEmail": "procurement@anveshak.demo",
     "productName": "6A/16A Modular Electrical Switches and Shuttered Socket Outlets",
     "productCategory": "Building Electricals",
     "status": "Needs Attention",
@@ -2149,7 +2042,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 95,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-16T17:49:14.873Z",
+    "createdAt": "2026-08-17T14:20:21.986Z",
     "rawInput": "Polycarbonate flame-retardant modular rocker switches (6A & 16A) compliant with IS 3854 and 3-pin shuttered universal socket outlets compliant with IS 1293 mounted on powder-coated GI concealed backboxes.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 3854: 1997 (Reaffirmed 2021). Child-proof internal shutter mechanism on 16A 3-pin sockets not enforced; glow wire flammability omitted.",
     "documentMetadata": {
@@ -2247,11 +2140,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 93
       }
     },
-    "improvedSpecification": "Polycarbonate flame-retardant modular rocker switches (6A & 16A) compliant with IS 3854 and 3-pin shuttered universal socket outlets compliant with IS 1293 mounted on powder-coated GI concealed backboxes. All materials and equipment shall be strictly manufactured in compliance with IS 3854: 1997 (Reaffirmed 2021) and IS 1293: 2019. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 9537 (Part 3): 1983."
+    "improvedSpecification": "Polycarbonate flame-retardant modular rocker switches (6A & 16A) compliant with IS 3854 and 3-pin shuttered universal socket outlets compliant with IS 1293 mounted on powder-coated GI concealed backboxes. All materials and equipment shall be strictly manufactured in compliance with IS 3854: 1997 (Reaffirmed 2021) and IS 1293: 2019. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 9537 (Part 3): 1983.",
+    "accountType": "procurement_officer",
+    "organization": "CPWD — Central Procurement Division"
   },
   {
     "demoKey": "po_analysis_19",
-    "userEmail": "procurement1@anveshak.demo",
+    "userEmail": "procurement@anveshak.demo",
     "productName": "Commercial Water Purification Reverse Osmosis (RO) Plant 10,000 LPH",
     "productCategory": "Water Treatment",
     "status": "Completed",
@@ -2260,7 +2155,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 96,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-15T17:49:14.873Z",
+    "createdAt": "2026-08-16T14:20:21.986Z",
     "rawInput": "10,000 Litres Per Hour industrial RO water purification plant with multi-grade sand filter, activated carbon polisher, anti-scalant dosing, thin-film composite polyamide membranes, and automatic CIP skid.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 16240: 2015. Permissible water recovery ratio set at 35% instead of statutory NGT/BIS mandated minimum 60% recovery.",
     "documentMetadata": {
@@ -2358,11 +2253,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 94
       }
     },
-    "improvedSpecification": "10,000 Litres Per Hour industrial RO water purification plant with multi-grade sand filter, activated carbon polisher, anti-scalant dosing, thin-film composite polyamide membranes, and automatic CIP skid. All materials and equipment shall be strictly manufactured in compliance with IS 16240: 2015 and IS 10500: 2012 (Amended 2021). Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 3025 (Parts 1-60)."
+    "improvedSpecification": "10,000 Litres Per Hour industrial RO water purification plant with multi-grade sand filter, activated carbon polisher, anti-scalant dosing, thin-film composite polyamide membranes, and automatic CIP skid. All materials and equipment shall be strictly manufactured in compliance with IS 16240: 2015 and IS 10500: 2012 (Amended 2021). Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 3025 (Parts 1-60).",
+    "accountType": "procurement_officer",
+    "organization": "CPWD — Central Procurement Division"
   },
   {
     "demoKey": "po_analysis_20",
-    "userEmail": "procurement1@anveshak.demo",
+    "userEmail": "procurement@anveshak.demo",
     "productName": "Ready-Mixed Concrete (RMC) M35 / M40 Grade for Institutional Complex",
     "productCategory": "Structural Concrete",
     "status": "Completed",
@@ -2371,7 +2268,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 97,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-14T17:49:14.873Z",
+    "createdAt": "2026-08-15T14:20:21.986Z",
     "rawInput": "Design mix Ready-Mixed Concrete Grade M35/M40 using 20mm graded aggregates, fly-ash blended cement (IS 1489), and polycarboxylate ether superplasticizer with initial slump 120-150mm at delivery point.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 4926: 2003 (Reaffirmed 2019). Transit mixer transit duration limit and slump retention at discharge point (IS 4926 Cl. 6.2) not specified.",
     "documentMetadata": {
@@ -2469,11 +2366,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 95
       }
     },
-    "improvedSpecification": "Design mix Ready-Mixed Concrete Grade M35/M40 using 20mm graded aggregates, fly-ash blended cement (IS 1489), and polycarboxylate ether superplasticizer with initial slump 120-150mm at delivery point. All materials and equipment shall be strictly manufactured in compliance with IS 4926: 2003 (Reaffirmed 2019) and IS 456: 2000 (Plain and Reinforced Concrete). Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 516 (Part 1/Sec 1): 2021."
+    "improvedSpecification": "Design mix Ready-Mixed Concrete Grade M35/M40 using 20mm graded aggregates, fly-ash blended cement (IS 1489), and polycarboxylate ether superplasticizer with initial slump 120-150mm at delivery point. All materials and equipment shall be strictly manufactured in compliance with IS 4926: 2003 (Reaffirmed 2019) and IS 456: 2000 (Plain and Reinforced Concrete). Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 516 (Part 1/Sec 1): 2021.",
+    "accountType": "procurement_officer",
+    "organization": "CPWD — Central Procurement Division"
   },
   {
     "demoKey": "po_analysis_21",
-    "userEmail": "procurement1@anveshak.demo",
+    "userEmail": "procurement@anveshak.demo",
     "productName": "Precast Autoclaved Aerated Concrete (AAC) Blocks for Masonry",
     "productCategory": "Building Materials",
     "status": "Completed",
@@ -2482,7 +2381,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 88,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-13T17:49:14.873Z",
+    "createdAt": "2026-08-14T14:20:21.986Z",
     "rawInput": "Autoclaved Aerated Concrete (AAC) masonry blocks conforming to IS 2185 (Part 3) Grade 1, thermal conductivity k <= 0.16 W/m.K, with polymer-modified thin-bed masonry mortar conforming to IS 1661.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 2185 (Part 3): 1984 (Reaffirmed 2020). Dry density class (Grade 1 vs Grade 2) and drying shrinkage limit omitted in masonry schedule.",
     "documentMetadata": {
@@ -2580,11 +2479,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 86
       }
     },
-    "improvedSpecification": "Autoclaved Aerated Concrete (AAC) masonry blocks conforming to IS 2185 (Part 3) Grade 1, thermal conductivity k <= 0.16 W/m.K, with polymer-modified thin-bed masonry mortar conforming to IS 1661. All materials and equipment shall be strictly manufactured in compliance with IS 2185 (Part 3): 1984 (Reaffirmed 2020) and IS 1077: 1992. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 6441 (Parts 1-9)."
+    "improvedSpecification": "Autoclaved Aerated Concrete (AAC) masonry blocks conforming to IS 2185 (Part 3) Grade 1, thermal conductivity k <= 0.16 W/m.K, with polymer-modified thin-bed masonry mortar conforming to IS 1661. All materials and equipment shall be strictly manufactured in compliance with IS 2185 (Part 3): 1984 (Reaffirmed 2020) and IS 1077: 1992. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 6441 (Parts 1-9).",
+    "accountType": "procurement_officer",
+    "organization": "CPWD — Central Procurement Division"
   },
   {
     "demoKey": "po_analysis_22",
-    "userEmail": "procurement1@anveshak.demo",
+    "userEmail": "procurement@anveshak.demo",
     "productName": "Landing Valves and Branch Pipes for Wet Riser Fire Fighting",
     "productCategory": "Fire Safety & Life Safety",
     "status": "Completed",
@@ -2593,7 +2494,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 89,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-12T17:49:14.873Z",
+    "createdAt": "2026-08-13T14:20:21.986Z",
     "rawInput": "63mm single outlet oblique type landing valves manufactured from gunmetal conforming to IS 5290 with instantaneous female outlet, stainless steel spindle, blank cap, and 15m Type A synthetic fire hose.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 5290: 1993 (Reaffirmed 2019). Gunmetal grade (Leaded Tin Bronze LTB2) not specified; body hydrostatic test pressure (2.1 MPa) omitted.",
     "documentMetadata": {
@@ -2691,11 +2592,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 87
       }
     },
-    "improvedSpecification": "63mm single outlet oblique type landing valves manufactured from gunmetal conforming to IS 5290 with instantaneous female outlet, stainless steel spindle, blank cap, and 15m Type A synthetic fire hose. All materials and equipment shall be strictly manufactured in compliance with IS 5290: 1993 (Reaffirmed 2019) and IS 903: 1993. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 636: 2018."
+    "improvedSpecification": "63mm single outlet oblique type landing valves manufactured from gunmetal conforming to IS 5290 with instantaneous female outlet, stainless steel spindle, blank cap, and 15m Type A synthetic fire hose. All materials and equipment shall be strictly manufactured in compliance with IS 5290: 1993 (Reaffirmed 2019) and IS 903: 1993. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 636: 2018.",
+    "accountType": "procurement_officer",
+    "organization": "CPWD — Central Procurement Division"
   },
   {
     "demoKey": "po_analysis_23",
-    "userEmail": "procurement1@anveshak.demo",
+    "userEmail": "procurement@anveshak.demo",
     "productName": "Standalone Solar LED Street Lighting Systems with LiFePO4 Battery",
     "productCategory": "Renewable Energy",
     "status": "Completed",
@@ -2704,7 +2607,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 90,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-11T17:49:14.873Z",
+    "createdAt": "2026-08-12T14:20:21.986Z",
     "rawInput": "Standalone 30W LED solar street lighting system with 100Wp MNRE approved PV module, 12.8V 36Ah LiFePO4 battery pack, MPPT dusk-to-dawn charge controller, and galvanized octagonal 6m pole.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 16107 (Part 2/Sec 1): 2012. Battery cycle life (> 2000 cycles at 80% DOD) and autonomous operating days during monsoon not defined.",
     "documentMetadata": {
@@ -2802,11 +2705,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 88
       }
     },
-    "improvedSpecification": "Standalone 30W LED solar street lighting system with 100Wp MNRE approved PV module, 12.8V 36Ah LiFePO4 battery pack, MPPT dusk-to-dawn charge controller, and galvanized octagonal 6m pole. All materials and equipment shall be strictly manufactured in compliance with IS 16107 (Part 2/Sec 1): 2012 and IS 16046 (Part 2): 2018. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 10322 (Part 5/Sec 3)."
+    "improvedSpecification": "Standalone 30W LED solar street lighting system with 100Wp MNRE approved PV module, 12.8V 36Ah LiFePO4 battery pack, MPPT dusk-to-dawn charge controller, and galvanized octagonal 6m pole. All materials and equipment shall be strictly manufactured in compliance with IS 16107 (Part 2/Sec 1): 2012 and IS 16046 (Part 2): 2018. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 10322 (Part 5/Sec 3).",
+    "accountType": "procurement_officer",
+    "organization": "CPWD — Central Procurement Division"
   },
   {
     "demoKey": "po_analysis_24",
-    "userEmail": "procurement1@anveshak.demo",
+    "userEmail": "procurement@anveshak.demo",
     "productName": "Heavy Duty Non-Clog Submersible Sewage Pumpsets 15 kW",
     "productCategory": "Pumping Machinery",
     "status": "Completed",
@@ -2815,7 +2720,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 91,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-10T17:49:14.873Z",
+    "createdAt": "2026-08-11T14:20:21.986Z",
     "rawInput": "15 kW, 415V, 3-phase, 50 Hz non-clog submersible sewage pump with single-vane channel impeller capable of passing 80mm solids, Class H insulation, IP68 protection, and automatic guide rail coupling system.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 14536: 1998 (Reaffirmed 2020). Solid sphere spherical clearance passing capacity and mechanical seal face material not specified.",
     "documentMetadata": {
@@ -2913,11 +2818,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 89
       }
     },
-    "improvedSpecification": "15 kW, 415V, 3-phase, 50 Hz non-clog submersible sewage pump with single-vane channel impeller capable of passing 80mm solids, Class H insulation, IP68 protection, and automatic guide rail coupling system. All materials and equipment shall be strictly manufactured in compliance with IS 14536: 1998 (Reaffirmed 2020) and IS 9220: 1979. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 5120: 1977."
+    "improvedSpecification": "15 kW, 415V, 3-phase, 50 Hz non-clog submersible sewage pump with single-vane channel impeller capable of passing 80mm solids, Class H insulation, IP68 protection, and automatic guide rail coupling system. All materials and equipment shall be strictly manufactured in compliance with IS 14536: 1998 (Reaffirmed 2020) and IS 9220: 1979. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 5120: 1977.",
+    "accountType": "procurement_officer",
+    "organization": "CPWD — Central Procurement Division"
   },
   {
     "demoKey": "po_analysis_25",
-    "userEmail": "procurement1@anveshak.demo",
+    "userEmail": "procurement@anveshak.demo",
     "productName": "Fusion-Bonded Epoxy Coated Steel Rebars for Coastal PWD Structures",
     "productCategory": "Corrosion Protection",
     "status": "Needs Attention",
@@ -2926,7 +2833,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 92,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-09T17:49:14.874Z",
+    "createdAt": "2026-08-10T14:20:21.986Z",
     "rawInput": "Fusion-bonded epoxy coating applied to high-strength deformed steel bars Fe 500D in accordance with IS 13620 with average dry film thickness of 250 microns and zero holidays for marine coastal RC structures.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 13620: 1993 (Reaffirmed 2020). Coating thickness uniformity (175 to 300 microns) and holiday test pinhole limits (max 2 per meter) omitted.",
     "documentMetadata": {
@@ -3024,11 +2931,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 90
       }
     },
-    "improvedSpecification": "Fusion-bonded epoxy coating applied to high-strength deformed steel bars Fe 500D in accordance with IS 13620 with average dry film thickness of 250 microns and zero holidays for marine coastal RC structures. All materials and equipment shall be strictly manufactured in compliance with IS 13620: 1993 (Reaffirmed 2020) and IS 1786: 2008. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 1599: 2019."
+    "improvedSpecification": "Fusion-bonded epoxy coating applied to high-strength deformed steel bars Fe 500D in accordance with IS 13620 with average dry film thickness of 250 microns and zero holidays for marine coastal RC structures. All materials and equipment shall be strictly manufactured in compliance with IS 13620: 1993 (Reaffirmed 2020) and IS 1786: 2008. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 1599: 2019.",
+    "accountType": "procurement_officer",
+    "organization": "CPWD — Central Procurement Division"
   },
   {
     "demoKey": "po_analysis_26",
-    "userEmail": "procurement1@anveshak.demo",
+    "userEmail": "procurement@anveshak.demo",
     "productName": "Unplasticized Polyvinyl Chloride (uPVC) Multi-Chamber Windows",
     "productCategory": "Building Openings",
     "status": "Completed",
@@ -3037,7 +2946,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 93,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-08T17:49:14.874Z",
+    "createdAt": "2026-08-09T14:20:21.986Z",
     "rawInput": "Factory-glazed uPVC sliding and casement window assemblies conforming to IS 15087 Class A tropicalized lead-free profiles with 5mm toughened safety glass and multi-point security locking hardware.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 15087: 2001. Wall thickness of main outer profile (< 2.2mm) fails structural wind load rating for upper floors.",
     "documentMetadata": {
@@ -3135,11 +3044,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 91
       }
     },
-    "improvedSpecification": "Factory-glazed uPVC sliding and casement window assemblies conforming to IS 15087 Class A tropicalized lead-free profiles with 5mm toughened safety glass and multi-point security locking hardware. All materials and equipment shall be strictly manufactured in compliance with IS 15087: 2001 and IS 2835: 1987. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 15087 Annexure B."
+    "improvedSpecification": "Factory-glazed uPVC sliding and casement window assemblies conforming to IS 15087 Class A tropicalized lead-free profiles with 5mm toughened safety glass and multi-point security locking hardware. All materials and equipment shall be strictly manufactured in compliance with IS 15087: 2001 and IS 2835: 1987. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 15087 Annexure B.",
+    "accountType": "procurement_officer",
+    "organization": "CPWD — Central Procurement Division"
   },
   {
     "demoKey": "po_analysis_27",
-    "userEmail": "procurement1@anveshak.demo",
+    "userEmail": "procurement@anveshak.demo",
     "productName": "Low-Voltage Fully Compartmentalized Motor Control Center (MCC)",
     "productCategory": "Electrical Switchgear",
     "status": "Completed",
@@ -3148,7 +3059,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 94,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-07T17:49:14.874Z",
+    "createdAt": "2026-08-08T14:20:21.986Z",
     "rawInput": "415V, 50kA for 1s, Form 4b compartmentalized floor-standing motor control center with drawout motor starter feeders, copper busbars (rated 1.6A/sq.mm), microprocessor motor protection relays, and IP54 enclosure.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS/IEC 61439 (Parts 1 & 2): 2011. Tender cited withdrawn standard IS 8623 and omitted temperature rise test verification at 50 deg C ambient.",
     "documentMetadata": {
@@ -3246,11 +3157,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 92
       }
     },
-    "improvedSpecification": "415V, 50kA for 1s, Form 4b compartmentalized floor-standing motor control center with drawout motor starter feeders, copper busbars (rated 1.6A/sq.mm), microprocessor motor protection relays, and IP54 enclosure. All materials and equipment shall be strictly manufactured in compliance with IS/IEC 61439 (Parts 1 & 2): 2011 and IS 13947 (Parts 1-5). Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 8623 (Superseded by IS/IEC 61439)."
+    "improvedSpecification": "415V, 50kA for 1s, Form 4b compartmentalized floor-standing motor control center with drawout motor starter feeders, copper busbars (rated 1.6A/sq.mm), microprocessor motor protection relays, and IP54 enclosure. All materials and equipment shall be strictly manufactured in compliance with IS/IEC 61439 (Parts 1 & 2): 2011 and IS 13947 (Parts 1-5). Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 8623 (Superseded by IS/IEC 61439).",
+    "accountType": "procurement_officer",
+    "organization": "CPWD — Central Procurement Division"
   },
   {
     "demoKey": "po_analysis_28",
-    "userEmail": "procurement1@anveshak.demo",
+    "userEmail": "procurement@anveshak.demo",
     "productName": "Resin-Bonded Mineral Rockwool Blankets for Thermal & Acoustic Insulation",
     "productCategory": "Thermal Insulation",
     "status": "Under Review",
@@ -3259,7 +3172,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 95,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-06T17:49:14.874Z",
+    "createdAt": "2026-08-07T14:20:21.986Z",
     "rawInput": "Resin-bonded preformed Rockwool thermal insulation blankets conforming to IS 8183 with density 48 kg/m3, reinforced aluminium foil facing, and water repellent treatment for HVAC chilled air ducting.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 8183: 1993 (Reaffirmed 2020). Non-combustibility Class A1 rating and maximum thermal conductivity at mean temperature 50 deg C omitted.",
     "documentMetadata": {
@@ -3357,11 +3270,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 93
       }
     },
-    "improvedSpecification": "Resin-bonded preformed Rockwool thermal insulation blankets conforming to IS 8183 with density 48 kg/m3, reinforced aluminium foil facing, and water repellent treatment for HVAC chilled air ducting. All materials and equipment shall be strictly manufactured in compliance with IS 8183: 1993 (Reaffirmed 2020) and IS 3144: 1992. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 3346: 1980."
+    "improvedSpecification": "Resin-bonded preformed Rockwool thermal insulation blankets conforming to IS 8183 with density 48 kg/m3, reinforced aluminium foil facing, and water repellent treatment for HVAC chilled air ducting. All materials and equipment shall be strictly manufactured in compliance with IS 8183: 1993 (Reaffirmed 2020) and IS 3144: 1992. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 3346: 1980.",
+    "accountType": "procurement_officer",
+    "organization": "CPWD — Central Procurement Division"
   },
   {
     "demoKey": "po_analysis_29",
-    "userEmail": "procurement1@anveshak.demo",
+    "userEmail": "procurement@anveshak.demo",
     "productName": "Conductive Anti-Static Homogeneous Vinyl Flooring for ICU & Server Rooms",
     "productCategory": "Hospital Finishing",
     "status": "Completed",
@@ -3370,7 +3285,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 96,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-05T17:49:14.874Z",
+    "createdAt": "2026-08-06T14:20:21.986Z",
     "rawInput": "2.0mm thick homogeneous conductive vinyl sheet flooring conforming to IS 3462 with conductive carbon black grid backing, polyurethane reinforcement (PUR), welded seams, and continuous copper strip earthing grid.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 3462: 1986 (Reaffirmed 2020). Electrical resistance range (10^4 to 10^6 Ohms) not verified; antibacterial fungistatic certification omitted.",
     "documentMetadata": {
@@ -3468,11 +3383,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 94
       }
     },
-    "improvedSpecification": "2.0mm thick homogeneous conductive vinyl sheet flooring conforming to IS 3462 with conductive carbon black grid backing, polyurethane reinforcement (PUR), welded seams, and continuous copper strip earthing grid. All materials and equipment shall be strictly manufactured in compliance with IS 3462: 1986 (Reaffirmed 2020) and IS 3461: 1980. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 3464: 1986."
+    "improvedSpecification": "2.0mm thick homogeneous conductive vinyl sheet flooring conforming to IS 3462 with conductive carbon black grid backing, polyurethane reinforcement (PUR), welded seams, and continuous copper strip earthing grid. All materials and equipment shall be strictly manufactured in compliance with IS 3462: 1986 (Reaffirmed 2020) and IS 3461: 1980. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 3464: 1986.",
+    "accountType": "procurement_officer",
+    "organization": "CPWD — Central Procurement Division"
   },
   {
     "demoKey": "po_analysis_30",
-    "userEmail": "procurement1@anveshak.demo",
+    "userEmail": "procurement@anveshak.demo",
     "productName": "Cast Iron Double Flanged Sluice Valves Class PN 1.6",
     "productCategory": "Waterworks Valves",
     "status": "Completed",
@@ -3481,7 +3398,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 97,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-04T17:49:14.874Z",
+    "createdAt": "2026-08-05T14:20:21.986Z",
     "rawInput": "Cast Iron double-flanged resilient-seated sluice valves Class PN 1.6 conforming to IS 14846 with non-rising stainless steel spindle, EPDM encapsulated ductile iron wedge, and electrostatic powder epoxy coating.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 14846: 2000 (Reaffirmed 2021). Seat test pressure (1.6 MPa) and body test pressure (2.4 MPa) inspection clause omitted from factory inspection.",
     "documentMetadata": {
@@ -3579,11 +3496,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 95
       }
     },
-    "improvedSpecification": "Cast Iron double-flanged resilient-seated sluice valves Class PN 1.6 conforming to IS 14846 with non-rising stainless steel spindle, EPDM encapsulated ductile iron wedge, and electrostatic powder epoxy coating. All materials and equipment shall be strictly manufactured in compliance with IS 14846: 2000 (Reaffirmed 2021) and IS 778: 1984. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 1538: 1993."
+    "improvedSpecification": "Cast Iron double-flanged resilient-seated sluice valves Class PN 1.6 conforming to IS 14846 with non-rising stainless steel spindle, EPDM encapsulated ductile iron wedge, and electrostatic powder epoxy coating. All materials and equipment shall be strictly manufactured in compliance with IS 14846: 2000 (Reaffirmed 2021) and IS 778: 1984. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 1538: 1993.",
+    "accountType": "procurement_officer",
+    "organization": "CPWD — Central Procurement Division"
   },
   {
     "demoKey": "po_analysis_31",
-    "userEmail": "procurement1@anveshak.demo",
+    "userEmail": "procurement@anveshak.demo",
     "productName": "Group B1a Fully Vitrified Ceramic Floor Tiles for Transit Terminals",
     "productCategory": "Floor Finishes",
     "status": "Completed",
@@ -3592,7 +3511,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 88,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-03T17:49:14.874Z",
+    "createdAt": "2026-08-04T14:20:21.986Z",
     "rawInput": "Heavy-duty double-charged unglazed fully vitrified floor tiles (size 600x600x10mm) conforming to IS 15622 Group B1a with modulus of rupture >= 38 N/mm2, scratch hardness >= 7 on Mohs scale, and rectified edges.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 15622: 2017. Water absorption limit cited as <= 0.5% but Mohs surface hardness (> 7) and anti-skid pendulum test omitted.",
     "documentMetadata": {
@@ -3690,11 +3609,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 86
       }
     },
-    "improvedSpecification": "Heavy-duty double-charged unglazed fully vitrified floor tiles (size 600x600x10mm) conforming to IS 15622 Group B1a with modulus of rupture >= 38 N/mm2, scratch hardness >= 7 on Mohs scale, and rectified edges. All materials and equipment shall be strictly manufactured in compliance with IS 15622: 2017 and IS 13630 (Parts 1-15). Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 15622 Group B1a Table 3."
+    "improvedSpecification": "Heavy-duty double-charged unglazed fully vitrified floor tiles (size 600x600x10mm) conforming to IS 15622 Group B1a with modulus of rupture >= 38 N/mm2, scratch hardness >= 7 on Mohs scale, and rectified edges. All materials and equipment shall be strictly manufactured in compliance with IS 15622: 2017 and IS 13630 (Parts 1-15). Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 15622 Group B1a Table 3.",
+    "accountType": "procurement_officer",
+    "organization": "CPWD — Central Procurement Division"
   },
   {
     "demoKey": "po_analysis_32",
-    "userEmail": "procurement1@anveshak.demo",
+    "userEmail": "procurement@anveshak.demo",
     "productName": "Maintenance-Free Chemical Earthing Copper-Bonded Steel Electrodes",
     "productCategory": "Earthing & Lightning",
     "status": "Needs Attention",
@@ -3703,7 +3624,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 89,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-02T17:49:14.874Z",
+    "createdAt": "2026-08-03T14:20:21.986Z",
     "rawInput": "Maintenance-free chemical earthing system comprising 3.0m long 17.2mm diameter copper-bonded steel rod with minimum 250 microns copper molecular bonding, UL listed, and 25 kg carbonaceous backfill compound.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 3043: 2018. Copper molecular bonding thickness (< 100 microns) inadequate for 25-year corrosive soil longevity.",
     "documentMetadata": {
@@ -3801,11 +3722,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 87
       }
     },
-    "improvedSpecification": "Maintenance-free chemical earthing system comprising 3.0m long 17.2mm diameter copper-bonded steel rod with minimum 250 microns copper molecular bonding, UL listed, and 25 kg carbonaceous backfill compound. All materials and equipment shall be strictly manufactured in compliance with IS 3043: 2018 and IS 1239 (Part 1): 2004. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IEC 62561-2."
+    "improvedSpecification": "Maintenance-free chemical earthing system comprising 3.0m long 17.2mm diameter copper-bonded steel rod with minimum 250 microns copper molecular bonding, UL listed, and 25 kg carbonaceous backfill compound. All materials and equipment shall be strictly manufactured in compliance with IS 3043: 2018 and IS 1239 (Part 1): 2004. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IEC 62561-2.",
+    "accountType": "procurement_officer",
+    "organization": "CPWD — Central Procurement Division"
   },
   {
     "demoKey": "dept_analysis_01",
-    "userEmail": "department1@anveshak.demo",
+    "userEmail": "department@anveshak.demo",
     "productName": "Smart City City-Wide Surveillance AI CCTV Network & Central VMS",
     "productCategory": "Information Technology & Surveillance",
     "status": "Completed",
@@ -3814,7 +3737,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 88,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-09-02T17:49:14.874Z",
+    "createdAt": "2026-09-03T14:20:21.986Z",
     "rawInput": "City-wide AI-enabled IP video surveillance infrastructure with 4K PTZ and 5MP varifocal bullet cameras (IP67, IK10 vandal-resistant) with edge analytics, H.265+ compression, and central unified video management software.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 13252 (Part 1): 2010. Tender missing mandatory cyber-security firmware hardening certification and OWASP Top 10 compliance audit.",
     "documentMetadata": {
@@ -3912,11 +3835,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 86
       }
     },
-    "improvedSpecification": "City-wide AI-enabled IP video surveillance infrastructure with 4K PTZ and 5MP varifocal bullet cameras (IP67, IK10 vandal-resistant) with edge analytics, H.265+ compression, and central unified video management software. All materials and equipment shall be strictly manufactured in compliance with IS 13252 (Part 1): 2010 and IS/IEC 60839 (Part 11/Sec 1): 2013. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS/IEC 60529: 2001."
+    "improvedSpecification": "City-wide AI-enabled IP video surveillance infrastructure with 4K PTZ and 5MP varifocal bullet cameras (IP67, IK10 vandal-resistant) with edge analytics, H.265+ compression, and central unified video management software. All materials and equipment shall be strictly manufactured in compliance with IS 13252 (Part 1): 2010 and IS/IEC 60839 (Part 11/Sec 1): 2013. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS/IEC 60529: 2001.",
+    "accountType": "government_department",
+    "organization": "Ministry of Housing & Urban Affairs (MoHUA)"
   },
   {
     "demoKey": "dept_analysis_02",
-    "userEmail": "department1@anveshak.demo",
+    "userEmail": "department@anveshak.demo",
     "productName": "Hospital On-Site 500 LPM Pressure Swing Adsorption (PSA) Medical Oxygen Plant",
     "productCategory": "Healthcare Infrastructure",
     "status": "Completed",
@@ -3925,7 +3850,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 89,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-09-01T17:49:14.874Z",
+    "createdAt": "2026-09-02T14:20:21.986Z",
     "rawInput": "Turnkey 500 Litres Per Minute PSA medical oxygen generation system producing 93% +/- 3% purity oxygen at 4.5 bar line pressure with oil-free air compressor, dual adsorption towers with synthetic zeolite molecular sieve, and duplex booster skid.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 15001: 2002 (Reaffirmed 2021). Carbon monoxide (<= 5 ppm) and carbon dioxide (<= 300 ppm) continuous analytical sensor monitoring omitted.",
     "documentMetadata": {
@@ -4023,11 +3948,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 87
       }
     },
-    "improvedSpecification": "Turnkey 500 Litres Per Minute PSA medical oxygen generation system producing 93% +/- 3% purity oxygen at 4.5 bar line pressure with oil-free air compressor, dual adsorption towers with synthetic zeolite molecular sieve, and duplex booster skid. All materials and equipment shall be strictly manufactured in compliance with IS 15001: 2002 (Reaffirmed 2021) and IS 7285 (Part 2): 2017. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 10500 / Indian Pharmacopoeia (IP)."
+    "improvedSpecification": "Turnkey 500 Litres Per Minute PSA medical oxygen generation system producing 93% +/- 3% purity oxygen at 4.5 bar line pressure with oil-free air compressor, dual adsorption towers with synthetic zeolite molecular sieve, and duplex booster skid. All materials and equipment shall be strictly manufactured in compliance with IS 15001: 2002 (Reaffirmed 2021) and IS 7285 (Part 2): 2017. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 10500 / Indian Pharmacopoeia (IP).",
+    "accountType": "government_department",
+    "organization": "Ministry of Housing & Urban Affairs (MoHUA)"
   },
   {
     "demoKey": "dept_analysis_03",
-    "userEmail": "department1@anveshak.demo",
+    "userEmail": "department@anveshak.demo",
     "productName": "Govt School Ergonomic Dual Desks & Steel Storage Furniture",
     "productCategory": "Institutional Furniture",
     "status": "Completed",
@@ -4036,7 +3963,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 90,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-31T17:49:14.874Z",
+    "createdAt": "2026-09-01T14:20:21.986Z",
     "rawInput": "Dual student classroom bench and desk units with ERW hollow square steel frame (conforming to IS 4923), 18mm pre-laminated high-density particle board (IS 3087) with 2mm machine-glued PVC edge banding.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 4837: 1990 (Reaffirmed 2021). Edge-banding adhesion test and lead-free non-toxic epoxy powder coating certification omitted.",
     "documentMetadata": {
@@ -4134,11 +4061,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 88
       }
     },
-    "improvedSpecification": "Dual student classroom bench and desk units with ERW hollow square steel frame (conforming to IS 4923), 18mm pre-laminated high-density particle board (IS 3087) with 2mm machine-glued PVC edge banding. All materials and equipment shall be strictly manufactured in compliance with IS 4837: 1990 (Reaffirmed 2021) and IS 3845: 1966. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 3663: 1981."
+    "improvedSpecification": "Dual student classroom bench and desk units with ERW hollow square steel frame (conforming to IS 4923), 18mm pre-laminated high-density particle board (IS 3087) with 2mm machine-glued PVC edge banding. All materials and equipment shall be strictly manufactured in compliance with IS 4837: 1990 (Reaffirmed 2021) and IS 3845: 1966. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 3663: 1981.",
+    "accountType": "government_department",
+    "organization": "Ministry of Housing & Urban Affairs (MoHUA)"
   },
   {
     "demoKey": "dept_analysis_04",
-    "userEmail": "department1@anveshak.demo",
+    "userEmail": "department@anveshak.demo",
     "productName": "12-Meter Low-Floor Fully Electric Air-Conditioned City Transit Buses",
     "productCategory": "Urban Mass Mobility",
     "status": "Needs Attention",
@@ -4147,7 +4076,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 91,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-30T17:49:14.874Z",
+    "createdAt": "2026-08-31T14:20:21.986Z",
     "rawInput": "12-meter low-floor (400mm floor height) monocoque city transit electric buses with 280 kWh LFP liquid-cooled battery pack, permanent magnet synchronous traction motor (250 kW peak), electronically controlled air suspension, and ADA wheelchair ramp.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 17017 (Part 1): 2018. Thermal runaway propagation mitigation and battery enclosure fire suppression system (NFPA 855) missing.",
     "documentMetadata": {
@@ -4245,11 +4174,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 89
       }
     },
-    "improvedSpecification": "12-meter low-floor (400mm floor height) monocoque city transit electric buses with 280 kWh LFP liquid-cooled battery pack, permanent magnet synchronous traction motor (250 kW peak), electronically controlled air suspension, and ADA wheelchair ramp. All materials and equipment shall be strictly manufactured in compliance with IS 17017 (Part 1): 2018 and IS 16046 (Part 2): 2018. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to AIS-038 (Rev 2) / AIS-153."
+    "improvedSpecification": "12-meter low-floor (400mm floor height) monocoque city transit electric buses with 280 kWh LFP liquid-cooled battery pack, permanent magnet synchronous traction motor (250 kW peak), electronically controlled air suspension, and ADA wheelchair ramp. All materials and equipment shall be strictly manufactured in compliance with IS 17017 (Part 1): 2018 and IS 16046 (Part 2): 2018. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to AIS-038 (Rev 2) / AIS-153.",
+    "accountType": "government_department",
+    "organization": "Ministry of Housing & Urban Affairs (MoHUA)"
   },
   {
     "demoKey": "dept_analysis_05",
-    "userEmail": "department1@anveshak.demo",
+    "userEmail": "department@anveshak.demo",
     "productName": "Centrifugally Spun Reinforced Concrete NP3 Drainage Pipes 900mm",
     "productCategory": "Drainage & Sewerage",
     "status": "Completed",
@@ -4258,7 +4189,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 92,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-29T17:49:14.874Z",
+    "createdAt": "2026-08-30T14:20:21.986Z",
     "rawInput": "900mm internal diameter centrifugally spun reinforced concrete pressure pipes Class NP3 with spigot and socket flexible rubber ring joints conforming to IS 458: 2021 for deep underground municipal stormwater and sewerage outfall.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 458: 2021. Three-edge bearing test failure load (IS 458 Table 3) and hydrostatic pressure leakage test not witnessed.",
     "documentMetadata": {
@@ -4356,11 +4287,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 90
       }
     },
-    "improvedSpecification": "900mm internal diameter centrifugally spun reinforced concrete pressure pipes Class NP3 with spigot and socket flexible rubber ring joints conforming to IS 458: 2021 for deep underground municipal stormwater and sewerage outfall. All materials and equipment shall be strictly manufactured in compliance with IS 458: 2021 and IS 3597: 1998. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 456: 2000."
+    "improvedSpecification": "900mm internal diameter centrifugally spun reinforced concrete pressure pipes Class NP3 with spigot and socket flexible rubber ring joints conforming to IS 458: 2021 for deep underground municipal stormwater and sewerage outfall. All materials and equipment shall be strictly manufactured in compliance with IS 458: 2021 and IS 3597: 1998. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 456: 2000.",
+    "accountType": "government_department",
+    "organization": "Ministry of Housing & Urban Affairs (MoHUA)"
   },
   {
     "demoKey": "dept_analysis_06",
-    "userEmail": "department1@anveshak.demo",
+    "userEmail": "department@anveshak.demo",
     "productName": "Jal Jeevan Mission Rural Potable Water HDPE Pipes PE-100 PN-10",
     "productCategory": "Water Supply Infrastructure",
     "status": "Under Review",
@@ -4369,7 +4302,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 93,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-28T17:49:14.874Z",
+    "createdAt": "2026-08-29T14:20:21.986Z",
     "rawInput": "High-Density Polyethylene (HDPE) pressure pipes manufactured from 100% virgin resin Grade PE-100, pressure rating PN-10 (1.0 MPa), with continuous blue co-extruded statutory identifying stripes conforming to IS 4984.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 4984: 2016. Carbon black dispersion test and 100-hour hydrostatic strength test at 80 deg C omitted in field verification.",
     "documentMetadata": {
@@ -4467,11 +4400,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 91
       }
     },
-    "improvedSpecification": "High-Density Polyethylene (HDPE) pressure pipes manufactured from 100% virgin resin Grade PE-100, pressure rating PN-10 (1.0 MPa), with continuous blue co-extruded statutory identifying stripes conforming to IS 4984. All materials and equipment shall be strictly manufactured in compliance with IS 4984: 2016 and IS 7634 (Part 2): 2012. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 2530: 1963."
+    "improvedSpecification": "High-Density Polyethylene (HDPE) pressure pipes manufactured from 100% virgin resin Grade PE-100, pressure rating PN-10 (1.0 MPa), with continuous blue co-extruded statutory identifying stripes conforming to IS 4984. All materials and equipment shall be strictly manufactured in compliance with IS 4984: 2016 and IS 7634 (Part 2): 2012. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 2530: 1963.",
+    "accountType": "government_department",
+    "organization": "Ministry of Housing & Urban Affairs (MoHUA)"
   },
   {
     "demoKey": "dept_analysis_07",
-    "userEmail": "department1@anveshak.demo",
+    "userEmail": "department@anveshak.demo",
     "productName": "Perforated Acoustic Gypsum Board Ceilings for State Legislative Chambers",
     "productCategory": "Civic Architecture",
     "status": "Completed",
@@ -4480,7 +4415,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 94,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-27T17:49:14.874Z",
+    "createdAt": "2026-08-28T14:20:21.986Z",
     "rawInput": "12.5mm square-edge perforated acoustic gypsum boards with 15% perforation area, non-woven acoustic tissue fleece backing, achieving minimum NRC 0.75 suspended on concealed hot-dip galvanized steel grid.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 2095 (Part 1): 2011. Noise Reduction Coefficient (NRC >= 0.70) test report from accredited reverberation chamber missing.",
     "documentMetadata": {
@@ -4578,11 +4513,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 92
       }
     },
-    "improvedSpecification": "12.5mm square-edge perforated acoustic gypsum boards with 15% perforation area, non-woven acoustic tissue fleece backing, achieving minimum NRC 0.75 suspended on concealed hot-dip galvanized steel grid. All materials and equipment shall be strictly manufactured in compliance with IS 2095 (Part 1): 2011 and IS 2542 (Part 1): 1978. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 11050: 1984."
+    "improvedSpecification": "12.5mm square-edge perforated acoustic gypsum boards with 15% perforation area, non-woven acoustic tissue fleece backing, achieving minimum NRC 0.75 suspended on concealed hot-dip galvanized steel grid. All materials and equipment shall be strictly manufactured in compliance with IS 2095 (Part 1): 2011 and IS 2542 (Part 1): 1978. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 11050: 1984.",
+    "accountType": "government_department",
+    "organization": "Ministry of Housing & Urban Affairs (MoHUA)"
   },
   {
     "demoKey": "dept_analysis_08",
-    "userEmail": "department1@anveshak.demo",
+    "userEmail": "department@anveshak.demo",
     "productName": "Grade 304 Stainless Steel Modular Bus Queue Shelters for Smart Transit",
     "productCategory": "Urban Street Furniture",
     "status": "Completed",
@@ -4591,7 +4528,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 95,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-26T17:49:14.874Z",
+    "createdAt": "2026-08-27T14:20:21.986Z",
     "rawInput": "Modular transit passenger bus queue shelters fabricated from structural Grade 304 stainless steel tubes and sheets with satin brush finish, 8mm laminated solar-control safety glass roofing, and LED backlight transit maps.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 6911: 2017. Supplier attempted quoting magnetic 200-series low-nickel stainless steel prone to rust in outdoor ambient.",
     "documentMetadata": {
@@ -4689,11 +4626,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 93
       }
     },
-    "improvedSpecification": "Modular transit passenger bus queue shelters fabricated from structural Grade 304 stainless steel tubes and sheets with satin brush finish, 8mm laminated solar-control safety glass roofing, and LED backlight transit maps. All materials and equipment shall be strictly manufactured in compliance with IS 6911: 2017 and IS 15997: 2012. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 1367 (Part 14): 2002."
+    "improvedSpecification": "Modular transit passenger bus queue shelters fabricated from structural Grade 304 stainless steel tubes and sheets with satin brush finish, 8mm laminated solar-control safety glass roofing, and LED backlight transit maps. All materials and equipment shall be strictly manufactured in compliance with IS 6911: 2017 and IS 15997: 2012. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 1367 (Part 14): 2002.",
+    "accountType": "government_department",
+    "organization": "Ministry of Housing & Urban Affairs (MoHUA)"
   },
   {
     "demoKey": "dept_analysis_09",
-    "userEmail": "department1@anveshak.demo",
+    "userEmail": "department@anveshak.demo",
     "productName": "Disaster Emergency Inflatable Rescue Boats with 40HP Outboard Motor",
     "productCategory": "Disaster Relief & Flood Management",
     "status": "Completed",
@@ -4702,7 +4641,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 96,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-25T17:49:14.874Z",
+    "createdAt": "2026-08-26T14:20:21.986Z",
     "rawInput": "4.7-meter heavy-duty inflatable disaster rescue boat constructed from 1670 Dtex reinforced Hypalon/Neoprene with rigid aluminium roll-up floorboard, 5 independent air chambers, towing bridle, and 40HP 2-stroke OBM.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 13495: 1992 (Reaffirmed 2020). Multi-compartment inflation buoyancy test (remaining afloat with one chamber deflated) and drop test not specified.",
     "documentMetadata": {
@@ -4800,11 +4739,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 94
       }
     },
-    "improvedSpecification": "4.7-meter heavy-duty inflatable disaster rescue boat constructed from 1670 Dtex reinforced Hypalon/Neoprene with rigid aluminium roll-up floorboard, 5 independent air chambers, towing bridle, and 40HP 2-stroke OBM. All materials and equipment shall be strictly manufactured in compliance with IS 13495: 1992 (Reaffirmed 2020) and IS 1259: 1984. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to ISO 6185-2 / SOLAS LSA Code."
+    "improvedSpecification": "4.7-meter heavy-duty inflatable disaster rescue boat constructed from 1670 Dtex reinforced Hypalon/Neoprene with rigid aluminium roll-up floorboard, 5 independent air chambers, towing bridle, and 40HP 2-stroke OBM. All materials and equipment shall be strictly manufactured in compliance with IS 13495: 1992 (Reaffirmed 2020) and IS 1259: 1984. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to ISO 6185-2 / SOLAS LSA Code.",
+    "accountType": "government_department",
+    "organization": "Ministry of Housing & Urban Affairs (MoHUA)"
   },
   {
     "demoKey": "dept_analysis_10",
-    "userEmail": "department1@anveshak.demo",
+    "userEmail": "department@anveshak.demo",
     "productName": "Canal Headworks Crest Radial Sluice Gates & Electromechanical Hoists",
     "productCategory": "Irrigation & Water Resources",
     "status": "Completed",
@@ -4813,7 +4754,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 97,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-24T17:49:14.874Z",
+    "createdAt": "2026-08-25T14:20:21.986Z",
     "rawInput": "12m x 8m structural steel radial crest gates designed for 10m hydraulic water head conforming to IS 4622 fabricated from IS 2062 Grade E250C with dual-drum twin-rope electrically operated hoisting mechanism.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 4622: 2003 (Reaffirmed 2019). Trunnion hub self-lubricating bronze bushing material specifications and skin plate corrosion allowance missing.",
     "documentMetadata": {
@@ -4911,11 +4852,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 95
       }
     },
-    "improvedSpecification": "12m x 8m structural steel radial crest gates designed for 10m hydraulic water head conforming to IS 4622 fabricated from IS 2062 Grade E250C with dual-drum twin-rope electrically operated hoisting mechanism. All materials and equipment shall be strictly manufactured in compliance with IS 4622: 2003 (Reaffirmed 2019) and IS 6938: 2005. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 10096 (Parts 1-3)."
+    "improvedSpecification": "12m x 8m structural steel radial crest gates designed for 10m hydraulic water head conforming to IS 4622 fabricated from IS 2062 Grade E250C with dual-drum twin-rope electrically operated hoisting mechanism. All materials and equipment shall be strictly manufactured in compliance with IS 4622: 2003 (Reaffirmed 2019) and IS 6938: 2005. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 10096 (Parts 1-3).",
+    "accountType": "government_department",
+    "organization": "Ministry of Housing & Urban Affairs (MoHUA)"
   },
   {
     "demoKey": "dept_analysis_11",
-    "userEmail": "department1@anveshak.demo",
+    "userEmail": "department@anveshak.demo",
     "productName": "Anganwadi Center Food-Grade Stainless Steel Cookware & Milk Cans",
     "productCategory": "Child Development & Nutrition",
     "status": "Needs Attention",
@@ -4924,7 +4867,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 88,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-23T17:49:14.874Z",
+    "createdAt": "2026-08-24T14:20:21.986Z",
     "rawInput": "Food-grade stainless steel institutional cookware set comprising 20L heavy-bottom pressure cooker, milk boiling urns with brass valves, and serving handis fabricated from IS 5522 Grade X04Cr19Ni9.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 5522: 2014. Heavy metal migration limit testing (Lead, Cadmium, Nickel leachability) under Food Safety Regulations omitted.",
     "documentMetadata": {
@@ -5022,11 +4965,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 86
       }
     },
-    "improvedSpecification": "Food-grade stainless steel institutional cookware set comprising 20L heavy-bottom pressure cooker, milk boiling urns with brass valves, and serving handis fabricated from IS 5522 Grade X04Cr19Ni9. All materials and equipment shall be strictly manufactured in compliance with IS 5522: 2014 and IS 6911: 2017. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 14756: 2017."
+    "improvedSpecification": "Food-grade stainless steel institutional cookware set comprising 20L heavy-bottom pressure cooker, milk boiling urns with brass valves, and serving handis fabricated from IS 5522 Grade X04Cr19Ni9. All materials and equipment shall be strictly manufactured in compliance with IS 5522: 2014 and IS 6911: 2017. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 14756: 2017.",
+    "accountType": "government_department",
+    "organization": "Ministry of Housing & Urban Affairs (MoHUA)"
   },
   {
     "demoKey": "dept_analysis_12",
-    "userEmail": "department1@anveshak.demo",
+    "userEmail": "department@anveshak.demo",
     "productName": "Off-Grid Hybrid Solar Micro-Grid Power Systems for Remote Tribal Hamlets",
     "productCategory": "Rural Electrification",
     "status": "Completed",
@@ -5035,7 +4980,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 89,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-22T17:49:14.874Z",
+    "createdAt": "2026-08-23T14:20:21.986Z",
     "rawInput": "10 kWp standalone solar micro-grid comprising MNRE-certified mono PERC panels, 48V 1200Ah tubular gel battery bank, bi-directional hybrid MPPT solar inverter, and local 230V single-phase LT distribution network.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 14286: 2010. Battery round-trip watt-hour efficiency (minimum 85%) and IP55 outdoor balance-of-system enclosure missing.",
     "documentMetadata": {
@@ -5133,11 +5078,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 87
       }
     },
-    "improvedSpecification": "10 kWp standalone solar micro-grid comprising MNRE-certified mono PERC panels, 48V 1200Ah tubular gel battery bank, bi-directional hybrid MPPT solar inverter, and local 230V single-phase LT distribution network. All materials and equipment shall be strictly manufactured in compliance with IS 14286: 2010 and IS 16221: 2015. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 1651: 2013."
+    "improvedSpecification": "10 kWp standalone solar micro-grid comprising MNRE-certified mono PERC panels, 48V 1200Ah tubular gel battery bank, bi-directional hybrid MPPT solar inverter, and local 230V single-phase LT distribution network. All materials and equipment shall be strictly manufactured in compliance with IS 14286: 2010 and IS 16221: 2015. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 1651: 2013.",
+    "accountType": "government_department",
+    "organization": "Ministry of Housing & Urban Affairs (MoHUA)"
   },
   {
     "demoKey": "dept_analysis_13",
-    "userEmail": "department1@anveshak.demo",
+    "userEmail": "department@anveshak.demo",
     "productName": "State Transport Bus Terminal P1.8 HD Indoor LED Video Displays",
     "productCategory": "Passenger Information Systems",
     "status": "Completed",
@@ -5146,7 +5093,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 90,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-21T17:49:14.874Z",
+    "createdAt": "2026-08-22T14:20:21.986Z",
     "rawInput": "Ultra-high-definition indoor passenger information LED video wall display (pixel pitch 1.8mm) with die-cast aluminium cabinets, refresh rate >= 3840 Hz, brightness >= 800 cd/m2, and redundant Novastar controllers.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 13252 (Part 1): 2010. Missing MeitY CRS registration clause for digital signage displays exceeding 32 inches.",
     "documentMetadata": {
@@ -5244,11 +5191,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 88
       }
     },
-    "improvedSpecification": "Ultra-high-definition indoor passenger information LED video wall display (pixel pitch 1.8mm) with die-cast aluminium cabinets, refresh rate >= 3840 Hz, brightness >= 800 cd/m2, and redundant Novastar controllers. All materials and equipment shall be strictly manufactured in compliance with IS 13252 (Part 1): 2010 and IS 16102 (Part 1): 2012. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 16103: 2012."
+    "improvedSpecification": "Ultra-high-definition indoor passenger information LED video wall display (pixel pitch 1.8mm) with die-cast aluminium cabinets, refresh rate >= 3840 Hz, brightness >= 800 cd/m2, and redundant Novastar controllers. All materials and equipment shall be strictly manufactured in compliance with IS 13252 (Part 1): 2010 and IS 16102 (Part 1): 2012. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 16103: 2012.",
+    "accountType": "government_department",
+    "organization": "Ministry of Housing & Urban Affairs (MoHUA)"
   },
   {
     "demoKey": "dept_analysis_14",
-    "userEmail": "department1@anveshak.demo",
+    "userEmail": "department@anveshak.demo",
     "productName": "Municipal 150 TPD Rotary Trommel Screens for Solid Waste Processing",
     "productCategory": "Solid Waste Management",
     "status": "Completed",
@@ -5257,7 +5206,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 91,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-20T17:49:14.874Z",
+    "createdAt": "2026-08-21T14:20:21.986Z",
     "rawInput": "150 Tonnes Per Day rotary cylindrical trommel screen (diameter 2.5m x length 10m) with interchangeable 35mm and 16mm perforated screening sections, heavy-duty trunnion roller drive, and integrated dust extraction hood.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 12402: 1988. Screen mesh aperture perforation wear-resistant steel plate grade (Hardox / SAIL-Hard) not specified.",
     "documentMetadata": {
@@ -5355,11 +5304,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 89
       }
     },
-    "improvedSpecification": "150 Tonnes Per Day rotary cylindrical trommel screen (diameter 2.5m x length 10m) with interchangeable 35mm and 16mm perforated screening sections, heavy-duty trunnion roller drive, and integrated dust extraction hood. All materials and equipment shall be strictly manufactured in compliance with IS 12402: 1988 and IS 9220: 1979. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 3177: 1999."
+    "improvedSpecification": "150 Tonnes Per Day rotary cylindrical trommel screen (diameter 2.5m x length 10m) with interchangeable 35mm and 16mm perforated screening sections, heavy-duty trunnion roller drive, and integrated dust extraction hood. All materials and equipment shall be strictly manufactured in compliance with IS 12402: 1988 and IS 9220: 1979. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 3177: 1999.",
+    "accountType": "government_department",
+    "organization": "Ministry of Housing & Urban Affairs (MoHUA)"
   },
   {
     "demoKey": "dept_analysis_15",
-    "userEmail": "department1@anveshak.demo",
+    "userEmail": "department@anveshak.demo",
     "productName": "Dual-Gun 120kW CCS2/CHAdeMO DC Fast EV Charging Stations",
     "productCategory": "Electric Vehicle Infrastructure",
     "status": "Completed",
@@ -5368,7 +5319,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 92,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-19T17:49:14.874Z",
+    "createdAt": "2026-08-20T14:20:21.986Z",
     "rawInput": "120kW dual-gun commercial DC fast electric vehicle charging station with liquid-cooled CCS Type 2 charging guns, dynamic power sharing (60kW + 60kW or 120kW single), 7-inch touch HMI, and RFID/UPI cashless billing.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 17017 (Part 1): 2018. Open Charge Point Protocol (OCPP 1.6J/2.0.1) interoperability and residual direct current monitoring missing.",
     "documentMetadata": {
@@ -5466,11 +5417,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 90
       }
     },
-    "improvedSpecification": "120kW dual-gun commercial DC fast electric vehicle charging station with liquid-cooled CCS Type 2 charging guns, dynamic power sharing (60kW + 60kW or 120kW single), 7-inch touch HMI, and RFID/UPI cashless billing. All materials and equipment shall be strictly manufactured in compliance with IS 17017 (Part 1): 2018 and IS 17017 (Part 23): 2021. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 17017 (Part 21/Sec 2)."
+    "improvedSpecification": "120kW dual-gun commercial DC fast electric vehicle charging station with liquid-cooled CCS Type 2 charging guns, dynamic power sharing (60kW + 60kW or 120kW single), 7-inch touch HMI, and RFID/UPI cashless billing. All materials and equipment shall be strictly manufactured in compliance with IS 17017 (Part 1): 2018 and IS 17017 (Part 23): 2021. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 17017 (Part 21/Sec 2).",
+    "accountType": "government_department",
+    "organization": "Ministry of Housing & Urban Affairs (MoHUA)"
   },
   {
     "demoKey": "dept_analysis_16",
-    "userEmail": "department1@anveshak.demo",
+    "userEmail": "department@anveshak.demo",
     "productName": "District Central Archives Motorized Mobile Compactor Storage Racks",
     "productCategory": "Government Records Management",
     "status": "Completed",
@@ -5479,7 +5432,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 93,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-18T17:49:14.874Z",
+    "createdAt": "2026-08-19T14:20:21.986Z",
     "rawInput": "Mechanically assisted hand-wheel and motorized mobile compactor storage systems fabricated from cold-rolled close-annealed (CRCA) steel sheet (IS 513) with central cylinder key locking and anti-rebound track safety.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 1888: 1982. Anti-topple seismic locking device and shelf uniform distributed load rating (120 kg/shelf) not certified.",
     "documentMetadata": {
@@ -5577,11 +5530,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 91
       }
     },
-    "improvedSpecification": "Mechanically assisted hand-wheel and motorized mobile compactor storage systems fabricated from cold-rolled close-annealed (CRCA) steel sheet (IS 513) with central cylinder key locking and anti-rebound track safety. All materials and equipment shall be strictly manufactured in compliance with IS 1888: 1982 and IS 3312: 1984. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 2062: 2011."
+    "improvedSpecification": "Mechanically assisted hand-wheel and motorized mobile compactor storage systems fabricated from cold-rolled close-annealed (CRCA) steel sheet (IS 513) with central cylinder key locking and anti-rebound track safety. All materials and equipment shall be strictly manufactured in compliance with IS 1888: 1982 and IS 3312: 1984. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 2062: 2011.",
+    "accountType": "government_department",
+    "organization": "Ministry of Housing & Urban Affairs (MoHUA)"
   },
   {
     "demoKey": "dept_analysis_17",
-    "userEmail": "department1@anveshak.demo",
+    "userEmail": "department@anveshak.demo",
     "productName": "Ice-Lined Refrigerators (ILR) for Universal Child Immunization Vaccines",
     "productCategory": "Cold Chain Healthcare",
     "status": "Under Review",
@@ -5590,7 +5545,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 94,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-17T17:49:14.874Z",
+    "createdAt": "2026-08-18T14:20:21.986Z",
     "rawInput": "Top-opening horizontal Ice-Lined Vaccine Refrigerator (capacity 140L vaccine net storage) operating on 230V AC with integrated copper ice-lining jackets, solid state temperature data logger, and holdover time >= 48 hours.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 14756: 2017. Holdover time during power failure (> 48 hours at +43 deg C ambient) and CFC/HCFC-free refrigerant omitted.",
     "documentMetadata": {
@@ -5688,11 +5643,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 92
       }
     },
-    "improvedSpecification": "Top-opening horizontal Ice-Lined Vaccine Refrigerator (capacity 140L vaccine net storage) operating on 230V AC with integrated copper ice-lining jackets, solid state temperature data logger, and holdover time >= 48 hours. All materials and equipment shall be strictly manufactured in compliance with IS 14756: 2017 and IS 1391 (Part 1): 2017. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to WHO PQS E003/RF05."
+    "improvedSpecification": "Top-opening horizontal Ice-Lined Vaccine Refrigerator (capacity 140L vaccine net storage) operating on 230V AC with integrated copper ice-lining jackets, solid state temperature data logger, and holdover time >= 48 hours. All materials and equipment shall be strictly manufactured in compliance with IS 14756: 2017 and IS 1391 (Part 1): 2017. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to WHO PQS E003/RF05.",
+    "accountType": "government_department",
+    "organization": "Ministry of Housing & Urban Affairs (MoHUA)"
   },
   {
     "demoKey": "dept_analysis_18",
-    "userEmail": "department1@anveshak.demo",
+    "userEmail": "department@anveshak.demo",
     "productName": "High-Intensity Retro-Reflective Highway Traffic Informatory Signs",
     "productCategory": "Highway Safety",
     "status": "Needs Attention",
@@ -5701,7 +5658,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 95,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-16T17:49:14.874Z",
+    "createdAt": "2026-08-17T14:20:21.986Z",
     "rawInput": "Overhead and shoulder-mounted directional highway informatory signboards fabricated from 3mm composite aluminium panels with ASTM D4956 Type XI full-cube retro-reflective sheeting and anti-dew clear protective overlay.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 7593: 1986. Tender quoted basic Class A sheeting (IS 7593) instead of mandatory Microprismatic Type XI for high-speed highways.",
     "documentMetadata": {
@@ -5799,11 +5756,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 93
       }
     },
-    "improvedSpecification": "Overhead and shoulder-mounted directional highway informatory signboards fabricated from 3mm composite aluminium panels with ASTM D4956 Type XI full-cube retro-reflective sheeting and anti-dew clear protective overlay. All materials and equipment shall be strictly manufactured in compliance with IS 7593: 1986 and IRC 67: 2022. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to ASTM D4956 Type XI."
+    "improvedSpecification": "Overhead and shoulder-mounted directional highway informatory signboards fabricated from 3mm composite aluminium panels with ASTM D4956 Type XI full-cube retro-reflective sheeting and anti-dew clear protective overlay. All materials and equipment shall be strictly manufactured in compliance with IS 7593: 1986 and IRC 67: 2022. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to ASTM D4956 Type XI.",
+    "accountType": "government_department",
+    "organization": "Ministry of Housing & Urban Affairs (MoHUA)"
   },
   {
     "demoKey": "dept_analysis_19",
-    "userEmail": "department1@anveshak.demo",
+    "userEmail": "department@anveshak.demo",
     "productName": "Non-Woven Polypropylene Geotextile Bags for Flood Embankment Protection",
     "productCategory": "River Protection & Geosynthetics",
     "status": "Completed",
@@ -5812,7 +5771,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 96,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-15T17:49:14.874Z",
+    "createdAt": "2026-08-16T14:20:21.986Z",
     "rawInput": "Non-woven needle-punched 100% polypropylene geotextile sand-filled bags (dimensions 1.03m x 0.70m, 300 GSM) with double-chain UV-stabilized stitching compliant with IS 16653 for river training and embankment scour protection.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 16653: 2017. UV degradation retention strength after 500 hours xenon arc exposure (< 80%) not verified in lab test.",
     "documentMetadata": {
@@ -5910,11 +5869,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 94
       }
     },
-    "improvedSpecification": "Non-woven needle-punched 100% polypropylene geotextile sand-filled bags (dimensions 1.03m x 0.70m, 300 GSM) with double-chain UV-stabilized stitching compliant with IS 16653 for river training and embankment scour protection. All materials and equipment shall be strictly manufactured in compliance with IS 16653: 2017 and IS 13162 (Part 5): 1992. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 14706: 1999."
+    "improvedSpecification": "Non-woven needle-punched 100% polypropylene geotextile sand-filled bags (dimensions 1.03m x 0.70m, 300 GSM) with double-chain UV-stabilized stitching compliant with IS 16653 for river training and embankment scour protection. All materials and equipment shall be strictly manufactured in compliance with IS 16653: 2017 and IS 13162 (Part 5): 1992. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 14706: 1999.",
+    "accountType": "government_department",
+    "organization": "Ministry of Housing & Urban Affairs (MoHUA)"
   },
   {
     "demoKey": "dept_analysis_20",
-    "userEmail": "department1@anveshak.demo",
+    "userEmail": "department@anveshak.demo",
     "productName": "Ultrasonic Bulk Cold Water Meters with NB-IoT Smart Telemetry",
     "productCategory": "Municipal Water Measurement",
     "status": "Completed",
@@ -5923,7 +5884,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 97,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-14T17:49:14.874Z",
+    "createdAt": "2026-08-15T14:20:21.986Z",
     "rawInput": "Flanged ultrasonic transit-time cold potable water meters (DN 150mm) Class 2 accuracy conforming to ISO 4064 / IS 6784 with bi-directional measurement, integrated Narrowband-IoT communication modem, and 10-year internal lithium battery.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 779: 1994 (Reaffirmed 2020). Dynamic turndown ratio (R400) and zero mechanical moving parts durability test missing.",
     "documentMetadata": {
@@ -6021,11 +5982,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 95
       }
     },
-    "improvedSpecification": "Flanged ultrasonic transit-time cold potable water meters (DN 150mm) Class 2 accuracy conforming to ISO 4064 / IS 6784 with bi-directional measurement, integrated Narrowband-IoT communication modem, and 10-year internal lithium battery. All materials and equipment shall be strictly manufactured in compliance with IS 779: 1994 (Reaffirmed 2020) and IS 6784: 1996 / ISO 4064. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 14846: 2000."
+    "improvedSpecification": "Flanged ultrasonic transit-time cold potable water meters (DN 150mm) Class 2 accuracy conforming to ISO 4064 / IS 6784 with bi-directional measurement, integrated Narrowband-IoT communication modem, and 10-year internal lithium battery. All materials and equipment shall be strictly manufactured in compliance with IS 779: 1994 (Reaffirmed 2020) and IS 6784: 1996 / ISO 4064. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 14846: 2000.",
+    "accountType": "government_department",
+    "organization": "Ministry of Housing & Urban Affairs (MoHUA)"
   },
   {
     "demoKey": "dept_analysis_21",
-    "userEmail": "department1@anveshak.demo",
+    "userEmail": "department@anveshak.demo",
     "productName": "Forest Patrol 4x4 Off-Road Electric Utility Vehicles",
     "productCategory": "Forest & Wildlife Conservation",
     "status": "Completed",
@@ -6034,7 +5997,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 88,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-13T17:49:14.874Z",
+    "createdAt": "2026-08-14T14:20:21.986Z",
     "rawInput": "All-wheel drive 4x4 rugged off-road electric utility vehicles for forest sanctuaries with 20 kWh IP67 battery, 72V AC induction motor, 150 km range on rough terrain, silent operation (< 45 dB), and solar auxiliary canopy.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 17017 (Part 1): 2018. Ingress protection against water wading (minimum 500mm water depth, IP67 powertrain) missing.",
     "documentMetadata": {
@@ -6132,11 +6095,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 86
       }
     },
-    "improvedSpecification": "All-wheel drive 4x4 rugged off-road electric utility vehicles for forest sanctuaries with 20 kWh IP67 battery, 72V AC induction motor, 150 km range on rough terrain, silent operation (< 45 dB), and solar auxiliary canopy. All materials and equipment shall be strictly manufactured in compliance with IS 17017 (Part 1): 2018 and IS 16046 (Part 2): 2018. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to AIS-038 (Rev 2)."
+    "improvedSpecification": "All-wheel drive 4x4 rugged off-road electric utility vehicles for forest sanctuaries with 20 kWh IP67 battery, 72V AC induction motor, 150 km range on rough terrain, silent operation (< 45 dB), and solar auxiliary canopy. All materials and equipment shall be strictly manufactured in compliance with IS 17017 (Part 1): 2018 and IS 16046 (Part 2): 2018. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to AIS-038 (Rev 2).",
+    "accountType": "government_department",
+    "organization": "Ministry of Housing & Urban Affairs (MoHUA)"
   },
   {
     "demoKey": "dept_analysis_22",
-    "userEmail": "department1@anveshak.demo",
+    "userEmail": "department@anveshak.demo",
     "productName": "Pressure-Compensating Inline Agricultural Drip Irrigation Tubing",
     "productCategory": "Agricultural Infrastructure",
     "status": "Completed",
@@ -6145,7 +6110,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 89,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-12T17:49:14.874Z",
+    "createdAt": "2026-08-13T14:20:21.986Z",
     "rawInput": "16mm outer diameter cylindrical pressure-compensating inline drip emitting pipes conforming to IS 13488 with 2.0 LPH discharge rate, 40cm emitter spacing, UV-stabilized linear low-density polyethylene (LLDPE) construction.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 13488: 2008 (Reaffirmed 2021). Coefficient of manufacturing variation (CV <= 0.05) and carbon black content (2.5% +/- 0.5%) unverified.",
     "documentMetadata": {
@@ -6243,11 +6208,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 87
       }
     },
-    "improvedSpecification": "16mm outer diameter cylindrical pressure-compensating inline drip emitting pipes conforming to IS 13488 with 2.0 LPH discharge rate, 40cm emitter spacing, UV-stabilized linear low-density polyethylene (LLDPE) construction. All materials and equipment shall be strictly manufactured in compliance with IS 13488: 2008 (Reaffirmed 2021) and IS 12786: 1989. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 13487: 1992."
+    "improvedSpecification": "16mm outer diameter cylindrical pressure-compensating inline drip emitting pipes conforming to IS 13488 with 2.0 LPH discharge rate, 40cm emitter spacing, UV-stabilized linear low-density polyethylene (LLDPE) construction. All materials and equipment shall be strictly manufactured in compliance with IS 13488: 2008 (Reaffirmed 2021) and IS 12786: 1989. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 13487: 1992.",
+    "accountType": "government_department",
+    "organization": "Ministry of Housing & Urban Affairs (MoHUA)"
   },
   {
     "demoKey": "dept_analysis_23",
-    "userEmail": "department1@anveshak.demo",
+    "userEmail": "department@anveshak.demo",
     "productName": "Compostable & Biodegradable Wet Organic Waste Garbage Bags",
     "productCategory": "Municipal Sanitation",
     "status": "Completed",
@@ -6256,7 +6223,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 90,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-11T17:49:14.874Z",
+    "createdAt": "2026-08-12T14:20:21.986Z",
     "rawInput": "Biodegradable and compostable corn-starch based bio-plastic garbage collection bin liners (size 24x30 inches, thickness 40 microns) conforming to IS 17088 printed with QR code and statutory CPCB registration number.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 17088: 2021. Central Pollution Control Board (CPCB) compostable plastic manufacturing certificate clause omitted.",
     "documentMetadata": {
@@ -6354,11 +6321,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 88
       }
     },
-    "improvedSpecification": "Biodegradable and compostable corn-starch based bio-plastic garbage collection bin liners (size 24x30 inches, thickness 40 microns) conforming to IS 17088 printed with QR code and statutory CPCB registration number. All materials and equipment shall be strictly manufactured in compliance with IS 17088: 2021 and IS 1070: 1992. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to ISO 14855-1."
+    "improvedSpecification": "Biodegradable and compostable corn-starch based bio-plastic garbage collection bin liners (size 24x30 inches, thickness 40 microns) conforming to IS 17088 printed with QR code and statutory CPCB registration number. All materials and equipment shall be strictly manufactured in compliance with IS 17088: 2021 and IS 1070: 1992. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to ISO 14855-1.",
+    "accountType": "government_department",
+    "organization": "Ministry of Housing & Urban Affairs (MoHUA)"
   },
   {
     "demoKey": "dept_analysis_24",
-    "userEmail": "department1@anveshak.demo",
+    "userEmail": "department@anveshak.demo",
     "productName": "42-Meter Hydraulic Aerial Ladder Platform Fire Rescue Appliance",
     "productCategory": "Municipal Fire Services",
     "status": "Completed",
@@ -6367,7 +6336,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 91,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-10T17:49:14.874Z",
+    "createdAt": "2026-08-11T14:20:21.986Z",
     "rawInput": "42-meter articulating telescopic boom hydraulic aerial ladder platform mounted on BS-VI 6x4 chassis with high-pressure bronze fire pump (4000 LPM @ 10 bar), remote electric water-foam monitor, and ultrasonic anti-collision cage sensors.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 949: 1985 (Reaffirmed 2019). Cage safe working load (minimum 450 kg / 4 persons) and water monitor throw capacity (3,800 LPM) omitted.",
     "documentMetadata": {
@@ -6465,11 +6434,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 89
       }
     },
-    "improvedSpecification": "42-meter articulating telescopic boom hydraulic aerial ladder platform mounted on BS-VI 6x4 chassis with high-pressure bronze fire pump (4000 LPM @ 10 bar), remote electric water-foam monitor, and ultrasonic anti-collision cage sensors. All materials and equipment shall be strictly manufactured in compliance with IS 949: 1985 (Reaffirmed 2019) and IS 951: 1987. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to EN 1777 / NFPA 1901."
+    "improvedSpecification": "42-meter articulating telescopic boom hydraulic aerial ladder platform mounted on BS-VI 6x4 chassis with high-pressure bronze fire pump (4000 LPM @ 10 bar), remote electric water-foam monitor, and ultrasonic anti-collision cage sensors. All materials and equipment shall be strictly manufactured in compliance with IS 949: 1985 (Reaffirmed 2019) and IS 951: 1987. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to EN 1777 / NFPA 1901.",
+    "accountType": "government_department",
+    "organization": "Ministry of Housing & Urban Affairs (MoHUA)"
   },
   {
     "demoKey": "dept_analysis_25",
-    "userEmail": "department1@anveshak.demo",
+    "userEmail": "department@anveshak.demo",
     "productName": "7-Ply Low-Relaxation Uncoated Pre-Stressed Concrete Strands 15.2mm",
     "productCategory": "Bridge Infrastructure",
     "status": "Needs Attention",
@@ -6478,7 +6449,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 92,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-09T17:49:14.874Z",
+    "createdAt": "2026-08-10T14:20:21.986Z",
     "rawInput": "15.2mm nominal diameter 7-ply uncoated low-relaxation pre-stressed concrete steel strands conforming to IS 14268 Class 2 with characteristic tensile strength 1860 MPa for flyover segmental box girder bridges.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 14268: 2022. 1000-hour isothermal stress relaxation test certificate at 20 deg C (max 2.5% relaxation) missing.",
     "documentMetadata": {
@@ -6576,11 +6547,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 90
       }
     },
-    "improvedSpecification": "15.2mm nominal diameter 7-ply uncoated low-relaxation pre-stressed concrete steel strands conforming to IS 14268 Class 2 with characteristic tensile strength 1860 MPa for flyover segmental box girder bridges. All materials and equipment shall be strictly manufactured in compliance with IS 14268: 2022 and IS 1785 (Part 1): 1983. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 1608: 2018."
+    "improvedSpecification": "15.2mm nominal diameter 7-ply uncoated low-relaxation pre-stressed concrete steel strands conforming to IS 14268 Class 2 with characteristic tensile strength 1860 MPa for flyover segmental box girder bridges. All materials and equipment shall be strictly manufactured in compliance with IS 14268: 2022 and IS 1785 (Part 1): 1983. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 1608: 2018.",
+    "accountType": "government_department",
+    "organization": "Ministry of Housing & Urban Affairs (MoHUA)"
   },
   {
     "demoKey": "dept_analysis_26",
-    "userEmail": "department1@anveshak.demo",
+    "userEmail": "department@anveshak.demo",
     "productName": "Multi-Zone Walk-Through Door Frame Metal Detectors (DFMD) for Courts",
     "productCategory": "Judicial Security",
     "status": "Completed",
@@ -6589,7 +6562,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 93,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-08T17:49:14.874Z",
+    "createdAt": "2026-08-09T14:20:21.986Z",
     "rawInput": "33-zone multi-frequency microprocessor-controlled walk-through door frame metal detector conforming to IS 14611 with digital LED column target location, transit traffic counter, immune to external electrical noise, and battery backup.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 13252 (Part 1): 2010. Pacemaker safety certificate and multi-target simultaneous pin-pointing (minimum 33 zones) omitted.",
     "documentMetadata": {
@@ -6687,11 +6660,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 91
       }
     },
-    "improvedSpecification": "33-zone multi-frequency microprocessor-controlled walk-through door frame metal detector conforming to IS 14611 with digital LED column target location, transit traffic counter, immune to external electrical noise, and battery backup. All materials and equipment shall be strictly manufactured in compliance with IS 13252 (Part 1): 2010 and IS 14611: 1999. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to NILECJ-STD-0601.00."
+    "improvedSpecification": "33-zone multi-frequency microprocessor-controlled walk-through door frame metal detector conforming to IS 14611 with digital LED column target location, transit traffic counter, immune to external electrical noise, and battery backup. All materials and equipment shall be strictly manufactured in compliance with IS 13252 (Part 1): 2010 and IS 14611: 1999. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to NILECJ-STD-0601.00.",
+    "accountType": "government_department",
+    "organization": "Ministry of Housing & Urban Affairs (MoHUA)"
   },
   {
     "demoKey": "dept_analysis_27",
-    "userEmail": "department1@anveshak.demo",
+    "userEmail": "department@anveshak.demo",
     "productName": "Non-Toxic Wooden Educational Cognitive Toys for Anganwadis",
     "productCategory": "Early Childhood Education",
     "status": "Completed",
@@ -6700,7 +6675,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 94,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-07T17:49:14.874Z",
+    "createdAt": "2026-08-08T14:20:21.986Z",
     "rawInput": "Educational wooden geometry sorting puzzles and counting abacus manufactured from natural seasoned rubberwood with non-toxic organic vegetable dyed finishes conforming strictly to IS 9873 (Parts 1, 2 & 3).",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 9873 (Part 1): 2019. Tender missing mandatory ISI Mark clause under DPIIT Toys QCO; heavy metal migration limits unspecified.",
     "documentMetadata": {
@@ -6798,11 +6773,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 92
       }
     },
-    "improvedSpecification": "Educational wooden geometry sorting puzzles and counting abacus manufactured from natural seasoned rubberwood with non-toxic organic vegetable dyed finishes conforming strictly to IS 9873 (Parts 1, 2 & 3). All materials and equipment shall be strictly manufactured in compliance with IS 9873 (Part 1): 2019 and IS 9873 (Part 2): 2017. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 9873 (Part 3): 2020."
+    "improvedSpecification": "Educational wooden geometry sorting puzzles and counting abacus manufactured from natural seasoned rubberwood with non-toxic organic vegetable dyed finishes conforming strictly to IS 9873 (Parts 1, 2 & 3). All materials and equipment shall be strictly manufactured in compliance with IS 9873 (Part 1): 2019 and IS 9873 (Part 2): 2017. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 9873 (Part 3): 2020.",
+    "accountType": "government_department",
+    "organization": "Ministry of Housing & Urban Affairs (MoHUA)"
   },
   {
     "demoKey": "dept_analysis_28",
-    "userEmail": "department1@anveshak.demo",
+    "userEmail": "department@anveshak.demo",
     "productName": "Medical Grade Reverse Osmosis Water Treatment Units for Dialysis",
     "productCategory": "Specialized Healthcare",
     "status": "Under Review",
@@ -6811,7 +6788,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 95,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-06T17:49:14.874Z",
+    "createdAt": "2026-08-07T14:20:21.986Z",
     "rawInput": "Dual-pass reverse osmosis water purification plant (1,500 LPH) for 15-bed hemodialysis unit with automated 85 deg C hot water thermal disinfection, stainless steel 316L piping, and endotoxin monitoring.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 16240: 2015. Endotoxin bacteria threshold (< 0.25 EU/ml) and chemical disinfectant dead-leg elimination omitted.",
     "documentMetadata": {
@@ -6909,11 +6886,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 93
       }
     },
-    "improvedSpecification": "Dual-pass reverse osmosis water purification plant (1,500 LPH) for 15-bed hemodialysis unit with automated 85 deg C hot water thermal disinfection, stainless steel 316L piping, and endotoxin monitoring. All materials and equipment shall be strictly manufactured in compliance with IS 16240: 2015 and IS 10500: 2012. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to AAMI / ISO 23500-3."
+    "improvedSpecification": "Dual-pass reverse osmosis water purification plant (1,500 LPH) for 15-bed hemodialysis unit with automated 85 deg C hot water thermal disinfection, stainless steel 316L piping, and endotoxin monitoring. All materials and equipment shall be strictly manufactured in compliance with IS 16240: 2015 and IS 10500: 2012. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to AAMI / ISO 23500-3.",
+    "accountType": "government_department",
+    "organization": "Ministry of Housing & Urban Affairs (MoHUA)"
   },
   {
     "demoKey": "dept_analysis_29",
-    "userEmail": "department1@anveshak.demo",
+    "userEmail": "department@anveshak.demo",
     "productName": "Radial Tubeless Tyres 295/80 R22.5 for State Road Transport Buses",
     "productCategory": "Automotive Components",
     "status": "Completed",
@@ -6922,7 +6901,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 96,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-05T17:49:14.874Z",
+    "createdAt": "2026-08-06T14:20:21.986Z",
     "rawInput": "All-position commercial radial tubeless tyres size 295/80 R22.5 load index 152/148M conforming to IS 15636 with 4-belt steel casing, cut-and-chip resistant tread compound, and minimum guaranteed casing life of 150,000 km.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 15636: 2012 (Reaffirmed 2022). Wet grip index and rolling resistance coefficient (RRC <= 5.5 N/kN) under AIS-142 standards missing.",
     "documentMetadata": {
@@ -7020,11 +6999,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 94
       }
     },
-    "improvedSpecification": "All-position commercial radial tubeless tyres size 295/80 R22.5 load index 152/148M conforming to IS 15636 with 4-belt steel casing, cut-and-chip resistant tread compound, and minimum guaranteed casing life of 150,000 km. All materials and equipment shall be strictly manufactured in compliance with IS 15636: 2012 (Reaffirmed 2022) and AIS-044 (Part 3). Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 15636 High Speed Test / Endurance Test."
+    "improvedSpecification": "All-position commercial radial tubeless tyres size 295/80 R22.5 load index 152/148M conforming to IS 15636 with 4-belt steel casing, cut-and-chip resistant tread compound, and minimum guaranteed casing life of 150,000 km. All materials and equipment shall be strictly manufactured in compliance with IS 15636: 2012 (Reaffirmed 2022) and AIS-044 (Part 3). Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 15636 High Speed Test / Endurance Test.",
+    "accountType": "government_department",
+    "organization": "Ministry of Housing & Urban Affairs (MoHUA)"
   },
   {
     "demoKey": "dept_analysis_30",
-    "userEmail": "department1@anveshak.demo",
+    "userEmail": "department@anveshak.demo",
     "productName": "Heavy-Duty Smooth High-Density Polyethylene Geomembrane Liners 1.5mm",
     "productCategory": "Water Conservation",
     "status": "Completed",
@@ -7033,7 +7014,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 97,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-04T17:49:14.874Z",
+    "createdAt": "2026-08-05T14:20:21.986Z",
     "rawInput": "1.5mm thick smooth black HDPE geomembrane manufactured from 100% virgin polymer conforming to IS 16352 with dual-wedge thermal fusion welding, air pressure test channels, for municipal raw water storage reservoirs.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 16352: 2020. Environmental stress crack resistance (ESCR > 500 hours) and oxidative induction time (OIT > 100 min) omitted.",
     "documentMetadata": {
@@ -7131,11 +7112,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 95
       }
     },
-    "improvedSpecification": "1.5mm thick smooth black HDPE geomembrane manufactured from 100% virgin polymer conforming to IS 16352 with dual-wedge thermal fusion welding, air pressure test channels, for municipal raw water storage reservoirs. All materials and equipment shall be strictly manufactured in compliance with IS 16352: 2020 and IS 15351: 2015. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to ASTM D5397."
+    "improvedSpecification": "1.5mm thick smooth black HDPE geomembrane manufactured from 100% virgin polymer conforming to IS 16352 with dual-wedge thermal fusion welding, air pressure test channels, for municipal raw water storage reservoirs. All materials and equipment shall be strictly manufactured in compliance with IS 16352: 2020 and IS 15351: 2015. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to ASTM D5397.",
+    "accountType": "government_department",
+    "organization": "Ministry of Housing & Urban Affairs (MoHUA)"
   },
   {
     "demoKey": "dept_analysis_31",
-    "userEmail": "department1@anveshak.demo",
+    "userEmail": "department@anveshak.demo",
     "productName": "Outdoor Calisthenics & Fitness Gymnasium Equipment for Public Parks",
     "productCategory": "Urban Recreational Infrastructure",
     "status": "Completed",
@@ -7144,7 +7127,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 88,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-03T17:49:14.874Z",
+    "createdAt": "2026-08-04T14:20:21.986Z",
     "rawInput": "Heavy-duty vandal-resistant outdoor open-gym equipment sets (Air Walker, Chest Press, Lat Pull-Down) fabricated from Class C galvanized steel tubes with electrostatically baked polyester powder coating and self-lubricating sealed bearings.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 9873: 2019. Finger entrapment protection clearance (less than 8mm or greater than 25mm) and bearing water ingress omitted.",
     "documentMetadata": {
@@ -7242,11 +7225,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 86
       }
     },
-    "improvedSpecification": "Heavy-duty vandal-resistant outdoor open-gym equipment sets (Air Walker, Chest Press, Lat Pull-Down) fabricated from Class C galvanized steel tubes with electrostatically baked polyester powder coating and self-lubricating sealed bearings. All materials and equipment shall be strictly manufactured in compliance with IS 9873: 2019 and IS 1239 (Part 1): 2004. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to EN 16630."
+    "improvedSpecification": "Heavy-duty vandal-resistant outdoor open-gym equipment sets (Air Walker, Chest Press, Lat Pull-Down) fabricated from Class C galvanized steel tubes with electrostatically baked polyester powder coating and self-lubricating sealed bearings. All materials and equipment shall be strictly manufactured in compliance with IS 9873: 2019 and IS 1239 (Part 1): 2004. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to EN 16630.",
+    "accountType": "government_department",
+    "organization": "Ministry of Housing & Urban Affairs (MoHUA)"
   },
   {
     "demoKey": "dept_analysis_32",
-    "userEmail": "department1@anveshak.demo",
+    "userEmail": "department@anveshak.demo",
     "productName": "120-Minute Fire-Resistant Glazed Emergency Exit Doors",
     "productCategory": "Fire Safety & Life Safety",
     "status": "Needs Attention",
@@ -7255,7 +7240,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 89,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-02T17:49:14.874Z",
+    "createdAt": "2026-08-03T14:20:21.986Z",
     "rawInput": "2-hour (120-minute) fire-rated double leaf galvanized steel flush doors conforming to IS 3614: 2021 with mineral wool honeycomb core, panic exit crash hardware, intumescent fire smoke seals, and vision lite fire glass.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 3614: 2021. Tender cited obsolete IS 3614 Part 1: 1992 test standard and lacked intumescent smoke seal specification.",
     "documentMetadata": {
@@ -7353,11 +7338,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 87
       }
     },
-    "improvedSpecification": "2-hour (120-minute) fire-rated double leaf galvanized steel flush doors conforming to IS 3614: 2021 with mineral wool honeycomb core, panic exit crash hardware, intumescent fire smoke seals, and vision lite fire glass. All materials and equipment shall be strictly manufactured in compliance with IS 3614: 2021 and IS 2202 (Part 1): 1999. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS/ISO 3008: 2007."
+    "improvedSpecification": "2-hour (120-minute) fire-rated double leaf galvanized steel flush doors conforming to IS 3614: 2021 with mineral wool honeycomb core, panic exit crash hardware, intumescent fire smoke seals, and vision lite fire glass. All materials and equipment shall be strictly manufactured in compliance with IS 3614: 2021 and IS 2202 (Part 1): 1999. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS/ISO 3008: 2007.",
+    "accountType": "government_department",
+    "organization": "Ministry of Housing & Urban Affairs (MoHUA)"
   },
   {
     "demoKey": "psu_analysis_01",
-    "userEmail": "psu1@anveshak.demo",
+    "userEmail": "psu@anveshak.demo",
     "productName": "Cast Carbon Steel Gate Valves Class 600 for Hydrocarbon Service",
     "productCategory": "Oil, Gas & Petrochemical",
     "status": "Completed",
@@ -7366,7 +7353,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 88,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-09-02T17:49:14.874Z",
+    "createdAt": "2026-09-03T14:20:21.986Z",
     "rawInput": "ASME Class 600 flexible wedge gate valves manufactured from cast carbon steel ASTM A216 WCB with full stellite hardfaced seat rings, outside screw and yoke (OS&Y), bolted bonnet, and API 6FA fire-safe certification.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 14846: 2000 / API 600. Fugitive emissions compliance (ISO 15848-1 Class AH) and NACE MR0175 sour service metallurgy not verified.",
     "documentMetadata": {
@@ -7464,11 +7451,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 86
       }
     },
-    "improvedSpecification": "ASME Class 600 flexible wedge gate valves manufactured from cast carbon steel ASTM A216 WCB with full stellite hardfaced seat rings, outside screw and yoke (OS&Y), bolted bonnet, and API 6FA fire-safe certification. All materials and equipment shall be strictly manufactured in compliance with IS 14846: 2000 / API 600 and IS 778: 1984. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to API 598 / IS 6157."
+    "improvedSpecification": "ASME Class 600 flexible wedge gate valves manufactured from cast carbon steel ASTM A216 WCB with full stellite hardfaced seat rings, outside screw and yoke (OS&Y), bolted bonnet, and API 6FA fire-safe certification. All materials and equipment shall be strictly manufactured in compliance with IS 14846: 2000 / API 600 and IS 778: 1984. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to API 598 / IS 6157.",
+    "accountType": "psu",
+    "organization": "NTPC Energy & Thermal Generation Corporation"
   },
   {
     "demoKey": "psu_analysis_02",
-    "userEmail": "psu1@anveshak.demo",
+    "userEmail": "psu@anveshak.demo",
     "productName": "Seamless Cold-Drawn Alloy Steel Superheater Boiler Tubes",
     "productCategory": "Thermal Power Generation",
     "status": "Completed",
@@ -7477,7 +7466,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 89,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-09-01T17:49:14.874Z",
+    "createdAt": "2026-09-02T14:20:21.986Z",
     "rawInput": "Seamless cold-drawn ferritic alloy steel boiler tubes Grade T91 (9% Cr, 1% Mo, V, Cb) conforming to IS 1914 / IBR 1950 for 660 MW supercritical steam generators at 593 deg C steam temperature and 250 bar pressure.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 1914 (Parts 1-4): 1984. Tender missing mandatory IBR Form III-A witness testing and 100% ultrasonic flaw examination schedule.",
     "documentMetadata": {
@@ -7575,11 +7564,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 87
       }
     },
-    "improvedSpecification": "Seamless cold-drawn ferritic alloy steel boiler tubes Grade T91 (9% Cr, 1% Mo, V, Cb) conforming to IS 1914 / IBR 1950 for 660 MW supercritical steam generators at 593 deg C steam temperature and 250 bar pressure. All materials and equipment shall be strictly manufactured in compliance with IS 1914 (Parts 1-4): 1984 and IS 2825: 1969. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IBR 1950 (Indian Boiler Regulations)."
+    "improvedSpecification": "Seamless cold-drawn ferritic alloy steel boiler tubes Grade T91 (9% Cr, 1% Mo, V, Cb) conforming to IS 1914 / IBR 1950 for 660 MW supercritical steam generators at 593 deg C steam temperature and 250 bar pressure. All materials and equipment shall be strictly manufactured in compliance with IS 1914 (Parts 1-4): 1984 and IS 2825: 1969. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IBR 1950 (Indian Boiler Regulations).",
+    "accountType": "psu",
+    "organization": "NTPC Energy & Thermal Generation Corporation"
   },
   {
     "demoKey": "psu_analysis_03",
-    "userEmail": "psu1@anveshak.demo",
+    "userEmail": "psu@anveshak.demo",
     "productName": "765kV Double Circuit Heavy Loading Galvanized Transmission Towers",
     "productCategory": "Power Grid Transmission",
     "status": "Completed",
@@ -7588,7 +7579,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 90,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-31T17:49:14.874Z",
+    "createdAt": "2026-09-01T14:20:21.986Z",
     "rawInput": "Fabrication and galvanizing of 765kV double circuit transmission line towers using high-tensile steel angles Grade E350/E250 conforming to IS 2062 with minimum 610 g/m2 hot-dip zinc coating as per IS 4759.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 802 (Parts 1-3): 1995 / 2015. Broken-wire longitudinal containment load conditions and full-scale proto tower destructive testing missing.",
     "documentMetadata": {
@@ -7686,11 +7677,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 88
       }
     },
-    "improvedSpecification": "Fabrication and galvanizing of 765kV double circuit transmission line towers using high-tensile steel angles Grade E350/E250 conforming to IS 2062 with minimum 610 g/m2 hot-dip zinc coating as per IS 4759. All materials and equipment shall be strictly manufactured in compliance with IS 802 (Parts 1-3): 1995 / 2015 and IS 2062: 2011. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 4759: 1996."
+    "improvedSpecification": "Fabrication and galvanizing of 765kV double circuit transmission line towers using high-tensile steel angles Grade E350/E250 conforming to IS 2062 with minimum 610 g/m2 hot-dip zinc coating as per IS 4759. All materials and equipment shall be strictly manufactured in compliance with IS 802 (Parts 1-3): 1995 / 2015 and IS 2062: 2011. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 4759: 1996.",
+    "accountType": "psu",
+    "organization": "NTPC Energy & Thermal Generation Corporation"
   },
   {
     "demoKey": "psu_analysis_04",
-    "userEmail": "psu1@anveshak.demo",
+    "userEmail": "psu@anveshak.demo",
     "productName": "Fire-Resistant Anti-Static Steel Cord Conveyor Belting 2000mm",
     "productCategory": "Mining & Coal Beneficiation",
     "status": "Needs Attention",
@@ -7699,7 +7692,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 91,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-30T17:49:14.874Z",
+    "createdAt": "2026-08-31T14:20:21.986Z",
     "rawInput": "2000mm wide ST-2500 steel cord conveyor belt with fire-resistant anti-static (FRAS) synthetic rubber covers (8mm top x 6mm bottom), open-construction zinc-galvanized steel cords, and high dynamic adhesion.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 1891 (Part 5): 1993 (Reaffirmed 2019). DGMS statutory flame propagation drum friction test certificate and electrical surface resistivity missing.",
     "documentMetadata": {
@@ -7797,11 +7790,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 89
       }
     },
-    "improvedSpecification": "2000mm wide ST-2500 steel cord conveyor belt with fire-resistant anti-static (FRAS) synthetic rubber covers (8mm top x 6mm bottom), open-construction zinc-galvanized steel cords, and high dynamic adhesion. All materials and equipment shall be strictly manufactured in compliance with IS 1891 (Part 5): 1993 (Reaffirmed 2019) and IS 15652: 2006. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 1891 (Part 1): 1994."
+    "improvedSpecification": "2000mm wide ST-2500 steel cord conveyor belt with fire-resistant anti-static (FRAS) synthetic rubber covers (8mm top x 6mm bottom), open-construction zinc-galvanized steel cords, and high dynamic adhesion. All materials and equipment shall be strictly manufactured in compliance with IS 1891 (Part 5): 1993 (Reaffirmed 2019) and IS 15652: 2006. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 1891 (Part 1): 1994.",
+    "accountType": "psu",
+    "organization": "NTPC Energy & Thermal Generation Corporation"
   },
   {
     "demoKey": "psu_analysis_05",
-    "userEmail": "psu1@anveshak.demo",
+    "userEmail": "psu@anveshak.demo",
     "productName": "Microprocessor-Based Electronic Interlocking (EI) Railway Signalling",
     "productCategory": "Railway Signalling & Automation",
     "status": "Completed",
@@ -7810,7 +7805,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 92,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-29T17:49:14.874Z",
+    "createdAt": "2026-08-30T14:20:21.986Z",
     "rawInput": "Centralized microprocessor-based electronic interlocking system with warm-standby 2oo3 multi-processor architecture, optical fiber communication networking, solid-state event logging, and dual redundant power supply.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IRS S-24 / IS 13252 (Part 1). Fail-safe 2-out-of-3 (2oo3) hardware architecture and SIL-4 functional safety third-party certificate omitted.",
     "documentMetadata": {
@@ -7908,11 +7903,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 90
       }
     },
-    "improvedSpecification": "Centralized microprocessor-based electronic interlocking system with warm-standby 2oo3 multi-processor architecture, optical fiber communication networking, solid-state event logging, and dual redundant power supply. All materials and equipment shall be strictly manufactured in compliance with IRS S-24 / IS 13252 (Part 1) and RDSO/SPN/192/2019. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to CENELEC EN 50126 / EN 50128 / EN 50129."
+    "improvedSpecification": "Centralized microprocessor-based electronic interlocking system with warm-standby 2oo3 multi-processor architecture, optical fiber communication networking, solid-state event logging, and dual redundant power supply. All materials and equipment shall be strictly manufactured in compliance with IRS S-24 / IS 13252 (Part 1) and RDSO/SPN/192/2019. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to CENELEC EN 50126 / EN 50128 / EN 50129.",
+    "accountType": "psu",
+    "organization": "NTPC Energy & Thermal Generation Corporation"
   },
   {
     "demoKey": "psu_analysis_06",
-    "userEmail": "psu1@anveshak.demo",
+    "userEmail": "psu@anveshak.demo",
     "productName": "33kV 3-Core Armoured Subsea Umbilical Power Cable for Offshore Platforms",
     "productCategory": "Offshore Hydrocarbon & Marine",
     "status": "Under Review",
@@ -7921,7 +7918,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 93,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-28T17:49:14.874Z",
+    "createdAt": "2026-08-29T14:20:21.986Z",
     "rawInput": "33kV (E), 3-Core x 240 sq.mm stranded circular copper conductor subsea power cable with dry-cured triple-extruded XLPE insulation, extruded metallic lead alloy sheath, integrated 24-core SM optical fibers, and double steel wire armour.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 7098 (Part 3): 1993 / IEC 60502-2. Radial water-tightness lead sheath barrier and dynamic bending fatigue flexure test missing.",
     "documentMetadata": {
@@ -8019,11 +8016,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 91
       }
     },
-    "improvedSpecification": "33kV (E), 3-Core x 240 sq.mm stranded circular copper conductor subsea power cable with dry-cured triple-extruded XLPE insulation, extruded metallic lead alloy sheath, integrated 24-core SM optical fibers, and double steel wire armour. All materials and equipment shall be strictly manufactured in compliance with IS 7098 (Part 3): 1993 / IEC 60502-2 and IS 1554: 1988. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to CIGRE Electra 171 / IEC 60840."
+    "improvedSpecification": "33kV (E), 3-Core x 240 sq.mm stranded circular copper conductor subsea power cable with dry-cured triple-extruded XLPE insulation, extruded metallic lead alloy sheath, integrated 24-core SM optical fibers, and double steel wire armour. All materials and equipment shall be strictly manufactured in compliance with IS 7098 (Part 3): 1993 / IEC 60502-2 and IS 1554: 1988. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to CIGRE Electra 171 / IEC 60840.",
+    "accountType": "psu",
+    "organization": "NTPC Energy & Thermal Generation Corporation"
   },
   {
     "demoKey": "psu_analysis_07",
-    "userEmail": "psu1@anveshak.demo",
+    "userEmail": "psu@anveshak.demo",
     "productName": "250MW Francis Hydro Turbine Runner Forgings & CNC Machined Casings",
     "productCategory": "Hydroelectric Power Generation",
     "status": "Completed",
@@ -8032,7 +8031,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 94,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-27T17:49:14.874Z",
+    "createdAt": "2026-08-28T14:20:21.986Z",
     "rawInput": "250MW high-head Francis hydro turbine runner designed for 340m rated head fabricated from vacuum degassed 13Cr-4Ni martensitic stainless steel with 5-axis CNC machined blade profiles and 100% volumetric ultrasonic inspection.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 3943: 1996 (Reaffirmed 2021). Cavitation erosion resistance stainless steel grade (13% Cr, 4% Ni martensitic) chemical limits missing.",
     "documentMetadata": {
@@ -8130,11 +8129,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 92
       }
     },
-    "improvedSpecification": "250MW high-head Francis hydro turbine runner designed for 340m rated head fabricated from vacuum degassed 13Cr-4Ni martensitic stainless steel with 5-axis CNC machined blade profiles and 100% volumetric ultrasonic inspection. All materials and equipment shall be strictly manufactured in compliance with IS 3943: 1996 (Reaffirmed 2021) and IS 2062: 2011. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IEC 60193 / ASTM A743."
+    "improvedSpecification": "250MW high-head Francis hydro turbine runner designed for 340m rated head fabricated from vacuum degassed 13Cr-4Ni martensitic stainless steel with 5-axis CNC machined blade profiles and 100% volumetric ultrasonic inspection. All materials and equipment shall be strictly manufactured in compliance with IS 3943: 1996 (Reaffirmed 2021) and IS 2062: 2011. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IEC 60193 / ASTM A743.",
+    "accountType": "psu",
+    "organization": "NTPC Energy & Thermal Generation Corporation"
   },
   {
     "demoKey": "psu_analysis_08",
-    "userEmail": "psu1@anveshak.demo",
+    "userEmail": "psu@anveshak.demo",
     "productName": "400kV Sulphur Hexafluoride (SF6) Gas Insulated Substation Switchgear",
     "productCategory": "High-Voltage Switchgear",
     "status": "Completed",
@@ -8143,7 +8144,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 95,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-26T17:49:14.874Z",
+    "createdAt": "2026-08-27T14:20:21.986Z",
     "rawInput": "400kV, 4000A, 63kA for 1-second SF6 gas-insulated metal-enclosed switchgear with single-phase encapsulated busbars, spring-operated circuit breakers, motorized disconnectors, and dual-redundant digital density monitors.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS/IEC 62271-203: 2011. SF6 gas leakage rate threshold (<= 0.5% per annum) and partial discharge UHF online monitoring missing.",
     "documentMetadata": {
@@ -8241,11 +8242,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 93
       }
     },
-    "improvedSpecification": "400kV, 4000A, 63kA for 1-second SF6 gas-insulated metal-enclosed switchgear with single-phase encapsulated busbars, spring-operated circuit breakers, motorized disconnectors, and dual-redundant digital density monitors. All materials and equipment shall be strictly manufactured in compliance with IS/IEC 62271-203: 2011 and IS 13118: 1991. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS/IEC 62271-1: 2007."
+    "improvedSpecification": "400kV, 4000A, 63kA for 1-second SF6 gas-insulated metal-enclosed switchgear with single-phase encapsulated busbars, spring-operated circuit breakers, motorized disconnectors, and dual-redundant digital density monitors. All materials and equipment shall be strictly manufactured in compliance with IS/IEC 62271-203: 2011 and IS 13118: 1991. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS/IEC 62271-1: 2007.",
+    "accountType": "psu",
+    "organization": "NTPC Energy & Thermal Generation Corporation"
   },
   {
     "demoKey": "psu_analysis_09",
-    "userEmail": "psu1@anveshak.demo",
+    "userEmail": "psu@anveshak.demo",
     "productName": "2500 kVA Heavy Marine Auxiliary Diesel Generator Sets 415V",
     "productCategory": "Shipbuilding & Marine Defense",
     "status": "Completed",
@@ -8254,7 +8257,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 96,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-25T17:49:14.874Z",
+    "createdAt": "2026-08-26T14:20:21.986Z",
     "rawInput": "2500 kVA, 415V, 3-phase, 50 Hz, 1000 RPM continuous heavy-duty marine auxiliary diesel generator sets with turbocharger, resilient anti-vibration mountings, duplex lube-oil filters, and IRS marine certification.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 10000 (Parts 1-12): 1980. Tender missing Indian Register of Shipping (IRS) classification society witness test and NOx emission limits.",
     "documentMetadata": {
@@ -8352,11 +8355,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 94
       }
     },
-    "improvedSpecification": "2500 kVA, 415V, 3-phase, 50 Hz, 1000 RPM continuous heavy-duty marine auxiliary diesel generator sets with turbocharger, resilient anti-vibration mountings, duplex lube-oil filters, and IRS marine certification. All materials and equipment shall be strictly manufactured in compliance with IS 10000 (Parts 1-12): 1980 and IS 13364 (Parts 1 & 2): 1992. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IRS Rules for Construction of Steel Ships / IMO Tier II."
+    "improvedSpecification": "2500 kVA, 415V, 3-phase, 50 Hz, 1000 RPM continuous heavy-duty marine auxiliary diesel generator sets with turbocharger, resilient anti-vibration mountings, duplex lube-oil filters, and IRS marine certification. All materials and equipment shall be strictly manufactured in compliance with IS 10000 (Parts 1-12): 1980 and IS 13364 (Parts 1 & 2): 1992. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IRS Rules for Construction of Steel Ships / IMO Tier II.",
+    "accountType": "psu",
+    "organization": "NTPC Energy & Thermal Generation Corporation"
   },
   {
     "demoKey": "psu_analysis_10",
-    "userEmail": "psu1@anveshak.demo",
+    "userEmail": "psu@anveshak.demo",
     "productName": "API 5L Grade X70 PSL2 Submerged Arc Welded (SAWL) Gas Line Pipe",
     "productCategory": "Cross-Country Gas Transmission",
     "status": "Completed",
@@ -8365,7 +8370,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 97,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-24T17:49:14.874Z",
+    "createdAt": "2026-08-25T14:20:21.986Z",
     "rawInput": "30-inch outside diameter (762mm), 14.3mm wall thickness longitudinal submerged arc welded (SAWL) line pipe Grade X70MS PSL2 manufactured from vacuum-degassed inclusion-controlled thermomechanical rolled plate.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 3589: 2001 / API 5L (46th Edition). Drop Weight Tear Test (DWTT >= 85% shear area at -10 deg C) and sour service HIC testing omitted.",
     "documentMetadata": {
@@ -8463,11 +8468,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 95
       }
     },
-    "improvedSpecification": "30-inch outside diameter (762mm), 14.3mm wall thickness longitudinal submerged arc welded (SAWL) line pipe Grade X70MS PSL2 manufactured from vacuum-degassed inclusion-controlled thermomechanical rolled plate. All materials and equipment shall be strictly manufactured in compliance with IS 3589: 2001 / API 5L (46th Edition) and IS 2062: 2011. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to NACE TM0284 / NACE TM0177."
+    "improvedSpecification": "30-inch outside diameter (762mm), 14.3mm wall thickness longitudinal submerged arc welded (SAWL) line pipe Grade X70MS PSL2 manufactured from vacuum-degassed inclusion-controlled thermomechanical rolled plate. All materials and equipment shall be strictly manufactured in compliance with IS 3589: 2001 / API 5L (46th Edition) and IS 2062: 2011. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to NACE TM0284 / NACE TM0177.",
+    "accountType": "psu",
+    "organization": "NTPC Energy & Thermal Generation Corporation"
   },
   {
     "demoKey": "psu_analysis_11",
-    "userEmail": "psu1@anveshak.demo",
+    "userEmail": "psu@anveshak.demo",
     "productName": "150/30-Tonne Double Girder Heavy Duty EOT Steel Mill Cranes",
     "productCategory": "Heavy Material Handling",
     "status": "Needs Attention",
@@ -8476,7 +8483,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 88,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-23T17:49:14.874Z",
+    "createdAt": "2026-08-24T14:20:21.986Z",
     "rawInput": "150-tonne main hoist / 30-tonne auxiliary hoist double-girder steel mill crane (span 28m) compliant with IS 4137 Class M8 with dual AC variable frequency motor drives, forged alloy steel ramshorn hook, and air-conditioned operator cabin.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 3177: 1999 (Reaffirmed 2019). Tender incorrectly cited commercial crane code IS 3177 instead of statutory steel plant mill crane standard IS 4137 Class M8.",
     "documentMetadata": {
@@ -8574,11 +8581,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 86
       }
     },
-    "improvedSpecification": "150-tonne main hoist / 30-tonne auxiliary hoist double-girder steel mill crane (span 28m) compliant with IS 4137 Class M8 with dual AC variable frequency motor drives, forged alloy steel ramshorn hook, and air-conditioned operator cabin. All materials and equipment shall be strictly manufactured in compliance with IS 3177: 1999 (Reaffirmed 2019) and IS 4137: 1985 (Reaffirmed 2020). Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 807: 2006."
+    "improvedSpecification": "150-tonne main hoist / 30-tonne auxiliary hoist double-girder steel mill crane (span 28m) compliant with IS 4137 Class M8 with dual AC variable frequency motor drives, forged alloy steel ramshorn hook, and air-conditioned operator cabin. All materials and equipment shall be strictly manufactured in compliance with IS 3177: 1999 (Reaffirmed 2019) and IS 4137: 1985 (Reaffirmed 2020). Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 807: 2006.",
+    "accountType": "psu",
+    "organization": "NTPC Energy & Thermal Generation Corporation"
   },
   {
     "demoKey": "psu_analysis_12",
-    "userEmail": "psu1@anveshak.demo",
+    "userEmail": "psu@anveshak.demo",
     "productName": "Heavy Water Reactor Primary Heat Transport Seamless Austenitic Piping",
     "productCategory": "Nuclear Power Generation",
     "status": "Completed",
@@ -8587,7 +8596,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 89,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-22T17:49:14.874Z",
+    "createdAt": "2026-08-23T14:20:21.986Z",
     "rawInput": "Seamless cold-finished austenitic stainless steel piping (DN 300mm Sch 80) manufactured from vacuum-induction melted Grade 304LN conforming to ASME Section III Class 1 with strict restricted cobalt content for 700 MWe PHWR.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 2825: 1969 (Reaffirmed 2018). Cobalt trace impurity limit (<= 0.05% Co to prevent radioactive activation) not specified.",
     "documentMetadata": {
@@ -8685,11 +8694,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 87
       }
     },
-    "improvedSpecification": "Seamless cold-finished austenitic stainless steel piping (DN 300mm Sch 80) manufactured from vacuum-induction melted Grade 304LN conforming to ASME Section III Class 1 with strict restricted cobalt content for 700 MWe PHWR. All materials and equipment shall be strictly manufactured in compliance with IS 2825: 1969 (Reaffirmed 2018) and IS 1239 (Part 1): 2004. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to ASME Section III Division 1 Subsection NB."
+    "improvedSpecification": "Seamless cold-finished austenitic stainless steel piping (DN 300mm Sch 80) manufactured from vacuum-induction melted Grade 304LN conforming to ASME Section III Class 1 with strict restricted cobalt content for 700 MWe PHWR. All materials and equipment shall be strictly manufactured in compliance with IS 2825: 1969 (Reaffirmed 2018) and IS 1239 (Part 1): 2004. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to ASME Section III Division 1 Subsection NB.",
+    "accountType": "psu",
+    "organization": "NTPC Energy & Thermal Generation Corporation"
   },
   {
     "demoKey": "psu_analysis_13",
-    "userEmail": "psu1@anveshak.demo",
+    "userEmail": "psu@anveshak.demo",
     "productName": "Sacrificial Aluminium Alloy Anodes for Offshore Platform Jackets",
     "productCategory": "Cathodic Corrosion Protection",
     "status": "Completed",
@@ -8698,7 +8709,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 90,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-21T17:49:14.874Z",
+    "createdAt": "2026-08-22T14:20:21.986Z",
     "rawInput": "Cast sacrificial aluminium-indium-zinc alloy stand-off anodes (net weight 250 kg) with tubular steel core insert, achieving minimum electrochemical capacity 2600 A.h/kg and closed-circuit potential -1050 mV vs Ag/AgCl.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 8587: 1997 (Reaffirmed 2020). Electrochemical capacity rating (minimum 2500 A-h/kg) and closed-circuit potential not verified.",
     "documentMetadata": {
@@ -8796,11 +8807,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 88
       }
     },
-    "improvedSpecification": "Cast sacrificial aluminium-indium-zinc alloy stand-off anodes (net weight 250 kg) with tubular steel core insert, achieving minimum electrochemical capacity 2600 A.h/kg and closed-circuit potential -1050 mV vs Ag/AgCl. All materials and equipment shall be strictly manufactured in compliance with IS 8587: 1997 (Reaffirmed 2020) and IS 8062 (Parts 1-3). Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to DNV RP-B401 / NACE TM0190."
+    "improvedSpecification": "Cast sacrificial aluminium-indium-zinc alloy stand-off anodes (net weight 250 kg) with tubular steel core insert, achieving minimum electrochemical capacity 2600 A.h/kg and closed-circuit potential -1050 mV vs Ag/AgCl. All materials and equipment shall be strictly manufactured in compliance with IS 8587: 1997 (Reaffirmed 2020) and IS 8062 (Parts 1-3). Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to DNV RP-B401 / NACE TM0190.",
+    "accountType": "psu",
+    "organization": "NTPC Energy & Thermal Generation Corporation"
   },
   {
     "demoKey": "psu_analysis_14",
-    "userEmail": "psu1@anveshak.demo",
+    "userEmail": "psu@anveshak.demo",
     "productName": "High-Chrome Alloy Abrasion-Resistant Heavy Slurry Pumps 350 kW",
     "productCategory": "Thermal Power Auxiliary Machinery",
     "status": "Completed",
@@ -8809,7 +8822,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 91,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-20T17:49:14.874Z",
+    "createdAt": "2026-08-21T14:20:21.986Z",
     "rawInput": "Heavy-duty horizontal end-suction centrifugal ash slurry disposal pumps (capacity 1200 m3/hr @ 60m head) powered by 350 kW motor with replaceable high-chrome alloy liners, dynamic expeller seal, and grease-lubricated bearings.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 14536: 1998. Wet-end impeller casing metallurgy hardness (minimum 650 BHN high-chrome cast iron) omitted.",
     "documentMetadata": {
@@ -8907,11 +8920,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 89
       }
     },
-    "improvedSpecification": "Heavy-duty horizontal end-suction centrifugal ash slurry disposal pumps (capacity 1200 m3/hr @ 60m head) powered by 350 kW motor with replaceable high-chrome alloy liners, dynamic expeller seal, and grease-lubricated bearings. All materials and equipment shall be strictly manufactured in compliance with IS 14536: 1998 and IS 5120: 1977. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 9137: 1979."
+    "improvedSpecification": "Heavy-duty horizontal end-suction centrifugal ash slurry disposal pumps (capacity 1200 m3/hr @ 60m head) powered by 350 kW motor with replaceable high-chrome alloy liners, dynamic expeller seal, and grease-lubricated bearings. All materials and equipment shall be strictly manufactured in compliance with IS 14536: 1998 and IS 5120: 1977. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 9137: 1979.",
+    "accountType": "psu",
+    "organization": "NTPC Energy & Thermal Generation Corporation"
   },
   {
     "demoKey": "psu_analysis_15",
-    "userEmail": "psu1@anveshak.demo",
+    "userEmail": "psu@anveshak.demo",
     "productName": "Heavy Clad Reactor Pressure Vessels for Refinery Hydrocracking Units",
     "productCategory": "Petroleum Refining Equipment",
     "status": "Completed",
@@ -8920,7 +8935,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 92,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-19T17:49:14.874Z",
+    "createdAt": "2026-08-20T14:20:21.986Z",
     "rawInput": "Hydrocracker reactor pressure vessels operating at 170 bar design pressure and 450 deg C design temperature fabricated from 150mm thick 2.25Cr-1Mo-V steel with 4mm internal stainless steel weld overlay conforming to ASME Sec VIII Div 2.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 2825: 1969 (Class 1 Pressure Vessels). Step-cooling temper embrittlement test protocol (Bruscato factor X <= 15 ppm) omitted in fabrication schedule.",
     "documentMetadata": {
@@ -9018,11 +9033,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 90
       }
     },
-    "improvedSpecification": "Hydrocracker reactor pressure vessels operating at 170 bar design pressure and 450 deg C design temperature fabricated from 150mm thick 2.25Cr-1Mo-V steel with 4mm internal stainless steel weld overlay conforming to ASME Sec VIII Div 2. All materials and equipment shall be strictly manufactured in compliance with IS 2825: 1969 (Class 1 Pressure Vessels) and IS 2062: 2011. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to ASME Boiler and Pressure Vessel Code Section VIII Division 2."
+    "improvedSpecification": "Hydrocracker reactor pressure vessels operating at 170 bar design pressure and 450 deg C design temperature fabricated from 150mm thick 2.25Cr-1Mo-V steel with 4mm internal stainless steel weld overlay conforming to ASME Sec VIII Div 2. All materials and equipment shall be strictly manufactured in compliance with IS 2825: 1969 (Class 1 Pressure Vessels) and IS 2062: 2011. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to ASME Boiler and Pressure Vessel Code Section VIII Division 2.",
+    "accountType": "psu",
+    "organization": "NTPC Energy & Thermal Generation Corporation"
   },
   {
     "demoKey": "psu_analysis_16",
-    "userEmail": "psu1@anveshak.demo",
+    "userEmail": "psu@anveshak.demo",
     "productName": "400kV Silicone Composite Polymer Suspension Long-Rod Insulators",
     "productCategory": "High-Voltage Transmission",
     "status": "Completed",
@@ -9031,7 +9048,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 93,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-18T17:49:14.874Z",
+    "createdAt": "2026-08-19T14:20:21.986Z",
     "rawInput": "400kV high-temperature vulcanized (HTV) silicone rubber composite long-rod insulators with 160 kN electro-mechanical failing load, high-purity boron-free E-CR glass fiber core, and forged steel hot-dip galvanized end-fittings.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 15451: 2004 / IEC 61109. Tracking and erosion test (5000-hour multi-stress accelerated aging test) and corona ring design omitted.",
     "documentMetadata": {
@@ -9129,11 +9146,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 91
       }
     },
-    "improvedSpecification": "400kV high-temperature vulcanized (HTV) silicone rubber composite long-rod insulators with 160 kN electro-mechanical failing load, high-purity boron-free E-CR glass fiber core, and forged steel hot-dip galvanized end-fittings. All materials and equipment shall be strictly manufactured in compliance with IS 15451: 2004 / IEC 61109 and IS 1445: 1977. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 2071 (Parts 1-3)."
+    "improvedSpecification": "400kV high-temperature vulcanized (HTV) silicone rubber composite long-rod insulators with 160 kN electro-mechanical failing load, high-purity boron-free E-CR glass fiber core, and forged steel hot-dip galvanized end-fittings. All materials and equipment shall be strictly manufactured in compliance with IS 15451: 2004 / IEC 61109 and IS 1445: 1977. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 2071 (Parts 1-3).",
+    "accountType": "psu",
+    "organization": "NTPC Energy & Thermal Generation Corporation"
   },
   {
     "demoKey": "psu_analysis_17",
-    "userEmail": "psu1@anveshak.demo",
+    "userEmail": "psu@anveshak.demo",
     "productName": "Cryogenic Liquefied Natural Gas (LNG) Double-Wall Full Containment Storage Tanks",
     "productCategory": "Cryogenic Hydrocarbons",
     "status": "Under Review",
@@ -9142,7 +9161,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 94,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-17T17:49:14.874Z",
+    "createdAt": "2026-08-18T14:20:21.986Z",
     "rawInput": "180,000 cubic meter full containment cryogenic LNG storage tank with 9% nickel steel inner container designed for -165 deg C storage, expanded perlite insulation, and post-tensioned reinforced concrete outer barrier tank.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 2825: 1969 / EN 14620 / API 620. Inner primary container 9% Nickel steel Charpy V-notch impact lateral expansion test at -196 deg C omitted.",
     "documentMetadata": {
@@ -9240,11 +9259,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 92
       }
     },
-    "improvedSpecification": "180,000 cubic meter full containment cryogenic LNG storage tank with 9% nickel steel inner container designed for -165 deg C storage, expanded perlite insulation, and post-tensioned reinforced concrete outer barrier tank. All materials and equipment shall be strictly manufactured in compliance with IS 2825: 1969 / EN 14620 / API 620 and IS 2062: 2011. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to BS EN 14620-2 / API 620 Appendix Q."
+    "improvedSpecification": "180,000 cubic meter full containment cryogenic LNG storage tank with 9% nickel steel inner container designed for -165 deg C storage, expanded perlite insulation, and post-tensioned reinforced concrete outer barrier tank. All materials and equipment shall be strictly manufactured in compliance with IS 2825: 1969 / EN 14620 / API 620 and IS 2062: 2011. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to BS EN 14620-2 / API 620 Appendix Q.",
+    "accountType": "psu",
+    "organization": "NTPC Energy & Thermal Generation Corporation"
   },
   {
     "demoKey": "psu_analysis_18",
-    "userEmail": "psu1@anveshak.demo",
+    "userEmail": "psu@anveshak.demo",
     "productName": "3-Phase AC Asynchronous Traction Motors for 6000 HP Freight Electric Locomotives",
     "productCategory": "Railway Traction Machinery",
     "status": "Needs Attention",
@@ -9253,7 +9274,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 95,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-16T17:49:14.874Z",
+    "createdAt": "2026-08-17T14:20:21.986Z",
     "rawInput": "1000 kW 3-phase axle-hung nose-suspended asynchronous induction traction motor operating from VVVF inverter with fabricated copper rotor cage, insulated hybrid ceramic ball bearings, and IP55 forced-air cooling.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 9670: 1980 / IEC 60349-2. Class 200 high-temperature corona-resistant Kapton insulation and rotor copper-bar brazing fatigue test missing.",
     "documentMetadata": {
@@ -9351,11 +9372,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 93
       }
     },
-    "improvedSpecification": "1000 kW 3-phase axle-hung nose-suspended asynchronous induction traction motor operating from VVVF inverter with fabricated copper rotor cage, insulated hybrid ceramic ball bearings, and IP55 forced-air cooling. All materials and equipment shall be strictly manufactured in compliance with IS 9670: 1980 / IEC 60349-2 and IS 13364: 1992. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IEC 61377."
+    "improvedSpecification": "1000 kW 3-phase axle-hung nose-suspended asynchronous induction traction motor operating from VVVF inverter with fabricated copper rotor cage, insulated hybrid ceramic ball bearings, and IP55 forced-air cooling. All materials and equipment shall be strictly manufactured in compliance with IS 9670: 1980 / IEC 60349-2 and IS 13364: 1992. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IEC 61377.",
+    "accountType": "psu",
+    "organization": "NTPC Energy & Thermal Generation Corporation"
   },
   {
     "demoKey": "psu_analysis_19",
-    "userEmail": "psu1@anveshak.demo",
+    "userEmail": "psu@anveshak.demo",
     "productName": "Centrifugal Natural Gas Pipeline Booster Compressors with Dry Gas Seals",
     "productCategory": "Oil & Gas Machinery",
     "status": "Completed",
@@ -9364,7 +9387,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 96,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-15T17:49:14.874Z",
+    "createdAt": "2026-08-16T14:20:21.986Z",
     "rawInput": "18 MW gas turbine-driven multi-stage barrel type centrifugal gas booster compressor (discharge pressure 92 bar) with 17-4PH stainless steel impellers, active magnetic bearings, and digital anti-surge control system.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 13364: 1992 / API 617. Full-load full-pressure hydrocarbon gas string test (PTC 10 Type 1) not specified in inspection plan.",
     "documentMetadata": {
@@ -9462,11 +9485,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 94
       }
     },
-    "improvedSpecification": "18 MW gas turbine-driven multi-stage barrel type centrifugal gas booster compressor (discharge pressure 92 bar) with 17-4PH stainless steel impellers, active magnetic bearings, and digital anti-surge control system. All materials and equipment shall be strictly manufactured in compliance with IS 13364: 1992 / API 617 and IS 3177: 1999. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to ASME PTC 10."
+    "improvedSpecification": "18 MW gas turbine-driven multi-stage barrel type centrifugal gas booster compressor (discharge pressure 92 bar) with 17-4PH stainless steel impellers, active magnetic bearings, and digital anti-surge control system. All materials and equipment shall be strictly manufactured in compliance with IS 13364: 1992 / API 617 and IS 3177: 1999. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to ASME PTC 10.",
+    "accountType": "psu",
+    "organization": "NTPC Energy & Thermal Generation Corporation"
   },
   {
     "demoKey": "psu_analysis_20",
-    "userEmail": "psu1@anveshak.demo",
+    "userEmail": "psu@anveshak.demo",
     "productName": "Urea Reactor High-Pressure Multi-Layered Ammonia Synthesis Vessel",
     "productCategory": "Fertilizer & Chemical Process",
     "status": "Completed",
@@ -9475,7 +9500,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 97,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-14T17:49:14.874Z",
+    "createdAt": "2026-08-15T14:20:21.986Z",
     "rawInput": "Multi-layer cylindrical high-pressure urea synthesis reactor (operating pressure 160 bar, temperature 195 deg C) with carbon steel multi-shrink layers and loose liner in urea-grade low-carbon stainless steel.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 2825: 1969 (Class 1 Pressure Vessels). Huey nitric acid intergranular corrosion test (ASTM A262 Practice C) for urea grade SS 316L modified omitted.",
     "documentMetadata": {
@@ -9573,11 +9598,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 95
       }
     },
-    "improvedSpecification": "Multi-layer cylindrical high-pressure urea synthesis reactor (operating pressure 160 bar, temperature 195 deg C) with carbon steel multi-shrink layers and loose liner in urea-grade low-carbon stainless steel. All materials and equipment shall be strictly manufactured in compliance with IS 2825: 1969 (Class 1 Pressure Vessels) and IS 2062: 2011. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to ASME Section VIII Division 1 & 2."
+    "improvedSpecification": "Multi-layer cylindrical high-pressure urea synthesis reactor (operating pressure 160 bar, temperature 195 deg C) with carbon steel multi-shrink layers and loose liner in urea-grade low-carbon stainless steel. All materials and equipment shall be strictly manufactured in compliance with IS 2825: 1969 (Class 1 Pressure Vessels) and IS 2062: 2011. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to ASME Section VIII Division 1 & 2.",
+    "accountType": "psu",
+    "organization": "NTPC Energy & Thermal Generation Corporation"
   },
   {
     "demoKey": "psu_analysis_21",
-    "userEmail": "psu1@anveshak.demo",
+    "userEmail": "psu@anveshak.demo",
     "productName": "220kV High-Pressure Fluid-Filled Underground XLPE Transmission Cable",
     "productCategory": "EHV Power Transmission",
     "status": "Completed",
@@ -9586,7 +9613,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 88,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-13T17:49:14.874Z",
+    "createdAt": "2026-08-14T14:20:21.986Z",
     "rawInput": "220kV single-core 1000 sq.mm segmented Milliken copper conductor cable with super-clean cross-linked polyethylene insulation, corrugated seamless aluminium sheath, and extruded semi-conductive HDPE outer jacket.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 7098 (Part 3): 1993 (Reaffirmed 2020). Tender missing mandatory 1-year pre-qualification test loop certificate (IEC 62067 Clause 13).",
     "documentMetadata": {
@@ -9684,11 +9711,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 86
       }
     },
-    "improvedSpecification": "220kV single-core 1000 sq.mm segmented Milliken copper conductor cable with super-clean cross-linked polyethylene insulation, corrugated seamless aluminium sheath, and extruded semi-conductive HDPE outer jacket. All materials and equipment shall be strictly manufactured in compliance with IS 7098 (Part 3): 1993 (Reaffirmed 2020) and IS 10810 (Parts 1-64). Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IEC 62067."
+    "improvedSpecification": "220kV single-core 1000 sq.mm segmented Milliken copper conductor cable with super-clean cross-linked polyethylene insulation, corrugated seamless aluminium sheath, and extruded semi-conductive HDPE outer jacket. All materials and equipment shall be strictly manufactured in compliance with IS 7098 (Part 3): 1993 (Reaffirmed 2020) and IS 10810 (Parts 1-64). Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IEC 62067.",
+    "accountType": "psu",
+    "organization": "NTPC Energy & Thermal Generation Corporation"
   },
   {
     "demoKey": "psu_analysis_22",
-    "userEmail": "psu1@anveshak.demo",
+    "userEmail": "psu@anveshak.demo",
     "productName": "Direct-Bonded Magnesite-Chrome Blast Furnace Refractory Bricks",
     "productCategory": "Metallurgical Refractories",
     "status": "Completed",
@@ -9697,7 +9726,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 89,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-12T17:49:14.874Z",
+    "createdAt": "2026-08-13T14:20:21.986Z",
     "rawInput": "Direct-bonded high-fired magnesite-chrome refractory bricks for blast furnace steel-making ladle slag line and torpedo cars with bulk density >= 3.10 g/cc, cold crushing strength >= 55 N/mm2, and hot modulus of rupture at 1400 deg C >= 8 N/mm2.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 6: 2017. Refractoriness Under Load (RUL ta >= 1700 deg C) and apparent porosity (<= 15%) unverified.",
     "documentMetadata": {
@@ -9795,11 +9824,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 87
       }
     },
-    "improvedSpecification": "Direct-bonded high-fired magnesite-chrome refractory bricks for blast furnace steel-making ladle slag line and torpedo cars with bulk density >= 3.10 g/cc, cold crushing strength >= 55 N/mm2, and hot modulus of rupture at 1400 deg C >= 8 N/mm2. All materials and equipment shall be strictly manufactured in compliance with IS 6: 2017 and IS 8: 1994. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 1528 (Parts 1-20)."
+    "improvedSpecification": "Direct-bonded high-fired magnesite-chrome refractory bricks for blast furnace steel-making ladle slag line and torpedo cars with bulk density >= 3.10 g/cc, cold crushing strength >= 55 N/mm2, and hot modulus of rupture at 1400 deg C >= 8 N/mm2. All materials and equipment shall be strictly manufactured in compliance with IS 6: 2017 and IS 8: 1994. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 1528 (Parts 1-20).",
+    "accountType": "psu",
+    "organization": "NTPC Energy & Thermal Generation Corporation"
   },
   {
     "demoKey": "psu_analysis_23",
-    "userEmail": "psu1@anveshak.demo",
+    "userEmail": "psu@anveshak.demo",
     "productName": "Flue Gas Desulphurization (FGD) Limestone Slurry Spray Header Pipes",
     "productCategory": "Thermal Environmental Compliance",
     "status": "Completed",
@@ -9808,7 +9839,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 90,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-11T17:49:14.874Z",
+    "createdAt": "2026-08-12T14:20:21.986Z",
     "rawInput": "Dual-laminate glass fiber reinforced vinyl ester resin (GRP/FRP) wet limestone slurry spray headers (DN 400mm) operating at 100 deg C in acidic wet scrubber environment conforming to ISO 14692 with solid silicon carbide whirl nozzles.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 1891: 1994. Severe slurry erosion barrier (silicon carbide filled vinylester resin liner minimum 3mm) missing.",
     "documentMetadata": {
@@ -9906,11 +9937,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 88
       }
     },
-    "improvedSpecification": "Dual-laminate glass fiber reinforced vinyl ester resin (GRP/FRP) wet limestone slurry spray headers (DN 400mm) operating at 100 deg C in acidic wet scrubber environment conforming to ISO 14692 with solid silicon carbide whirl nozzles. All materials and equipment shall be strictly manufactured in compliance with IS 1891: 1994 and IS 9220: 1979. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to ASTM D2996 / ISO 14692."
+    "improvedSpecification": "Dual-laminate glass fiber reinforced vinyl ester resin (GRP/FRP) wet limestone slurry spray headers (DN 400mm) operating at 100 deg C in acidic wet scrubber environment conforming to ISO 14692 with solid silicon carbide whirl nozzles. All materials and equipment shall be strictly manufactured in compliance with IS 1891: 1994 and IS 9220: 1979. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to ASTM D2996 / ISO 14692.",
+    "accountType": "psu",
+    "organization": "NTPC Energy & Thermal Generation Corporation"
   },
   {
     "demoKey": "psu_analysis_24",
-    "userEmail": "psu1@anveshak.demo",
+    "userEmail": "psu@anveshak.demo",
     "productName": "Armoured Electro-Optical Deep-Sea ROV Tether Cables 3000m",
     "productCategory": "Deep Sea Mining & Ocean Exploration",
     "status": "Completed",
@@ -9919,7 +9952,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 91,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-10T17:49:14.874Z",
+    "createdAt": "2026-08-11T14:20:21.986Z",
     "rawInput": "3000m neutrally buoyant electro-optical umbilical tether cable with 3x 4.0 sq.mm 3.3kV conductors, 12-core single-mode optical fiber tubes, water-blocked aramid fiber tensile yarn armour, and abrasion-resistant extruded polyurethane jacket.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 1554 (Part 2): 1988. Hydrostatic pressure integrity at 300 bar (3000m ocean depth) and breaking load (minimum 180 kN) omitted.",
     "documentMetadata": {
@@ -10017,11 +10050,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 89
       }
     },
-    "improvedSpecification": "3000m neutrally buoyant electro-optical umbilical tether cable with 3x 4.0 sq.mm 3.3kV conductors, 12-core single-mode optical fiber tubes, water-blocked aramid fiber tensile yarn armour, and abrasion-resistant extruded polyurethane jacket. All materials and equipment shall be strictly manufactured in compliance with IS 1554 (Part 2): 1988 and IS 9968 (Part 2): 2002. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IEC 60794 / ISO 13628-5."
+    "improvedSpecification": "3000m neutrally buoyant electro-optical umbilical tether cable with 3x 4.0 sq.mm 3.3kV conductors, 12-core single-mode optical fiber tubes, water-blocked aramid fiber tensile yarn armour, and abrasion-resistant extruded polyurethane jacket. All materials and equipment shall be strictly manufactured in compliance with IS 1554 (Part 2): 1988 and IS 9968 (Part 2): 2002. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IEC 60794 / ISO 13628-5.",
+    "accountType": "psu",
+    "organization": "NTPC Energy & Thermal Generation Corporation"
   },
   {
     "demoKey": "psu_analysis_25",
-    "userEmail": "psu1@anveshak.demo",
+    "userEmail": "psu@anveshak.demo",
     "productName": "High-Tensile Shipbuilding Structural Steel Plates Grade EH36",
     "productCategory": "Defense Naval Architecture",
     "status": "Needs Attention",
@@ -10030,7 +10065,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 92,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-09T17:49:14.874Z",
+    "createdAt": "2026-08-10T14:20:21.986Z",
     "rawInput": "Thermo-mechanically controlled processed (TMCP) high-strength hull structural steel plates Grade EH36 (thickness 12mm to 50mm) with minimum yield strength 355 MPa, through-thickness Z-axis ductility (Z35), and ultrasonic tested to Class 1.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 2062: 2011 / IS 3039: 1988. Charpy V-notch impact energy verification at -40 deg C (minimum 34 Joules) omitted in mill test certificate.",
     "documentMetadata": {
@@ -10128,11 +10163,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 90
       }
     },
-    "improvedSpecification": "Thermo-mechanically controlled processed (TMCP) high-strength hull structural steel plates Grade EH36 (thickness 12mm to 50mm) with minimum yield strength 355 MPa, through-thickness Z-axis ductility (Z35), and ultrasonic tested to Class 1. All materials and equipment shall be strictly manufactured in compliance with IS 2062: 2011 / IS 3039: 1988 and IS 1608: 2018. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IRS Rules Part 2 / DNVGL-OS-B101."
+    "improvedSpecification": "Thermo-mechanically controlled processed (TMCP) high-strength hull structural steel plates Grade EH36 (thickness 12mm to 50mm) with minimum yield strength 355 MPa, through-thickness Z-axis ductility (Z35), and ultrasonic tested to Class 1. All materials and equipment shall be strictly manufactured in compliance with IS 2062: 2011 / IS 3039: 1988 and IS 1608: 2018. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IRS Rules Part 2 / DNVGL-OS-B101.",
+    "accountType": "psu",
+    "organization": "NTPC Energy & Thermal Generation Corporation"
   },
   {
     "demoKey": "psu_analysis_26",
-    "userEmail": "psu1@anveshak.demo",
+    "userEmail": "psu@anveshak.demo",
     "productName": "Intrinsically Safe Digital Methane & Multi-Gas Telemetry Sensors for Mines",
     "productCategory": "Underground Mining Safety",
     "status": "Completed",
@@ -10141,7 +10178,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 93,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-08T17:49:14.874Z",
+    "createdAt": "2026-08-09T14:20:21.986Z",
     "rawInput": "Intrinsically safe Ex-ia digital underground coal mine methane and carbon monoxide continuous monitoring transmitter with dual-beam non-dispersive infrared (NDIR) optical bench, backlit LCD display, and 4-20mA/RS-485 Modbus telemetry.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS/IEC 60079 (Part 11): 2011. Missing DGMS Ex-ia approval certificate and infrared optical optical-chamber poison-resistance specification.",
     "documentMetadata": {
@@ -10239,11 +10276,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 91
       }
     },
-    "improvedSpecification": "Intrinsically safe Ex-ia digital underground coal mine methane and carbon monoxide continuous monitoring transmitter with dual-beam non-dispersive infrared (NDIR) optical bench, backlit LCD display, and 4-20mA/RS-485 Modbus telemetry. All materials and equipment shall be strictly manufactured in compliance with IS/IEC 60079 (Part 11): 2011 and IS/IEC 60079 (Part 0): 2017. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS/IEC 60079-1."
+    "improvedSpecification": "Intrinsically safe Ex-ia digital underground coal mine methane and carbon monoxide continuous monitoring transmitter with dual-beam non-dispersive infrared (NDIR) optical bench, backlit LCD display, and 4-20mA/RS-485 Modbus telemetry. All materials and equipment shall be strictly manufactured in compliance with IS/IEC 60079 (Part 11): 2011 and IS/IEC 60079 (Part 0): 2017. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS/IEC 60079-1.",
+    "accountType": "psu",
+    "organization": "NTPC Energy & Thermal Generation Corporation"
   },
   {
     "demoKey": "psu_analysis_27",
-    "userEmail": "psu1@anveshak.demo",
+    "userEmail": "psu@anveshak.demo",
     "productName": "Induced Draft Cooling Tower Fibre-Reinforced Polymer (FRP) Fan Blades",
     "productCategory": "Power Plant Auxiliary Cooling",
     "status": "Completed",
@@ -10252,7 +10291,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 94,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-07T17:49:14.874Z",
+    "createdAt": "2026-08-08T14:20:21.986Z",
     "rawInput": "10-meter diameter 8-blade variable pitch aerofoil FRP cooling tower fans manufactured from epoxy vinyl ester resin with hollow construction, hot-dip galvanized steel hub, and dynamically balanced to ISO 1940 Grade G2.5.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 10000: 1980. Dynamic balance grade (ISO 1940-1 Grade G2.5) and leading-edge erosion protection tape missing.",
     "documentMetadata": {
@@ -10350,11 +10389,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 92
       }
     },
-    "improvedSpecification": "10-meter diameter 8-blade variable pitch aerofoil FRP cooling tower fans manufactured from epoxy vinyl ester resin with hollow construction, hot-dip galvanized steel hub, and dynamically balanced to ISO 1940 Grade G2.5. All materials and equipment shall be strictly manufactured in compliance with IS 10000: 1980 and IS 3682: 1966. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to CTI STD-131 / ISO 1940-1."
+    "improvedSpecification": "10-meter diameter 8-blade variable pitch aerofoil FRP cooling tower fans manufactured from epoxy vinyl ester resin with hollow construction, hot-dip galvanized steel hub, and dynamically balanced to ISO 1940 Grade G2.5. All materials and equipment shall be strictly manufactured in compliance with IS 10000: 1980 and IS 3682: 1966. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to CTI STD-131 / ISO 1940-1.",
+    "accountType": "psu",
+    "organization": "NTPC Energy & Thermal Generation Corporation"
   },
   {
     "demoKey": "psu_analysis_28",
-    "userEmail": "psu1@anveshak.demo",
+    "userEmail": "psu@anveshak.demo",
     "productName": "5-Axis Heavy CNC Gantry Milling Machine for Turbine Casings",
     "productCategory": "High-Precision Machine Tools",
     "status": "Under Review",
@@ -10363,7 +10404,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 95,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-06T17:49:14.874Z",
+    "createdAt": "2026-08-07T14:20:21.986Z",
     "rawInput": "Heavy gantry-type 5-axis simultaneous CNC milling machining center (X=16m, Y=6m, Z=2.5m) with automatic universal milling head, 100 kW high-torque spindle, Siemens Sinumerik ONE CNC control, and Renishaw laser tool setter.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 2161: 1962 / ISO 10791. Volumetric geometric accuracy compensation and laser interferometer calibration protocol omitted.",
     "documentMetadata": {
@@ -10461,11 +10502,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 93
       }
     },
-    "improvedSpecification": "Heavy gantry-type 5-axis simultaneous CNC milling machining center (X=16m, Y=6m, Z=2.5m) with automatic universal milling head, 100 kW high-torque spindle, Siemens Sinumerik ONE CNC control, and Renishaw laser tool setter. All materials and equipment shall be strictly manufactured in compliance with IS 2161: 1962 / ISO 10791 and IS 11000 (Part 1): 1984. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to ISO 230-2."
+    "improvedSpecification": "Heavy gantry-type 5-axis simultaneous CNC milling machining center (X=16m, Y=6m, Z=2.5m) with automatic universal milling head, 100 kW high-torque spindle, Siemens Sinumerik ONE CNC control, and Renishaw laser tool setter. All materials and equipment shall be strictly manufactured in compliance with IS 2161: 1962 / ISO 10791 and IS 11000 (Part 1): 1984. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to ISO 230-2.",
+    "accountType": "psu",
+    "organization": "NTPC Energy & Thermal Generation Corporation"
   },
   {
     "demoKey": "psu_analysis_29",
-    "userEmail": "psu1@anveshak.demo",
+    "userEmail": "psu@anveshak.demo",
     "productName": "400kV Heavy Duty Gapless Zinc Oxide Substation Surge Arresters",
     "productCategory": "Substation Overvoltage Protection",
     "status": "Completed",
@@ -10474,7 +10517,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 96,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-05T17:49:14.874Z",
+    "createdAt": "2026-08-06T14:20:21.986Z",
     "rawInput": "390kV rated, 10kA nominal discharge current gapless metal-oxide zinc surge arresters housed in silicone polymer housing with minimum creepage distance 13,000mm, line discharge Class 4, and digital surge monitor with leakage current meter.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 15086 (Part 4): 2014 / IEC 60099-4. Repetitive charge transfer rating (Qrs >= 2.4 C) and pressure relief Class 63kA RMS omitted.",
     "documentMetadata": {
@@ -10572,11 +10615,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 94
       }
     },
-    "improvedSpecification": "390kV rated, 10kA nominal discharge current gapless metal-oxide zinc surge arresters housed in silicone polymer housing with minimum creepage distance 13,000mm, line discharge Class 4, and digital surge monitor with leakage current meter. All materials and equipment shall be strictly manufactured in compliance with IS 15086 (Part 4): 2014 / IEC 60099-4 and IS 2071: 2016. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS/IEC 60099-5."
+    "improvedSpecification": "390kV rated, 10kA nominal discharge current gapless metal-oxide zinc surge arresters housed in silicone polymer housing with minimum creepage distance 13,000mm, line discharge Class 4, and digital surge monitor with leakage current meter. All materials and equipment shall be strictly manufactured in compliance with IS 15086 (Part 4): 2014 / IEC 60099-4 and IS 2071: 2016. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS/IEC 60099-5.",
+    "accountType": "psu",
+    "organization": "NTPC Energy & Thermal Generation Corporation"
   },
   {
     "demoKey": "psu_analysis_30",
-    "userEmail": "psu1@anveshak.demo",
+    "userEmail": "psu@anveshak.demo",
     "productName": "Automated Rim-Seal Hydrocarbon Fire Foam Deluge Protection System",
     "productCategory": "Petroleum Terminal Safety",
     "status": "Completed",
@@ -10585,7 +10630,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 97,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-04T17:49:14.874Z",
+    "createdAt": "2026-08-05T14:20:21.986Z",
     "rawInput": "Automatic rim-seal polyurethane foam pourer deluge fire suppression system for 79m diameter external floating roof crude oil storage tanks with linear heat sensor detection, pneumatic detection lines, and skid-mounted foam bladder tank.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 3844: 1989 (Reaffirmed 2020). Tender missing OISD-117 mandatory linear heat detection cable and pneumatic fast foam dump (< 30 seconds).",
     "documentMetadata": {
@@ -10683,11 +10728,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 95
       }
     },
-    "improvedSpecification": "Automatic rim-seal polyurethane foam pourer deluge fire suppression system for 79m diameter external floating roof crude oil storage tanks with linear heat sensor detection, pneumatic detection lines, and skid-mounted foam bladder tank. All materials and equipment shall be strictly manufactured in compliance with IS 3844: 1989 (Reaffirmed 2020) and OISD-STD-117. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to NFPA 11 / EN 13565-2."
+    "improvedSpecification": "Automatic rim-seal polyurethane foam pourer deluge fire suppression system for 79m diameter external floating roof crude oil storage tanks with linear heat sensor detection, pneumatic detection lines, and skid-mounted foam bladder tank. All materials and equipment shall be strictly manufactured in compliance with IS 3844: 1989 (Reaffirmed 2020) and OISD-STD-117. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to NFPA 11 / EN 13565-2.",
+    "accountType": "psu",
+    "organization": "NTPC Energy & Thermal Generation Corporation"
   },
   {
     "demoKey": "psu_analysis_31",
-    "userEmail": "psu1@anveshak.demo",
+    "userEmail": "psu@anveshak.demo",
     "productName": "High-Tensile Locked Coil Steel Wire Ropes for Mine Shaft Winding 48mm",
     "productCategory": "Deep Mining Hoisting Systems",
     "status": "Completed",
@@ -10696,7 +10743,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 88,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-03T17:49:14.874Z",
+    "createdAt": "2026-08-04T14:20:21.986Z",
     "rawInput": "48mm diameter full-locked coil galvanized steel wire rope for friction Koepe mine shaft hoist with interlocking Z-shaped outer wires, high-density non-rotating core, tensile grade 1770 N/mm2, conforming to IS 1855 and DGMS approved.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 2266: 2019. Tender cited general engineering standard IS 2266 instead of specialized mine winding rope standard IS 1855.",
     "documentMetadata": {
@@ -10794,11 +10841,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 86
       }
     },
-    "improvedSpecification": "48mm diameter full-locked coil galvanized steel wire rope for friction Koepe mine shaft hoist with interlocking Z-shaped outer wires, high-density non-rotating core, tensile grade 1770 N/mm2, conforming to IS 1855 and DGMS approved. All materials and equipment shall be strictly manufactured in compliance with IS 2266: 2019 and IS 1855: 2003. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 6594: 2001."
+    "improvedSpecification": "48mm diameter full-locked coil galvanized steel wire rope for friction Koepe mine shaft hoist with interlocking Z-shaped outer wires, high-density non-rotating core, tensile grade 1770 N/mm2, conforming to IS 1855 and DGMS approved. All materials and equipment shall be strictly manufactured in compliance with IS 2266: 2019 and IS 1855: 2003. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 6594: 2001.",
+    "accountType": "psu",
+    "organization": "NTPC Energy & Thermal Generation Corporation"
   },
   {
     "demoKey": "psu_analysis_32",
-    "userEmail": "psu1@anveshak.demo",
+    "userEmail": "psu@anveshak.demo",
     "productName": "50MWh Modular Grid-Scale Lithium Iron Phosphate Battery Energy Storage System (BESS)",
     "productCategory": "Grid Energy Storage",
     "status": "Needs Attention",
@@ -10807,7 +10856,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 89,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-02T17:49:14.874Z",
+    "createdAt": "2026-08-03T14:20:21.986Z",
     "rawInput": "25 MW / 50 MWh utility grid-scale battery energy storage system comprising liquid-cooled IP55 containerized Lithium Iron Phosphate (LiFePO4) racks, bi-directional power conversion system (PCS), aerosol fire suppression, and SCADA interface.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 16046 (Part 2): 2018 / IEC 62619. UL 9540A unit-level and installation-level fire test report missing; deflagration explosion venting omitted.",
     "documentMetadata": {
@@ -10905,11 +10954,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 87
       }
     },
-    "improvedSpecification": "25 MW / 50 MWh utility grid-scale battery energy storage system comprising liquid-cooled IP55 containerized Lithium Iron Phosphate (LiFePO4) racks, bi-directional power conversion system (PCS), aerosol fire suppression, and SCADA interface. All materials and equipment shall be strictly manufactured in compliance with IS 16046 (Part 2): 2018 / IEC 62619 and IS 16221: 2015. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to UL 9540A / IEC 62933-5-2."
+    "improvedSpecification": "25 MW / 50 MWh utility grid-scale battery energy storage system comprising liquid-cooled IP55 containerized Lithium Iron Phosphate (LiFePO4) racks, bi-directional power conversion system (PCS), aerosol fire suppression, and SCADA interface. All materials and equipment shall be strictly manufactured in compliance with IS 16046 (Part 2): 2018 / IEC 62619 and IS 16221: 2015. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to UL 9540A / IEC 62933-5-2.",
+    "accountType": "psu",
+    "organization": "NTPC Energy & Thermal Generation Corporation"
   },
   {
     "demoKey": "admin_analysis_01",
-    "userEmail": "admin1@anveshak.demo",
+    "userEmail": "admin@anveshak.demo",
     "productName": "National Standardization Compliance Audit: Public LED Street Lighting Tenders",
     "productCategory": "National Standards Governance",
     "status": "Completed",
@@ -10918,7 +10969,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 88,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-09-02T17:49:14.874Z",
+    "createdAt": "2026-09-03T14:20:21.986Z",
     "rawInput": "Comprehensive national audit of municipal street lighting procurement tenders examining compliance with Bureau of Indian Standards safety norms, MeitY compulsory registration, and BEE star rating parameters.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 10322 (Part 5/Sec 3): 2012. Nationwide sweep revealed 38% of urban local body tenders failed to mandate BIS CRS R-numbers for LED drivers.",
     "documentMetadata": {
@@ -11016,11 +11067,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 86
       }
     },
-    "improvedSpecification": "Comprehensive national audit of municipal street lighting procurement tenders examining compliance with Bureau of Indian Standards safety norms, MeitY compulsory registration, and BEE star rating parameters. All materials and equipment shall be strictly manufactured in compliance with IS 10322 (Part 5/Sec 3): 2012 and IS 15885 (Part 2/Sec 13): 2012. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 16107 (Part 2/Sec 1): 2012."
+    "improvedSpecification": "Comprehensive national audit of municipal street lighting procurement tenders examining compliance with Bureau of Indian Standards safety norms, MeitY compulsory registration, and BEE star rating parameters. All materials and equipment shall be strictly manufactured in compliance with IS 10322 (Part 5/Sec 3): 2012 and IS 15885 (Part 2/Sec 13): 2012. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 16107 (Part 2/Sec 1): 2012.",
+    "accountType": "organization_admin",
+    "organization": "Bureau of Indian Standards (BIS) Directorate"
   },
   {
     "demoKey": "admin_analysis_02",
-    "userEmail": "admin1@anveshak.demo",
+    "userEmail": "admin@anveshak.demo",
     "productName": "DPIIT Mandatory QCO Enforcement: Domestic Steel Products Conformance Audit",
     "productCategory": "Statutory QCO Surveillance",
     "status": "Completed",
@@ -11029,7 +11082,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 89,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-09-01T17:49:14.874Z",
+    "createdAt": "2026-09-02T14:20:21.986Z",
     "rawInput": "Inter-ministerial surveillance report auditing adherence to Steel Quality Control Orders across state infrastructure projects, verifying heat numbers, chemical chemistry limits, and genuine ISI embossing on TMT bars.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 1786: 2008 (Reaffirmed 2023). Unlicensed secondary re-rolling mills supplying non-ISI marked TMT rebars lacking boron and phosphorus micro-alloy control.",
     "documentMetadata": {
@@ -11127,11 +11180,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 87
       }
     },
-    "improvedSpecification": "Inter-ministerial surveillance report auditing adherence to Steel Quality Control Orders across state infrastructure projects, verifying heat numbers, chemical chemistry limits, and genuine ISI embossing on TMT bars. All materials and equipment shall be strictly manufactured in compliance with IS 1786: 2008 (Reaffirmed 2023) and IS 2062: 2011. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 1608: 2018."
+    "improvedSpecification": "Inter-ministerial surveillance report auditing adherence to Steel Quality Control Orders across state infrastructure projects, verifying heat numbers, chemical chemistry limits, and genuine ISI embossing on TMT bars. All materials and equipment shall be strictly manufactured in compliance with IS 1786: 2008 (Reaffirmed 2023) and IS 2062: 2011. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 1608: 2018.",
+    "accountType": "organization_admin",
+    "organization": "Bureau of Indian Standards (BIS) Directorate"
   },
   {
     "demoKey": "admin_analysis_03",
-    "userEmail": "admin1@anveshak.demo",
+    "userEmail": "admin@anveshak.demo",
     "productName": "GeM Public Procurement Portal: Low-Voltage Cable Category Harmonization Audit",
     "productCategory": "E-Marketplace Harmonization",
     "status": "Completed",
@@ -11140,7 +11195,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 90,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-31T17:49:14.874Z",
+    "createdAt": "2026-09-01T14:20:21.986Z",
     "rawInput": "Harmonization framework aligning GeM product category parameters with latest BIS revisions, requiring conductor resistance verification conforming to IS 8130 and flame-retardancy classification under IS 694.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 694: 2010. Catalogue misalignment allowing vendors to list copper-clad aluminium (CCA) wires under pure electrolytic copper categories.",
     "documentMetadata": {
@@ -11238,11 +11293,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 88
       }
     },
-    "improvedSpecification": "Harmonization framework aligning GeM product category parameters with latest BIS revisions, requiring conductor resistance verification conforming to IS 8130 and flame-retardancy classification under IS 694. All materials and equipment shall be strictly manufactured in compliance with IS 694: 2010 and IS 1554 (Part 1): 1988. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 7098 (Part 1): 1988."
+    "improvedSpecification": "Harmonization framework aligning GeM product category parameters with latest BIS revisions, requiring conductor resistance verification conforming to IS 8130 and flame-retardancy classification under IS 694. All materials and equipment shall be strictly manufactured in compliance with IS 694: 2010 and IS 1554 (Part 1): 1988. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 7098 (Part 1): 1988.",
+    "accountType": "organization_admin",
+    "organization": "Bureau of Indian Standards (BIS) Directorate"
   },
   {
     "demoKey": "admin_analysis_04",
-    "userEmail": "admin1@anveshak.demo",
+    "userEmail": "admin@anveshak.demo",
     "productName": "Cross-Ministry Harmonization: Potable Water Supply Pipe Selection Standards",
     "productCategory": "Inter-Departmental Standards Policy",
     "status": "Needs Attention",
@@ -11251,7 +11308,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 91,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-30T17:49:14.874Z",
+    "createdAt": "2026-08-31T14:20:21.986Z",
     "rawInput": "National technical harmonization whitepaper establishing rigorous engineering selection guidelines between Ductile Iron (IS 8329), HDPE PE-100 (IS 4984), and mild steel pipes across rural and urban water supply schemes.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 4984: 2016. Discrepancies in soil corrosivity evaluation leading to premature failure of uncoated metallic pipes in saline belts.",
     "documentMetadata": {
@@ -11349,11 +11406,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 89
       }
     },
-    "improvedSpecification": "National technical harmonization whitepaper establishing rigorous engineering selection guidelines between Ductile Iron (IS 8329), HDPE PE-100 (IS 4984), and mild steel pipes across rural and urban water supply schemes. All materials and equipment shall be strictly manufactured in compliance with IS 4984: 2016 and IS 8329: 2000. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 1239 (Part 1): 2004."
+    "improvedSpecification": "National technical harmonization whitepaper establishing rigorous engineering selection guidelines between Ductile Iron (IS 8329), HDPE PE-100 (IS 4984), and mild steel pipes across rural and urban water supply schemes. All materials and equipment shall be strictly manufactured in compliance with IS 4984: 2016 and IS 8329: 2000. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 1239 (Part 1): 2004.",
+    "accountType": "organization_admin",
+    "organization": "Bureau of Indian Standards (BIS) Directorate"
   },
   {
     "demoKey": "admin_analysis_05",
-    "userEmail": "admin1@anveshak.demo",
+    "userEmail": "admin@anveshak.demo",
     "productName": "Bureau of Indian Standards National Quality Audit: Distribution Transformers",
     "productCategory": "Regulatory Surveillance & Enforcement",
     "status": "Completed",
@@ -11362,7 +11421,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 92,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-29T17:49:14.874Z",
+    "createdAt": "2026-08-30T14:20:21.986Z",
     "rawInput": "Special nationwide regulatory surveillance report on distribution transformer manufacturing quality, verifying CRGO core steel grade, total losses at 50% and 100% loading, and dielectric breakdown voltage of transformer oil.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 1180 (Part 1): 2014. Random factory sampling found 22% of units exceeding maximum total losses at 50% load specified in BEE Star Level 2.",
     "documentMetadata": {
@@ -11460,11 +11519,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 90
       }
     },
-    "improvedSpecification": "Special nationwide regulatory surveillance report on distribution transformer manufacturing quality, verifying CRGO core steel grade, total losses at 50% and 100% loading, and dielectric breakdown voltage of transformer oil. All materials and equipment shall be strictly manufactured in compliance with IS 1180 (Part 1): 2014 and IS 2026: 2011. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 335: 2018."
+    "improvedSpecification": "Special nationwide regulatory surveillance report on distribution transformer manufacturing quality, verifying CRGO core steel grade, total losses at 50% and 100% loading, and dielectric breakdown voltage of transformer oil. All materials and equipment shall be strictly manufactured in compliance with IS 1180 (Part 1): 2014 and IS 2026: 2011. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 335: 2018.",
+    "accountType": "organization_admin",
+    "organization": "Bureau of Indian Standards (BIS) Directorate"
   },
   {
     "demoKey": "admin_analysis_06",
-    "userEmail": "admin1@anveshak.demo",
+    "userEmail": "admin@anveshak.demo",
     "productName": "Central Vigilance Commission Procurement Gap Audit: Public Works Cement Tenders",
     "productCategory": "Vigilance & Procurement Integrity",
     "status": "Under Review",
@@ -11473,7 +11534,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 93,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-28T17:49:14.874Z",
+    "createdAt": "2026-08-29T14:20:21.986Z",
     "rawInput": "Central Vigilance Commission technical audit identifying restrictive tender conditions, obsolete standard citations (IS 8112 / IS 12269), and establishing transparency benchmarks for cement procurement in public works.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 1489 (Part 1): 2015. Restrictive tender conditions favoring specific brand names over equivalent BIS-certified manufacturers.",
     "documentMetadata": {
@@ -11571,11 +11632,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 91
       }
     },
-    "improvedSpecification": "Central Vigilance Commission technical audit identifying restrictive tender conditions, obsolete standard citations (IS 8112 / IS 12269), and establishing transparency benchmarks for cement procurement in public works. All materials and equipment shall be strictly manufactured in compliance with IS 1489 (Part 1): 2015 and IS 269: 2015. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 4031 (Parts 1-15)."
+    "improvedSpecification": "Central Vigilance Commission technical audit identifying restrictive tender conditions, obsolete standard citations (IS 8112 / IS 12269), and establishing transparency benchmarks for cement procurement in public works. All materials and equipment shall be strictly manufactured in compliance with IS 1489 (Part 1): 2015 and IS 269: 2015. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 4031 (Parts 1-15).",
+    "accountType": "organization_admin",
+    "organization": "Bureau of Indian Standards (BIS) Directorate"
   },
   {
     "demoKey": "admin_analysis_07",
-    "userEmail": "admin1@anveshak.demo",
+    "userEmail": "admin@anveshak.demo",
     "productName": "Compulsory Registration Scheme (CRS) Electronics Regulatory Conformance Audit",
     "productCategory": "Electronics Standards Surveillance",
     "status": "Completed",
@@ -11584,7 +11647,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 94,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-27T17:49:14.874Z",
+    "createdAt": "2026-08-28T14:20:21.986Z",
     "rawInput": "Surveillance audit inspecting commercial IT equipment, laptops, interactive flat panels, and power adapters supplied to government institutions to ensure valid active R-numbers and critical safety component declarations.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 13252 (Part 1): 2010. Unregistered imported power adapters and sub-standard lithium batteries entering govt supply chains.",
     "documentMetadata": {
@@ -11682,11 +11745,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 92
       }
     },
-    "improvedSpecification": "Surveillance audit inspecting commercial IT equipment, laptops, interactive flat panels, and power adapters supplied to government institutions to ensure valid active R-numbers and critical safety component declarations. All materials and equipment shall be strictly manufactured in compliance with IS 13252 (Part 1): 2010 and IS 16046 (Part 2): 2018. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 16333 (Part 3): 2022."
+    "improvedSpecification": "Surveillance audit inspecting commercial IT equipment, laptops, interactive flat panels, and power adapters supplied to government institutions to ensure valid active R-numbers and critical safety component declarations. All materials and equipment shall be strictly manufactured in compliance with IS 13252 (Part 1): 2010 and IS 16046 (Part 2): 2018. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 16333 (Part 3): 2022.",
+    "accountType": "organization_admin",
+    "organization": "Bureau of Indian Standards (BIS) Directorate"
   },
   {
     "demoKey": "admin_analysis_08",
-    "userEmail": "admin1@anveshak.demo",
+    "userEmail": "admin@anveshak.demo",
     "productName": "National Standards Testing Laboratory NABL ISO/IEC 17025 Modernization Audit",
     "productCategory": "Laboratory Accreditation & Metrology",
     "status": "Completed",
@@ -11695,7 +11760,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 95,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-26T17:49:14.874Z",
+    "createdAt": "2026-08-27T14:20:21.986Z",
     "rawInput": "Comprehensive infrastructure assessment of national testing laboratories evaluating measurement uncertainty calculations, equipment metrological traceability, automated test data logging, and proficiency testing compliance.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS/ISO/IEC 17025: 2017. Inadequate calibration traceability and lack of inter-laboratory proficiency testing in secondary testing labs.",
     "documentMetadata": {
@@ -11793,11 +11858,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 93
       }
     },
-    "improvedSpecification": "Comprehensive infrastructure assessment of national testing laboratories evaluating measurement uncertainty calculations, equipment metrological traceability, automated test data logging, and proficiency testing compliance. All materials and equipment shall be strictly manufactured in compliance with IS/ISO/IEC 17025: 2017 and IS/ISO/IEC 17043: 2010. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 1608: 2018."
+    "improvedSpecification": "Comprehensive infrastructure assessment of national testing laboratories evaluating measurement uncertainty calculations, equipment metrological traceability, automated test data logging, and proficiency testing compliance. All materials and equipment shall be strictly manufactured in compliance with IS/ISO/IEC 17025: 2017 and IS/ISO/IEC 17043: 2010. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 1608: 2018.",
+    "accountType": "organization_admin",
+    "organization": "Bureau of Indian Standards (BIS) Directorate"
   },
   {
     "demoKey": "admin_analysis_09",
-    "userEmail": "admin1@anveshak.demo",
+    "userEmail": "admin@anveshak.demo",
     "productName": "Fire Protection Infrastructure Compliance Audit in Central Govt High-Rises",
     "productCategory": "Life Safety & Urban Regulations",
     "status": "Completed",
@@ -11806,7 +11873,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 96,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-25T17:49:14.874Z",
+    "createdAt": "2026-08-26T14:20:21.986Z",
     "rawInput": "Nationwide fire safety compliance audit of central government multi-storey office secretariats evaluating automatic sprinkler coverage, fire pump room pressure maintenance, staircase pressurization, and emergency exit lighting.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 15683: 2018. Overdue hydrostatic pressure stretch testing on fire extinguisher cylinders and non-functional compartmentalization fire dampers.",
     "documentMetadata": {
@@ -11904,11 +11971,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 94
       }
     },
-    "improvedSpecification": "Nationwide fire safety compliance audit of central government multi-storey office secretariats evaluating automatic sprinkler coverage, fire pump room pressure maintenance, staircase pressurization, and emergency exit lighting. All materials and equipment shall be strictly manufactured in compliance with IS 15683: 2018 and IS 2189: 2008. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 3844: 1989."
+    "improvedSpecification": "Nationwide fire safety compliance audit of central government multi-storey office secretariats evaluating automatic sprinkler coverage, fire pump room pressure maintenance, staircase pressurization, and emergency exit lighting. All materials and equipment shall be strictly manufactured in compliance with IS 15683: 2018 and IS 2189: 2008. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 3844: 1989.",
+    "accountType": "organization_admin",
+    "organization": "Bureau of Indian Standards (BIS) Directorate"
   },
   {
     "demoKey": "admin_analysis_10",
-    "userEmail": "admin1@anveshak.demo",
+    "userEmail": "admin@anveshak.demo",
     "productName": "Mandatory Toy Safety QCO Market Surveillance & Test Sampling Report",
     "productCategory": "Consumer Product Safety",
     "status": "Completed",
@@ -11917,7 +11986,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 97,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-24T17:49:14.874Z",
+    "createdAt": "2026-08-25T14:20:21.986Z",
     "rawInput": "Annual national market surveillance report assessing child toy safety under DPIIT Quality Control Order, evaluating mechanical drop test shock resistance, small parts choking hazards, phthalate plasticizer limits, and chemical safety.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 9873 (Part 1): 2019. Counterfeit ISI markings on imported plastic toys containing high phthalate plasticizers and toxic heavy metals.",
     "documentMetadata": {
@@ -12015,11 +12084,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 95
       }
     },
-    "improvedSpecification": "Annual national market surveillance report assessing child toy safety under DPIIT Quality Control Order, evaluating mechanical drop test shock resistance, small parts choking hazards, phthalate plasticizer limits, and chemical safety. All materials and equipment shall be strictly manufactured in compliance with IS 9873 (Part 1): 2019 and IS 9873 (Part 2): 2017. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 9873 (Part 3): 2020."
+    "improvedSpecification": "Annual national market surveillance report assessing child toy safety under DPIIT Quality Control Order, evaluating mechanical drop test shock resistance, small parts choking hazards, phthalate plasticizer limits, and chemical safety. All materials and equipment shall be strictly manufactured in compliance with IS 9873 (Part 1): 2019 and IS 9873 (Part 2): 2017. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 9873 (Part 3): 2020.",
+    "accountType": "organization_admin",
+    "organization": "Bureau of Indian Standards (BIS) Directorate"
   },
   {
     "demoKey": "admin_analysis_11",
-    "userEmail": "admin1@anveshak.demo",
+    "userEmail": "admin@anveshak.demo",
     "productName": "National Solar Inverter & Photovoltaic Quality Control Compliance Survey",
     "productCategory": "Renewable Standards Policy",
     "status": "Needs Attention",
@@ -12028,7 +12099,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 88,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-23T17:49:14.874Z",
+    "createdAt": "2026-08-24T14:20:21.986Z",
     "rawInput": "Comprehensive quality audit of utility-scale and distributed rooftop solar installations verifying module design qualification, damp-heat degradation testing, potential-induced degradation (PID), and grid-tie inverter safety.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 14286: 2010 / IEC 61215. Sub-standard imported solar PV cells being assembled and passed off as domestic content under ALMM exemptions.",
     "documentMetadata": {
@@ -12126,11 +12197,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 86
       }
     },
-    "improvedSpecification": "Comprehensive quality audit of utility-scale and distributed rooftop solar installations verifying module design qualification, damp-heat degradation testing, potential-induced degradation (PID), and grid-tie inverter safety. All materials and equipment shall be strictly manufactured in compliance with IS 14286: 2010 / IEC 61215 and IS 16221 (Part 2): 2015. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 16169: 2014."
+    "improvedSpecification": "Comprehensive quality audit of utility-scale and distributed rooftop solar installations verifying module design qualification, damp-heat degradation testing, potential-induced degradation (PID), and grid-tie inverter safety. All materials and equipment shall be strictly manufactured in compliance with IS 14286: 2010 / IEC 61215 and IS 16221 (Part 2): 2015. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 16169: 2014.",
+    "accountType": "organization_admin",
+    "organization": "Bureau of Indian Standards (BIS) Directorate"
   },
   {
     "demoKey": "admin_analysis_12",
-    "userEmail": "admin1@anveshak.demo",
+    "userEmail": "admin@anveshak.demo",
     "productName": "Railway Safety Commission Track Fasteners & Prestressed Sleepers Audit",
     "productCategory": "Railway Infrastructure Safety",
     "status": "Completed",
@@ -12139,7 +12212,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 89,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-22T17:49:14.874Z",
+    "createdAt": "2026-08-23T14:20:21.986Z",
     "rawInput": "Technical safety audit evaluating elastic rail clips (ERC), grooved rubber sole plates, and mono-block pre-stressed concrete sleepers across high-density freight and passenger corridors to ensure zero track fatigue defects.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 1877: 1999. Toe load degradation in spring steel elastic clips leading to gauge widening and track vibration risks.",
     "documentMetadata": {
@@ -12237,11 +12310,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 87
       }
     },
-    "improvedSpecification": "Technical safety audit evaluating elastic rail clips (ERC), grooved rubber sole plates, and mono-block pre-stressed concrete sleepers across high-density freight and passenger corridors to ensure zero track fatigue defects. All materials and equipment shall be strictly manufactured in compliance with IS 1877: 1999 and IRS T-12 / RDSO/T-3901. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IRS T-46: 2020."
+    "improvedSpecification": "Technical safety audit evaluating elastic rail clips (ERC), grooved rubber sole plates, and mono-block pre-stressed concrete sleepers across high-density freight and passenger corridors to ensure zero track fatigue defects. All materials and equipment shall be strictly manufactured in compliance with IS 1877: 1999 and IRS T-12 / RDSO/T-3901. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IRS T-46: 2020.",
+    "accountType": "organization_admin",
+    "organization": "Bureau of Indian Standards (BIS) Directorate"
   },
   {
     "demoKey": "admin_analysis_13",
-    "userEmail": "admin1@anveshak.demo",
+    "userEmail": "admin@anveshak.demo",
     "productName": "Public EV Charging Station Interoperability & Electrical Grounding Protocol Audit",
     "productCategory": "E-Mobility Standards Governance",
     "status": "Completed",
@@ -12250,7 +12325,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 90,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-21T17:49:14.874Z",
+    "createdAt": "2026-08-22T14:20:21.986Z",
     "rawInput": "National safety and operational audit of commercial EV charging plazas assessing communication handshake protocols, residual current device sensitivity, emergency stop function, and earthing bonding conforming to IS 3043.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 17017 (Part 1): 2018. Earth electrode resistance exceeding 5 ohms at 18% of inspected charging plazas, creating electric shock hazards.",
     "documentMetadata": {
@@ -12348,11 +12423,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 88
       }
     },
-    "improvedSpecification": "National safety and operational audit of commercial EV charging plazas assessing communication handshake protocols, residual current device sensitivity, emergency stop function, and earthing bonding conforming to IS 3043. All materials and equipment shall be strictly manufactured in compliance with IS 17017 (Part 1): 2018 and IS 3043: 2018. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 17017 (Part 23): 2021."
+    "improvedSpecification": "National safety and operational audit of commercial EV charging plazas assessing communication handshake protocols, residual current device sensitivity, emergency stop function, and earthing bonding conforming to IS 3043. All materials and equipment shall be strictly manufactured in compliance with IS 17017 (Part 1): 2018 and IS 3043: 2018. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 17017 (Part 23): 2021.",
+    "accountType": "organization_admin",
+    "organization": "Bureau of Indian Standards (BIS) Directorate"
   },
   {
     "demoKey": "admin_analysis_14",
-    "userEmail": "admin1@anveshak.demo",
+    "userEmail": "admin@anveshak.demo",
     "productName": "National Smart Metering Deployment Cyber Security & Data Privacy Audit",
     "productCategory": "Smart Grid & Cyber Security",
     "status": "Completed",
@@ -12361,7 +12438,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 91,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-20T17:49:14.874Z",
+    "createdAt": "2026-08-21T14:20:21.986Z",
     "rawInput": "Comprehensive cybersecurity audit of Advanced Metering Infrastructure (AMI) evaluating data concentrator units, Head-End Systems (HES), meter data encryption, and tamper detection logging under IS 16444.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 16444 (Part 1): 2015. Default firmware keys and unencrypted over-the-air (OTA) firmware upgrade protocols identified in certain AMI networks.",
     "documentMetadata": {
@@ -12459,11 +12536,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 89
       }
     },
-    "improvedSpecification": "Comprehensive cybersecurity audit of Advanced Metering Infrastructure (AMI) evaluating data concentrator units, Head-End Systems (HES), meter data encryption, and tamper detection logging under IS 16444. All materials and equipment shall be strictly manufactured in compliance with IS 16444 (Part 1): 2015 and IS 15959 (Part 2): 2016. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 13779: 1999."
+    "improvedSpecification": "Comprehensive cybersecurity audit of Advanced Metering Infrastructure (AMI) evaluating data concentrator units, Head-End Systems (HES), meter data encryption, and tamper detection logging under IS 16444. All materials and equipment shall be strictly manufactured in compliance with IS 16444 (Part 1): 2015 and IS 15959 (Part 2): 2016. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 13779: 1999.",
+    "accountType": "organization_admin",
+    "organization": "Bureau of Indian Standards (BIS) Directorate"
   },
   {
     "demoKey": "admin_analysis_15",
-    "userEmail": "admin1@anveshak.demo",
+    "userEmail": "admin@anveshak.demo",
     "productName": "Medical Oxygen Equipment & Cryogenic Regulators Statutory Conformance Audit",
     "productCategory": "Biomedical Equipment Standards",
     "status": "Completed",
@@ -12472,7 +12551,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 92,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-19T17:49:14.874Z",
+    "createdAt": "2026-08-20T14:20:21.986Z",
     "rawInput": "Hospital medical gas safety audit assessing high-pressure cryogenic vacuum insulated storage vessels, automatic manifold switchovers, line pressure drop alarms, and emergency oxygen supply terminals.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 15001: 2002. Uncalibrated mechanical pressure relief valves on cryogenic liquid medical oxygen (LMO) vaporizers.",
     "documentMetadata": {
@@ -12570,11 +12649,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 90
       }
     },
-    "improvedSpecification": "Hospital medical gas safety audit assessing high-pressure cryogenic vacuum insulated storage vessels, automatic manifold switchovers, line pressure drop alarms, and emergency oxygen supply terminals. All materials and equipment shall be strictly manufactured in compliance with IS 15001: 2002 and IS 7285: 2017. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to ISO 10524-1."
+    "improvedSpecification": "Hospital medical gas safety audit assessing high-pressure cryogenic vacuum insulated storage vessels, automatic manifold switchovers, line pressure drop alarms, and emergency oxygen supply terminals. All materials and equipment shall be strictly manufactured in compliance with IS 15001: 2002 and IS 7285: 2017. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to ISO 10524-1.",
+    "accountType": "organization_admin",
+    "organization": "Bureau of Indian Standards (BIS) Directorate"
   },
   {
     "demoKey": "admin_analysis_16",
-    "userEmail": "admin1@anveshak.demo",
+    "userEmail": "admin@anveshak.demo",
     "productName": "Highway Pavement Performance & Polymer-Modified Bitumen Quality Adherence",
     "productCategory": "Road Infrastructure Quality",
     "status": "Completed",
@@ -12583,7 +12664,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 93,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-18T17:49:14.874Z",
+    "createdAt": "2026-08-19T14:20:21.986Z",
     "rawInput": "National pavement engineering audit evaluating high-traffic expressway wearing courses, testing viscosity grading, softening point, Marshall stability, and resistance to moisture-induced stripping in accordance with IS 73 & IS 15462.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 73: 2018. Premature rutting caused by blending recycled waste tyre crumb rubber exceeding permissible 15% elastomeric modifier limits.",
     "documentMetadata": {
@@ -12681,11 +12762,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 91
       }
     },
-    "improvedSpecification": "National pavement engineering audit evaluating high-traffic expressway wearing courses, testing viscosity grading, softening point, Marshall stability, and resistance to moisture-induced stripping in accordance with IS 73 & IS 15462. All materials and equipment shall be strictly manufactured in compliance with IS 73: 2018 and IS 15462: 2019. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 1201 to IS 1220: 1978."
+    "improvedSpecification": "National pavement engineering audit evaluating high-traffic expressway wearing courses, testing viscosity grading, softening point, Marshall stability, and resistance to moisture-induced stripping in accordance with IS 73 & IS 15462. All materials and equipment shall be strictly manufactured in compliance with IS 73: 2018 and IS 15462: 2019. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 1201 to IS 1220: 1978.",
+    "accountType": "organization_admin",
+    "organization": "Bureau of Indian Standards (BIS) Directorate"
   },
   {
     "demoKey": "admin_analysis_17",
-    "userEmail": "admin1@anveshak.demo",
+    "userEmail": "admin@anveshak.demo",
     "productName": "Defense Procurement Verification: Soldier Personal Protective Equipment",
     "productCategory": "Defense Standards & Ballistics",
     "status": "Under Review",
@@ -12694,7 +12777,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 94,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-17T17:49:14.874Z",
+    "createdAt": "2026-08-18T14:20:21.986Z",
     "rawInput": "Technical audit of military body armour and combat helmets inspecting boron carbide ceramic composite plates, ultra-high molecular weight polyethylene (UHMWPE) backing, trauma attenuation pads, and environmental extreme conditioning.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 17051: 2018. Back face signature (BFS trauma indentation > 25mm) exceeding safe biological threshold during 7.62x39mm ball ammunition trials.",
     "documentMetadata": {
@@ -12792,11 +12875,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 92
       }
     },
-    "improvedSpecification": "Technical audit of military body armour and combat helmets inspecting boron carbide ceramic composite plates, ultra-high molecular weight polyethylene (UHMWPE) backing, trauma attenuation pads, and environmental extreme conditioning. All materials and equipment shall be strictly manufactured in compliance with IS 17051: 2018 and IS 2925: 1984. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 15844: 2010."
+    "improvedSpecification": "Technical audit of military body armour and combat helmets inspecting boron carbide ceramic composite plates, ultra-high molecular weight polyethylene (UHMWPE) backing, trauma attenuation pads, and environmental extreme conditioning. All materials and equipment shall be strictly manufactured in compliance with IS 17051: 2018 and IS 2925: 1984. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 15844: 2010.",
+    "accountType": "organization_admin",
+    "organization": "Bureau of Indian Standards (BIS) Directorate"
   },
   {
     "demoKey": "admin_analysis_18",
-    "userEmail": "admin1@anveshak.demo",
+    "userEmail": "admin@anveshak.demo",
     "productName": "Footwear & Leather Products Mandatory Quality Control Order Conformance",
     "productCategory": "Consumer Goods Standards",
     "status": "Needs Attention",
@@ -12805,7 +12890,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 95,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-16T17:49:14.874Z",
+    "createdAt": "2026-08-17T14:20:21.986Z",
     "rawInput": "Surveillance report on safety and casual footwear manufacturing, inspecting impact resistance of protective toe caps, sole bond peel strength, slip resistance on ceramic tile with NaLS, and absence of carcinogenic azo dyes.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 15844 (Part 1): 2023. Steel toe cap impact resistance (< 200 Joules) and upper leather tear strength failing below mandatory thresholds.",
     "documentMetadata": {
@@ -12903,11 +12988,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 93
       }
     },
-    "improvedSpecification": "Surveillance report on safety and casual footwear manufacturing, inspecting impact resistance of protective toe caps, sole bond peel strength, slip resistance on ceramic tile with NaLS, and absence of carcinogenic azo dyes. All materials and equipment shall be strictly manufactured in compliance with IS 15844 (Part 1): 2023 and IS 15844 (Part 2): 2023. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 15844 (Part 3): 2023."
+    "improvedSpecification": "Surveillance report on safety and casual footwear manufacturing, inspecting impact resistance of protective toe caps, sole bond peel strength, slip resistance on ceramic tile with NaLS, and absence of carcinogenic azo dyes. All materials and equipment shall be strictly manufactured in compliance with IS 15844 (Part 1): 2023 and IS 15844 (Part 2): 2023. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 15844 (Part 3): 2023.",
+    "accountType": "organization_admin",
+    "organization": "Bureau of Indian Standards (BIS) Directorate"
   },
   {
     "demoKey": "admin_analysis_19",
-    "userEmail": "admin1@anveshak.demo",
+    "userEmail": "admin@anveshak.demo",
     "productName": "Municipal Solid Waste Incinerators & Flue Gas Air Emission Conformance",
     "productCategory": "Environmental Pollution Control",
     "status": "Completed",
@@ -12916,7 +13003,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 96,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-15T17:49:14.874Z",
+    "createdAt": "2026-08-16T14:20:21.986Z",
     "rawInput": "Environmental performance audit of thermal municipal waste-to-energy facilities evaluating combustion chamber temperature (>= 850 deg C), particulate matter baghouse filters, acid gas lime scrubbers, and heavy metal emissions.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 12402: 1988. Dioxins and furans sampling (< 0.1 ng TEQ/Nm3) and continuous emission monitoring system (CEMS) sensor drift.",
     "documentMetadata": {
@@ -13014,11 +13101,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 94
       }
     },
-    "improvedSpecification": "Environmental performance audit of thermal municipal waste-to-energy facilities evaluating combustion chamber temperature (>= 850 deg C), particulate matter baghouse filters, acid gas lime scrubbers, and heavy metal emissions. All materials and equipment shall be strictly manufactured in compliance with IS 12402: 1988 and IS 5182 (Part 2): 2001. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 5182 (Part 6): 2006."
+    "improvedSpecification": "Environmental performance audit of thermal municipal waste-to-energy facilities evaluating combustion chamber temperature (>= 850 deg C), particulate matter baghouse filters, acid gas lime scrubbers, and heavy metal emissions. All materials and equipment shall be strictly manufactured in compliance with IS 12402: 1988 and IS 5182 (Part 2): 2001. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 5182 (Part 6): 2006.",
+    "accountType": "organization_admin",
+    "organization": "Bureau of Indian Standards (BIS) Directorate"
   },
   {
     "demoKey": "admin_analysis_20",
-    "userEmail": "admin1@anveshak.demo",
+    "userEmail": "admin@anveshak.demo",
     "productName": "Continuous Ambient Air Quality Monitoring Stations (CAAQMS) Sensor Calibration",
     "productCategory": "Environmental Metrology",
     "status": "Completed",
@@ -13027,7 +13116,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 97,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-14T17:49:14.874Z",
+    "createdAt": "2026-08-15T14:20:21.986Z",
     "rawInput": "Metrological audit of continuous ambient air monitoring stations verifying Beta Attenuation particulate monitors, UV fluorescence SO2 analysers, chemiluminescence NOx detectors, and gas chromatography VOC analysers.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 5182 (Parts 1-22). Span gas drift calibration neglected; Beta Attenuation Monitor (BAM) tape advancement jamming unrecorded.",
     "documentMetadata": {
@@ -13125,11 +13214,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 95
       }
     },
-    "improvedSpecification": "Metrological audit of continuous ambient air monitoring stations verifying Beta Attenuation particulate monitors, UV fluorescence SO2 analysers, chemiluminescence NOx detectors, and gas chromatography VOC analysers. All materials and equipment shall be strictly manufactured in compliance with IS 5182 (Parts 1-22) and IS 13252: 2010. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to USEPA Designated Reference and Equivalent Methods."
+    "improvedSpecification": "Metrological audit of continuous ambient air monitoring stations verifying Beta Attenuation particulate monitors, UV fluorescence SO2 analysers, chemiluminescence NOx detectors, and gas chromatography VOC analysers. All materials and equipment shall be strictly manufactured in compliance with IS 5182 (Parts 1-22) and IS 13252: 2010. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to USEPA Designated Reference and Equivalent Methods.",
+    "accountType": "organization_admin",
+    "organization": "Bureau of Indian Standards (BIS) Directorate"
   },
   {
     "demoKey": "admin_analysis_21",
-    "userEmail": "admin1@anveshak.demo",
+    "userEmail": "admin@anveshak.demo",
     "productName": "Heavy Earthmoving Machinery Roll-Over & Falling Object Protection Safety Audit",
     "productCategory": "Industrial Machinery Safety",
     "status": "Completed",
@@ -13138,7 +13229,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 88,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-13T17:49:14.874Z",
+    "createdAt": "2026-08-14T14:20:21.986Z",
     "rawInput": "Occupational safety audit inspecting hydraulic excavators, backhoe loaders, and motor graders used on public infrastructure projects to verify structural operator roll-over cab integrity, seat-belt interlocks, and emergency hydraulic dumps.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 14756: 2017 / ISO 3471. Tender failed to mandate ISO 3471 destructive deflection load testing for operator protective safety cabins.",
     "documentMetadata": {
@@ -13236,11 +13327,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 86
       }
     },
-    "improvedSpecification": "Occupational safety audit inspecting hydraulic excavators, backhoe loaders, and motor graders used on public infrastructure projects to verify structural operator roll-over cab integrity, seat-belt interlocks, and emergency hydraulic dumps. All materials and equipment shall be strictly manufactured in compliance with IS 14756: 2017 / ISO 3471 and IS 16806: 2018 / ISO 3449. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to ISO 2867 / ISO 5010."
+    "improvedSpecification": "Occupational safety audit inspecting hydraulic excavators, backhoe loaders, and motor graders used on public infrastructure projects to verify structural operator roll-over cab integrity, seat-belt interlocks, and emergency hydraulic dumps. All materials and equipment shall be strictly manufactured in compliance with IS 14756: 2017 / ISO 3471 and IS 16806: 2018 / ISO 3449. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to ISO 2867 / ISO 5010.",
+    "accountType": "organization_admin",
+    "organization": "Bureau of Indian Standards (BIS) Directorate"
   },
   {
     "demoKey": "admin_analysis_22",
-    "userEmail": "admin1@anveshak.demo",
+    "userEmail": "admin@anveshak.demo",
     "productName": "Structural Concrete Batching Plant Certification & Test Consistency Audit",
     "productCategory": "Ready-Mixed Concrete Governance",
     "status": "Completed",
@@ -13249,7 +13342,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 89,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-12T17:49:14.874Z",
+    "createdAt": "2026-08-13T14:20:21.986Z",
     "rawInput": "Quality surveillance audit across commercial ready-mixed concrete plants evaluating digital load-cell calibration accuracy (conforming to IS 4926 Clause 7), fly ash blending consistency, chemical admixture dosing, and standard 28-day cube strength variance.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 4926: 2003 (Reaffirmed 2019). Aggregate moisture sensor automated water-cement ratio compensation bypassed during monsoon operations.",
     "documentMetadata": {
@@ -13347,11 +13440,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 87
       }
     },
-    "improvedSpecification": "Quality surveillance audit across commercial ready-mixed concrete plants evaluating digital load-cell calibration accuracy (conforming to IS 4926 Clause 7), fly ash blending consistency, chemical admixture dosing, and standard 28-day cube strength variance. All materials and equipment shall be strictly manufactured in compliance with IS 4926: 2003 (Reaffirmed 2019) and IS 456: 2000. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 516 (Part 1/Sec 1): 2021."
+    "improvedSpecification": "Quality surveillance audit across commercial ready-mixed concrete plants evaluating digital load-cell calibration accuracy (conforming to IS 4926 Clause 7), fly ash blending consistency, chemical admixture dosing, and standard 28-day cube strength variance. All materials and equipment shall be strictly manufactured in compliance with IS 4926: 2003 (Reaffirmed 2019) and IS 456: 2000. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 516 (Part 1/Sec 1): 2021.",
+    "accountType": "organization_admin",
+    "organization": "Bureau of Indian Standards (BIS) Directorate"
   },
   {
     "demoKey": "admin_analysis_23",
-    "userEmail": "admin1@anveshak.demo",
+    "userEmail": "admin@anveshak.demo",
     "productName": "Telecommunications Tower Wind Load & Structural Fasteners Quality Audit",
     "productCategory": "Telecom Infrastructure Governance",
     "status": "Completed",
@@ -13360,7 +13455,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 90,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-11T17:49:14.874Z",
+    "createdAt": "2026-08-12T14:20:21.986Z",
     "rawInput": "Structural engineering audit inspecting self-supporting 4-legged lattice telecommunication towers, evaluating gust wind load calculations, hot-dip galvanizing coating thickness, foundation hold-down bolts, and antenna loading safety margins.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 802: 1995. Towers designed using obsolete 1987 basic wind speed maps failing to account for cyclonic wind gusts (50 m/s).",
     "documentMetadata": {
@@ -13458,11 +13553,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 88
       }
     },
-    "improvedSpecification": "Structural engineering audit inspecting self-supporting 4-legged lattice telecommunication towers, evaluating gust wind load calculations, hot-dip galvanizing coating thickness, foundation hold-down bolts, and antenna loading safety margins. All materials and equipment shall be strictly manufactured in compliance with IS 802: 1995 and IS 875 (Part 3): 2015. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 1367 (Parts 1-20)."
+    "improvedSpecification": "Structural engineering audit inspecting self-supporting 4-legged lattice telecommunication towers, evaluating gust wind load calculations, hot-dip galvanizing coating thickness, foundation hold-down bolts, and antenna loading safety margins. All materials and equipment shall be strictly manufactured in compliance with IS 802: 1995 and IS 875 (Part 3): 2015. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 1367 (Parts 1-20).",
+    "accountType": "organization_admin",
+    "organization": "Bureau of Indian Standards (BIS) Directorate"
   },
   {
     "demoKey": "admin_analysis_24",
-    "userEmail": "admin1@anveshak.demo",
+    "userEmail": "admin@anveshak.demo",
     "productName": "BIS Gold & Silver Hallmarking Center XRF Assay Accuracy Evaluation",
     "productCategory": "Precious Metals Metrology",
     "status": "Completed",
@@ -13471,7 +13568,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 91,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-10T17:49:14.874Z",
+    "createdAt": "2026-08-11T14:20:21.986Z",
     "rawInput": "National metrological audit evaluating BIS-recognized Assaying and Hallmarking Centers (AHCs), inspecting XRF spectrometer accuracy, micro-laser hallmarking inscription resolution, HUID digital ledger sync, and chemical cupellation furnaces.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 1417: 2019. X-Ray Fluorescence (XRF) non-destructive assay accuracy drift exceeding +/- 0.5 parts per thousand.",
     "documentMetadata": {
@@ -13569,11 +13666,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 89
       }
     },
-    "improvedSpecification": "National metrological audit evaluating BIS-recognized Assaying and Hallmarking Centers (AHCs), inspecting XRF spectrometer accuracy, micro-laser hallmarking inscription resolution, HUID digital ledger sync, and chemical cupellation furnaces. All materials and equipment shall be strictly manufactured in compliance with IS 1417: 2019 and IS 1418: 2009. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 2112: 2014."
+    "improvedSpecification": "National metrological audit evaluating BIS-recognized Assaying and Hallmarking Centers (AHCs), inspecting XRF spectrometer accuracy, micro-laser hallmarking inscription resolution, HUID digital ledger sync, and chemical cupellation furnaces. All materials and equipment shall be strictly manufactured in compliance with IS 1417: 2019 and IS 1418: 2009. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 2112: 2014.",
+    "accountType": "organization_admin",
+    "organization": "Bureau of Indian Standards (BIS) Directorate"
   },
   {
     "demoKey": "admin_analysis_25",
-    "userEmail": "admin1@anveshak.demo",
+    "userEmail": "admin@anveshak.demo",
     "productName": "Green Public Procurement: Eco-Mark Product Categorization & Registry Audit",
     "productCategory": "Sustainable Procurement Policy",
     "status": "Needs Attention",
@@ -13582,7 +13681,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 92,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-09T17:49:14.874Z",
+    "createdAt": "2026-08-10T14:20:21.986Z",
     "rawInput": "Strategic policy audit establishing comprehensive Eco-Mark environmental benchmarks for building materials, architectural coatings, paper products, and cleaning detergents conforming to IS/ISO 14024 Type I environmental labelling.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS/ISO 14024: 1999. Absence of standardized carbon footprint and life-cycle assessment (LCA) disclosure in public procurement tenders.",
     "documentMetadata": {
@@ -13680,11 +13779,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 90
       }
     },
-    "improvedSpecification": "Strategic policy audit establishing comprehensive Eco-Mark environmental benchmarks for building materials, architectural coatings, paper products, and cleaning detergents conforming to IS/ISO 14024 Type I environmental labelling. All materials and equipment shall be strictly manufactured in compliance with IS/ISO 14024: 1999 and IS/ISO 14040: 2006. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 17088: 2021."
+    "improvedSpecification": "Strategic policy audit establishing comprehensive Eco-Mark environmental benchmarks for building materials, architectural coatings, paper products, and cleaning detergents conforming to IS/ISO 14024 Type I environmental labelling. All materials and equipment shall be strictly manufactured in compliance with IS/ISO 14024: 1999 and IS/ISO 14040: 2006. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 17088: 2021.",
+    "accountType": "organization_admin",
+    "organization": "Bureau of Indian Standards (BIS) Directorate"
   },
   {
     "demoKey": "admin_analysis_26",
-    "userEmail": "admin1@anveshak.demo",
+    "userEmail": "admin@anveshak.demo",
     "productName": "Central Public Procurement Portal (CPPP) Obsolete Standard Citation Sweep",
     "productCategory": "Procurement Regulatory Sanitization",
     "status": "Completed",
@@ -13693,7 +13794,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 93,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-08T17:49:14.874Z",
+    "createdAt": "2026-08-09T14:20:21.986Z",
     "rawInput": "Big data algorithmic audit scanning public procurement tenders across Central Public Procurement Portal (CPPP) and GeM, detecting obsolete citations such as IS 800: 1984 (Working Stress Method) and IS 1786: 1985.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 456: 2000. Identification of 14,200 active government tenders citing withdrawn, superseded, or non-existent Indian Standard numbers.",
     "documentMetadata": {
@@ -13791,11 +13892,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 91
       }
     },
-    "improvedSpecification": "Big data algorithmic audit scanning public procurement tenders across Central Public Procurement Portal (CPPP) and GeM, detecting obsolete citations such as IS 800: 1984 (Working Stress Method) and IS 1786: 1985. All materials and equipment shall be strictly manufactured in compliance with IS 456: 2000 and IS 800: 2007. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 13920: 2016."
+    "improvedSpecification": "Big data algorithmic audit scanning public procurement tenders across Central Public Procurement Portal (CPPP) and GeM, detecting obsolete citations such as IS 800: 1984 (Working Stress Method) and IS 1786: 1985. All materials and equipment shall be strictly manufactured in compliance with IS 456: 2000 and IS 800: 2007. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 13920: 2016.",
+    "accountType": "organization_admin",
+    "organization": "Bureau of Indian Standards (BIS) Directorate"
   },
   {
     "demoKey": "admin_analysis_27",
-    "userEmail": "admin1@anveshak.demo",
+    "userEmail": "admin@anveshak.demo",
     "productName": "Jal Jeevan Mission Rural Point-of-Use Water Filter Efficacy Verification",
     "productCategory": "Public Health Standards Enforcement",
     "status": "Completed",
@@ -13804,7 +13907,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 94,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-07T17:49:14.874Z",
+    "createdAt": "2026-08-08T14:20:21.986Z",
     "rawInput": "Field efficacy surveillance assessing point-of-use and community gravity and solar-powered water filtration plants across high-fluoride and heavy metal affected districts, verifying compliance with acceptable limits of IS 10500.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 10500: 2012 (Amended 2021). Community arsenic and fluoride removal media failing after 6 months due to backwashing neglect.",
     "documentMetadata": {
@@ -13902,11 +14005,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 92
       }
     },
-    "improvedSpecification": "Field efficacy surveillance assessing point-of-use and community gravity and solar-powered water filtration plants across high-fluoride and heavy metal affected districts, verifying compliance with acceptable limits of IS 10500. All materials and equipment shall be strictly manufactured in compliance with IS 10500: 2012 (Amended 2021) and IS 16240: 2015. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 13028: 1991."
+    "improvedSpecification": "Field efficacy surveillance assessing point-of-use and community gravity and solar-powered water filtration plants across high-fluoride and heavy metal affected districts, verifying compliance with acceptable limits of IS 10500. All materials and equipment shall be strictly manufactured in compliance with IS 10500: 2012 (Amended 2021) and IS 16240: 2015. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 13028: 1991.",
+    "accountType": "organization_admin",
+    "organization": "Bureau of Indian Standards (BIS) Directorate"
   },
   {
     "demoKey": "admin_analysis_28",
-    "userEmail": "admin1@anveshak.demo",
+    "userEmail": "admin@anveshak.demo",
     "productName": "Plywood & Structural Flush Door Mandatory Quality Control Order Audit",
     "productCategory": "Wood & Timber Products Governance",
     "status": "Under Review",
@@ -13915,7 +14020,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 95,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-06T17:49:14.874Z",
+    "createdAt": "2026-08-07T14:20:21.986Z",
     "rawInput": "National surveillance audit inspecting wood veneer manufacturing, assessing boiling water resistance, mycological test for fungal resistance, formaldehyde emissions, and mandatory BIS ISI stamp marking under IS 303 and IS 710.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 303: 1989 (Reaffirmed 2020). Commercial moisture-resistant (MR) grade plywood fraudulently labeled as Boiling Water Proof (BWP IS 710).",
     "documentMetadata": {
@@ -14013,11 +14118,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 93
       }
     },
-    "improvedSpecification": "National surveillance audit inspecting wood veneer manufacturing, assessing boiling water resistance, mycological test for fungal resistance, formaldehyde emissions, and mandatory BIS ISI stamp marking under IS 303 and IS 710. All materials and equipment shall be strictly manufactured in compliance with IS 303: 1989 (Reaffirmed 2020) and IS 2202 (Part 1): 1999. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 1734 (Parts 1-20)."
+    "improvedSpecification": "National surveillance audit inspecting wood veneer manufacturing, assessing boiling water resistance, mycological test for fungal resistance, formaldehyde emissions, and mandatory BIS ISI stamp marking under IS 303 and IS 710. All materials and equipment shall be strictly manufactured in compliance with IS 303: 1989 (Reaffirmed 2020) and IS 2202 (Part 1): 1999. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 1734 (Parts 1-20).",
+    "accountType": "organization_admin",
+    "organization": "Bureau of Indian Standards (BIS) Directorate"
   },
   {
     "demoKey": "admin_analysis_29",
-    "userEmail": "admin1@anveshak.demo",
+    "userEmail": "admin@anveshak.demo",
     "productName": "Liquefied Petroleum Gas (LPG) Domestic Cylinders & Compact Regulators Audit",
     "productCategory": "Consumer Gas Safety",
     "status": "Completed",
@@ -14026,7 +14133,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 96,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-05T17:49:14.874Z",
+    "createdAt": "2026-08-06T14:20:21.986Z",
     "rawInput": "National safety and statutory compliance audit inspecting 14.2 kg domestic LPG cylinders, evaluating low-carbon micro-alloy steel sheet quality (IS 6240), circumferential submerged arc weld radiography, and burst pressure testing (>= 8.0 MPa).",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 3196 (Part 1): 2013. Fatigue cracks around welded foot-ring and neck collar joint in sub-standard re-conditioned cylinders.",
     "documentMetadata": {
@@ -14124,11 +14231,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 94
       }
     },
-    "improvedSpecification": "National safety and statutory compliance audit inspecting 14.2 kg domestic LPG cylinders, evaluating low-carbon micro-alloy steel sheet quality (IS 6240), circumferential submerged arc weld radiography, and burst pressure testing (>= 8.0 MPa). All materials and equipment shall be strictly manufactured in compliance with IS 3196 (Part 1): 2013 and IS 9798: 1995. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 3224: 2002."
+    "improvedSpecification": "National safety and statutory compliance audit inspecting 14.2 kg domestic LPG cylinders, evaluating low-carbon micro-alloy steel sheet quality (IS 6240), circumferential submerged arc weld radiography, and burst pressure testing (>= 8.0 MPa). All materials and equipment shall be strictly manufactured in compliance with IS 3196 (Part 1): 2013 and IS 9798: 1995. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 3224: 2002.",
+    "accountType": "organization_admin",
+    "organization": "Bureau of Indian Standards (BIS) Directorate"
   },
   {
     "demoKey": "admin_analysis_30",
-    "userEmail": "admin1@anveshak.demo",
+    "userEmail": "admin@anveshak.demo",
     "productName": "Agricultural Knapsack Power Sprayers & Nozzles Quality Conformance Audit",
     "productCategory": "Agritech Equipment Governance",
     "status": "Completed",
@@ -14137,7 +14246,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 97,
     "confidenceLabel": "Direct Match",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-04T17:49:14.874Z",
+    "createdAt": "2026-08-05T14:20:21.986Z",
     "rawInput": "Quality control audit of agricultural power sprayers and mist blowers inspecting high-pressure plunger pumps, chemical-resistant fluoroelastomer seals, spray boom pressure drop, and operator chemical drift protection.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 3652: 1995 (Reaffirmed 2021). Sub-standard brass discharge nozzles exhibiting rapid abrasive wear and non-uniform droplet spray spectrum.",
     "documentMetadata": {
@@ -14235,11 +14344,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 95
       }
     },
-    "improvedSpecification": "Quality control audit of agricultural power sprayers and mist blowers inspecting high-pressure plunger pumps, chemical-resistant fluoroelastomer seals, spray boom pressure drop, and operator chemical drift protection. All materials and equipment shall be strictly manufactured in compliance with IS 3652: 1995 (Reaffirmed 2021) and IS 10134: 1982. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 11313: 2007."
+    "improvedSpecification": "Quality control audit of agricultural power sprayers and mist blowers inspecting high-pressure plunger pumps, chemical-resistant fluoroelastomer seals, spray boom pressure drop, and operator chemical drift protection. All materials and equipment shall be strictly manufactured in compliance with IS 3652: 1995 (Reaffirmed 2021) and IS 10134: 1982. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 11313: 2007.",
+    "accountType": "organization_admin",
+    "organization": "Bureau of Indian Standards (BIS) Directorate"
   },
   {
     "demoKey": "admin_analysis_31",
-    "userEmail": "admin1@anveshak.demo",
+    "userEmail": "admin@anveshak.demo",
     "productName": "Commercial Building Elevator Safety & Earthquake Counterweight Audit",
     "productCategory": "Vertical Transportation Governance",
     "status": "Completed",
@@ -14248,7 +14359,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 88,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-03T17:49:14.874Z",
+    "createdAt": "2026-08-04T14:20:21.986Z",
     "rawInput": "Public safety audit inspecting passenger and freight traction lifts in government complexes, evaluating progressive safety gear tripping, electro-mechanical brake holding power, car apron dimensions, and fire-fighter recall switch operation.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 14665 (Parts 1-5): 2000. Absence of seismic derailment counterweight retainer brackets and bidirectional overspeed governor certification.",
     "documentMetadata": {
@@ -14346,11 +14457,13 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 86
       }
     },
-    "improvedSpecification": "Public safety audit inspecting passenger and freight traction lifts in government complexes, evaluating progressive safety gear tripping, electro-mechanical brake holding power, car apron dimensions, and fire-fighter recall switch operation. All materials and equipment shall be strictly manufactured in compliance with IS 14665 (Parts 1-5): 2000 and IS 15785: 2007. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 14665 (Part 3/Sec 1)."
+    "improvedSpecification": "Public safety audit inspecting passenger and freight traction lifts in government complexes, evaluating progressive safety gear tripping, electro-mechanical brake holding power, car apron dimensions, and fire-fighter recall switch operation. All materials and equipment shall be strictly manufactured in compliance with IS 14665 (Parts 1-5): 2000 and IS 15785: 2007. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IS 14665 (Part 3/Sec 1).",
+    "accountType": "organization_admin",
+    "organization": "Bureau of Indian Standards (BIS) Directorate"
   },
   {
     "demoKey": "admin_analysis_32",
-    "userEmail": "admin1@anveshak.demo",
+    "userEmail": "admin@anveshak.demo",
     "productName": "Critical Healthcare Cleanrooms & Air Sterility HEPA Conformance Audit",
     "productCategory": "Biomedical Facility Standards",
     "status": "Needs Attention",
@@ -14359,7 +14472,7 @@ export const DEMO_ANALYSES = [
     "confidenceScore": 89,
     "confidenceLabel": "Highly Relevant",
     "inputType": "tender_pdf",
-    "createdAt": "2026-08-02T17:49:14.874Z",
+    "createdAt": "2026-08-03T14:20:21.986Z",
     "rawInput": "Sterility and airborne particulate audit of critical hospital surgical suites and pharmaceutical laboratories evaluating laminar air flow ceiling velocity (0.45 +/- 0.1 m/s), positive room pressure differential (>= 15 Pa), and HEPA filter H14 integrity.",
     "explanation": "Evaluated against Bureau of Indian Standards corpus. Primary specification aligns with IS 14644 (Parts 1-3) / ISO 14644-1: 2015. Airborne particle count exceeding ISO Class 5 limits due to HEPA filter seal bypass leakage (PAO aerosol leak > 0.01%).",
     "documentMetadata": {
@@ -14457,6 +14570,8 @@ export const DEMO_ANALYSES = [
         "technicalCompleteness": 87
       }
     },
-    "improvedSpecification": "Sterility and airborne particulate audit of critical hospital surgical suites and pharmaceutical laboratories evaluating laminar air flow ceiling velocity (0.45 +/- 0.1 m/s), positive room pressure differential (>= 15 Pa), and HEPA filter H14 integrity. All materials and equipment shall be strictly manufactured in compliance with IS 14644 (Parts 1-3) / ISO 14644-1: 2015 and IS 659: 1964. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IEST-RP-CC001."
+    "improvedSpecification": "Sterility and airborne particulate audit of critical hospital surgical suites and pharmaceutical laboratories evaluating laminar air flow ceiling velocity (0.45 +/- 0.1 m/s), positive room pressure differential (>= 15 Pa), and HEPA filter H14 integrity. All materials and equipment shall be strictly manufactured in compliance with IS 14644 (Parts 1-3) / ISO 14644-1: 2015 and IS 659: 1964. Vendor must possess valid active BIS License / CRS Registration and submit accredited NABL laboratory test certificates conforming to IEST-RP-CC001.",
+    "accountType": "organization_admin",
+    "organization": "Bureau of Indian Standards (BIS) Directorate"
   }
 ];
