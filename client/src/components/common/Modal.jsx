@@ -36,6 +36,9 @@ export const Modal = ({ isOpen, onClose, title, children, size = 'lg' }) => {
       className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 overflow-y-auto bg-slate-900/60 backdrop-blur-xs animate-fade-in"
     >
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-label={typeof title === 'string' ? title : 'Modal Dialog'}
         className={`relative w-[calc(100%-1rem)] sm:w-full ${sizeClasses[size] || sizeClasses.lg} bg-white rounded-lg shadow-xl border border-slate-300 overflow-hidden my-auto max-h-[88vh] flex flex-col`}
         onClick={(e) => e.stopPropagation()}
       >
