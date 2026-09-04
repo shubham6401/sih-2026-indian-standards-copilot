@@ -228,8 +228,15 @@ export const AnalysisProvider = ({ children }) => {
 
       const idMap = new Map();
       (remoteItems || []).forEach(item => {
-        if (item && (item._id || item.id)) {
-          idMap.set(String(item._id || item.id), item);
+        if (!item) return;
+        const id = item._id || item.id || item.demoKey;
+        if (id) {
+          const normalized = {
+            ...item,
+            _id: item._id || id,
+            id: item.id || id
+          };
+          idMap.set(String(id), normalized);
         }
       });
 

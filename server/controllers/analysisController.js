@@ -4,7 +4,11 @@ import { findRelevantStandards } from '../services/aiService.js';
 import { DEMO_ANALYSES } from '../seed/demoData.js';
 import { normalizeRoleKey } from '../middleware/authMiddleware.js';
 
-export const memoryAnalyses = [...DEMO_ANALYSES];
+export const memoryAnalyses = DEMO_ANALYSES.map(a => ({
+  _id: a._id || a.demoKey,
+  id: a.id || a._id || a.demoKey,
+  ...a
+}));
 
 export const createAnalysis = async (req, res) => {
   try {
