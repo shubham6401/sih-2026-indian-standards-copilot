@@ -175,27 +175,27 @@ export const LandingPage = () => {
               onClick={() => scrollToSection('how-it-works')}
               className="hover:text-gov-700 transition-colors"
             >
-              How It Works
+              {t('How It Works')}
             </button>
             <button
               type="button"
               onClick={() => scrollToSection('capabilities')}
               className="hover:text-gov-700 transition-colors"
             >
-              Key Capabilities
+              {t('Key Capabilities')}
             </button>
             <button
               type="button"
               onClick={() => scrollToSection('sectors')}
               className="hover:text-gov-700 transition-colors font-bold text-gov-700"
             >
-              Covered Standards
+              {t('Covered Standards')}
             </button>
             <Link to="/architecture" className="hover:text-gov-700 transition-colors">
-              Copilot Architecture
+              {t('Copilot Architecture')}
             </Link>
             <Link to="/explorer" className="hover:text-gov-700 transition-colors">
-              Standards Explorer
+              {t('standardsExplorer', 'Standards Explorer')}
             </Link>
           </div>
 
@@ -204,19 +204,19 @@ export const LandingPage = () => {
               to="/login"
               className="px-3 py-1.5 rounded-lg border border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-bold transition-all shadow-2xs"
             >
-              Sign In
+              {t('signIn', 'Sign In')}
             </Link>
             <Link
               to="/register"
               className="px-3.5 py-1.5 rounded-lg bg-gov-700 hover:bg-gov-800 text-white text-xs font-bold shadow-sm transition-all"
             >
-              Register
+              {t('register', 'Register')}
             </Link>
             <Link
               to="/dashboard"
               className="px-3.5 py-1.5 rounded-lg bg-gov-100 hover:bg-gov-200 text-gov-900 border border-gov-300 text-xs font-bold transition-all hidden sm:inline-flex"
             >
-              Dashboard
+              {t('dashboard', 'Dashboard')}
             </Link>
           </div>
         </div>
@@ -227,15 +227,15 @@ export const LandingPage = () => {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gov-100/80 border border-gov-200 text-gov-800 text-xs font-bold mb-6">
             <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-            <span>AI-Driven Procurement Decision Support • GeM & GFR 2017 Aligned</span>
+            <span>{t('AI-Driven Procurement Decision Support • GeM & GFR 2017 Aligned')}</span>
           </div>
 
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight max-w-4xl mx-auto font-outfit leading-tight">
-            AI Procurement Standards Copilot
+            {t('heroTitle', 'AI Procurement Standards Copilot')}
           </h1>
 
           <p className="mt-5 text-base sm:text-lg text-slate-600 max-w-3xl mx-auto leading-relaxed">
-            Understand procurement requirements, map applicable <strong>Indian Standards (IS)</strong>, detect missing testing/safety clauses, catch outdated revisions, and generate enforceable technical tender specifications.
+            {t('heroSubtitle', 'Understand procurement requirements, map applicable Indian Standards (IS), detect missing testing/safety clauses, catch outdated revisions, and generate enforceable technical tender specifications.')}
           </p>
 
           {/* CTA Buttons */}
@@ -247,7 +247,7 @@ export const LandingPage = () => {
               icon={Sparkles}
               onClick={() => navigate('/analysis/new')}
             >
-              {t('analyzeSpec')}
+              {t('analyzeSpec', 'Analyze Specification')}
             </Button>
             <Button
               size="lg"
@@ -256,7 +256,7 @@ export const LandingPage = () => {
               icon={UploadCloud}
               onClick={() => navigate('/tender/upload')}
             >
-              {t('uploadTender')}
+              {t('tenderUpload', 'Upload Tender')}
             </Button>
           </div>
 

@@ -9,6 +9,7 @@ import {
 import { useAuth } from '../../context/AuthContext';
 import { useLanguage } from '../../context/LanguageContext';
 import { normalizeRole, ROLE_CONFIG } from '../../config/roleConfig';
+import { LanguageToggle } from '../common/LanguageToggle';
 
 export const Sidebar = ({ isOpen, onClose }) => {
   const { user, logout } = useAuth();
@@ -67,20 +68,25 @@ export const Sidebar = ({ isOpen, onClose }) => {
                 BIS Copilot
               </span>
               <span className="text-[10px] text-gov-600 font-semibold block -mt-0.5">
-                {currentRoleConfig.displayName}
+                {t(currentRoleConfig.roleKey || currentRoleConfig.displayName)}
               </span>
             </div>
           </div>
 
-          <button
-            type="button"
-            onClick={onClose}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 transition-colors cursor-pointer"
-            title="Close navigation"
-            aria-label="Close navigation"
-          >
-            <X className="w-5 h-5" />
-          </button>
+          <div className="flex items-center gap-1">
+            <div className="sm:hidden">
+              <LanguageToggle />
+            </div>
+            <button
+              type="button"
+              onClick={onClose}
+              className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 transition-colors cursor-pointer"
+              title="Close navigation"
+              aria-label="Close navigation"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
         {/* Scrollable Role-Based Navigation List */}
@@ -88,7 +94,7 @@ export const Sidebar = ({ isOpen, onClose }) => {
           {navSections.map((section, sIdx) => (
             <div key={section.title || sIdx} className="space-y-1">
               <div className="px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-slate-400">
-                {section.title}
+                {t(section.titleKey || section.title)}
               </div>
 
               {section.items.map((item) => {
@@ -114,7 +120,7 @@ export const Sidebar = ({ isOpen, onClose }) => {
                           item.highlight ? 'text-amber-600' : 'text-slate-500 group-hover:text-gov-600'
                         }`}
                       />
-                      <span>{item.label}</span>
+                      <span>{t(item.labelKey || item.label)}</span>
                     </div>
                     <ChevronRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 text-slate-400 transition-opacity" />
                   </NavLink>
@@ -134,7 +140,7 @@ export const Sidebar = ({ isOpen, onClose }) => {
                   <p className="text-[10px] text-slate-500 truncate">{user.organizationName || user.organization || 'Government of India'}</p>
                 </div>
                 <span className="text-[9px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded bg-gov-100 text-gov-800 shrink-0">
-                  {currentRoleConfig.badgeTitle}
+                  {t(currentRoleConfig.badgeTitle)}
                 </span>
               </div>
 
@@ -144,7 +150,7 @@ export const Sidebar = ({ isOpen, onClose }) => {
                 className="w-full flex items-center justify-center gap-1.5 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-100 text-slate-600 hover:text-rose-600 text-xs font-semibold transition-colors cursor-pointer"
               >
                 <LogOut className="w-3.5 h-3.5" />
-                <span>Sign Out</span>
+                <span>{t('logout', 'Sign Out')}</span>
               </button>
             </>
           ) : (
@@ -154,14 +160,14 @@ export const Sidebar = ({ isOpen, onClose }) => {
                 onClick={onClose}
                 className="w-full flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-100 text-xs font-semibold transition-colors"
               >
-                Sign In to Account
+                {t('signInToAccount', 'Sign In to Account')}
               </Link>
               <Link
                 to="/register"
                 onClick={onClose}
                 className="w-full flex items-center justify-center py-2 px-3 rounded-xl bg-gov-700 hover:bg-gov-800 text-white text-xs font-bold transition-all shadow-xs"
               >
-                Register New Profile
+                {t('registerNewProfile', 'Register New Profile')}
               </Link>
             </div>
           )}

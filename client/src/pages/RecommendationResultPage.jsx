@@ -37,6 +37,7 @@ import { ExecutivePdfReport } from '../components/reports/ExecutivePdfReport';
 import { generateProcurementReportPdf } from '../utils/generatePdfReport';
 import { formatSpecificationText } from '../utils/formatSpecification';
 import { useAnalysis, INITIAL_DEMO_HISTORY } from '../context/AnalysisContext';
+import { useLanguage } from '../context/LanguageContext';
 import { api } from '../services/api';
 import confetti from 'canvas-confetti';
 
@@ -46,6 +47,7 @@ export const RecommendationResultPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const tabParam = searchParams.get('tab') || 'overview';
   const { currentAnalysis, setCurrentAnalysis, history, deleteAnalysisRecord, showToast } = useAnalysis();
+  const { t, lang } = useLanguage();
 
   // Helper to synchronously find item from any available memory layer
   const resolveInitialAnalysis = useCallback(() => {
@@ -298,13 +300,13 @@ export const RecommendationResultPage = () => {
 
   // 7 Clean Tabs per Requirements 22-29
   const tabItems = [
-    { id: 'overview', label: 'Overview', icon: Sparkles },
-    { id: 'standards', label: 'Standards', icon: Layers, count: primaryList.length },
-    { id: 'relationships', label: 'Relationships', icon: Network },
-    { id: 'gaps', label: 'Gap Analysis', icon: ShieldAlert, count: gapsList.length },
-    { id: 'compliance', label: 'Compliance', icon: Award, count: certificationsList.length },
-    { id: 'specification', label: 'Improved Specification', icon: FileText },
-    { id: 'report', label: 'Report Dossier', icon: Printer }
+    { id: 'overview', label: t('tabOverview', 'Overview'), icon: Sparkles },
+    { id: 'standards', label: t('tabStandards', 'Standards'), icon: Layers, count: primaryList.length },
+    { id: 'relationships', label: t('tabRelationships', 'Relationships'), icon: Network },
+    { id: 'gaps', label: t('tabGaps', 'Gap Analysis'), icon: ShieldAlert, count: gapsList.length },
+    { id: 'compliance', label: t('tabCompliance', 'Compliance'), icon: Award, count: certificationsList.length },
+    { id: 'specification', label: t('tabSpecification', 'Improved Specification'), icon: FileText },
+    { id: 'report', label: t('tabReport', 'Report Dossier'), icon: Printer }
   ];
 
   return (
@@ -316,17 +318,17 @@ export const RecommendationResultPage = () => {
             type="button"
             onClick={() => navigate(-1)}
             className="inline-flex items-center gap-1 text-slate-600 hover:text-slate-900 font-semibold px-2 py-1 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
-            title="Go back to previous page"
-            aria-label="Go back"
+            title={t('back', 'Back')}
+            aria-label={t('back', 'Back')}
           >
             <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Back</span>
+            <span>{t('back', 'Back')}</span>
           </button>
           <span className="text-slate-300">|</span>
           <div className="flex items-center gap-1.5 text-slate-500">
-            <Link to="/dashboard" className="hover:text-slate-800">Dashboard</Link>
+            <Link to="/dashboard" className="hover:text-slate-800">{t('dashboard', 'Dashboard')}</Link>
             <ChevronRight className="w-3.5 h-3.5" />
-            <Link to="/reports" className="hover:text-slate-800">Reports</Link>
+            <Link to="/reports" className="hover:text-slate-800">{t('reports', 'Reports')}</Link>
             <ChevronRight className="w-3.5 h-3.5" />
             <span className="text-slate-900 font-bold truncate max-w-xs">{safeProductName}</span>
           </div>
@@ -340,7 +342,7 @@ export const RecommendationResultPage = () => {
             loading={downloadingPdf}
             onClick={handleDownloadPdf}
           >
-            Download PDF
+            {t('downloadPdf', 'Download PDF')}
           </Button>
           <Button
             size="xs"
@@ -348,7 +350,7 @@ export const RecommendationResultPage = () => {
             icon={Sparkles}
             onClick={() => navigate('/analysis/new')}
           >
-            New Analysis
+            {t('newAnalysis', 'New Analysis')}
           </Button>
         </div>
       </div>
@@ -359,13 +361,13 @@ export const RecommendationResultPage = () => {
           <div className="space-y-2">
             <div className="flex flex-wrap items-center gap-2">
               <span className="text-[10px] font-bold uppercase tracking-wider bg-gov-50 text-gov-700 border border-gov-200 px-2 py-0.5 rounded">
-                BIS Recommendation Dossier
+                {lang === 'hi' ? 'बीआईएस अनुशंसा डोजियर' : 'BIS Recommendation Dossier'}
               </span>
               <Badge variant={analysis.inputType === 'tender_pdf' ? 'mandate' : 'primary'} size="xs">
-                {analysis.inputType === 'tender_pdf' ? 'Tender PDF' : 'Specification Input'}
+                {analysis.inputType === 'tender_pdf' ? (lang === 'hi' ? 'निविदा पीडीएफ' : 'Tender PDF') : (lang === 'hi' ? 'विनिर्देश इनपुट' : 'Specification Input')}
               </Badge>
               <span className="text-xs text-slate-500">
-                Date: {analysisDate}
+                {t('date', 'Date')}: {analysisDate}
               </span>
             </div>
 
@@ -374,14 +376,14 @@ export const RecommendationResultPage = () => {
             </h1>
 
             <div className="text-xs text-slate-600 flex flex-wrap items-center gap-3 pt-0.5">
-              <span><strong>Category:</strong> {safeProductCategory}</span>
-              {analysis.quantity && <span>• <strong>Quantity:</strong> {typeof analysis.quantity === 'object' ? JSON.stringify(analysis.quantity) : analysis.quantity}</span>}
+              <span><strong>{t('category', 'Category')}:</strong> {safeProductCategory}</span>
+              {analysis.quantity && <span>• <strong>{t('quantity', 'Quantity')}:</strong> {typeof analysis.quantity === 'object' ? JSON.stringify(analysis.quantity) : analysis.quantity}</span>}
               <button
                 type="button"
                 onClick={() => setIsKbModalOpen(true)}
                 className="text-gov-700 hover:text-gov-900 font-semibold underline cursor-pointer"
               >
-                Inspect Provenance & Methodology
+                {lang === 'hi' ? 'स्रोत और कार्यप्रणाली का निरीक्षण करें' : 'Inspect Provenance & Methodology'}
               </button>
             </div>
           </div>
@@ -389,7 +391,7 @@ export const RecommendationResultPage = () => {
           <div className="shrink-0 flex sm:flex-col items-center sm:items-end gap-1.5">
             <ScoreIndicator
               score={analysis.confidenceScore || 92}
-              label={analysis.confidenceLabel || 'Highly Relevant'}
+              label={analysis.confidenceLabel || (lang === 'hi' ? 'अत्यधिक प्रासंगिक' : 'Highly Relevant')}
               size="md"
             />
           </div>
@@ -727,14 +729,14 @@ export const RecommendationResultPage = () => {
                   loading={downloadingPdf}
                   onClick={handleDownloadPdf}
                 >
-                  Download PDF Report
+                  {t('downloadPdf', 'Download PDF Report')}
                 </Button>
                 <Button
                   size="sm"
                   variant="secondary"
                   onClick={() => window.print()}
                 >
-                  Print Dossier
+                  {t('printReport', 'Print Dossier')}
                 </Button>
                 <Button
                   size="sm"
@@ -742,7 +744,7 @@ export const RecommendationResultPage = () => {
                   icon={Trash2}
                   onClick={() => setIsDeleteModalOpen(true)}
                 >
-                  Delete Report
+                  {t('deleteReport', 'Delete Report')}
                 </Button>
               </div>
             </div>
@@ -770,19 +772,19 @@ export const RecommendationResultPage = () => {
       <Modal
         isOpen={isDeleteModalOpen}
         onClose={() => setIsDeleteModalOpen(false)}
-        title="Delete this analysis report?"
+        title={t('deleteReport', 'Delete this analysis report?')}
         size="sm"
       >
         <div className="space-y-4">
           <p className="text-xs text-slate-600">
-            Are you sure you want to delete this procurement assessment record? This action cannot be undone.
+            {t('confirmDeleteReport', 'Are you sure you want to delete this procurement assessment record? This action cannot be undone.')}
           </p>
           <div className="flex items-center justify-end gap-2 pt-2">
             <Button size="xs" variant="secondary" onClick={() => setIsDeleteModalOpen(false)}>
-              Cancel
+              {t('cancel', 'Cancel')}
             </Button>
             <Button size="xs" variant="danger" onClick={handleDeleteReport}>
-              Confirm Delete
+              {t('delete', 'Confirm Delete')}
             </Button>
           </div>
         </div>

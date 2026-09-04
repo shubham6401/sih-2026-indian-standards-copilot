@@ -7,13 +7,12 @@ import {
   CheckCircle2,
   Loader2,
   ArrowRight,
-  FileSpreadsheet,
   Sparkles
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useAnalysis } from '../../context/AnalysisContext';
+import { useLanguage } from '../../context/LanguageContext';
 import { DEMO_PERSONAS, normalizeRole, ROLE_KEYS } from '../../config/roleConfig';
-import { Badge } from './Badge';
 
 const PERSONA_ICONS = {
   [ROLE_KEYS.PROCUREMENT_OFFICER]: Shield,
@@ -22,11 +21,13 @@ const PERSONA_ICONS = {
   [ROLE_KEYS.ADMIN]: Sparkles
 };
 
-export const DemoPersonaBar = ({ className = '', title = "Switch Demo Stakeholder Persona", compact = false }) => {
+export const DemoPersonaBar = ({ className = '', title, compact = false }) => {
   const { user, switchRole } = useAuth();
   const { loadHistory } = useAnalysis();
+  const { t } = useLanguage();
   const [switchingEmail, setSwitchingEmail] = useState(null);
 
+  const displayTitle = title || t('switchDemoPersona', 'Switch Demo Stakeholder Persona');
   const currentUserRoleKey = normalizeRole(user?.accountType || user?.role);
 
   const isPersonaActive = (persona) => {
@@ -64,21 +65,21 @@ export const DemoPersonaBar = ({ className = '', title = "Switch Demo Stakeholde
           <div>
             <div className="flex items-center gap-2">
               <h3 className="text-xs sm:text-sm font-bold text-slate-900 font-outfit uppercase tracking-wider">
-                {title}
+                {displayTitle}
               </h3>
               <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200">
-                1 Account Per Role
+                {t('accountPerRole', '1 Account Per Role')}
               </span>
             </div>
             <p className="text-[11px] text-slate-500 mt-0.5">
-              Click any demo account below to switch directly and view role-isolated procurement reports (32 pre-seeded analyses each).
+              {t('personaBarDesc', 'Click any demo account below to switch directly and view role-isolated procurement reports (32 pre-seeded analyses each).')}
             </p>
           </div>
         </div>
 
         <div className="hidden md:flex items-center gap-2 text-[11px] text-slate-500 font-medium shrink-0">
           <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-          <span>Live Role Isolation Active</span>
+          <span>{t('liveRoleIsolationActive', 'Live Role Isolation Active')}</span>
         </div>
       </div>
 
@@ -114,12 +115,12 @@ export const DemoPersonaBar = ({ className = '', title = "Switch Demo Stakeholde
                       <RoleIcon className="w-3 h-3" />
                     </div>
                     <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-700 truncate">
-                      {persona.role}
+                      {t(persona.role)}
                     </span>
                   </div>
 
                   <span className="text-[10px] font-bold font-mono px-1.5 py-0.5 rounded bg-white border border-slate-200 text-gov-800 shrink-0">
-                    {persona.roleKey === ROLE_KEYS.ADMIN ? '128 Reports' : '32 Reports'}
+                    {persona.roleKey === ROLE_KEYS.ADMIN ? `128 ${t('reports', 'Reports')}` : `32 ${t('reports', 'Reports')}`}
                   </span>
                 </div>
 
@@ -139,16 +140,16 @@ export const DemoPersonaBar = ({ className = '', title = "Switch Demo Stakeholde
                 {active ? (
                   <span className="inline-flex items-center gap-1 font-bold text-emerald-700">
                     <CheckCircle2 className="w-3 h-3 text-emerald-600 shrink-0" />
-                    <span>Active Account</span>
+                    <span>{t('activeAccount', 'Active Account')}</span>
                   </span>
                 ) : isSwitchingThis ? (
                   <span className="inline-flex items-center gap-1 font-bold text-gov-700">
                     <Loader2 className="w-3 h-3 animate-spin shrink-0" />
-                    <span>Switching...</span>
+                    <span>{t('switching', 'Switching...')}</span>
                   </span>
                 ) : (
                   <span className="inline-flex items-center gap-1 font-semibold text-slate-500 group-hover:text-gov-700 transition-colors">
-                    <span>Click to switch</span>
+                    <span>{t('clickToSwitch', 'Click to switch')}</span>
                     <ArrowRight className="w-2.5 h-2.5 group-hover:translate-x-0.5 transition-transform" />
                   </span>
                 )}

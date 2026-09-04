@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react';
 import { X } from 'lucide-react';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const Modal = ({ isOpen, onClose, title, children, size = 'lg' }) => {
+  const { t } = useLanguage();
+
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape' && isOpen) onClose();
@@ -9,6 +12,8 @@ export const Modal = ({ isOpen, onClose, title, children, size = 'lg' }) => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
       window.addEventListener('keydown', handleKeyDown);
+    } else {
+      document.body.style.overflow = 'unset';
     }
     return () => {
       document.body.style.overflow = 'unset';
@@ -40,8 +45,8 @@ export const Modal = ({ isOpen, onClose, title, children, size = 'lg' }) => {
           <button
             type="button"
             onClick={onClose}
-            aria-label="Close modal"
-            title="Close modal"
+            aria-label={t('close', 'Close')}
+            title={t('close', 'Close')}
             className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 rounded-lg transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />

@@ -1,34 +1,28 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { useNavigate, Link, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   FileSpreadsheet,
   Download,
-  Printer,
   Eye,
-  FileText,
   Sparkles,
-  Calendar,
-  Layers,
-  Award,
   Trash2,
   AlertTriangle,
-  Search,
-  CheckCircle2,
-  ShieldAlert
+  Search
 } from 'lucide-react';
 import { Button } from '../components/common/Button';
 import { Badge } from '../components/common/Badge';
 import { ScoreIndicator } from '../components/common/ScoreIndicator';
 import { Modal } from '../components/common/Modal';
 import { useAnalysis } from '../context/AnalysisContext';
+import { useLanguage } from '../context/LanguageContext';
 import { generateProcurementReportPdf } from '../utils/generatePdfReport';
-import { api } from '../services/api';
 import { DemoPersonaBar } from '../components/common/DemoPersonaBar';
 
 export const ReportsPage = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const { history, loadHistory, deleteAnalysisRecord, setCurrentAnalysis } = useAnalysis();
+  const { t, lang } = useLanguage();
 
   const urlSearch = searchParams.get('search') || '';
   const [search, setSearch] = useState(urlSearch);
@@ -130,15 +124,17 @@ export const ReportsPage = () => {
         <div>
           <div className="flex items-center gap-2 mb-1">
             <span className="text-xs font-bold uppercase tracking-wider text-gov-600 bg-gov-50 px-2.5 py-0.5 rounded border border-gov-200">
-              Procurement Documentation
+              {t('procurementDocumentation', 'Procurement Documentation')}
             </span>
-            <span className="text-xs text-slate-500 font-medium">Standards Compliance Dossiers</span>
+            <span className="text-xs text-slate-500 font-medium">
+              {t('complianceDossiers', 'Standards Compliance Dossiers')}
+            </span>
           </div>
           <h1 className="text-2xl font-black text-slate-900 font-outfit tracking-tight">
-            Procurement Reports Repository
+            {t('reportsRepoTitle', 'Procurement Reports Repository')}
           </h1>
           <p className="text-xs text-slate-500 mt-0.5">
-            Export, download, and manage formal compliance assessment dossiers ready for inclusion in official tender files.
+            {t('reportsRepoSubtitle', 'Export, download, and manage formal compliance assessment dossiers ready for inclusion in official tender files.')}
           </p>
         </div>
 
@@ -148,12 +144,12 @@ export const ReportsPage = () => {
           icon={Sparkles}
           onClick={() => navigate('/analysis/new')}
         >
-          Generate New Report
+          {t('generateNewReport', 'Generate New Report')}
         </Button>
       </div>
 
       {/* Demo Stakeholder Account Quick Switcher (Direct 1-Click Role Isolation) */}
-      <DemoPersonaBar title="Switch Demo Account • 32 Pre-Seeded Reports Per Role" />
+      <DemoPersonaBar title={t('switchDemoAccount', 'Switch Demo Account • 32 Pre-Seeded Reports Per Role')} />
 
       {/* Filter and Search Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center gap-3 justify-between">
@@ -170,7 +166,7 @@ export const ReportsPage = () => {
                   : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
               }`}
             >
-              {st}
+              {t(st)}
             </button>
           ))}
         </div>
@@ -181,7 +177,7 @@ export const ReportsPage = () => {
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search reports by keyword, product, or standard..."
+            placeholder={t('searchReportsPlaceholder', 'Search reports by keyword, product, or standard...')}
             className="w-full pl-10 pr-4 py-2 text-xs rounded-xl border border-slate-300 bg-white focus:ring-2 focus:ring-gov-500 focus:outline-none"
           />
           <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
@@ -200,46 +196,42 @@ export const ReportsPage = () => {
               >
                 <div>
                   <div className="flex items-start justify-between gap-2 mb-3">
-                    <div className="flex flex-wrap items-center gap-1.5">
-                      <span className="text-[10px] font-mono font-bold bg-slate-100 text-slate-700 px-2 py-0.5 rounded border border-slate-200">
-                        {reportId}
-                      </span>
-                      <Badge variant={getStatusBadgeVariant(rep.status)} size="xs">
-                        {rep.status || 'Completed'}
-                      </Badge>
-                      <Badge variant="primary" size="xs">
-                        {rep.productCategory}
-                      </Badge>
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="font-mono text-[10px] text-slate-400 font-bold">
+                          {reportId}
+                        </span>
+                        <Badge variant={getStatusBadgeVariant(rep.status)} size="xs">
+                          {t(rep.status || 'Completed')}
+                        </Badge>
+                      </div>
+                      <h3 className="text-sm font-bold text-slate-900 truncate group-hover:text-gov-800 transition-colors">
+                        {rep.productName || 'Procurement Dossier'}
+                      </h3>
+                      <p className="text-[11px] text-slate-500 mt-0.5 truncate">
+                        {rep.productCategory || 'Engineering Works'}
+                      </p>
                     </div>
+
                     <ScoreIndicator
                       score={rep.confidenceScore || 90}
-                      label={rep.confidenceLabel || 'Highly Relevant'}
+                      label={rep.confidenceLabel || 'Relevant'}
                       size="sm"
                     />
                   </div>
 
-                  <div className="text-[11px] font-bold text-gov-700 uppercase tracking-wider mb-1">
-                    {rep.reportType || 'Procurement Standards Compliance Report'}
-                  </div>
-
-                  <h3 className="text-base font-bold text-slate-900 font-outfit">
-                    {rep.productName}
-                  </h3>
-                  <p className="text-xs text-slate-600 mt-1 line-clamp-2 italic">
-                    "{rep.rawInput}"
+                  <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed bg-slate-50 p-2.5 rounded-xl border border-slate-100">
+                    {rep.rawInput || 'Procurement technical specification analyzed against Bureau of Indian Standards (BIS) repository.'}
                   </p>
 
-                  <div className="mt-4 pt-3 border-t border-slate-100 flex flex-wrap gap-2 text-xs">
+                  <div className="mt-3 flex items-center gap-3 text-[11px]">
                     <span className="text-slate-600">
-                      <strong>Primary: </strong> {rep.primaryStandards?.[0]?.standardNumber || 'IS Standard'}
+                      <strong>{t('standards', 'Standards')}: </strong>
+                      {(rep.primaryStandards?.length || 0) + (rep.relatedStandards?.length || 0)}
                     </span>
                     <span className="text-slate-300">•</span>
                     <span className="text-slate-600">
-                      <strong>Standards: </strong> {(rep.primaryStandards?.length || 0) + (rep.relatedStandards?.length || 0)}
-                    </span>
-                    <span className="text-slate-300">•</span>
-                    <span className="text-slate-600">
-                      <strong>Gaps Flagged: </strong> {rep.tenderGaps?.length || 0}
+                      <strong>{lang === 'hi' ? 'पहचानी गई कमियां:' : 'Gaps Flagged:'} </strong> {rep.tenderGaps?.length || 0}
                     </span>
                   </div>
                 </div>
@@ -256,8 +248,8 @@ export const ReportsPage = () => {
                     <button
                       type="button"
                       onClick={(e) => openDeleteModal(rep, e)}
-                      title="Delete Report"
-                      aria-label="Delete Report"
+                      title={t('deleteReport', 'Delete Report')}
+                      aria-label={t('deleteReport', 'Delete Report')}
                       className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer"
                     >
                       <Trash2 className="w-4 h-4" />
@@ -281,7 +273,7 @@ export const ReportsPage = () => {
                       onClick={() => handleOpenReport(rep)}
                     >
                       <Eye className="w-3.5 h-3.5 mr-1" />
-                      {openingId === (rep._id || rep.id) ? 'Opening...' : 'View Full Report'}
+                      {openingId === (rep._id || rep.id) ? t('openingReport', 'Opening...') : t('viewFullDossier', 'View Full Dossier')}
                     </Button>
                   </div>
                 </div>
@@ -294,12 +286,14 @@ export const ReportsPage = () => {
           <div className="w-12 h-12 rounded-2xl bg-gov-50 text-gov-600 flex items-center justify-center mx-auto">
             <FileSpreadsheet className="w-6 h-6" />
           </div>
-          <h3 className="text-base font-bold text-slate-900">No Reports Found</h3>
+          <h3 className="text-base font-bold text-slate-900">{t('noReportsFound', 'No Reports Found')}</h3>
           <p className="text-xs text-slate-500 max-w-sm mx-auto">
-            Run an analysis on a technical specification or tender PDF to generate a compliance report dossier.
+            {lang === 'hi'
+              ? 'अनुपालन रिपोर्ट डोजियर उत्पन्न करने के लिए किसी तकनीकी विनिर्देश या निविदा पीडीएफ पर विश्लेषण चलाएं।'
+              : 'Run an analysis on a technical specification or tender PDF to generate a compliance report dossier.'}
           </p>
           <Button size="sm" variant="primary" onClick={() => navigate('/analysis/new')}>
-            Start New Analysis
+            {t('startAnalysisBtn', 'Start New Analysis')}
           </Button>
         </div>
       )}
@@ -308,16 +302,16 @@ export const ReportsPage = () => {
       <Modal
         isOpen={Boolean(reportToDelete)}
         onClose={() => !isDeleting && setReportToDelete(null)}
-        title="Delete this report?"
+        title={t('deleteReport', 'Delete this report?')}
         size="sm"
       >
         <div className="space-y-4 pt-1">
           <div className="flex items-start gap-3 p-3 bg-rose-50 border border-rose-200 rounded-xl text-rose-900 text-xs">
             <AlertTriangle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
             <div>
-              <p className="font-bold">Are you sure you want to delete this report?</p>
+              <p className="font-bold">{t('confirmDeleteReport', 'Are you sure you want to permanently delete this procurement report?')}</p>
               <p className="text-[11px] text-rose-700 mt-0.5">
-                "{reportToDelete?.productName}" will be permanently removed from your reports repository and audit log. This action cannot be undone.
+                "{reportToDelete?.productName}" {t('actionCannotBeUndone', 'will be permanently removed from your reports repository and audit log. This action cannot be undone.')}
               </p>
             </div>
           </div>
@@ -329,7 +323,7 @@ export const ReportsPage = () => {
               disabled={isDeleting}
               onClick={() => setReportToDelete(null)}
             >
-              Cancel
+              {t('cancel', 'Cancel')}
             </Button>
             <Button
               size="sm"
@@ -338,7 +332,7 @@ export const ReportsPage = () => {
               icon={Trash2}
               onClick={handleConfirmDelete}
             >
-              Delete Report
+              {t('deleteReport', 'Delete Report')}
             </Button>
           </div>
         </div>

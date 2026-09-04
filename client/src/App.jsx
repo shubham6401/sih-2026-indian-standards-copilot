@@ -58,6 +58,7 @@ export function App() {
                 <Route path="/tender/upload" element={<ProtectedRoute><TenderUploadPage /></ProtectedRoute>} />
                 <Route path="/history" element={<ProtectedRoute><AnalysisHistoryPage /></ProtectedRoute>} />
                 <Route path="/saved" element={<ProtectedRoute><SavedStandardsPage /></ProtectedRoute>} />
+                <Route path="/saved-standards" element={<ProtectedRoute><SavedStandardsPage /></ProtectedRoute>} />
                 <Route path="/reports" element={<ProtectedRoute><ReportsPage /></ProtectedRoute>} />
                 <Route path="/settings" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
 

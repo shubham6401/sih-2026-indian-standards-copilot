@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Mic, MicOff, AlertCircle, CheckCircle2, Globe, Trash2, StopCircle, Play } from 'lucide-react';
+import { Mic, MicOff, AlertCircle, CheckCircle2, Globe, Trash2, StopCircle } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 
 export const VoiceInput = ({ onTranscript, className = '' }) => {
-  const { lang: globalLang } = useLanguage();
+  const { lang: globalLang, t } = useLanguage();
   const [selectedLang, setSelectedLang] = useState('auto'); // 'en-IN', 'hi-IN', 'auto'
   const [isListening, setIsListening] = useState(false);
   const [capturedRecently, setCapturedRecently] = useState(false);
@@ -52,11 +52,11 @@ export const VoiceInput = ({ onTranscript, className = '' }) => {
     recognition.onerror = (event) => {
       setIsListening(false);
       if (event.error === 'not-allowed') {
-        setErrorMessage('Microphone access was denied. Please allow microphone permissions in your browser bar.');
+        setErrorMessage(t('micAccessDenied', 'Microphone access was denied. Please allow microphone permissions in your browser bar.'));
       } else if (event.error === 'no-speech') {
-        setErrorMessage('No speech detected. Please speak closer to the microphone.');
+        setErrorMessage(t('noSpeechDetected', 'No speech detected. Please speak closer to the microphone.'));
       } else if (event.error === 'network') {
-        setErrorMessage('Speech recognition network error. Please retry.');
+        setErrorMessage(t('speechNetworkError', 'Speech recognition network error. Please retry.'));
       } else {
         setErrorMessage(`Speech recognition notice: ${event.error}`);
       }
@@ -74,11 +74,11 @@ export const VoiceInput = ({ onTranscript, className = '' }) => {
         recognition.abort();
       } catch {}
     };
-  }, [effectiveLangCode]);
+  }, [effectiveLangCode, t]);
 
   const toggleListen = () => {
     if (!isSupported) {
-      alert('Voice speech-to-text is not supported in this browser. Please use Chrome or Edge, or type your specification directly.');
+      alert(t('voiceNotSupported', 'Voice speech-to-text is not supported in this browser. Please use Chrome or Edge, or type your specification directly.'));
       return;
     }
 
@@ -112,7 +112,7 @@ export const VoiceInput = ({ onTranscript, className = '' }) => {
     return (
       <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 text-slate-400 bg-slate-50 text-xs">
         <MicOff className="w-3.5 h-3.5" />
-        <span>Voice (Not supported in this browser)</span>
+        <span>{t('voiceNotSupported', 'Voice (Not supported in this browser)')}</span>
       </div>
     );
   }
@@ -139,7 +139,7 @@ export const VoiceInput = ({ onTranscript, className = '' }) => {
         <button
           type="button"
           onClick={toggleListen}
-          aria-label={isListening ? 'Stop voice recording' : 'Start voice recording'}
+          aria-label={isListening ? t('stopRecording', 'Stop Recording') : t('voiceInput', 'Voice Input')}
           className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
             isListening
               ? 'bg-rose-600 text-white animate-pulse shadow-sm'
@@ -151,17 +151,17 @@ export const VoiceInput = ({ onTranscript, className = '' }) => {
           {isListening ? (
             <>
               <StopCircle className="w-3.5 h-3.5 animate-spin" />
-              <span>Stop Recording</span>
+              <span>{t('stopRecording', 'Stop Recording')}</span>
             </>
           ) : capturedRecently ? (
             <>
               <CheckCircle2 className="w-3.5 h-3.5" />
-              <span>Captured</span>
+              <span>{t('capturedVoice', 'Captured')}</span>
             </>
           ) : (
             <>
               <Mic className="w-3.5 h-3.5" />
-              <span>Voice Input</span>
+              <span>{t('voiceInput', 'Voice Input')}</span>
             </>
           )}
         </button>
@@ -170,8 +170,8 @@ export const VoiceInput = ({ onTranscript, className = '' }) => {
           <button
             type="button"
             onClick={handleClearTranscript}
-            title="Clear preview"
-            aria-label="Clear preview"
+            title={t('clearVoicePreview', 'Clear preview')}
+            aria-label={t('clearVoicePreview', 'Clear preview')}
             className="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg transition-colors cursor-pointer"
           >
             <Trash2 className="w-3.5 h-3.5" />
@@ -184,7 +184,9 @@ export const VoiceInput = ({ onTranscript, className = '' }) => {
         <div className="text-[11px] bg-amber-50 border border-amber-200 text-amber-900 px-3 py-1.5 rounded-xl flex items-center gap-2 max-w-md animate-fade-in shadow-xs">
           <span className="w-2 h-2 rounded-full bg-rose-500 animate-ping shrink-0" />
           <span className="font-semibold truncate">
-            {transcriptPreview ? `"${transcriptPreview}"` : `Listening in ${effectiveLangCode === 'hi-IN' ? 'Hindi (हिंदी)' : 'English'}... Speak clearly`}
+            {transcriptPreview
+              ? `"${transcriptPreview}"`
+              : `${t('listeningIn', 'Listening in')} ${effectiveLangCode === 'hi-IN' ? 'Hindi (हिंदी)' : 'English'}... ${t('speakClearly', 'Speak clearly')}`}
           </span>
         </div>
       )}

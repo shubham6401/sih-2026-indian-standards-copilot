@@ -15,11 +15,13 @@ import {
 import { Button } from '../components/common/Button';
 import { Badge } from '../components/common/Badge';
 import { useAnalysis } from '../context/AnalysisContext';
+import { useLanguage } from '../context/LanguageContext';
 import { api } from '../services/api';
 
 export const TenderUploadPage = () => {
   const navigate = useNavigate();
   const { setCurrentAnalysis, showToast } = useAnalysis();
+  const { t, lang } = useLanguage();
   const fileInputRef = useRef(null);
 
   const [file, setFile] = useState(null);
@@ -51,11 +53,11 @@ export const TenderUploadPage = () => {
   ];
 
   const stages = [
-    { label: 'Document uploaded', detail: 'PDF file size and structure verified' },
-    { label: 'Text & clauses extracted', detail: 'Technical specification sections parsed' },
-    { label: 'Requirements identified', detail: 'Extracting technology, voltage, grades, parameters' },
-    { label: 'Standards matching & ranking', detail: 'Querying BIS Indian Standards knowledge base' },
-    { label: 'Report generation', detail: 'Compiling QCO mandates and compliance report' }
+    { label: lang === 'hi' ? 'दस्तावेज़ अपलोड किया गया' : 'Document uploaded', detail: lang === 'hi' ? 'पीडीएफ फ़ाइल आकार और संरचना सत्यापित' : 'PDF file size and structure verified' },
+    { label: lang === 'hi' ? 'पाठ और धाराएं निकाली गईं' : 'Text & clauses extracted', detail: lang === 'hi' ? 'तकनीकी विनिर्देश अनुभागों का पार्सिंग' : 'Technical specification sections parsed' },
+    { label: lang === 'hi' ? 'आवश्यकताओं की पहचान की गई' : 'Requirements identified', detail: lang === 'hi' ? 'प्रौद्योगिकी, वोल्टेज, ग्रेड, पैरामीटर का निष्कर्षण' : 'Extracting technology, voltage, grades, parameters' },
+    { label: lang === 'hi' ? 'मानक मिलान और रैंकिंग' : 'Standards matching & ranking', detail: lang === 'hi' ? 'बीआईएस भारतीय मानक ज्ञानकोश से मिलान' : 'Querying BIS Indian Standards knowledge base' },
+    { label: lang === 'hi' ? 'रिपोर्ट तैयार की गई' : 'Report generation', detail: lang === 'hi' ? 'QCO अनिवार्यताएं और अनुपालन रिपोर्ट संकलित' : 'Compiling QCO mandates and compliance report' }
   ];
 
   const handleLoadSampleTender = async (sample, autoAnalyze = false) => {
@@ -85,19 +87,19 @@ export const TenderUploadPage = () => {
         setCurrentStage(5);
 
         if (!result.success) {
-          setError(result.message || 'Could not map sufficient standards from this document.');
+          setError(result.message || (lang === 'hi' ? 'इस दस्तावेज़ से पर्याप्त मानकों का मिलान नहीं हो सका।' : 'Could not map sufficient standards from this document.'));
           setUploading(false);
           return;
         }
 
         setCurrentAnalysis(result.analysis);
-        showToast('Tender document analyzed and standards mapped successfully!');
+        showToast(lang === 'hi' ? 'निविदा दस्तावेज़ का विश्लेषण और मानकों का मिलान सफलतापूर्वक संपन्न!' : 'Tender document analyzed and standards mapped successfully!');
         setTimeout(() => {
           navigate(`/reports/${result.analysis._id}`);
         }, 500);
       }
     } catch (err) {
-      setError('Failed to load sample tender PDF: ' + err.message);
+      setError(lang === 'hi' ? 'नमूना निविदा पीडीएफ लोड करने में विफल: ' + err.message : 'Failed to load sample tender PDF: ' + err.message);
       setUploading(false);
     }
   };
@@ -129,12 +131,12 @@ export const TenderUploadPage = () => {
 
   const handleFileSelected = (selectedFile) => {
     setError('');
-    if (!selectedFile.name.toLowerCase().endsWith('.pdf') && selectedFile.type !== 'application/pdf') {
-      setError('Only PDF documents are supported for tender specification analysis.');
+    if (selectedFile.type !== 'application/pdf' && !selectedFile.name.endsWith('.pdf')) {
+      setError(lang === 'hi' ? 'कृपया एक वैध पीडीएफ (.pdf) निविदा दस्तावेज़ अपलोड करें।' : 'Please upload a valid PDF (.pdf) tender document.');
       return;
     }
-    if (selectedFile.size > 20 * 1024 * 1024) {
-      setError('File exceeds 20 MB limit. Please select a smaller PDF tender file.');
+    if (selectedFile.size > 25 * 1024 * 1024) {
+      setError(lang === 'hi' ? 'फ़ाइल का आकार 25MB सीमा से अधिक है। कृपया एक छोटा पीडीएफ अपलोड करें।' : 'File size exceeds 25MB limit. Please upload a smaller PDF.');
       return;
     }
 
@@ -146,7 +148,7 @@ export const TenderUploadPage = () => {
 
   const handleUploadAndAnalyze = async () => {
     if (!file) {
-      setError('Please select a PDF tender document first.');
+      setError(lang === 'hi' ? 'कृपया पहले एक पीडीएफ निविदा दस्तावेज़ चुनें।' : 'Please select a PDF tender document first.');
       return;
     }
 
@@ -169,19 +171,19 @@ export const TenderUploadPage = () => {
       setCurrentStage(5);
 
       if (!result.success) {
-        setError(result.message || 'Could not map sufficient standards from this document.');
+        setError(result.message || (lang === 'hi' ? 'इस दस्तावेज़ से पर्याप्त मानकों का मिलान नहीं हो सका।' : 'Could not map sufficient standards from this document.'));
         setUploading(false);
         return;
       }
 
       setCurrentAnalysis(result.analysis);
-      showToast('Tender document analyzed and standards mapped successfully!');
+      showToast(lang === 'hi' ? 'निविदा दस्तावेज़ का विश्लेषण और मानकों का मिलान सफलतापूर्वक संपन्न!' : 'Tender document analyzed and standards mapped successfully!');
       setTimeout(() => {
         navigate(`/reports/${result.analysis._id}`);
       }, 500);
     } catch (err) {
       clearInterval(stageTimer);
-      setError(err.message || 'Tender upload failed. Please ensure the PDF is text-readable.');
+      setError(err.message || (lang === 'hi' ? 'निविदा अपलोड विफल रहा। कृपया सुनिश्चित करें कि पीडीएफ पाठ-पठनीय है।' : 'Tender upload failed. Please ensure the PDF is text-readable.'));
       setUploading(false);
     }
   };
@@ -192,15 +194,17 @@ export const TenderUploadPage = () => {
       <div className="pb-4 border-b border-slate-200">
         <div className="flex items-center gap-2 mb-1">
           <span className="text-xs font-bold uppercase tracking-wider text-gov-600 bg-gov-50 px-2.5 py-0.5 rounded border border-gov-200">
-            Document Ingestion Pipeline
+            {lang === 'hi' ? 'दस्तावेज़ अंतर्ग्रहण पाइपलाइन' : 'Document Ingestion Pipeline'}
           </span>
-          <span className="text-xs text-slate-500 font-medium">PDF Specification OCR & Clause Extractor</span>
+          <span className="text-xs text-slate-500 font-medium">
+            {lang === 'hi' ? 'पीडीएफ विनिर्देश ओसीआर और खंड निष्कर्षण' : 'PDF Specification OCR & Clause Extractor'}
+          </span>
         </div>
         <h1 className="text-2xl font-black text-slate-900 font-outfit tracking-tight">
-          Upload Tender / Specification PDF
+          {t('uploadTenderHeaderTitle', 'Upload Tender / Specification PDF')}
         </h1>
         <p className="text-xs text-slate-500 mt-0.5">
-          Upload a formal government or PSU tender document to automatically extract technical schedules, scope items, and find mandatory Indian Standards.
+          {t('uploadTenderHeaderSubtitle', 'Upload a formal government or PSU tender document to automatically extract technical schedules, scope items, and find mandatory Indian Standards.')}
         </p>
       </div>
 
@@ -208,7 +212,7 @@ export const TenderUploadPage = () => {
         <div className="p-4 bg-rose-50 border border-rose-200 text-rose-900 text-xs rounded-xl flex items-start gap-2.5">
           <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
           <div>
-            <span className="font-bold block">Document Notice:</span>
+            <span className="font-bold block">{lang === 'hi' ? 'दस्तावेज़ सूचना:' : 'Document Notice:'}</span>
             <span>{error}</span>
           </div>
         </div>
@@ -242,16 +246,16 @@ export const TenderUploadPage = () => {
             </div>
 
             <h3 className="text-base sm:text-lg font-bold text-slate-900 font-outfit">
-              Drag & Drop Tender PDF
+              {lang === 'hi' ? 'निविदा पीडीएफ यहां खींचें और छोड़ें' : 'Drag & Drop Tender PDF'}
             </h3>
             <p className="text-xs text-slate-500 mt-1 mb-4">
-              or <span className="text-gov-600 font-bold underline">Browse files</span> from your computer
+              {lang === 'hi' ? 'या अपने कंप्यूटर से' : 'or'} <span className="text-gov-600 font-bold underline">{lang === 'hi' ? 'फ़ाइलें ब्राउज़ करें' : 'Browse files'}</span> {lang === 'hi' ? '' : 'from your computer'}
             </p>
 
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 text-slate-600 text-[11px] font-semibold">
-              <span>PDF format up to 20 MB</span>
+              <span>{lang === 'hi' ? '25 MB तक का पीडीएफ प्रारूप' : 'PDF format up to 25 MB'}</span>
               <span>•</span>
-              <span>Text-searchable documents</span>
+              <span>{lang === 'hi' ? 'पाठ-खोजने योग्य दस्तावेज़' : 'Text-searchable documents'}</span>
             </div>
           </div>
         ) : (
@@ -265,7 +269,7 @@ export const TenderUploadPage = () => {
                 <div className="min-w-0">
                   <h4 className="text-xs font-bold text-slate-900 truncate">{file.name}</h4>
                   <p className="text-[11px] text-slate-500">
-                    {(file.size / (1024 * 1024)).toFixed(2)} MB • Ready for AI extraction
+                    {(file.size / (1024 * 1024)).toFixed(2)} MB • {lang === 'hi' ? 'एआई निष्कर्षण के लिए तैयार' : 'Ready for AI extraction'}
                   </p>
                 </div>
               </div>
@@ -274,7 +278,9 @@ export const TenderUploadPage = () => {
                 <button
                   type="button"
                   onClick={() => setFile(null)}
-                  className="p-1 text-slate-400 hover:text-slate-700 rounded-lg"
+                  className="p-1 text-slate-400 hover:text-slate-700 rounded-lg cursor-pointer"
+                  title={t('clear', 'Clear')}
+                  aria-label={t('clear', 'Clear')}
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -284,7 +290,7 @@ export const TenderUploadPage = () => {
             {/* Optional Tender Name Title */}
             <div>
               <label className="block text-xs font-bold text-slate-800 mb-1">
-                Tender Title / Procurement Item Name (Optional)
+                {lang === 'hi' ? 'निविदा शीर्षक / खरीद मद का नाम (वैकल्पिक)' : 'Tender Title / Procurement Item Name (Optional)'}
               </label>
               <input
                 type="text"
@@ -292,7 +298,7 @@ export const TenderUploadPage = () => {
                 value={tenderTitle}
                 onChange={(e) => setTenderTitle(e.target.value)}
                 className="w-full px-3.5 py-2 text-xs rounded-xl border border-slate-300 focus:ring-2 focus:ring-gov-500 focus:outline-none"
-                placeholder="e.g. Municipal Street Lighting Tender 2026"
+                placeholder={lang === 'hi' ? 'उदा. नगर निगम स्ट्रीट लाइटिंग निविदा 2026' : 'e.g. Municipal Street Lighting Tender 2026'}
               />
             </div>
 
@@ -302,10 +308,10 @@ export const TenderUploadPage = () => {
                 <div className="flex items-center justify-between pb-2 border-b border-slate-200">
                   <h4 className="text-xs font-bold text-slate-900 flex items-center gap-2">
                     <Loader2 className="w-4 h-4 text-gov-600 animate-spin" />
-                    <span>Document Analysis in Progress</span>
+                    <span>{lang === 'hi' ? 'दस्तावेज़ विश्लेषण प्रगति पर है' : 'Document Analysis in Progress'}</span>
                   </h4>
                   <span className="text-[11px] font-bold text-gov-700">
-                    Step {currentStage} of {stages.length}
+                    {lang === 'hi' ? `चरण ${currentStage} / ${stages.length}` : `Step ${currentStage} of ${stages.length}`}
                   </span>
                 </div>
 
@@ -352,7 +358,7 @@ export const TenderUploadPage = () => {
             {!uploading && (
               <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
                 <Button variant="secondary" size="md" onClick={() => setFile(null)}>
-                  Choose Different File
+                  {lang === 'hi' ? 'अलग फ़ाइल चुनें' : 'Choose Different File'}
                 </Button>
                 <Button
                   variant="primary"
@@ -360,7 +366,7 @@ export const TenderUploadPage = () => {
                   icon={Sparkles}
                   onClick={handleUploadAndAnalyze}
                 >
-                  Analyze Tender Document
+                  {t('analyzeTenderBtn', 'Analyze Tender Document')}
                 </Button>
               </div>
             )}
@@ -374,14 +380,14 @@ export const TenderUploadPage = () => {
           <div>
             <h3 className="text-sm font-bold text-slate-900 font-outfit flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-amber-500" />
-              <span>Preloaded Sample Tenders for Instant Evaluation</span>
+              <span>{lang === 'hi' ? 'त्वरित मूल्यांकन के लिए प्रीलोडेड नमूना निविदाएं' : 'Preloaded Sample Tenders for Instant Evaluation'}</span>
             </h3>
             <p className="text-xs text-slate-500 mt-0.5">
-              Test authentic government tender documents without needing to upload external files.
+              {lang === 'hi' ? 'बाहरी फ़ाइलों को अपलोड किए बिना प्रामाणिक सरकारी निविदा दस्तावेजों का परीक्षण करें।' : 'Test authentic government tender documents without needing to upload external files.'}
             </p>
           </div>
           <Badge variant="primary" size="xs">
-            1-Click Preload
+            {lang === 'hi' ? '1-क्लिक प्रीलोड' : '1-Click Preload'}
           </Badge>
         </div>
 
@@ -417,7 +423,7 @@ export const TenderUploadPage = () => {
                   disabled={uploading}
                   onClick={() => handleLoadSampleTender(sample, false)}
                 >
-                  Load into Dropzone
+                  {lang === 'hi' ? 'ड्रॉपज़ोन में लोड करें' : 'Load into Dropzone'}
                 </Button>
                 <Button
                   size="xs"
@@ -427,7 +433,7 @@ export const TenderUploadPage = () => {
                   data-testid={`analyze-sample-${sample.id}`}
                   onClick={() => handleLoadSampleTender(sample, true)}
                 >
-                  Analyze Sample Tender <ArrowRight className="w-3 h-3 ml-1" />
+                  {lang === 'hi' ? 'नमूना निविदा का विश्लेषण करें' : 'Analyze Sample Tender'} <ArrowRight className="w-3 h-3 ml-1" />
                 </Button>
               </div>
             </div>
@@ -437,9 +443,13 @@ export const TenderUploadPage = () => {
 
       {/* Info notice */}
       <div className="p-4 bg-slate-100/70 rounded-2xl border border-slate-200 text-xs text-slate-600 leading-relaxed">
-        <h5 className="font-bold text-slate-800 mb-1">Supported Document Formats & Privacy Notice</h5>
+        <h5 className="font-bold text-slate-800 mb-1">
+          {lang === 'hi' ? 'समर्थित दस्तावेज़ प्रारूप और गोपनीयता सूचना' : 'Supported Document Formats & Privacy Notice'}
+        </h5>
         <p>
-          The engine processes standard text-based PDF tender notices, NIT (Notice Inviting Tender), BOQ schedules, and technical requirement attachments. Uploaded documents are parsed locally in-memory to extract technical parameters and are not shared with unauthorized third parties.
+          {lang === 'hi'
+            ? 'इंजन मानक पाठ-आधारित पीडीएफ निविदा नोटिस, एनआईटी (निविदा आमंत्रण सूचना), बीओक्यू अनुसूचियों और तकनीकी आवश्यकता अनुलग्नकों को संसाधित करता है। अपलोड किए गए दस्तावेजों को स्थानीय रूप से मेमोरी में पार्स किया जाता है और किसी भी अनधिकृत तृतीय पक्ष के साथ साझा नहीं किया जाता है।'
+            : 'The engine processes standard text-based PDF tender notices, NIT (Notice Inviting Tender), BOQ schedules, and technical requirement attachments. Uploaded documents are parsed locally in-memory to extract technical parameters and are not shared with unauthorized third parties.'}
         </p>
       </div>
     </div>

@@ -99,7 +99,7 @@ export const NewAnalysisPage = () => {
   const executeAnalysis = async (customData = null) => {
     const dataToSubmit = customData || formData;
     if (!dataToSubmit.rawInput.trim() && !dataToSubmit.productName.trim()) {
-      setError('Please provide a product name or technical specification requirement.');
+      setError(t('errSpecOrNameRequired', 'Please provide a product name or technical specification requirement.'));
       return;
     }
 
@@ -237,7 +237,7 @@ export const NewAnalysisPage = () => {
   };
 
   if (analyzing) {
-    return <LoadingState message="Extracting structured requirements, checking revisions, and analyzing Indian Standards..." />;
+    return <LoadingState message={t('extractingStandards', 'Extracting structured requirements, checking revisions, and analyzing Indian Standards...')} />;
   }
 
   return (
@@ -247,15 +247,15 @@ export const NewAnalysisPage = () => {
         <div>
           <div className="flex items-center gap-2 mb-1">
             <span className="text-xs font-bold uppercase tracking-wider text-gov-600 bg-gov-50 px-2.5 py-0.5 rounded border border-gov-200">
-              Procurement Standards Copilot
+              {t('nationalCopilot', 'Procurement Standards Copilot')}
             </span>
-            <span className="text-xs text-slate-500 font-medium">Bilingual NLP • Ambiguity Intelligence</span>
+            <span className="text-xs text-slate-500 font-medium">{lang === 'hi' ? 'द्विभाषी एनएलपी • अस्पष्टता आसूचना' : 'Bilingual NLP • Ambiguity Intelligence'}</span>
           </div>
           <h1 className="text-2xl font-black text-slate-900 font-outfit tracking-tight">
-            Analyze Procurement Specification
+            {t('newAnalysisHeaderTitle', 'Analyze Procurement Specification')}
           </h1>
           <p className="text-xs text-slate-500 mt-0.5">
-            Enter technical requirements in English, Hindi (हिंदी), or Hinglish, or speak requirement via Voice Input.
+            {t('newAnalysisHeaderSubtitle', 'Enter technical requirements in English, Hindi (हिंदी), or Hinglish, or speak requirement via Voice Input.')}
           </p>
         </div>
 
@@ -285,14 +285,14 @@ export const NewAnalysisPage = () => {
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8">
         <div className="flex items-center justify-between pb-4 border-b border-slate-100 mb-5">
           <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider">
-            Technical Specification Parameters
+            {lang === 'hi' ? 'तकनीकी विनिर्देश पैरामीटर' : 'Technical Specification Parameters'}
           </h3>
           <button
             type="button"
             onClick={handleClear}
-            className="text-[11px] font-semibold text-slate-500 hover:text-slate-800 inline-flex items-center gap-1"
+            className="text-[11px] font-semibold text-slate-500 hover:text-slate-800 inline-flex items-center gap-1 cursor-pointer"
           >
-            <RotateCcw className="w-3 h-3" /> Reset Form
+            <RotateCcw className="w-3 h-3" /> {lang === 'hi' ? 'फ़ॉर्म रीसेट करें' : 'Reset Form'}
           </button>
         </div>
 
@@ -300,7 +300,7 @@ export const NewAnalysisPage = () => {
           <div className="mb-5 p-4 bg-rose-50 border border-rose-200 text-rose-900 text-xs rounded-xl flex items-start gap-2.5">
             <AlertTriangle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
             <div className="flex-1">
-              <span className="font-bold block">Analysis Notice:</span>
+              <span className="font-bold block">{lang === 'hi' ? 'विश्लेषण सूचना:' : 'Analysis Notice:'}</span>
               <span>{error}</span>
             </div>
           </div>
@@ -320,7 +320,7 @@ export const NewAnalysisPage = () => {
                 value={formData.productName}
                 onChange={(e) => setFormData({ ...formData, productName: e.target.value })}
                 className="w-full px-3.5 py-2 text-xs rounded-xl border border-slate-300 focus:ring-2 focus:ring-gov-500 focus:outline-none"
-                placeholder="e.g. 100W Outdoor LED Street Light"
+                placeholder={lang === 'hi' ? 'उदा. 100W आउटडोर एलईडी स्ट्रीट लाइट' : 'e.g. 100W Outdoor LED Street Light'}
               />
             </div>
 
@@ -335,16 +335,16 @@ export const NewAnalysisPage = () => {
                 onChange={(e) => setFormData({ ...formData, productCategory: e.target.value })}
                 className="w-full px-3.5 py-2 text-xs rounded-xl border border-slate-300 bg-white focus:ring-2 focus:ring-gov-500 focus:outline-none"
               >
-                <option value="LED Lighting">LED Lighting & Luminaires</option>
-                <option value="Cement & Building Materials">Cement, Concrete & Building Materials</option>
-                <option value="Steel & Construction Materials">TMT Rebars & Structural Steel</option>
-                <option value="Personal Protective Equipment">Personal Protective Equipment (PPE)</option>
-                <option value="Pumps & Water Equipment">Water Pumps (Submersible / Centrifugal)</option>
-                <option value="Electrical Cables">Electrical Cables & Conductors</option>
-                <option value="Electrical Equipment">Transformers & Switchgears</option>
-                <option value="Solar & Renewable Energy">Solar PV Modules & Inverters</option>
-                <option value="Pipes & Water Supply">HDPE, DI & PVC Pipes (Jal Jeevan Mission)</option>
-                <option value="General">General Industrial & Engineering</option>
+                <option value="LED Lighting">{lang === 'hi' ? 'एलईडी लाइटिंग और ल्यूमिनेयर' : 'LED Lighting & Luminaires'}</option>
+                <option value="Cement & Building Materials">{lang === 'hi' ? 'सीमेंट, कंक्रीट और निर्माण सामग्री' : 'Cement, Concrete & Building Materials'}</option>
+                <option value="Steel & Construction Materials">{lang === 'hi' ? 'TMT रिबार और स्ट्रक्चरल स्टील' : 'TMT Rebars & Structural Steel'}</option>
+                <option value="Personal Protective Equipment">{lang === 'hi' ? 'व्यक्तिगत सुरक्षा उपकरण (PPE)' : 'Personal Protective Equipment (PPE)'}</option>
+                <option value="Pumps & Water Equipment">{lang === 'hi' ? 'जल पंप (सबमर्सिबल / सेंट्रीफ्यूगल)' : 'Water Pumps (Submersible / Centrifugal)'}</option>
+                <option value="Electrical Cables">{lang === 'hi' ? 'विद्युत केबल और कंडक्टर' : 'Electrical Cables & Conductors'}</option>
+                <option value="Electrical Equipment">{lang === 'hi' ? 'ट्रांसफार्मर और स्विचगियर' : 'Transformers & Switchgears'}</option>
+                <option value="Solar & Renewable Energy">{lang === 'hi' ? 'सौर पीवी मॉड्यूल और इनवर्टर' : 'Solar PV Modules & Inverters'}</option>
+                <option value="Pipes & Water Supply">{lang === 'hi' ? 'एचडीपीई, डीआई और पीवीसी पाइप (जल जीवन मिशन)' : 'HDPE, DI & PVC Pipes (Jal Jeevan Mission)'}</option>
+                <option value="General">{lang === 'hi' ? 'सामान्य औद्योगिक और इंजीनियरिंग' : 'General Industrial & Engineering'}</option>
               </select>
             </div>
           </div>
@@ -355,7 +355,7 @@ export const NewAnalysisPage = () => {
               <label className="block text-xs font-bold text-slate-800">
                 {t('specification')} <span className="text-rose-500">*</span>
               </label>
-              <span className="text-[11px] text-slate-400">Natural language, specs, or clauses</span>
+              <span className="text-[11px] text-slate-400">{lang === 'hi' ? 'सरल भाषा, विनिर्देश या धाराएं' : 'Natural language, specs, or clauses'}</span>
             </div>
             <textarea
               rows={5}
@@ -380,7 +380,7 @@ export const NewAnalysisPage = () => {
                 value={formData.quantity}
                 onChange={(e) => setFormData({ ...formData, quantity: e.target.value })}
                 className="w-full px-3.5 py-2 text-xs rounded-xl border border-slate-300 focus:ring-2 focus:ring-gov-500 focus:outline-none"
-                placeholder="e.g. 500 Units / 1000 Metric Tonnes"
+                placeholder={lang === 'hi' ? 'उदा. 500 इकाइयां / 1000 मीट्रिक टन' : 'e.g. 500 Units / 1000 Metric Tonnes'}
               />
             </div>
 
@@ -393,7 +393,7 @@ export const NewAnalysisPage = () => {
                 value={formData.additionalRequirements}
                 onChange={(e) => setFormData({ ...formData, additionalRequirements: e.target.value })}
                 className="w-full px-3.5 py-2 text-xs rounded-xl border border-slate-300 focus:ring-2 focus:ring-gov-500 focus:outline-none"
-                placeholder="e.g. Mandatory 10kV surge protector, BIS Scheme I"
+                placeholder={lang === 'hi' ? 'उदा. अनिवार्य 10kV सर्ज रक्षक, BIS स्कीम I' : 'e.g. Mandatory 10kV surge protector, BIS Scheme I'}
               />
             </div>
           </div>
@@ -402,7 +402,7 @@ export const NewAnalysisPage = () => {
           <div className="pt-4 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="text-[11px] text-slate-500 flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-              <span>Full normative cross-referencing, QCO checks & gap detection</span>
+              <span>{lang === 'hi' ? 'पूर्ण मानक क्रॉस-रेफरेंसिंग, QCO जांच और कमी का पता लगाना' : 'Full normative cross-referencing, QCO checks & gap detection'}</span>
             </div>
 
             <Button
@@ -412,7 +412,7 @@ export const NewAnalysisPage = () => {
               className="w-full sm:w-auto font-bold"
               icon={Sparkles}
             >
-              Analyze with AI Copilot
+              {t('analyzeBtn', 'Analyze Specification')}
             </Button>
           </div>
         </form>

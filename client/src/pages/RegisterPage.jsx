@@ -15,10 +15,12 @@ import {
   EyeOff
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
 
 export const RegisterPage = () => {
   const navigate = useNavigate();
   const { user, register, isAuthenticated } = useAuth();
+  const { t } = useLanguage();
 
   const [formData, setFormData] = useState({
     name: '',
@@ -38,7 +40,9 @@ export const RegisterPage = () => {
       value: 'procurement_officer',
       role: 'Procurement Officer',
       label: 'Procurement Officer',
+      labelKey: 'procurementOfficerRole',
       desc: 'Analyze tenders and identify applicable Indian Standards.',
+      descKey: 'Analyze tenders and identify applicable Indian Standards.',
       orgLabel: 'Organization / Department',
       orgPlaceholder: 'e.g. Central Public Works Department (CPWD)'
     },
@@ -46,7 +50,9 @@ export const RegisterPage = () => {
       value: 'government_department',
       role: 'Government Department',
       label: 'Government Department',
+      labelKey: 'govtDeptRole',
       desc: 'Manage department-level procurement intelligence and QCO mandates.',
+      descKey: 'Manage department-level procurement intelligence and QCO mandates.',
       orgLabel: 'Department Name',
       orgPlaceholder: 'e.g. Ministry of Railways'
     },
@@ -54,7 +60,9 @@ export const RegisterPage = () => {
       value: 'psu',
       role: 'PSU',
       label: 'Public Sector Undertaking (PSU)',
+      labelKey: 'psuRole',
       desc: 'Analyze and monitor PSU technical procurement compliance.',
+      descKey: 'Analyze and monitor PSU technical procurement compliance.',
       orgLabel: 'PSU Name',
       orgPlaceholder: 'e.g. Bharat Heavy Electricals Limited (BHEL)'
     },
@@ -62,7 +70,9 @@ export const RegisterPage = () => {
       value: 'organization_admin',
       role: 'Organization/Admin',
       label: 'Organization / Admin',
+      labelKey: 'adminRole',
       desc: 'Manage organization users, standards compliance, and system activity.',
+      descKey: 'Manage organization users, standards compliance, and system activity.',
       orgLabel: 'Organization Name',
       orgPlaceholder: 'e.g. ABC Infrastructure Pvt. Ltd.'
     }
@@ -91,33 +101,33 @@ export const RegisterPage = () => {
     const selectedAccountType = formData.accountType;
 
     if (!trimmedName) {
-      setError('Full Name cannot be empty.');
+      setError(t('errNameRequired', 'Full Name cannot be empty.'));
       return;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!trimmedEmail || !emailRegex.test(trimmedEmail)) {
-      setError('Please provide a valid official email address.');
+      setError(t('errValidEmailRequired', 'Please provide a valid official email address.'));
       return;
     }
 
     if (!trimmedOrg) {
-      setError(`Please provide your ${currentAccountType.orgLabel.replace(/\s*\*/, '').trim().toLowerCase()}.`);
+      setError(t('errOrgRequired', `Please provide your organization or department name.`));
       return;
     }
 
     if (!selectedAccountType) {
-      setError('Please select an Account Type.');
+      setError(t('errAccountTypeRequired', 'Please select an Account Type.'));
       return;
     }
 
     if (!formData.password || formData.password.length < 6) {
-      setError('Password must be at least 6 characters long.');
+      setError(t('errPasswordLength', 'Password must be at least 6 characters long.'));
       return;
     }
 
     if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match. Please verify.');
+      setError(t('errPasswordMismatch', 'Passwords do not match. Please verify.'));
       return;
     }
 
@@ -136,7 +146,7 @@ export const RegisterPage = () => {
 
       navigate('/dashboard');
     } catch (err) {
-      setError(err.message || 'Registration failed. Please check your details.');
+      setError(err.message || t('Registration failed. Please check your details.'));
     } finally {
       setLoading(false);
     }
@@ -154,10 +164,10 @@ export const RegisterPage = () => {
           </span>
         </Link>
         <h2 className="text-2xl font-black text-slate-900 tracking-tight font-outfit">
-          Register Procurement Account
+          {t('registerHeader', 'Register Procurement Account')}
         </h2>
         <p className="mt-1 text-xs text-slate-500 max-w-md mx-auto">
-          Create an enterprise profile for automated Indian Standards compliance, tender gap detection, and statutory QCO verification.
+          {t('registerSubheader', 'Create an enterprise profile for automated Indian Standards compliance, tender gap detection, and statutory QCO verification.')}
         </p>
       </div>
 
@@ -166,16 +176,16 @@ export const RegisterPage = () => {
           {isAuthenticated && user && (
             <div className="mb-4 p-3 bg-blue-50 border border-blue-200 text-blue-900 text-xs rounded-xl flex items-center justify-between gap-2">
               <div>
-                <span>Signed in as <strong>{user.name}</strong> ({user.role})</span>
+                <span>{t('Signed in as')} <strong>{user.name}</strong> ({t(user.role)})</span>
                 <p className="text-[11px] text-blue-700 mt-0.5">
-                  Submitting this form will create and switch to your new profile.
+                  {t('Submitting this form will create and switch to your new profile.')}
                 </p>
               </div>
               <Link
                 to="/dashboard"
                 className="px-2.5 py-1 bg-white border border-blue-300 hover:bg-blue-100 rounded-lg font-bold text-[11px] text-blue-900 shadow-2xs shrink-0"
               >
-                Dashboard →
+                {t('Dashboard')} →
               </Link>
             </div>
           )}
@@ -191,7 +201,7 @@ export const RegisterPage = () => {
             {/* Full Name */}
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-1">
-                Full Name <span className="text-rose-500">*</span>
+                {t('fullNameLabel', 'Full Name *')}
               </label>
               <div className="relative">
                 <input
@@ -210,7 +220,7 @@ export const RegisterPage = () => {
             {/* Official Email */}
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-1">
-                Official Email <span className="text-rose-500">*</span>
+                {t('officialEmailLabelReq', 'Official Email Address *')}
               </label>
               <div className="relative">
                 <input
@@ -229,7 +239,7 @@ export const RegisterPage = () => {
             {/* Dynamic Organization / Department */}
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-1">
-                {currentAccountType.orgLabel} <span className="text-rose-500">*</span>
+                {t(currentAccountType.orgLabel)} <span className="text-rose-500">*</span>
               </label>
               <div className="relative">
                 <input
@@ -248,17 +258,17 @@ export const RegisterPage = () => {
             {/* Account Type with Selection Cards */}
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-1.5">
-                Account Type <span className="text-rose-500">*</span>
+                {t('accountTypeLabel', 'Account Type *')}
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {accountTypes.map((t) => {
-                  const isSelected = formData.accountType === t.value;
+                {accountTypes.map((tItem) => {
+                  const isSelected = formData.accountType === tItem.value;
                   return (
                     <div
-                      key={t.value}
-                      id={`account-type-${t.value}`}
-                      data-account-type={t.value}
-                      onClick={() => handleAccountTypeSelect(t.value)}
+                      key={tItem.value}
+                      id={`account-type-${tItem.value}`}
+                      data-account-type={tItem.value}
+                      onClick={() => handleAccountTypeSelect(tItem.value)}
                       className={`p-3 rounded-xl border transition-all cursor-pointer flex flex-col justify-between ${
                         isSelected
                           ? 'bg-gov-50/70 border-gov-600 ring-2 ring-gov-600/20 shadow-xs'
@@ -267,14 +277,14 @@ export const RegisterPage = () => {
                     >
                       <div className="flex items-start justify-between gap-1.5">
                         <span className="font-bold text-xs text-slate-900 leading-snug">
-                          {t.label}
+                          {t(tItem.labelKey || tItem.label)}
                         </span>
                         {isSelected && (
                           <CheckCircle2 className="w-3.5 h-3.5 text-gov-600 shrink-0 mt-0.5" />
                         )}
                       </div>
                       <p className="text-[11px] text-slate-500 mt-1 leading-relaxed">
-                        {t.desc}
+                        {t(tItem.descKey || tItem.desc)}
                       </p>
                     </div>
                   );
@@ -286,7 +296,7 @@ export const RegisterPage = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1">
-                  Password <span className="text-rose-500">*</span>
+                  {t('passwordLabelReq', 'Password *')}
                 </label>
                 <div className="relative">
                   <input
@@ -303,7 +313,7 @@ export const RegisterPage = () => {
                     type="button"
                     onClick={() => setShowPassword(prev => !prev)}
                     className="absolute right-2.5 top-2.5 text-slate-400 hover:text-slate-600 focus:outline-none cursor-pointer"
-                    aria-label={showPassword ? 'Hide password' : 'Show password'}
+                    aria-label={showPassword ? t('form.hidePassword', 'Hide password') : t('form.showPassword', 'Show password')}
                   >
                     {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
@@ -312,7 +322,7 @@ export const RegisterPage = () => {
 
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1">
-                  Confirm Password <span className="text-rose-500">*</span>
+                  {t('confirmPasswordLabel', 'Confirm Password *')}
                 </label>
                 <div className="relative">
                   <input
@@ -329,7 +339,7 @@ export const RegisterPage = () => {
                     type="button"
                     onClick={() => setShowConfirmPassword(prev => !prev)}
                     className="absolute right-2.5 top-2.5 text-slate-400 hover:text-slate-600 focus:outline-none cursor-pointer"
-                    aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
+                    aria-label={showConfirmPassword ? t('form.hidePassword', 'Hide password') : t('form.showPassword', 'Show password')}
                   >
                     {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
@@ -347,11 +357,11 @@ export const RegisterPage = () => {
                 {loading ? (
                   <>
                     <Loader2 className="w-4 h-4 animate-spin" />
-                    <span>Creating Account...</span>
+                    <span>{t('creatingAccount', 'Creating Account...')}</span>
                   </>
                 ) : (
                   <>
-                    <span>Complete Registration</span>
+                    <span>{t('createAccountButton', 'Complete Registration')}</span>
                     <ArrowRight className="w-4 h-4" />
                   </>
                 )}
@@ -360,9 +370,9 @@ export const RegisterPage = () => {
           </form>
 
           <div className="mt-5 text-center text-xs text-slate-500">
-            Already have an active account?{' '}
+            {t('alreadyHaveAccount', 'Already have an active account?')}{' '}
             <Link to="/login" className="font-bold text-gov-600 hover:text-gov-800 underline">
-              Sign in here
+              {t('signInHere', 'Sign in here')}
             </Link>
           </div>
         </div>

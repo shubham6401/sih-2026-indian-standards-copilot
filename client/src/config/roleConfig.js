@@ -36,51 +36,58 @@ export const normalizeRole = (role = '') => {
 export const ROLE_CONFIG = {
   [ROLE_KEYS.PROCUREMENT_OFFICER]: {
     key: ROLE_KEYS.PROCUREMENT_OFFICER,
+    roleKey: 'procurementOfficerRole',
     displayName: 'Procurement Officer',
     badgeTitle: 'Procurement Officer',
     badgeVariant: 'primary',
     organizationExample: 'CPWD — Central Public Works Department',
     dashboardTitle: 'Procurement Intelligence Dashboard',
+    dashboardTitleKey: 'procurementDashboardTitle',
     dashboardSubtitle: 'Analyze procurement specifications, verify applicable Indian Standards, and eliminate compliance gaps.',
+    dashboardSubtitleKey: 'procurementDashboardSubtitle',
     primaryActions: [
-      { label: 'New AI Analysis', path: '/analysis/new', icon: Sparkles, variant: 'primary' },
-      { label: 'Upload Tender', path: '/tender/upload', icon: UploadCloud, variant: 'secondary' }
+      { label: 'New AI Analysis', labelKey: 'newAnalysis', path: '/analysis/new', icon: Sparkles, variant: 'primary' },
+      { label: 'Upload Tender', labelKey: 'tenderUpload', path: '/tender/upload', icon: UploadCloud, variant: 'secondary' }
     ],
     metricCards: [
-      { key: 'totalAnalyses', label: 'Total Analyses', icon: FileText, color: 'blue' },
-      { key: 'completedAnalyses', label: 'Completed Analyses', icon: Award, color: 'emerald' },
-      { key: 'pendingReview', label: 'Pending Review', icon: Activity, color: 'amber' },
-      { key: 'savedStandards', label: 'Saved Standards', icon: BookmarkCheck, color: 'purple' }
+      { key: 'totalAnalyses', label: 'Total Analyses', labelKey: 'totalAnalyses', icon: FileText, color: 'blue' },
+      { key: 'completedAnalyses', label: 'Completed Analyses', labelKey: 'completedAnalyses', icon: Award, color: 'emerald' },
+      { key: 'pendingReview', label: 'Pending Review', labelKey: 'pendingReview', icon: Activity, color: 'amber' },
+      { key: 'savedStandards', label: 'Saved Standards', labelKey: 'savedStandardsCount', icon: BookmarkCheck, color: 'purple' }
     ],
     navSections: [
       {
         title: 'Main',
+        titleKey: 'Main',
         items: [
-          { label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard }
+          { label: 'Dashboard', labelKey: 'dashboard', path: '/dashboard', icon: LayoutDashboard }
         ]
       },
       {
         title: 'Procurement Operations',
+        titleKey: 'Procurement Operations',
         items: [
-          { label: 'New AI Analysis', path: '/analysis/new', icon: Sparkles, highlight: true },
-          { label: 'Upload Tender', path: '/tender/upload', icon: UploadCloud },
-          { label: 'My Analysis History', path: '/history', icon: History }
+          { label: 'New AI Analysis', labelKey: 'newAnalysis', path: '/analysis/new', icon: Sparkles, highlight: true },
+          { label: 'Upload Tender', labelKey: 'tenderUpload', path: '/tender/upload', icon: UploadCloud },
+          { label: 'My Analysis History', labelKey: 'My Analysis History', path: '/history', icon: History }
         ]
       },
       {
         title: 'Standards Intelligence',
+        titleKey: 'Standards Intelligence',
         items: [
-          { label: 'Standards Explorer', path: '/explorer', icon: Compass },
-          { label: 'Saved Standards', path: '/saved', icon: BookmarkCheck },
-          { label: 'Procurement Reports', path: '/reports', icon: FileSpreadsheet }
+          { label: 'Standards Explorer', labelKey: 'standardsExplorer', path: '/explorer', icon: Compass },
+          { label: 'Saved Standards', labelKey: 'savedStandards', path: '/saved', icon: BookmarkCheck },
+          { label: 'Procurement Reports', labelKey: 'reports', path: '/reports', icon: FileSpreadsheet }
         ]
       },
       {
         title: 'Reference & Settings',
+        titleKey: 'Reference & Settings',
         items: [
-          { label: 'Copilot Architecture', path: '/architecture', icon: Workflow },
-          { label: 'Evaluator Defense & FAQ', path: '/evaluator-faq', icon: HelpCircle },
-          { label: 'Settings', path: '/settings', icon: Settings }
+          { label: 'Copilot Architecture', labelKey: 'Copilot Architecture', path: '/architecture', icon: Workflow },
+          { label: 'Evaluator Defense & FAQ', labelKey: 'Evaluator Defense & FAQ', path: '/evaluator-faq', icon: HelpCircle },
+          { label: 'Settings', labelKey: 'settings', path: '/settings', icon: Settings }
         ]
       }
     ],
@@ -89,50 +96,57 @@ export const ROLE_CONFIG = {
 
   [ROLE_KEYS.GOVERNMENT_DEPARTMENT]: {
     key: ROLE_KEYS.GOVERNMENT_DEPARTMENT,
+    roleKey: 'govtDeptRole',
     displayName: 'Government Department',
     badgeTitle: 'Department Director',
     badgeVariant: 'mandate',
     organizationExample: 'Department of Public Works',
     dashboardTitle: 'Department Procurement Intelligence',
+    dashboardTitleKey: 'deptDashboardTitle',
     dashboardSubtitle: 'Department-wide procurement oversight, statutory Quality Control Order compliance, and tender analytics.',
+    dashboardSubtitleKey: 'deptDashboardSubtitle',
     primaryActions: [
-      { label: 'Analyze New Tender', path: '/tender/upload', icon: UploadCloud, variant: 'primary' },
-      { label: 'Department Reports', path: '/reports', icon: FileSpreadsheet, variant: 'secondary' }
+      { label: 'Analyze New Tender', labelKey: 'Analyze New Tender', path: '/tender/upload', icon: UploadCloud, variant: 'primary' },
+      { label: 'Department Reports', labelKey: 'Department Reports', path: '/reports', icon: FileSpreadsheet, variant: 'secondary' }
     ],
     metricCards: [
-      { key: 'totalAnalyses', label: 'Department Analyses', icon: Building2, color: 'blue' },
-      { key: 'activeMandates', label: 'Active QCO Mandates', icon: Shield, color: 'rose' },
-      { key: 'completedAnalyses', label: 'Compliant Tenders', icon: Award, color: 'emerald' },
-      { key: 'savedStandards', label: 'Department Bookmarks', icon: BookmarkCheck, color: 'purple' }
+      { key: 'totalAnalyses', label: 'Department Analyses', labelKey: 'departmentAnalyses', icon: Building2, color: 'blue' },
+      { key: 'activeMandates', label: 'Active QCO Mandates', labelKey: 'activeMandates', icon: Shield, color: 'rose' },
+      { key: 'completedAnalyses', label: 'Compliant Tenders', labelKey: 'compliantTenders', icon: Award, color: 'emerald' },
+      { key: 'savedStandards', label: 'Department Bookmarks', labelKey: 'departmentBookmarks', icon: BookmarkCheck, color: 'purple' }
     ],
     navSections: [
       {
         title: 'Main',
+        titleKey: 'Main',
         items: [
-          { label: 'Department Overview', path: '/dashboard', icon: LayoutDashboard }
+          { label: 'Department Overview', labelKey: 'Dashboard', path: '/dashboard', icon: LayoutDashboard }
         ]
       },
       {
         title: 'Department Procurement',
+        titleKey: 'Department Procurement',
         items: [
-          { label: 'Analyze Tender Specification', path: '/tender/upload', icon: UploadCloud, highlight: true },
-          { label: 'New AI Analysis', path: '/analysis/new', icon: Sparkles },
-          { label: 'Department Analyses', path: '/history', icon: History }
+          { label: 'Analyze Tender Specification', labelKey: 'Analyze Tender Specification', path: '/tender/upload', icon: UploadCloud, highlight: true },
+          { label: 'New AI Analysis', labelKey: 'newAnalysis', path: '/analysis/new', icon: Sparkles },
+          { label: 'Department Analyses', labelKey: 'departmentAnalyses', path: '/history', icon: History }
         ]
       },
       {
         title: 'Compliance & Standards',
+        titleKey: 'Compliance & Standards',
         items: [
-          { label: 'Standards Explorer', path: '/explorer', icon: Compass },
-          { label: 'Department Reports', path: '/reports', icon: FileSpreadsheet }
+          { label: 'Standards Explorer', labelKey: 'standardsExplorer', path: '/explorer', icon: Compass },
+          { label: 'Department Reports', labelKey: 'Department Reports', path: '/reports', icon: FileSpreadsheet }
         ]
       },
       {
         title: 'Reference & Settings',
+        titleKey: 'Reference & Settings',
         items: [
-          { label: 'Copilot Architecture', path: '/architecture', icon: Workflow },
-          { label: 'Evaluator Defense & FAQ', path: '/evaluator-faq', icon: HelpCircle },
-          { label: 'Settings', path: '/settings', icon: Settings }
+          { label: 'Copilot Architecture', labelKey: 'Copilot Architecture', path: '/architecture', icon: Workflow },
+          { label: 'Evaluator Defense & FAQ', labelKey: 'Evaluator Defense & FAQ', path: '/evaluator-faq', icon: HelpCircle },
+          { label: 'Settings', labelKey: 'settings', path: '/settings', icon: Settings }
         ]
       }
     ],
@@ -141,50 +155,57 @@ export const ROLE_CONFIG = {
 
   [ROLE_KEYS.PSU]: {
     key: ROLE_KEYS.PSU,
+    roleKey: 'psuRole',
     displayName: 'Public Sector Undertaking (PSU)',
     badgeTitle: 'PSU Compliance',
     badgeVariant: 'warning',
     organizationExample: 'National Energy Infrastructure Corporation',
     dashboardTitle: 'PSU Procurement Compliance Dashboard',
+    dashboardTitleKey: 'psuDashboardTitle',
     dashboardSubtitle: 'High-value technical procurement compliance, specialized equipment verification, and tender risk audits.',
+    dashboardSubtitleKey: 'psuDashboardSubtitle',
     primaryActions: [
-      { label: 'New Procurement Review', path: '/analysis/new', icon: Sparkles, variant: 'primary' },
-      { label: 'Upload Specification', path: '/tender/upload', icon: UploadCloud, variant: 'secondary' }
+      { label: 'New Procurement Review', labelKey: 'New Procurement Review', path: '/analysis/new', icon: Sparkles, variant: 'primary' },
+      { label: 'Upload Specification', labelKey: 'Upload Specification', path: '/tender/upload', icon: UploadCloud, variant: 'secondary' }
     ],
     metricCards: [
-      { key: 'totalAnalyses', label: 'Active Reviews', icon: Activity, color: 'blue' },
-      { key: 'completedAnalyses', label: 'Certified Compliant', icon: Award, color: 'emerald' },
-      { key: 'pendingReview', label: 'High-Risk Reviews', icon: Shield, color: 'amber' },
-      { key: 'savedStandards', label: 'Referenced Standards', icon: BookmarkCheck, color: 'purple' }
+      { key: 'totalAnalyses', label: 'Active Reviews', labelKey: 'activeReviews', icon: Activity, color: 'blue' },
+      { key: 'completedAnalyses', label: 'Certified Compliant', labelKey: 'certifiedCompliant', icon: Award, color: 'emerald' },
+      { key: 'pendingReview', label: 'High-Risk Reviews', labelKey: 'highRiskReviews', icon: Shield, color: 'amber' },
+      { key: 'savedStandards', label: 'Referenced Standards', labelKey: 'referencedStandards', icon: BookmarkCheck, color: 'purple' }
     ],
     navSections: [
       {
         title: 'Main',
+        titleKey: 'Main',
         items: [
-          { label: 'PSU Dashboard', path: '/dashboard', icon: LayoutDashboard }
+          { label: 'PSU Dashboard', labelKey: 'Dashboard', path: '/dashboard', icon: LayoutDashboard }
         ]
       },
       {
         title: 'Technical Procurement',
+        titleKey: 'Technical Procurement',
         items: [
-          { label: 'New Technical Analysis', path: '/analysis/new', icon: Sparkles, highlight: true },
-          { label: 'Upload Tender Package', path: '/tender/upload', icon: UploadCloud },
-          { label: 'Active PSU Reviews', path: '/history', icon: History }
+          { label: 'New Technical Analysis', labelKey: 'New Technical Analysis', path: '/analysis/new', icon: Sparkles, highlight: true },
+          { label: 'Upload Tender Package', labelKey: 'Upload Tender Package', path: '/tender/upload', icon: UploadCloud },
+          { label: 'Active PSU Reviews', labelKey: 'Active PSU Reviews', path: '/history', icon: History }
         ]
       },
       {
         title: 'Standards & Audits',
+        titleKey: 'Standards & Audits',
         items: [
-          { label: 'Standards Explorer', path: '/explorer', icon: Compass },
-          { label: 'Saved Standards', path: '/saved', icon: BookmarkCheck },
-          { label: 'PSU Audit Reports', path: '/reports', icon: FileSpreadsheet }
+          { label: 'Standards Explorer', labelKey: 'standardsExplorer', path: '/explorer', icon: Compass },
+          { label: 'Saved Standards', labelKey: 'savedStandards', path: '/saved', icon: BookmarkCheck },
+          { label: 'PSU Audit Reports', labelKey: 'PSU Audit Reports', path: '/reports', icon: FileSpreadsheet }
         ]
       },
       {
         title: 'Reference & Settings',
+        titleKey: 'Reference & Settings',
         items: [
-          { label: 'Copilot Architecture', path: '/architecture', icon: Workflow },
-          { label: 'Settings', path: '/settings', icon: Settings }
+          { label: 'Copilot Architecture', labelKey: 'Copilot Architecture', path: '/architecture', icon: Workflow },
+          { label: 'Settings', labelKey: 'settings', path: '/settings', icon: Settings }
         ]
       }
     ],
@@ -193,52 +214,59 @@ export const ROLE_CONFIG = {
 
   [ROLE_KEYS.ADMIN]: {
     key: ROLE_KEYS.ADMIN,
+    roleKey: 'adminRole',
     displayName: 'Organization / Admin',
     badgeTitle: 'Platform Admin',
     badgeVariant: 'success',
     organizationExample: 'Bureau of Indian Standards (BIS) Directorate',
     dashboardTitle: 'Anveshak Administration',
+    dashboardTitleKey: 'adminDashboardTitle',
     dashboardSubtitle: 'Platform management, user governance, standards knowledge base indexing, and system health telemetry.',
+    dashboardSubtitleKey: 'adminDashboardSubtitle',
     primaryActions: [
-      { label: 'User Directory', path: '/admin/users', icon: Users, variant: 'primary' },
-      { label: 'Standards Knowledge Base', path: '/explorer', icon: Database, variant: 'secondary' }
+      { label: 'User Directory', labelKey: 'User Directory', path: '/admin/users', icon: Users, variant: 'primary' },
+      { label: 'Standards Knowledge Base', labelKey: 'Standards Knowledge Base', path: '/explorer', icon: Database, variant: 'secondary' }
     ],
     metricCards: [
-      { key: 'totalUsers', label: 'Platform Users', icon: Users, color: 'blue' },
-      { key: 'totalAnalyses', label: 'Total Analyses', icon: FileText, color: 'emerald' },
-      { key: 'standardsIndexed', label: 'Standards Indexed', icon: Database, color: 'purple' },
-      { key: 'reportsGenerated', label: 'Reports Generated', icon: FileSpreadsheet, color: 'amber' }
+      { key: 'totalUsers', label: 'Platform Users', labelKey: 'platformUsers', icon: Users, color: 'blue' },
+      { key: 'totalAnalyses', label: 'Total Analyses', labelKey: 'totalAnalyses', icon: FileText, color: 'emerald' },
+      { key: 'standardsIndexed', label: 'Standards Indexed', labelKey: 'standardsIndexed', icon: Database, color: 'purple' },
+      { key: 'reportsGenerated', label: 'Reports Generated', labelKey: 'reportsGenerated', icon: FileSpreadsheet, color: 'amber' }
     ],
     navSections: [
       {
         title: 'Main',
+        titleKey: 'Main',
         items: [
-          { label: 'Admin Overview', path: '/dashboard', icon: LayoutDashboard }
+          { label: 'Admin Overview', labelKey: 'Dashboard', path: '/dashboard', icon: LayoutDashboard }
         ]
       },
       {
         title: 'Platform Governance',
+        titleKey: 'Platform Governance',
         items: [
-          { label: 'Standards Intelligence Registry', path: '/admin/standards', icon: Database, highlight: true },
-          { label: 'User Directory', path: '/admin/users', icon: Users },
-          { label: 'System Audit Trail', path: '/admin/audit-logs', icon: Activity },
-          { label: 'Demo Data Governance', path: '/admin/demo-data', icon: Shield },
-          { label: 'All Reports Archive', path: '/reports', icon: FileSpreadsheet }
+          { label: 'Standards Intelligence Registry', labelKey: 'Standards Intelligence Registry', path: '/admin/standards', icon: Database, highlight: true },
+          { label: 'User Directory', labelKey: 'User Directory', path: '/admin/users', icon: Users },
+          { label: 'System Audit Trail', labelKey: 'System Audit Trail', path: '/admin/audit-logs', icon: Activity },
+          { label: 'Demo Data Governance', labelKey: 'Demo Data Governance', path: '/admin/demo-data', icon: Shield },
+          { label: 'All Reports Archive', labelKey: 'All Reports Archive', path: '/reports', icon: FileSpreadsheet }
         ]
       },
       {
         title: 'Knowledge Base',
+        titleKey: 'Knowledge Base',
         items: [
-          { label: 'Standards Knowledge Base', path: '/explorer', icon: Database },
-          { label: 'Standards Explorer', path: '/explorer', icon: Compass }
+          { label: 'Standards Knowledge Base', labelKey: 'Standards Knowledge Base', path: '/explorer', icon: Database },
+          { label: 'Standards Explorer', labelKey: 'standardsExplorer', path: '/explorer', icon: Compass }
         ]
       },
       {
         title: 'Platform Reference',
+        titleKey: 'Platform Reference',
         items: [
-          { label: 'System Architecture', path: '/architecture', icon: Workflow },
-          { label: 'Evaluator Defense & FAQ', path: '/evaluator-faq', icon: HelpCircle },
-          { label: 'Platform Settings', path: '/settings', icon: Settings }
+          { label: 'System Architecture', labelKey: 'System Architecture', path: '/architecture', icon: Workflow },
+          { label: 'Evaluator Defense & FAQ', labelKey: 'Evaluator Defense & FAQ', path: '/evaluator-faq', icon: HelpCircle },
+          { label: 'Platform Settings', labelKey: 'settings', path: '/settings', icon: Settings }
         ]
       }
     ],
@@ -299,4 +327,3 @@ export const DEMO_PERSONAS = [
     badgeVariant: 'mandate'
   }
 ];
-

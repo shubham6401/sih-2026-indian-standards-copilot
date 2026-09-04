@@ -4,6 +4,7 @@ import { Shield, Lock, Mail, ArrowRight, AlertCircle, CheckCircle2, Eye, EyeOff 
 import { Button } from '../components/common/Button';
 import { Badge } from '../components/common/Badge';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
 import { DEMO_PERSONAS } from '../config/roleConfig';
 
 export const LoginPage = () => {
@@ -14,8 +15,8 @@ export const LoginPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [successMsg, setSuccessMsg] = useState(() => location.state?.message || '');
-  const [activeRoleTab, setActiveRoleTab] = useState('Procurement Officer');
   const { login, isAuthenticated } = useAuth();
+  const { t } = useLanguage();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,11 +32,11 @@ export const LoginPage = () => {
 
     const cleanEmail = email.trim().toLowerCase();
     if (!cleanEmail) {
-      setError('Please provide your official email address.');
+      setError(t('errEmailRequired', 'Please provide your official email address.'));
       return;
     }
     if (!password) {
-      setError('Please provide your password.');
+      setError(t('errPasswordRequired', 'Please provide your password.'));
       return;
     }
 
@@ -45,7 +46,7 @@ export const LoginPage = () => {
       await login(cleanEmail, password);
       navigate('/dashboard');
     } catch (err) {
-      setError(err.message || 'Invalid official email or password.');
+      setError(err.message || t('errInvalidCredentials', 'Invalid official email or password.'));
     } finally {
       setLoading(false);
     }
@@ -61,7 +62,7 @@ export const LoginPage = () => {
       await login(persona.email, persona.password);
       navigate('/dashboard');
     } catch (err) {
-      setError(err.message || 'Demo authentication failed.');
+      setError(err.message || t('errDemoAuthFailed', 'Demo authentication failed.'));
     } finally {
       setLoading(false);
     }
@@ -74,10 +75,10 @@ export const LoginPage = () => {
           <Shield className="w-6 h-6 text-amber-400" />
         </div>
         <h2 className="mt-4 text-2xl font-black text-slate-900 tracking-tight font-outfit">
-          Sign In to Procurement Engine
+          {t('signInHeader', 'Sign In to Procurement Engine')}
         </h2>
         <p className="mt-1 text-xs text-slate-500">
-          Official Decision Support Portal for Indian Standards & BIS Compliance
+          {t('signInSubheader', 'Official Decision Support Portal for Indian Standards & BIS Compliance')}
         </p>
       </div>
 
@@ -100,7 +101,7 @@ export const LoginPage = () => {
           <form onSubmit={handleSubmit} noValidate className="space-y-4">
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-1">
-                Official Email Address
+                {t('officialEmailLabel', 'Official Email Address')}
               </label>
               <div className="relative">
                 <input
@@ -119,13 +120,13 @@ export const LoginPage = () => {
             <div>
               <div className="flex items-center justify-between mb-1">
                 <label className="block text-xs font-bold text-slate-700">
-                  Password
+                  {t('passwordLabel', 'Password')}
                 </label>
                 <Link
                   to="/forgot-password"
                   className="text-[11px] font-semibold text-gov-600 hover:text-gov-800"
                 >
-                  Forgot password?
+                  {t('forgotPasswordLink', 'Forgot password?')}
                 </Link>
               </div>
               <div className="relative">
@@ -143,7 +144,7 @@ export const LoginPage = () => {
                   type="button"
                   onClick={() => setShowPassword(prev => !prev)}
                   className="absolute right-2.5 top-2.5 text-slate-400 hover:text-slate-600 focus:outline-none cursor-pointer"
-                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  aria-label={showPassword ? t('form.hidePassword', 'Hide password') : t('form.showPassword', 'Show password')}
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
@@ -157,7 +158,7 @@ export const LoginPage = () => {
               loading={loading}
               icon={ArrowRight}
             >
-              Sign In to Dashboard
+              {t('signInButton', 'Sign In to Dashboard')}
             </Button>
           </form>
 
@@ -166,14 +167,14 @@ export const LoginPage = () => {
             <div className="flex items-center justify-between mb-3">
               <div>
                 <span className="text-[10px] font-black uppercase tracking-wider text-gov-800 bg-gov-100 px-2 py-0.5 rounded border border-gov-200">
-                  SIH 2026 Evaluation • 1 Account Per Role
+                  {t('accountPerRole', 'SIH 2026 Evaluation • 1 Account Per Role')}
                 </span>
                 <h3 className="text-xs font-black text-slate-900 mt-1 uppercase tracking-wider font-outfit">
-                  Role-Based Demo Accounts ({DEMO_PERSONAS.length} Roles)
+                  {t('demoAccountsTitle', `Role-Based Demo Accounts (${DEMO_PERSONAS.length} Roles)`)}
                 </h3>
               </div>
               <span className="text-[11px] font-mono text-gov-700 bg-gov-50 px-2 py-0.5 rounded border border-gov-200 font-bold">
-                Pass: Demo@12345
+                {t('passDemo', 'Pass: Demo@12345')}
               </span>
             </div>
 
@@ -187,14 +188,14 @@ export const LoginPage = () => {
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-bold text-slate-900">{persona.name}</span>
                       <Badge variant={persona.badgeVariant} size="xs">
-                        {persona.role}
+                        {t(persona.role)}
                       </Badge>
                     </div>
                     <div className="text-[11px] text-slate-600 font-medium truncate mt-0.5">
                       {persona.organization}
                     </div>
                     <div className="text-[10px] text-slate-400 mt-0.5">
-                      {persona.description}
+                      {t(persona.description)}
                     </div>
                     <div className="text-[10px] font-mono text-gov-600 mt-0.5">
                       {persona.email}
@@ -210,7 +211,7 @@ export const LoginPage = () => {
                     loading={loading && email === persona.email}
                     onClick={() => handleUseDemoAccount(persona)}
                   >
-                    Use Demo Account
+                    {t('useDemoAccountBtn', 'Use Demo Account')}
                   </Button>
                 </div>
               ))}
@@ -218,9 +219,9 @@ export const LoginPage = () => {
           </div>
 
           <div className="mt-6 text-center text-xs text-slate-500">
-            Don't have an account?{' '}
+            {t('dontHaveAccount', "Don't have an account?")}{' '}
             <Link to="/register" className="font-bold text-gov-600 hover:text-gov-800 underline">
-              Register here
+              {t('registerHere', 'Register here')}
             </Link>
           </div>
         </div>
