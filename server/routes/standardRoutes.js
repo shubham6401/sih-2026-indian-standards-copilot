@@ -10,6 +10,7 @@ const router = express.Router();
 
 router.get('/stats', getKnowledgeBaseStats);
 router.get('/filters', getCategoriesAndFilters);
+router.get('/categories', getCategoriesAndFilters);
 router.get('/search', searchStandards);
 router.get('/', searchStandards);
 router.get('/:id', getStandardById);

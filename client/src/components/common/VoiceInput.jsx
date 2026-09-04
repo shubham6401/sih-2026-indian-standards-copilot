@@ -78,7 +78,7 @@ export const VoiceInput = ({ onTranscript, className = '' }) => {
 
   const toggleListen = () => {
     if (!isSupported) {
-      alert(t('voiceNotSupported', 'Voice speech-to-text is not supported in this browser. Please use Chrome or Edge, or type your specification directly.'));
+      setErrorMessage(t('voiceNotSupported', 'Voice speech-to-text is not supported in this browser. Please use Chrome or Edge, or type your specification directly.'));
       return;
     }
 

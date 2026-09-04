@@ -21,16 +21,19 @@ export const AdminDemoManagementPage = () => {
   const [isResetModalOpen, setIsResetModalOpen] = useState(false);
   const [isResetting, setIsResetting] = useState(false);
   const [resetMessage, setResetMessage] = useState('');
+  const [resetError, setResetError] = useState('');
 
   const handleReset = async () => {
     setIsResetting(true);
+    setResetError('');
     try {
       const res = await api.resetAdminDemoData();
       setResetMessage(res.message || 'Demo dataset successfully restored to deterministic baseline.');
       setIsResetModalOpen(false);
       setTimeout(() => setResetMessage(''), 8000);
     } catch (err) {
-      alert('Reset failed: ' + err.message);
+      setResetError('Reset failed: ' + err.message);
+      setTimeout(() => setResetError(''), 8000);
     } finally {
       setIsResetting(false);
     }
@@ -69,6 +72,13 @@ export const AdminDemoManagementPage = () => {
         <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 py-3 rounded-2xl text-xs flex items-center gap-2 animate-fade-in">
           <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
           <span className="font-semibold">{resetMessage}</span>
+        </div>
+      )}
+
+      {resetError && (
+        <div className="bg-rose-50 border border-rose-200 text-rose-800 px-4 py-3 rounded-2xl text-xs flex items-center gap-2 animate-fade-in">
+          <AlertTriangle className="w-5 h-5 text-rose-600 shrink-0" />
+          <span className="font-semibold">{resetError}</span>
         </div>
       )}
 

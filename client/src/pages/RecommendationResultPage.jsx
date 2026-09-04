@@ -764,6 +764,7 @@ AI-generated draft technical schedule. Indenting Officers must verify the active
             </div>
             <div className="flex items-center gap-2">
               <Button
+                data-testid="copy-schedule-btn"
                 size="xs"
                 variant="secondary"
                 icon={copiedSpec ? Check : Copy}
@@ -772,6 +773,7 @@ AI-generated draft technical schedule. Indenting Officers must verify the active
                 {copiedSpec ? 'Copied' : 'Copy Schedule'}
               </Button>
               <Button
+                data-testid="generate-pdf-spec-btn"
                 size="xs"
                 variant="primary"
                 icon={Download}

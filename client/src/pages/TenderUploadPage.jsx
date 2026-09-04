@@ -34,7 +34,7 @@ export const TenderUploadPage = () => {
     {
       id: 'led-street-lighting',
       title: 'CPWD Smart City LED Street Lighting Tender NIT-2026',
-      fileName: 'CPWD_Smart_City_LED_Street_Lighting_Tender_NIT_2026.pdf',
+      fileName: 'sample_led_street_light_tender.pdf',
       url: '/sample_tenders/sample_led_street_light_tender.pdf',
       category: 'LED Lighting',
       scope: '100W energy efficient LED Street Lights with IP66 waterproof housing, surge protection, and IS 10322 compliance.',
@@ -43,11 +43,38 @@ export const TenderUploadPage = () => {
     {
       id: 'substation-power-transformer',
       title: 'NTPC 11kV Power Distribution Transformer Tender NIT-2026',
-      fileName: 'NTPC_11kV_Power_Distribution_Transformer_NIT_2026.pdf',
+      fileName: 'sample_power_transformer_tender.pdf',
       url: '/sample_tenders/sample_power_transformer_tender.pdf',
       category: 'Electrical Equipment',
       scope: 'Outdoor oil-immersed distribution transformers complying with BIS Scheme I mandate and BEE 5-Star efficiency.',
       standardsTarget: 'IS 1180 (Part 1): 2014, IS 2026, CEA Guidelines'
+    },
+    {
+      id: 'tmt-steel-reinforcement',
+      title: 'NHAI Highway Bridge High-Yield Fe 500D TMT Steel Rebar NIT-2026',
+      fileName: 'sample_tmt_steel_tender.pdf',
+      url: '/sample_tenders/sample_tmt_steel_tender.pdf',
+      category: 'Steel & Construction Materials',
+      scope: 'High strength deformed steel bars and wires for concrete reinforcement under Ministry of Steel mandatory QCO.',
+      standardsTarget: 'IS 1786:2008, IS 2062:2011, IS 1608:2005'
+    },
+    {
+      id: 'borewell-submersible-pump',
+      title: 'Jal Jeevan Mission Deepwell Submersible Pump Sets NIT-2026',
+      fileName: 'sample_submersible_pump_tender.pdf',
+      url: '/sample_tenders/sample_submersible_pump_tender.pdf',
+      category: 'Water Supply & Mechanical Machinery',
+      scope: 'Submersible pump-sets for clear, cold, fresh water with BEE 5-Star efficiency rating and SS304 impellers.',
+      standardsTarget: 'IS 8034:2018, IS 9283:2013, IS 14536:1998'
+    },
+    {
+      id: 'lt-xlpe-armoured-cable',
+      title: 'State Discom 1.1kV Underground LT Armoured XLPE Cable NIT-2026',
+      fileName: 'sample_lt_xlpe_cable_tender.pdf',
+      url: '/sample_tenders/sample_lt_xlpe_cable_tender.pdf',
+      category: 'Electrical Cables & Conductors',
+      scope: 'Crosslinked polyethylene insulated thermoplastic sheathed power cables under DPIIT Mandatory Quality Control Order.',
+      standardsTarget: 'IS 7098 (Part 1):1988, IS 8130:2013, IS 5831:1984'
     }
   ];
 

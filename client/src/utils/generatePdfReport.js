@@ -312,23 +312,25 @@ export const generateProcurementReportPdf = (analysis = {}) => {
     ];
 
     topGaps.forEach((g) => {
-      pdf.setFillColor(g.severity === 'HIGH' ? 254 : 254, g.severity === 'HIGH' ? 242 : 243, g.severity === 'HIGH' ? 242 : 199);
+      const sev = String(g.severity || 'MEDIUM').toUpperCase();
+      pdf.setFillColor(sev === 'HIGH' ? 254 : 254, sev === 'HIGH' ? 242 : 243, sev === 'HIGH' ? 242 : 199);
       pdf.roundedRect(margin + 5, gY - 3, 16, 6, 1, 1, 'F');
       pdf.setFont('helvetica', 'bold');
       pdf.setFontSize(6.5);
-      pdf.setTextColor(g.severity === 'HIGH' ? C_ROSE[0] : C_AMBER[0],
-                       g.severity === 'HIGH' ? C_ROSE[1] : C_AMBER[1],
-                       g.severity === 'HIGH' ? C_ROSE[2] : C_AMBER[2]);
-      pdf.text(g.severity, margin + 13, gY + 1.2, { align: 'center' });
+      pdf.setTextColor(sev === 'HIGH' ? C_ROSE[0] : C_AMBER[0],
+                       sev === 'HIGH' ? C_ROSE[1] : C_AMBER[1],
+                       sev === 'HIGH' ? C_ROSE[2] : C_AMBER[2]);
+      pdf.text(sev, margin + 13, gY + 1.2, { align: 'center' });
 
       pdf.setFont('helvetica', 'bold');
       pdf.setFontSize(7.5);
       pdf.setTextColor(...C_DARK);
-      pdf.text(`${g.category}:`, margin + 24, gY + 1.2);
+      const cat = String(g.category || g.parameter || 'Parameter');
+      pdf.text(`${cat.substring(0, 18)}:`, margin + 24, gY + 1.2);
 
       pdf.setFont('helvetica', 'normal');
       pdf.setTextColor(71, 85, 105);
-      const desc = g.title || g.description;
+      const desc = String(g.title || g.description || g.impact || g.explanation || g.recommendation || 'Specification adjustment required');
       pdf.text(desc.length > 70 ? desc.substring(0, 68) + '...' : desc, margin + 54, gY + 1.2);
 
       gY += 12;
@@ -819,6 +821,7 @@ export const generateProcurementReportPdf = (analysis = {}) => {
     ];
 
     gapRows.forEach((g, idx) => {
+      const sev = String(g.severity || 'MEDIUM').toUpperCase();
       pdf.setFillColor(idx % 2 === 0 ? 255 : 248, idx % 2 === 0 ? 255 : 250, idx % 2 === 0 ? 255 : 252);
       pdf.rect(margin, yPos, contentWidth, 14, 'F');
       pdf.setDrawColor(...C_BORDER);
@@ -826,24 +829,26 @@ export const generateProcurementReportPdf = (analysis = {}) => {
 
       pdf.setFont('helvetica', 'bold');
       pdf.setFontSize(7);
-      pdf.setTextColor(g.severity === 'HIGH' ? C_ROSE[0] : C_AMBER[0],
-                       g.severity === 'HIGH' ? C_ROSE[1] : C_AMBER[1],
-                       g.severity === 'HIGH' ? C_ROSE[2] : C_AMBER[2]);
-      pdf.text(g.severity, margin + 4, yPos + 8);
+      pdf.setTextColor(sev === 'HIGH' ? C_ROSE[0] : C_AMBER[0],
+                       sev === 'HIGH' ? C_ROSE[1] : C_AMBER[1],
+                       sev === 'HIGH' ? C_ROSE[2] : C_AMBER[2]);
+      pdf.text(sev, margin + 4, yPos + 8);
 
       pdf.setFont('helvetica', 'bold');
       pdf.setTextColor(...C_DARK);
-      pdf.text(g.category, margin + 24, yPos + 8);
+      const cat = String(g.category || g.parameter || 'Technical Spec');
+      pdf.text(cat.length > 18 ? cat.substring(0, 16) + '...' : cat, margin + 24, yPos + 8);
 
       pdf.setFont('helvetica', 'normal');
       pdf.setFontSize(7);
       pdf.setTextColor(71, 85, 105);
-      const desc = g.title || g.description;
+      const desc = String(g.title || g.description || g.impact || g.explanation || 'Specification gap identified');
       pdf.text(desc.length > 40 ? desc.substring(0, 38) + '...' : desc, margin + 60, yPos + 8);
 
       pdf.setFont('helvetica', 'bold');
       pdf.setTextColor(...C_NAVY);
-      pdf.text(g.remedy ? (g.remedy.length > 42 ? g.remedy.substring(0, 40) + '...' : g.remedy) : 'Add clause to NIT', margin + 120, yPos + 8);
+      const remedy = String(g.remedy || g.recommendation || g.action || 'Add clause to NIT');
+      pdf.text(remedy.length > 42 ? remedy.substring(0, 40) + '...' : remedy, margin + 120, yPos + 8);
 
       yPos += 14;
     });

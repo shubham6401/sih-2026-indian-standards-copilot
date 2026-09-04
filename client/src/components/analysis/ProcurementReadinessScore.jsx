@@ -28,17 +28,17 @@ export const ProcurementReadinessScore = ({ readiness }) => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-bold uppercase tracking-wider bg-gov-50 text-gov-800 px-2 py-0.5 rounded border border-gov-200">
-              Procurement Readiness Index
+            <span className="text-[10px] font-bold uppercase tracking-wider bg-amber-50 text-amber-900 px-2 py-0.5 rounded border border-amber-200">
+              ANVESHAK Analytical Index
             </span>
-            <span className="text-xs text-slate-500 font-medium">Pre-Bid Quality Assurance</span>
+            <span className="text-xs text-slate-500 font-medium">Pre-Bid Tender Quality Assurance</span>
           </div>
           <h3 className="text-base font-bold text-slate-900 font-outfit mt-1 flex items-center gap-2">
             <Gauge className="w-5 h-5 text-gov-600" />
             <span>Procurement Specification Readiness Score</span>
           </h3>
           <p className="text-xs text-slate-500 mt-0.5">
-            Diagnostic evaluation measuring specification completeness against national standards and GFR norms
+            Analytical score evaluated across 6 weighted technical dimensions (Standards 25%, Testing 20%, Safety 15%, QCO 15%, Currency 15%, Completeness 10%). Advisory only.
           </p>
         </div>
 

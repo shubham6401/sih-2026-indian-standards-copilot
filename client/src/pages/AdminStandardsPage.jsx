@@ -42,6 +42,7 @@ export const AdminStandardsPage = () => {
   // Approval state
   const [approvingId, setApprovingId] = useState(null);
   const [approvalSuccess, setApprovalSuccess] = useState('');
+  const [approvalError, setApprovalError] = useState('');
 
   const loadData = async () => {
     setLoading(true);
@@ -107,13 +108,15 @@ export const AdminStandardsPage = () => {
   const handleApproveRevision = async (std) => {
     const id = std._id || std.id;
     setApprovingId(id);
+    setApprovalError('');
     try {
       const res = await api.approveStandardRevision(id);
       setApprovalSuccess(res.message || 'Standard revision successfully published.');
       loadData();
       setTimeout(() => setApprovalSuccess(''), 6000);
     } catch (err) {
-      alert('Error approving revision: ' + err.message);
+      setApprovalError('Error approving revision: ' + err.message);
+      setTimeout(() => setApprovalError(''), 6000);
     } finally {
       setApprovingId(null);
     }
@@ -210,6 +213,13 @@ export const AdminStandardsPage = () => {
         <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 py-3 rounded-xl text-xs flex items-center gap-2 animate-fade-in">
           <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
           <span>{approvalSuccess}</span>
+        </div>
+      )}
+
+      {approvalError && (
+        <div className="bg-rose-50 border border-rose-200 text-rose-800 px-4 py-3 rounded-xl text-xs flex items-center gap-2 animate-fade-in">
+          <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
+          <span>{approvalError}</span>
         </div>
       )}
 

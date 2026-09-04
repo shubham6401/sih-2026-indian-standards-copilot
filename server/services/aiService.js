@@ -378,30 +378,27 @@ export const detectTenderGaps = (rawInput = '', primaryStandards = [], extracted
  * Calculate Procurement Readiness Score (0-100)
  */
 export const calculateProcurementReadinessScore = (gaps = [], outdated = [], primaryStandards = []) => {
-  let score = 95;
-
-  gaps.forEach(g => {
-    if (g.severity === 'HIGH') score -= 12;
-    else if (g.severity === 'MEDIUM') score -= 6;
-    else score -= 3;
-  });
-
-  outdated.forEach(() => {
-    score -= 10;
-  });
-
-  if (primaryStandards.length === 0) score -= 30;
-
-  const finalScore = Math.max(35, Math.min(score, 98));
-
   const breakdown = {
-    standardsCoverage: primaryStandards.length > 0 ? 92 : 40,
-    testingCoverage: gaps.some(g => g.category.includes('Testing')) ? 55 : 90,
-    safetyCoverage: gaps.some(g => g.category.includes('Reliability') || g.category.includes('Safety')) ? 68 : 94,
-    certificationCoverage: gaps.some(g => g.category.includes('Certification')) ? 50 : 96,
-    versionCurrency: outdated.length > 0 ? 60 : 95,
-    technicalCompleteness: Math.round(finalScore * 0.95)
+    standardsCoverage: primaryStandards.length >= 2 ? 96 : primaryStandards.length === 1 ? 88 : 40,
+    testingCoverage: gaps.some(g => (g.category || g.parameter || '').toLowerCase().includes('test')) ? 60 : 92,
+    safetyCoverage: gaps.some(g => (g.category || g.parameter || '').toLowerCase().includes('safety') || (g.category || g.parameter || '').toLowerCase().includes('protect') || (g.category || g.parameter || '').toLowerCase().includes('surge')) ? 65 : 94,
+    certificationCoverage: gaps.some(g => (g.category || g.parameter || '').toLowerCase().includes('cert') || (g.category || g.parameter || '').toLowerCase().includes('qco') || (g.category || g.parameter || '').toLowerCase().includes('isi')) ? 55 : 95,
+    versionCurrency: outdated.length > 0 ? 58 : 96,
+    technicalCompleteness: primaryStandards.length > 0 && gaps.length <= 1 ? 92 : gaps.length <= 3 ? 80 : 65
   };
+
+  // Weighted 6-factor ANVESHAK Analytical Index:
+  // Standards Coverage: 25%, Testing: 20%, Safety: 15%, Certification & QCO: 15%, Version Currency: 15%, Technical Completeness: 10%
+  const weighted = Math.round(
+    (breakdown.standardsCoverage * 0.25) +
+    (breakdown.testingCoverage * 0.20) +
+    (breakdown.safetyCoverage * 0.15) +
+    (breakdown.certificationCoverage * 0.15) +
+    (breakdown.versionCurrency * 0.15) +
+    (breakdown.technicalCompleteness * 0.10)
+  );
+
+  const finalScore = Math.max(35, Math.min(weighted, 98));
 
   return {
     totalScore: finalScore,

@@ -125,11 +125,12 @@ export const CertificationSection = ({ certifications = [], standards = [] }) =>
         </table>
       </div>
 
-      <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
+      <div className="mt-4 pt-3 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px] text-slate-500">
         <div className="flex items-center gap-1.5">
-          <Scale className="w-3.5 h-3.5 text-slate-400" />
-          <span>Under Rule 144 of GFR 2017 & DPIIT Quality Control Orders, goods covered under mandatory BIS certification must carry standard ISI/CRS marks and active license.</span>
+          <Scale className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+          <span>Under Rule 144 of GFR 2017 & DPIIT QCOs, goods under mandatory BIS certification must carry valid ISI/CRS marks.</span>
         </div>
+        <span className="italic text-slate-400">Advisory intelligence; official statutory verification remains with the procuring authority.</span>
       </div>
     </div>
   );
