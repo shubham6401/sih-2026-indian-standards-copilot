@@ -19,14 +19,40 @@ const userSchema = new mongoose.Schema({
     required: true,
     minlength: 6,
   },
+  organizationName: {
+    type: String,
+    trim: true,
+  },
   organization: {
     type: String,
-    required: true,
     trim: true,
+  },
+  accountType: {
+    type: String,
+    enum: [
+      'procurement_officer',
+      'government_department',
+      'psu',
+      'organization_admin',
+      'Procurement Officer',
+      'Government Department',
+      'PSU',
+      'Organization/Admin'
+    ],
+    default: 'procurement_officer',
   },
   role: {
     type: String,
-    enum: ['Procurement Officer', 'Government Department', 'PSU', 'Organization/Admin'],
+    enum: [
+      'Procurement Officer',
+      'Government Department',
+      'PSU',
+      'Organization/Admin',
+      'procurement_officer',
+      'government_department',
+      'psu',
+      'organization_admin'
+    ],
     default: 'Procurement Officer',
   },
   organizationType: {
@@ -42,6 +68,38 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   }
+});
+
+userSchema.pre('validate', function (next) {
+  if (this.organizationName && !this.organization) {
+    this.organization = this.organizationName;
+  }
+  if (this.organization && !this.organizationName) {
+    this.organizationName = this.organization;
+  }
+
+  const typeToRole = {
+    'procurement_officer': 'Procurement Officer',
+    'government_department': 'Government Department',
+    'psu': 'PSU',
+    'organization_admin': 'Organization/Admin'
+  };
+  const roleToType = {
+    'Procurement Officer': 'procurement_officer',
+    'Government Department': 'government_department',
+    'PSU': 'psu',
+    'Organization/Admin': 'organization_admin'
+  };
+
+  if (this.accountType && typeToRole[this.accountType] && !this.role) {
+    this.role = typeToRole[this.accountType];
+  } else if (this.role && roleToType[this.role] && !this.accountType) {
+    this.accountType = roleToType[this.role];
+  } else if (this.accountType && typeToRole[this.accountType]) {
+    this.role = typeToRole[this.accountType];
+  }
+
+  next();
 });
 
 userSchema.pre('save', async function (next) {

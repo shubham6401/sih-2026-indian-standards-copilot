@@ -131,7 +131,7 @@ export const Sidebar = ({ isOpen, onClose }) => {
               <div className="flex items-center justify-between gap-2 mb-2.5">
                 <div className="min-w-0 flex-1">
                   <p className="text-xs font-bold text-slate-900 truncate">{user.name}</p>
-                  <p className="text-[10px] text-slate-500 truncate">{user.organization || 'Government of India'}</p>
+                  <p className="text-[10px] text-slate-500 truncate">{user.organizationName || user.organization || 'Government of India'}</p>
                 </div>
                 <span className="text-[9px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded bg-gov-100 text-gov-800 shrink-0">
                   {currentRoleConfig.badgeTitle}

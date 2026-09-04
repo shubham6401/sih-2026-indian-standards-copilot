@@ -7,16 +7,68 @@ const memoryUsers = [];
 
 export const registerUser = async (req, res) => {
   try {
-    const { name, email, password, organization, role } = req.body;
+    const {
+      name,
+      email,
+      password,
+      organizationName,
+      organization,
+      accountType,
+      role
+    } = req.body;
 
-    if (!name || !email || !password || !organization) {
-      return res.status(400).json({ message: 'Please provide all required registration fields.' });
+    const cleanOrg = (organizationName || organization || '').trim();
+    const rawAccountType = (accountType || role || '').trim();
+
+    // Map accountType <-> role
+    const ACCOUNT_TYPE_MAP = {
+      'procurement_officer': { role: 'Procurement Officer', type: 'procurement_officer', orgType: 'Central Government' },
+      'government_department': { role: 'Government Department', type: 'government_department', orgType: 'Central Government' },
+      'psu': { role: 'PSU', type: 'psu', orgType: 'PSU' },
+      'organization_admin': { role: 'Organization/Admin', type: 'organization_admin', orgType: 'Private Institution' },
+      'Procurement Officer': { role: 'Procurement Officer', type: 'procurement_officer', orgType: 'Central Government' },
+      'Government Department': { role: 'Government Department', type: 'government_department', orgType: 'Central Government' },
+      'PSU': { role: 'PSU', type: 'psu', orgType: 'PSU' },
+      'Organization/Admin': { role: 'Organization/Admin', type: 'organization_admin', orgType: 'Private Institution' }
+    };
+
+    const matchedType = ACCOUNT_TYPE_MAP[rawAccountType];
+
+    // 1. Full Name cannot be empty
+    if (!name || !name.trim()) {
+      return res.status(400).json({ message: 'Please provide your full name.' });
+    }
+
+    // 2. Official Email must be valid
+    if (!email || !email.trim()) {
+      return res.status(400).json({ message: 'Please provide your official email address.' });
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email.trim())) {
+      return res.status(400).json({ message: 'Please provide a valid official email address.' });
+    }
+
+    // 3. Organization/Department value cannot be empty
+    if (!cleanOrg) {
+      return res.status(400).json({ message: 'Please provide your organization or department name.' });
+    }
+
+    // 4. Account Type must be selected and valid
+    if (!rawAccountType || !matchedType) {
+      return res.status(400).json({ message: 'Please select a valid Account Type.' });
+    }
+
+    // 5. Password validation
+    if (!password || password.length < 6) {
+      return res.status(400).json({ message: 'Password must be at least 6 characters long.' });
     }
 
     const cleanEmail = email.trim().toLowerCase();
     const cleanName = name.trim();
-    const cleanOrg = organization.trim();
-    const cleanRole = role || 'Procurement Officer';
+    const canonicalAccountType = matchedType.type;
+    const canonicalRole = matchedType.role;
+    const canonicalOrgType = matchedType.orgType;
 
     // Try DB first
     try {
@@ -29,8 +81,11 @@ export const registerUser = async (req, res) => {
         name: cleanName,
         email: cleanEmail,
         password,
+        organizationName: cleanOrg,
         organization: cleanOrg,
-        role: cleanRole
+        accountType: canonicalAccountType,
+        role: canonicalRole,
+        organizationType: canonicalOrgType
       });
 
       // Synchronize into memoryUsers cache for instant offline fallback
@@ -40,8 +95,10 @@ export const registerUser = async (req, res) => {
         name: cleanName,
         email: cleanEmail,
         password,
+        organizationName: cleanOrg,
         organization: cleanOrg,
-        role: cleanRole,
+        accountType: canonicalAccountType,
+        role: canonicalRole,
         createdAt: new Date()
       };
       if (memIdx >= 0) {
@@ -54,7 +111,9 @@ export const registerUser = async (req, res) => {
         _id: user._id,
         name: user.name,
         email: user.email,
-        organization: user.organization,
+        organizationName: user.organizationName || user.organization,
+        organization: user.organization || user.organizationName,
+        accountType: user.accountType || canonicalAccountType,
         role: user.role,
         token: generateToken(user)
       });
@@ -70,8 +129,10 @@ export const registerUser = async (req, res) => {
         name: cleanName,
         email: cleanEmail,
         password,
+        organizationName: cleanOrg,
         organization: cleanOrg,
-        role: cleanRole,
+        accountType: canonicalAccountType,
+        role: canonicalRole,
         createdAt: new Date()
       };
       memoryUsers.push(newUser);
@@ -80,7 +141,9 @@ export const registerUser = async (req, res) => {
         _id: newUser._id,
         name: newUser.name,
         email: newUser.email,
+        organizationName: newUser.organizationName,
         organization: newUser.organization,
+        accountType: newUser.accountType,
         role: newUser.role,
         token: generateToken(newUser)
       });
@@ -100,6 +163,13 @@ export const loginUser = async (req, res) => {
 
     const lowEmail = email.toLowerCase().trim();
 
+    const roleToType = {
+      'Procurement Officer': 'procurement_officer',
+      'Government Department': 'government_department',
+      'PSU': 'psu',
+      'Organization/Admin': 'organization_admin'
+    };
+
     // 1. Check verified demo accounts FIRST for instant 0ms response without DB lag
     const demoMatch = DEMO_USERS.find(u => u.email.toLowerCase() === lowEmail);
     if (demoMatch && (password === DEMO_PASSWORD || password === 'Demo@12345' || password.length >= 6)) {
@@ -107,8 +177,10 @@ export const loginUser = async (req, res) => {
         _id: demoMatch.demoKey || demoMatch._id || 'user_demo_01',
         name: demoMatch.name,
         email: demoMatch.email,
+        organizationName: demoMatch.organization,
         organization: demoMatch.organization,
         organizationType: demoMatch.organizationType || 'Central Government',
+        accountType: roleToType[demoMatch.role] || 'procurement_officer',
         role: demoMatch.role,
         isDemo: true
       };
@@ -127,7 +199,9 @@ export const loginUser = async (req, res) => {
           _id: user._id,
           name: user.name,
           email: user.email,
-          organization: user.organization,
+          organizationName: user.organizationName || user.organization,
+          organization: user.organization || user.organizationName,
+          accountType: user.accountType || roleToType[user.role] || 'procurement_officer',
           role: user.role,
           token: generateToken(user)
         });
@@ -143,7 +217,9 @@ export const loginUser = async (req, res) => {
         _id: memUser._id,
         name: memUser.name,
         email: memUser.email,
-        organization: memUser.organization,
+        organizationName: memUser.organizationName || memUser.organization,
+        organization: memUser.organization || memUser.organizationName,
+        accountType: memUser.accountType || roleToType[memUser.role] || 'procurement_officer',
         role: memUser.role,
         token: generateToken(memUser)
       });

@@ -74,7 +74,9 @@ export const AuthProvider = ({ children }) => {
         _id: data._id,
         name: data.name,
         email: cleanEmail,
-        organization: data.organization,
+        organizationName: data.organizationName || data.organization,
+        organization: data.organization || data.organizationName,
+        accountType: data.accountType,
         role: data.role,
         password: cleanPass
       });
@@ -90,7 +92,9 @@ export const AuthProvider = ({ children }) => {
             _id: localMatch._id || 'user_' + Date.now(),
             name: localMatch.name,
             email: localMatch.email,
-            organization: localMatch.organization,
+            organizationName: localMatch.organizationName || localMatch.organization,
+            organization: localMatch.organization || localMatch.organizationName,
+            accountType: localMatch.accountType || 'procurement_officer',
             role: localMatch.role || 'Procurement Officer'
           };
           setUser(authUser);
@@ -108,7 +112,9 @@ export const AuthProvider = ({ children }) => {
           _id: 'officer_cpwd_01',
           name: 'Sh. Rajesh Kumar',
           email: cleanEmail,
+          organizationName: 'Central Public Works Department (CPWD)',
           organization: 'Central Public Works Department (CPWD)',
+          accountType: 'procurement_officer',
           role: 'Procurement Officer'
         };
         setUser(fallbackDemo);
@@ -124,13 +130,24 @@ export const AuthProvider = ({ children }) => {
   const register = async (userData) => {
     const cleanEmail = (userData.email || '').trim().toLowerCase();
     const cleanName = (userData.name || '').trim();
-    const cleanOrg = (userData.organization || '').trim();
-    const cleanRole = userData.role || 'Procurement Officer';
+    const cleanOrg = (userData.organizationName || userData.organization || '').trim();
+    const cleanAccountType = userData.accountType || 'procurement_officer';
+
+    const typeToRole = {
+      'procurement_officer': 'Procurement Officer',
+      'government_department': 'Government Department',
+      'psu': 'PSU',
+      'organization_admin': 'Organization/Admin'
+    };
+
+    const cleanRole = userData.role || typeToRole[cleanAccountType] || 'Procurement Officer';
 
     const normalizedData = {
       name: cleanName,
       email: cleanEmail,
+      organizationName: cleanOrg,
       organization: cleanOrg,
+      accountType: cleanAccountType,
       role: cleanRole,
       password: userData.password
     };
@@ -140,7 +157,9 @@ export const AuthProvider = ({ children }) => {
       _id: 'user_' + Date.now(),
       name: cleanName,
       email: cleanEmail,
+      organizationName: cleanOrg,
       organization: cleanOrg,
+      accountType: cleanAccountType,
       role: cleanRole,
       password: userData.password
     });
@@ -162,7 +181,9 @@ export const AuthProvider = ({ children }) => {
         _id: 'user_' + Date.now(),
         name: cleanName,
         email: cleanEmail,
+        organizationName: cleanOrg,
         organization: cleanOrg,
+        accountType: cleanAccountType,
         role: cleanRole
       };
       setUser(fallbackUser);
@@ -182,7 +203,9 @@ export const AuthProvider = ({ children }) => {
         _id: 'user_demo_po_01',
         name: name || 'Rajesh Kumar',
         email: email || 'demo.procurement@anveshak.demo',
+        organizationName: organization || 'CPWD — Central Public Works Department',
         organization: organization || 'CPWD — Central Public Works Department',
+        accountType: 'procurement_officer',
         role: 'Procurement Officer',
         isDemo: true
       },
@@ -190,7 +213,9 @@ export const AuthProvider = ({ children }) => {
         _id: 'user_demo_dept_02',
         name: name || 'Priya Sharma',
         email: email || 'demo.department@anveshak.demo',
+        organizationName: organization || 'Department of Public Works',
         organization: organization || 'Department of Public Works',
+        accountType: 'government_department',
         role: 'Government Department',
         isDemo: true
       },
@@ -198,7 +223,9 @@ export const AuthProvider = ({ children }) => {
         _id: 'user_demo_psu_03',
         name: name || 'Amit Verma',
         email: email || 'demo.psu@anveshak.demo',
+        organizationName: organization || 'National Energy Infrastructure Corporation',
         organization: organization || 'National Energy Infrastructure Corporation',
+        accountType: 'psu',
         role: 'PSU',
         isDemo: true
       },
@@ -206,7 +233,9 @@ export const AuthProvider = ({ children }) => {
         _id: 'user_demo_admin_04',
         name: name || 'Anveshak Administrator',
         email: email || 'demo.admin@anveshak.demo',
+        organizationName: organization || 'Anveshak Platform',
         organization: organization || 'Anveshak Platform',
+        accountType: 'organization_admin',
         role: 'Organization/Admin',
         isDemo: true
       }

@@ -23,8 +23,8 @@ export const RegisterPage = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    organization: '',
-    role: 'Procurement Officer',
+    organizationName: '',
+    accountType: 'procurement_officer',
     password: '',
     confirmPassword: '',
   });
@@ -33,36 +33,50 @@ export const RegisterPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const roles = [
+  const accountTypes = [
     {
-      value: 'Procurement Officer',
+      value: 'procurement_officer',
+      role: 'Procurement Officer',
       label: 'Procurement Officer',
-      desc: 'Analyze tenders and identify applicable Indian Standards.'
+      desc: 'Analyze tenders and identify applicable Indian Standards.',
+      orgLabel: 'Organization / Department',
+      orgPlaceholder: 'e.g. Central Public Works Department (CPWD)'
     },
     {
-      value: 'Government Department',
+      value: 'government_department',
+      role: 'Government Department',
       label: 'Government Department',
-      desc: 'Manage department-level procurement intelligence & QCO mandates.'
+      desc: 'Manage department-level procurement intelligence and QCO mandates.',
+      orgLabel: 'Department Name',
+      orgPlaceholder: 'e.g. Ministry of Railways'
     },
     {
-      value: 'PSU',
+      value: 'psu',
+      role: 'PSU',
       label: 'Public Sector Undertaking (PSU)',
-      desc: 'Analyze and monitor PSU technical procurement compliance.'
+      desc: 'Analyze and monitor PSU technical procurement compliance.',
+      orgLabel: 'PSU Name',
+      orgPlaceholder: 'e.g. Bharat Heavy Electricals Limited (BHEL)'
     },
     {
-      value: 'Organization/Admin',
+      value: 'organization_admin',
+      role: 'Organization/Admin',
       label: 'Organization / Admin',
-      desc: 'Manage platform users, standards dataset, and system activity.'
+      desc: 'Manage organization users, standards compliance, and system activity.',
+      orgLabel: 'Organization Name',
+      orgPlaceholder: 'e.g. ABC Infrastructure Pvt. Ltd.'
     }
   ];
+
+  const currentAccountType = accountTypes.find(t => t.value === formData.accountType) || accountTypes[0];
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setError('');
   };
 
-  const handleRoleSelect = (roleValue) => {
-    setFormData({ ...formData, role: roleValue });
+  const handleAccountTypeSelect = (typeValue) => {
+    setFormData(prev => ({ ...prev, accountType: typeValue }));
     setError('');
   };
 
@@ -72,20 +86,37 @@ export const RegisterPage = () => {
 
     const trimmedName = formData.name.trim();
     const trimmedEmail = formData.email.trim().toLowerCase();
-    const trimmedOrg = formData.organization.trim();
+    const trimmedOrg = formData.organizationName.trim();
+    const selectedAccountType = formData.accountType;
 
-    if (!trimmedName || !trimmedEmail || !trimmedOrg) {
-      setError('Please fill in all mandatory fields.');
+    if (!trimmedName) {
+      setError('Full Name cannot be empty.');
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!trimmedEmail || !emailRegex.test(trimmedEmail)) {
+      setError('Please provide a valid official email address.');
+      return;
+    }
+
+    if (!trimmedOrg) {
+      setError(`Please provide your ${currentAccountType.orgLabel.replace(/\s*\*/, '').trim().toLowerCase()}.`);
+      return;
+    }
+
+    if (!selectedAccountType) {
+      setError('Please select an Account Type.');
+      return;
+    }
+
+    if (!formData.password || formData.password.length < 6) {
+      setError('Password must be at least 6 characters long.');
       return;
     }
 
     if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match. Please verify.');
-      return;
-    }
-
-    if (formData.password.length < 6) {
-      setError('Password must be at least 6 characters long.');
       return;
     }
 
@@ -95,8 +126,10 @@ export const RegisterPage = () => {
       await register({
         name: trimmedName,
         email: trimmedEmail,
+        organizationName: trimmedOrg,
         organization: trimmedOrg,
-        role: formData.role,
+        accountType: selectedAccountType,
+        role: currentAccountType.role,
         password: formData.password
       });
 
@@ -192,37 +225,37 @@ export const RegisterPage = () => {
               </div>
             </div>
 
-            {/* Organization / Department */}
+            {/* Dynamic Organization / Department */}
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-1">
-                Organization / Department <span className="text-rose-500">*</span>
+                {currentAccountType.orgLabel} <span className="text-rose-500">*</span>
               </label>
               <div className="relative">
                 <input
                   type="text"
                   required
-                  name="organization"
-                  value={formData.organization}
+                  name="organizationName"
+                  value={formData.organizationName}
                   onChange={handleChange}
                   className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-300 focus:ring-2 focus:ring-gov-500/20 focus:border-gov-500"
-                  placeholder="e.g. Central Public Works Department (CPWD)"
+                  placeholder={currentAccountType.orgPlaceholder}
                 />
                 <Building className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
               </div>
             </div>
 
-            {/* Designated Role with Rich Descriptions */}
+            {/* Account Type with Selection Cards */}
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-1.5">
-                Designated Stakeholder Role <span className="text-rose-500">*</span>
+                Account Type <span className="text-rose-500">*</span>
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {roles.map((r) => {
-                  const isSelected = formData.role === r.value;
+                {accountTypes.map((t) => {
+                  const isSelected = formData.accountType === t.value;
                   return (
                     <div
-                      key={r.value}
-                      onClick={() => handleRoleSelect(r.value)}
+                      key={t.value}
+                      onClick={() => handleAccountTypeSelect(t.value)}
                       className={`p-3 rounded-xl border transition-all cursor-pointer flex flex-col justify-between ${
                         isSelected
                           ? 'bg-gov-50/70 border-gov-600 ring-2 ring-gov-600/20 shadow-xs'
@@ -231,14 +264,14 @@ export const RegisterPage = () => {
                     >
                       <div className="flex items-start justify-between gap-1.5">
                         <span className="font-bold text-xs text-slate-900 leading-snug">
-                          {r.label}
+                          {t.label}
                         </span>
                         {isSelected && (
                           <CheckCircle2 className="w-3.5 h-3.5 text-gov-600 shrink-0 mt-0.5" />
                         )}
                       </div>
                       <p className="text-[11px] text-slate-500 mt-1 leading-relaxed">
-                        {r.desc}
+                        {t.desc}
                       </p>
                     </div>
                   );

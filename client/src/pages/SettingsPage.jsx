@@ -24,7 +24,7 @@ export const SettingsPage = () => {
 
   const [geminiApiKey, setGeminiApiKey] = useState(localStorage.getItem('is_custom_gemini_key') || '');
   const [modelMode, setModelMode] = useState('hybrid');
-  const [organization, setOrganization] = useState(user?.organization || 'Central Public Works Department (CPWD)');
+  const [organization, setOrganization] = useState(user?.organizationName || user?.organization || 'Central Public Works Department (CPWD)');
   const [role, setRole] = useState(user?.role || 'Procurement Officer');
 
   const handleSaveSettings = (e) => {

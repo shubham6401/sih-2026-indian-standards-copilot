@@ -105,6 +105,7 @@ export const LoginPage = () => {
               <div className="relative">
                 <input
                   type="email"
+                  name="email"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -130,6 +131,7 @@ export const LoginPage = () => {
               <div className="relative">
                 <input
                   type={showPassword ? 'text' : 'password'}
+                  name="password"
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}

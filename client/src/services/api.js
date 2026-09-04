@@ -34,10 +34,13 @@ export const api = {
   },
 
   register: async (userData) => {
+    const orgValue = (userData.organizationName || userData.organization || '').trim();
     const payload = {
       name: (userData.name || '').trim(),
       email: (userData.email || '').trim().toLowerCase(),
-      organization: (userData.organization || '').trim(),
+      organizationName: orgValue,
+      organization: orgValue,
+      accountType: userData.accountType || 'procurement_officer',
       role: userData.role || 'Procurement Officer',
       password: userData.password || ''
     };

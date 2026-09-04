@@ -122,7 +122,7 @@ export const DashboardPage = () => {
               <span>{currentRoleConfig.displayName}</span>
             </span>
             <span className="text-xs text-slate-300 font-medium">
-              {user?.organization || currentRoleConfig.organizationExample}
+              {user?.organizationName || user?.organization || currentRoleConfig.organizationExample}
             </span>
           </div>
 
@@ -547,7 +547,7 @@ export const DashboardPage = () => {
                       <div key={u._id} className="py-2.5 flex items-center justify-between gap-2">
                         <div className="min-w-0 flex-1">
                           <p className="font-bold text-slate-900 truncate">{u.name}</p>
-                          <p className="text-[11px] text-slate-500 truncate">{u.email} • {u.organization}</p>
+                          <p className="text-[11px] text-slate-500 truncate">{u.email} • {u.organizationName || u.organization}</p>
                         </div>
                         <Badge variant={rCfg.badgeVariant} size="xs">
                           {rCfg.badgeTitle}

@@ -323,7 +323,7 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                         {currentRoleConfig.badgeTitle}
                       </span>
                     </div>
-                    <p className="text-[10px] text-slate-500 truncate max-w-[130px]">{user.organization || currentRoleConfig.displayName}</p>
+                    <p className="text-[10px] text-slate-500 truncate max-w-[130px]">{user.organizationName || user.organization || currentRoleConfig.displayName}</p>
                   </div>
                   <ChevronDown className="w-3.5 h-3.5 text-slate-400 hidden sm:block shrink-0" />
                 </button>
@@ -357,7 +357,7 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                       </span>
                     </div>
                     <p className="text-[11px] text-slate-500 truncate">{user.email}</p>
-                    <p className="text-[10px] text-slate-400 truncate mt-0.5">{user.organization}</p>
+                    <p className="text-[10px] text-slate-400 truncate mt-0.5">{user.organizationName || user.organization}</p>
                   </div>
 
                   {/* One-Click Demo Role Switcher */}
