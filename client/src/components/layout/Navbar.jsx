@@ -16,13 +16,15 @@ import {
   Workflow
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import { useAnalysis } from '../../context/AnalysisContext';
 import { useLanguage } from '../../context/LanguageContext';
 import { LanguageToggle } from '../common/LanguageToggle';
 import { KnowledgeBaseTransparencyModal } from '../analysis/KnowledgeBaseTransparencyModal';
-import { normalizeRole, ROLE_CONFIG } from '../../config/roleConfig';
+import { normalizeRole, ROLE_CONFIG, DEMO_PERSONAS } from '../../config/roleConfig';
 
 export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
   const { user, logout, switchRole } = useAuth();
+  const { loadHistory } = useAnalysis();
   const { lang, t } = useLanguage();
   const navigate = useNavigate();
   const [showProfileMenu, setShowProfileMenu] = useState(false);
@@ -366,74 +368,39 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                       Switch Demo Stakeholder Persona
                     </p>
                     <div className="space-y-1 text-xs">
-                      <button
-                        type="button"
-                        data-testid="switch-role-procurement"
-                        onClick={() => {
-                          switchRole('Procurement Officer');
-                          setShowProfileMenu(false);
-                          navigate('/dashboard');
-                        }}
-                        className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-between transition-colors cursor-pointer ${
-                          userRoleKey === 'procurement_officer'
-                            ? 'bg-gov-100 text-gov-900 font-bold'
-                            : 'hover:bg-slate-200/60 text-slate-700'
-                        }`}
-                      >
-                        <span>Rajesh Kumar (CPWD)</span>
-                        {userRoleKey === 'procurement_officer' && <span className="text-[10px] text-gov-700 font-extrabold">Active</span>}
-                      </button>
-                      <button
-                        type="button"
-                        data-testid="switch-role-dept"
-                        onClick={() => {
-                          switchRole('Government Department');
-                          setShowProfileMenu(false);
-                          navigate('/dashboard');
-                        }}
-                        className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-between transition-colors cursor-pointer ${
-                          userRoleKey === 'government_department'
-                            ? 'bg-gov-100 text-gov-900 font-bold'
-                            : 'hover:bg-slate-200/60 text-slate-700'
-                        }`}
-                      >
-                        <span>Priya Sharma (Public Works)</span>
-                        {userRoleKey === 'government_department' && <span className="text-[10px] text-gov-700 font-extrabold">Active</span>}
-                      </button>
-                      <button
-                        type="button"
-                        data-testid="switch-role-psu"
-                        onClick={() => {
-                          switchRole('PSU');
-                          setShowProfileMenu(false);
-                          navigate('/dashboard');
-                        }}
-                        className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-between transition-colors cursor-pointer ${
-                          userRoleKey === 'psu'
-                            ? 'bg-gov-100 text-gov-900 font-bold'
-                            : 'hover:bg-slate-200/60 text-slate-700'
-                        }`}
-                      >
-                        <span>Amit Verma (Energy PSU)</span>
-                        {userRoleKey === 'psu' && <span className="text-[10px] text-gov-700 font-extrabold">Active</span>}
-                      </button>
-                      <button
-                        type="button"
-                        data-testid="switch-role-admin"
-                        onClick={() => {
-                          switchRole('Organization/Admin');
-                          setShowProfileMenu(false);
-                          navigate('/dashboard');
-                        }}
-                        className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-between transition-colors cursor-pointer ${
-                          userRoleKey === 'admin'
-                            ? 'bg-gov-100 text-gov-900 font-bold'
-                            : 'hover:bg-slate-200/60 text-slate-700'
-                        }`}
-                      >
-                        <span>Anveshak Admin (Platform)</span>
-                        {userRoleKey === 'admin' && <span className="text-[10px] text-gov-700 font-extrabold">Active</span>}
-                      </button>
+                      {DEMO_PERSONAS.map((persona) => {
+                        const isActive = user?.email
+                          ? user.email.toLowerCase() === persona.email.toLowerCase()
+                          : userRoleKey === persona.roleKey;
+                        return (
+                          <button
+                            key={persona.email}
+                            type="button"
+                            data-testid={`switch-role-${persona.roleKey}`}
+                            onClick={async () => {
+                              try {
+                                await switchRole(persona);
+                                setShowProfileMenu(false);
+                                await loadHistory(true);
+                                navigate('/dashboard');
+                              } catch (err) {
+                                console.error('Persona switch error:', err);
+                              }
+                            }}
+                            className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-between transition-colors cursor-pointer ${
+                              isActive
+                                ? 'bg-gov-100 text-gov-900 font-bold'
+                                : 'hover:bg-slate-200/60 text-slate-700'
+                            }`}
+                          >
+                            <div className="truncate pr-2">
+                              <span className="block font-bold truncate">{persona.name}</span>
+                              <span className="block text-[10px] text-slate-500 truncate">{persona.organization} (32 Reports)</span>
+                            </div>
+                            {isActive && <span className="text-[10px] text-gov-700 font-extrabold shrink-0">Active</span>}
+                          </button>
+                        );
+                      })}
                     </div>
                   </div>
 

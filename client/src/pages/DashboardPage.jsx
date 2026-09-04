@@ -34,6 +34,7 @@ import { useAnalysis } from '../context/AnalysisContext';
 import { useLanguage } from '../context/LanguageContext';
 import { normalizeRole, ROLE_CONFIG, ROLE_KEYS } from '../config/roleConfig';
 import { api } from '../services/api';
+import { DemoPersonaBar } from '../components/common/DemoPersonaBar';
 
 export const DashboardPage = () => {
   const { user } = useAuth();
@@ -185,6 +186,9 @@ export const DashboardPage = () => {
           );
         })}
       </div>
+ 
+      {/* 2.5. Demo Stakeholder Persona Quick Switcher (Instant 1-Click Role Isolation) */}
+      <DemoPersonaBar title="Switch Demo Stakeholder Persona • Isolated Procurement Reports" />
 
       {/* 3. Role-Specific Main Dashboard Views */}
 

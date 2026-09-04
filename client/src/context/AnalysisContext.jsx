@@ -151,8 +151,8 @@ export const INITIAL_DEMO_HISTORY = [
 
 export const AnalysisProvider = ({ children }) => {
   const { user } = useAuth();
-  const userId = user?._id ? String(user._id) : null;
-  const isDemo = Boolean(user?.isDemo);
+  const userId = user?._id ? String(user._id) : (user?.id ? String(user.id) : null);
+  const isDemo = Boolean(user?.isDemo || user?.email?.includes('@anveshak.demo'));
 
   const [currentAnalysis, setCurrentAnalysisState] = useState(null);
   const [history, setHistory] = useState([]);
@@ -204,9 +204,18 @@ export const AnalysisProvider = ({ children }) => {
   };
 
   const loadHistory = async (force = false) => {
-    if (!userId && !isDemo) {
+    const activeUser = user || (() => {
+      try {
+        const u = localStorage.getItem('is_auth_user');
+        return u ? JSON.parse(u) : null;
+      } catch { return null; }
+    })();
+    const activeUserId = activeUser?._id || activeUser?.id;
+    const activeIsDemo = Boolean(activeUser?.isDemo || activeUser?.email?.includes('@anveshak.demo'));
+
+    if (!activeUserId && !activeIsDemo) {
       setHistory([]);
-      return;
+      return [];
     }
 
     try {
@@ -229,13 +238,15 @@ export const AnalysisProvider = ({ children }) => {
       );
 
       setHistory(merged);
-      if (userId) {
+      if (activeUserId) {
         try {
-          localStorage.setItem(getHistoryKey(userId), JSON.stringify(merged));
+          localStorage.setItem(getHistoryKey(activeUserId), JSON.stringify(merged));
         } catch (e) {}
       }
+      return merged;
     } catch (e) {
       console.warn('Failed to load history:', e.message);
+      return [];
     }
   };
 
@@ -274,7 +285,7 @@ export const AnalysisProvider = ({ children }) => {
   useEffect(() => {
     resetAnalysisState();
 
-    if (user && userId) {
+    if (user && (userId || isDemo)) {
       // 1. Try loading cached user history from user-scoped key
       try {
         const cachedHistory = localStorage.getItem(getHistoryKey(userId));
@@ -299,7 +310,7 @@ export const AnalysisProvider = ({ children }) => {
       loadHistory(true);
       loadSaved();
     }
-  }, [userId]);
+  }, [userId, user?.email, user?.accountType, user?.role]);
 
   const toggleSaveStandard = async (standard) => {
     const stdNum = standard.standardNumber || standard;

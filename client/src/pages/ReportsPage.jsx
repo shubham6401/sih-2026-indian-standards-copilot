@@ -23,6 +23,7 @@ import { Modal } from '../components/common/Modal';
 import { useAnalysis } from '../context/AnalysisContext';
 import { generateProcurementReportPdf } from '../utils/generatePdfReport';
 import { api } from '../services/api';
+import { DemoPersonaBar } from '../components/common/DemoPersonaBar';
 
 export const ReportsPage = () => {
   const navigate = useNavigate();
@@ -150,6 +151,9 @@ export const ReportsPage = () => {
           Generate New Report
         </Button>
       </div>
+
+      {/* Demo Stakeholder Account Quick Switcher (Direct 1-Click Role Isolation) */}
+      <DemoPersonaBar title="Switch Demo Account • 32 Pre-Seeded Reports Per Role" />
 
       {/* Filter and Search Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center gap-3 justify-between">

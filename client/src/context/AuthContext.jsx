@@ -82,20 +82,35 @@ export const AuthProvider = ({ children }) => {
     return await switchRole(role);
   };
 
-  const switchRole = async (role) => {
-    const demoCredentials = {
-      'Procurement Officer': { email: 'demo.procurement@anveshak.demo', password: 'Demo@12345' },
-      'Government Department': { email: 'demo.department@anveshak.demo', password: 'Demo@12345' },
-      'PSU': { email: 'demo.psu@anveshak.demo', password: 'Demo@12345' },
-      'Organization/Admin': { email: 'demo.admin@anveshak.demo', password: 'Demo@12345' }
-    };
+  const switchRole = async (roleOrPersona) => {
+    let email = 'procurement@anveshak.demo';
+    const password = 'Demo@12345';
 
-    const creds = demoCredentials[role] || demoCredentials['Procurement Officer'];
-    const data = await api.login({ email: creds.email, password: creds.password });
-    setUser(data);
-    localStorage.setItem('is_auth_token', data.token);
-    localStorage.setItem('is_auth_user', JSON.stringify(data));
-    return data;
+    if (roleOrPersona && typeof roleOrPersona === 'object') {
+      email = roleOrPersona.email || email;
+    } else {
+      const r = String(roleOrPersona || '').toLowerCase().trim();
+      if (r.includes('admin') || r.includes('directorate') || r === 'organization_admin') {
+        email = 'admin@anveshak.demo';
+      } else if (r.includes('psu') || r.includes('energy') || r.includes('ntpc')) {
+        email = 'psu@anveshak.demo';
+      } else if (r.includes('dept') || r.includes('department') || r.includes('mohua') || r.includes('public works')) {
+        email = 'department@anveshak.demo';
+      } else {
+        email = 'procurement@anveshak.demo';
+      }
+    }
+
+    setLoading(true);
+    try {
+      const data = await api.login({ email, password });
+      setUser(data);
+      localStorage.setItem('is_auth_token', data.token);
+      localStorage.setItem('is_auth_user', JSON.stringify(data));
+      return data;
+    } finally {
+      setLoading(false);
+    }
   };
 
   const logout = () => {
