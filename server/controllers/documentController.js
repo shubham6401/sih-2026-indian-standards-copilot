@@ -31,6 +31,9 @@ export const uploadAndAnalyzeDocument = async (req, res) => {
     if (!inferredProductName) {
       const lower = extractedText.toLowerCase();
       if (lower.includes('street light') || lower.includes('led luminaire')) inferredProductName = 'LED Street Lighting Equipment';
+      else if (lower.includes('submersible') || lower.includes('pump')) inferredProductName = 'Borewell Submersible Pump Set';
+      else if (lower.includes('transformer')) inferredProductName = 'Power & Distribution Transformer';
+      else if (lower.includes('tmt') || lower.includes('rebar') || lower.includes('fe 500') || lower.includes('steel bar')) inferredProductName = 'High-Yield TMT Steel Reinforcement Bars';
       else if (lower.includes('cement') || lower.includes('concrete')) inferredProductName = 'Structural Cement & Concrete';
       else if (lower.includes('pipe') || lower.includes('hdpe')) inferredProductName = 'Water Supply HDPE Piping Network';
       else if (lower.includes('solar') || lower.includes('photovoltaic')) inferredProductName = 'Solar PV Power Modules';
