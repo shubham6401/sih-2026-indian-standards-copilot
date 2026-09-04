@@ -132,7 +132,7 @@ export const NewAnalysisPage = () => {
       if (result.analysis) {
         setCurrentAnalysis(result.analysis);
         showToast('Standards recommendation report generated successfully!');
-        navigate(`/analysis/result/${result.analysis._id || result.analysis.id}`);
+        navigate(`/reports/${result.analysis._id || result.analysis.id}`);
       } else {
         setError(result.message || 'No matching Indian Standards identified. Please refine your technical requirements.');
         setAnalyzing(false);
@@ -165,22 +165,22 @@ export const NewAnalysisPage = () => {
 
       // Scenario 1: LED street light
       if (pName.includes('led') || spec.includes('led')) {
-        const demo = INITIAL_DEMO_HISTORY.find(h => h._id === 'demo_analysis_led_01');
+        const demo = INITIAL_DEMO_HISTORY.find(h => h._id === 'po_analysis_01' || h.demoKey === 'po_analysis_01');
         if (demo) {
           setCurrentAnalysis(demo);
           showToast('100W LED Street Light benchmark dossier loaded!', 'success');
-          navigate(`/analysis/result/${demo._id}`);
+          navigate(`/reports/${demo._id}`);
           return;
         }
       }
 
       // Scenario 2: Cement
       if (pName.includes('cement') || spec.includes('cement')) {
-        const demo = INITIAL_DEMO_HISTORY.find(h => h._id === 'demo_analysis_cement_02');
+        const demo = INITIAL_DEMO_HISTORY.find(h => h._id === 'po_analysis_04' || h.demoKey === 'po_analysis_04');
         if (demo) {
           setCurrentAnalysis(demo);
           showToast('53 Grade Cement benchmark dossier loaded!', 'success');
-          navigate(`/analysis/result/${demo._id}`);
+          navigate(`/reports/${demo._id}`);
           return;
         }
       }
@@ -220,7 +220,7 @@ export const NewAnalysisPage = () => {
       if (result.analysis) {
         setCurrentAnalysis(result.analysis);
         showToast('Standards recommendation report generated successfully!');
-        navigate(`/analysis/result/${result.analysis._id}`);
+        navigate(`/reports/${result.analysis._id}`);
       } else {
         setError(result.message || 'No matching Indian Standards identified.');
         setAnalyzing(false);

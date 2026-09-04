@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useParams } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { LanguageProvider } from './context/LanguageContext';
 import { AnalysisProvider } from './context/AnalysisContext';
@@ -31,6 +31,11 @@ import { ProtectedRoute } from './components/common/ProtectedRoute';
 
 import { ErrorBoundary } from './components/common/ErrorBoundary';
 
+export const ReportRedirect = () => {
+  const { id } = useParams();
+  return <Navigate to={`/reports/${id}`} replace />;
+};
+
 export function App() {
   return (
     <Router>
@@ -59,9 +64,9 @@ export function App() {
                 {/* Public Technical Exploration & Dossiers */}
                 <Route path="/explorer" element={<StandardsExplorerPage />} />
                 <Route path="/standards/:id" element={<StandardDetailsPage />} />
-                <Route path="/analysis/result/:id" element={<RecommendationResultPage />} />
-                <Route path="/analysis/:id" element={<RecommendationResultPage />} />
                 <Route path="/reports/:id" element={<RecommendationResultPage />} />
+                <Route path="/analysis/result/:id" element={<ReportRedirect />} />
+                <Route path="/analysis/:id" element={<ReportRedirect />} />
                 <Route path="/architecture" element={<ArchitecturePage />} />
                 <Route path="/evaluator-faq" element={<EvaluatorQuestionsPage />} />
 

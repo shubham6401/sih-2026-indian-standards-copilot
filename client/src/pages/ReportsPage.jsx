@@ -65,7 +65,7 @@ export const ReportsPage = () => {
     if (!id) return;
     setOpeningId(id);
     setCurrentAnalysis(rep);
-    navigate(`/analysis/result/${id}`);
+    navigate(`/reports/${id}`);
   };
 
   const openDeleteModal = (rep, e) => {

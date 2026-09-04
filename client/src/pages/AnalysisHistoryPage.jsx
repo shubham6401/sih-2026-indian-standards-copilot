@@ -62,7 +62,7 @@ export const AnalysisHistoryPage = () => {
     if (!id) return;
     setOpeningId(id);
     setCurrentAnalysis(item);
-    navigate(`/analysis/result/${id}`);
+    navigate(`/reports/${id}`);
   };
 
   const openDeleteModal = (item, e) => {

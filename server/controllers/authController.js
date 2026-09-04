@@ -172,22 +172,27 @@ export const loginUser = async (req, res) => {
 
     // 1. Check verified demo accounts FIRST for instant 0ms response without DB lag
     const demoMatch = DEMO_USERS.find(u => u.email.toLowerCase() === lowEmail);
-    if (demoMatch && (password === DEMO_PASSWORD || password === 'Demo@12345' || password.length >= 6)) {
-      const demoUser = {
-        _id: demoMatch.demoKey || demoMatch._id || 'user_demo_01',
-        name: demoMatch.name,
-        email: demoMatch.email,
-        organizationName: demoMatch.organization,
-        organization: demoMatch.organization,
-        organizationType: demoMatch.organizationType || 'Central Government',
-        accountType: roleToType[demoMatch.role] || 'procurement_officer',
-        role: demoMatch.role,
-        isDemo: true
-      };
-      return res.json({
-        ...demoUser,
-        token: generateToken(demoUser)
-      });
+    if (demoMatch) {
+      const validPass = demoMatch.password || DEMO_PASSWORD;
+      if (password === validPass || password === DEMO_PASSWORD) {
+        const demoUser = {
+          _id: demoMatch.demoKey || demoMatch._id || 'user_demo_01',
+          name: demoMatch.name,
+          email: demoMatch.email,
+          organizationName: demoMatch.organization,
+          organization: demoMatch.organization,
+          organizationType: demoMatch.organizationType || 'Central Government',
+          accountType: roleToType[demoMatch.role] || 'procurement_officer',
+          role: demoMatch.role,
+          isDemo: true
+        };
+        return res.json({
+          ...demoUser,
+          token: generateToken(demoUser)
+        });
+      } else {
+        return res.status(401).json({ message: 'Invalid password. Please check your credentials.' });
+      }
     }
 
     // 2. Try DB lookup

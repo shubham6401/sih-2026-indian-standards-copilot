@@ -93,7 +93,7 @@ export const TenderUploadPage = () => {
         setCurrentAnalysis(result.analysis);
         showToast('Tender document analyzed and standards mapped successfully!');
         setTimeout(() => {
-          navigate(`/analysis/result/${result.analysis._id}`);
+          navigate(`/reports/${result.analysis._id}`);
         }, 500);
       }
     } catch (err) {
@@ -177,7 +177,7 @@ export const TenderUploadPage = () => {
       setCurrentAnalysis(result.analysis);
       showToast('Tender document analyzed and standards mapped successfully!');
       setTimeout(() => {
-        navigate(`/analysis/result/${result.analysis._id}`);
+        navigate(`/reports/${result.analysis._id}`);
       }, 500);
     } catch (err) {
       clearInterval(stageTimer);

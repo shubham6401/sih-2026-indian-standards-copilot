@@ -9,7 +9,8 @@ const LOCAL_STORAGE_SAVED_KEY = 'is_saved_standards';
 // Initial starter history items so dashboard has realistic data on first load
 export const INITIAL_DEMO_HISTORY = [
   {
-    _id: 'demo_analysis_led_01',
+    _id: 'po_analysis_01',
+    demoKey: 'po_analysis_01',
     productName: '100W Outdoor LED Street Light',
     productCategory: 'LED Lighting',
     rawInput: '100W outdoor LED street lights for municipal roads with IP66 waterproof housing, energy efficacy above 120 lm/W and surge protection up to 10kV.',
@@ -48,7 +49,8 @@ export const INITIAL_DEMO_HISTORY = [
     createdAt: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString()
   },
   {
-    _id: 'demo_analysis_pump_04',
+    _id: 'po_analysis_24',
+    demoKey: 'po_analysis_24',
     productName: '5 HP Solar Submersible Water Pump Set',
     productCategory: 'Water Pumps & Motors',
     rawInput: '5 HP (3.7 kW) Solar Submersible Water Pump Set with 100m total head, stainless steel impeller, and MPPT inverter.',
@@ -87,7 +89,8 @@ export const INITIAL_DEMO_HISTORY = [
     createdAt: new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString()
   },
   {
-    _id: 'demo_analysis_cement_02',
+    _id: 'po_analysis_04',
+    demoKey: 'po_analysis_04',
     productName: 'Ordinary Portland Cement (53 Grade)',
     productCategory: 'Cement & Building Materials',
     rawInput: '53 Grade Ordinary Portland Cement for high-load bridge pier construction requiring 53 MPa 28-day compressive strength.',
@@ -115,7 +118,8 @@ export const INITIAL_DEMO_HISTORY = [
     createdAt: new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString()
   },
   {
-    _id: 'demo_analysis_helmet_03',
+    _id: 'po_analysis_13',
+    demoKey: 'po_analysis_13',
     productName: 'Industrial Safety Helmet (Hard Hat)',
     productCategory: 'Personal Protective Equipment',
     rawInput: 'Industrial safety helmet for construction site workers with 2200V electrical proof test and impact resistance.',

@@ -106,23 +106,6 @@ export const AuthProvider = ({ children }) => {
         }
       }
 
-      // 3. Check demo accounts fallback
-      if (cleanEmail.includes('demo') || cleanEmail.includes('officer') || cleanEmail.includes('cpwd')) {
-        const fallbackDemo = {
-          _id: 'officer_cpwd_01',
-          name: 'Sh. Rajesh Kumar',
-          email: cleanEmail,
-          organizationName: 'Central Public Works Department (CPWD)',
-          organization: 'Central Public Works Department (CPWD)',
-          accountType: 'procurement_officer',
-          role: 'Procurement Officer'
-        };
-        setUser(fallbackDemo);
-        localStorage.setItem('is_auth_token', 'demo_active_token_2026');
-        localStorage.setItem('is_auth_user', JSON.stringify(fallbackDemo));
-        return fallbackDemo;
-      }
-
       throw err;
     }
   };
