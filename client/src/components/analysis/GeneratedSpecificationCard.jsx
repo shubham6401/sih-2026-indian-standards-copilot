@@ -1,16 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FileText, Copy, Check, Edit3, Download, Sparkles, Printer } from 'lucide-react';
 import { Button } from '../common/Button';
 import { useAnalysis } from '../../context/AnalysisContext';
+import { formatSpecificationText } from '../../utils/formatSpecification';
 
 export const GeneratedSpecificationCard = ({ specification = '', productName = 'Procurement Item' }) => {
   const { showToast } = useAnalysis();
   const [copied, setCopied] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [content, setContent] = useState(specification);
+  const [content, setContent] = useState(() => formatSpecificationText(specification));
+
+  useEffect(() => {
+    setContent(formatSpecificationText(specification));
+  }, [specification]);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(content);
+    navigator.clipboard.writeText(String(content || ''));
     setCopied(true);
     showToast('Specification text copied to clipboard!', 'success');
     setTimeout(() => setCopied(false), 2500);

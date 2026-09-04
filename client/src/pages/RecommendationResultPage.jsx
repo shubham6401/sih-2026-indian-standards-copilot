@@ -35,6 +35,7 @@ import { GeneratedSpecificationCard } from '../components/analysis/GeneratedSpec
 import { KnowledgeBaseTransparencyModal } from '../components/analysis/KnowledgeBaseTransparencyModal';
 import { ExecutivePdfReport } from '../components/reports/ExecutivePdfReport';
 import { generateProcurementReportPdf } from '../utils/generatePdfReport';
+import { formatSpecificationText } from '../utils/formatSpecification';
 import { useAnalysis, INITIAL_DEMO_HISTORY } from '../context/AnalysisContext';
 import { api } from '../services/api';
 import confetti from 'canvas-confetti';
@@ -206,9 +207,7 @@ export const RecommendationResultPage = () => {
 
   const handleCopySpec = () => {
     if (!analysis?.improvedSpecification) return;
-    const specText = typeof analysis.improvedSpecification === 'string'
-      ? analysis.improvedSpecification
-      : JSON.stringify(analysis.improvedSpecification, null, 2);
+    const specText = formatSpecificationText(analysis.improvedSpecification);
     navigator.clipboard.writeText(specText);
     setCopiedSpec(true);
     showToast('Tender specification copied to clipboard!');
@@ -276,6 +275,22 @@ export const RecommendationResultPage = () => {
   const certificationsList = analysis.certifications || analysis.certificationRequirements || [];
   const allStandards = [...primaryList, ...relatedList];
 
+  const safeProductName = typeof analysis.productName === 'object'
+    ? (analysis.productName?.title || analysis.productName?.name || 'Procurement Item')
+    : String(analysis.productName || 'Procurement Item');
+
+  const safeProductCategory = typeof analysis.productCategory === 'object'
+    ? JSON.stringify(analysis.productCategory)
+    : String(analysis.productCategory || 'General');
+
+  const safeImprovedSpecification = useMemo(() => {
+    return formatSpecificationText(analysis.improvedSpecification);
+  }, [analysis.improvedSpecification]);
+
+  const safeExplanation = typeof analysis.explanation === 'object'
+    ? (analysis.explanation?.summary || JSON.stringify(analysis.explanation))
+    : (analysis.explanation || 'Analyzed against Bureau of Indian Standards database with high confidence alignment.');
+
   // Gaps counts by severity
   const highGaps = gapsList.filter(g => (g?.severity || '').toUpperCase() === 'HIGH');
   const medGaps = gapsList.filter(g => (g?.severity || '').toUpperCase() === 'MEDIUM');
@@ -313,7 +328,7 @@ export const RecommendationResultPage = () => {
             <ChevronRight className="w-3.5 h-3.5" />
             <Link to="/reports" className="hover:text-slate-800">Reports</Link>
             <ChevronRight className="w-3.5 h-3.5" />
-            <span className="text-slate-900 font-bold truncate max-w-xs">{analysis.productName}</span>
+            <span className="text-slate-900 font-bold truncate max-w-xs">{safeProductName}</span>
           </div>
         </div>
 
@@ -355,12 +370,12 @@ export const RecommendationResultPage = () => {
             </div>
 
             <h1 className="text-xl sm:text-2xl font-black text-slate-900 font-outfit tracking-tight">
-              {analysis.productName}
+              {safeProductName}
             </h1>
 
             <div className="text-xs text-slate-600 flex flex-wrap items-center gap-3 pt-0.5">
-              <span><strong>Category:</strong> {analysis.productCategory}</span>
-              {analysis.quantity && <span>• <strong>Quantity:</strong> {analysis.quantity}</span>}
+              <span><strong>Category:</strong> {safeProductCategory}</span>
+              {analysis.quantity && <span>• <strong>Quantity:</strong> {typeof analysis.quantity === 'object' ? JSON.stringify(analysis.quantity) : analysis.quantity}</span>}
               <button
                 type="button"
                 onClick={() => setIsKbModalOpen(true)}
@@ -431,7 +446,7 @@ export const RecommendationResultPage = () => {
               <span>Primary Recommendation Summary</span>
             </div>
             <p className="text-slate-700 leading-relaxed">
-              {analysis.explanation || 'Analyzed against Bureau of Indian Standards database with high confidence alignment.'}
+              {safeExplanation}
             </p>
           </div>
 
@@ -672,14 +687,14 @@ export const RecommendationResultPage = () => {
 
           {/* Generated Specification Card */}
           <GeneratedSpecificationCard
-            specification={analysis.improvedSpecification}
-            productName={analysis.productName}
+            specification={safeImprovedSpecification}
+            productName={safeProductName}
           />
 
           {/* Before vs After Comparison */}
           <BeforeAfterComparisonView
             rawInput={analysis.rawInput}
-            improvedSpecification={analysis.improvedSpecification}
+            improvedSpecification={safeImprovedSpecification}
             outdated={analysis.outdatedReferences || []}
             gaps={gapsList}
           />
@@ -700,7 +715,7 @@ export const RecommendationResultPage = () => {
                   Procurement Compliance Dossier
                 </h3>
                 <p className="text-xs text-slate-500">
-                  Synthesized for {analysis.productName} ({analysis.productCategory})
+                  Synthesized for {safeProductName} ({safeProductCategory})
                 </p>
               </div>
 

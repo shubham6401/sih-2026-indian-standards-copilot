@@ -182,6 +182,10 @@ export const getAnalysisById = async (req, res) => {
       analysis = memoryAnalyses.find(a => String(a._id) === String(id) || a.demoKey === id);
     }
 
+    if (!analysis && id === 'demo_analysis_led_01') {
+      analysis = memoryAnalyses.find(a => a.demoKey === 'po_analysis_01' || a.productCategory === 'Electrical & Lighting') || memoryAnalyses[0];
+    }
+
     if (!analysis) {
       return res.status(404).json({ message: 'Analysis report not found.' });
     }

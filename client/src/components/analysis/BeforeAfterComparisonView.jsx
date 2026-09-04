@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Columns, CheckCircle2, ArrowRight, Sparkles, PlusCircle, RefreshCw, FileText } from 'lucide-react';
 import { Badge } from '../common/Badge';
+import { formatSpecificationText } from '../../utils/formatSpecification';
 
 export const BeforeAfterComparisonView = ({
   rawInput = '',
@@ -8,6 +9,21 @@ export const BeforeAfterComparisonView = ({
   outdated = [],
   gaps = []
 }) => {
+  const formattedRaw = useMemo(() => {
+    if (!rawInput) return 'No raw specification text.';
+    if (typeof rawInput === 'object') {
+      try {
+        return JSON.stringify(rawInput, null, 2);
+      } catch {
+        return String(rawInput);
+      }
+    }
+    return String(rawInput);
+  }, [rawInput]);
+
+  const formattedSpec = useMemo(() => {
+    return formatSpecificationText(improvedSpecification) || 'Specification schedule generated.';
+  }, [improvedSpecification]);
   return (
     <div className="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-sm my-6 space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-slate-100">
@@ -66,7 +82,7 @@ export const BeforeAfterComparisonView = ({
             </div>
 
             <div className="p-4 bg-white rounded-xl border border-slate-200 text-xs text-slate-700 leading-relaxed font-mono whitespace-pre-wrap min-h-[220px]">
-              {rawInput || 'No raw specification text.'}
+              {formattedRaw}
             </div>
 
             {/* Identified Flaws Summary */}
@@ -97,7 +113,7 @@ export const BeforeAfterComparisonView = ({
             </div>
 
             <div className="p-4 bg-white rounded-xl border border-gov-200 text-xs text-slate-800 leading-relaxed font-mono whitespace-pre-wrap min-h-[220px] max-h-[380px] overflow-y-auto">
-              {improvedSpecification || 'Specification schedule generated.'}
+              {formattedSpec}
             </div>
 
             {/* Improvements Added */}
