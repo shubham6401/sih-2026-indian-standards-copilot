@@ -102,7 +102,11 @@ export const getAnalyses = async (req, res) => {
     const roleKey = normalizeRoleKey(user.accountType || user.role);
     const userId = user._id ? String(user._id) : null;
     const userOrg = (user.organizationName || user.organization || '').trim();
-    const isDemo = Boolean(user.isDemo);
+    const isDemo = Boolean(
+      user.isDemo ||
+      user.email?.toLowerCase().includes('@anveshak.demo') ||
+      String(user._id).startsWith('user_demo_')
+    );
 
     let list = [];
 

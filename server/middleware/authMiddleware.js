@@ -11,6 +11,12 @@ export const normalizeRoleKey = (role = '') => {
   return 'procurement_officer';
 };
 
+export const isDemoEmailOrId = (email = '', id = '') => {
+  const e = String(email).toLowerCase();
+  const i = String(id).toLowerCase();
+  return e.includes('@anveshak.demo') || i.startsWith('user_demo_');
+};
+
 export const generateToken = (user) => {
   const roleToType = {
     'Procurement Officer': 'procurement_officer',
@@ -27,6 +33,7 @@ export const generateToken = (user) => {
 
   const accountType = user.accountType || roleToType[user.role] || 'procurement_officer';
   const role = user.role || typeToRole[user.accountType] || 'Procurement Officer';
+  const isDemo = Boolean(user.isDemo || isDemoEmailOrId(user.email, user._id));
 
   return jwt.sign(
     {
@@ -36,7 +43,7 @@ export const generateToken = (user) => {
       accountType,
       role,
       organization: user.organizationName || user.organization || '',
-      isDemo: Boolean(user.isDemo)
+      isDemo
     },
     JWT_SECRET,
     { expiresIn: '30d' }
@@ -60,7 +67,10 @@ export const protect = async (req, res, next) => {
         } catch (err) {}
 
         if (dbUser) {
-          req.user = dbUser;
+          req.user = dbUser.toObject ? dbUser.toObject() : dbUser;
+          if (isDemoEmailOrId(req.user.email, req.user._id)) {
+            req.user.isDemo = true;
+          }
           return next();
         }
 
@@ -73,7 +83,7 @@ export const protect = async (req, res, next) => {
           organizationName: decoded.organization || '',
           accountType: decoded.accountType || 'procurement_officer',
           role: decoded.role || 'Procurement Officer',
-          isDemo: Boolean(decoded.isDemo)
+          isDemo: Boolean(decoded.isDemo || isDemoEmailOrId(decoded.email, decoded.id))
         };
 
         return next();

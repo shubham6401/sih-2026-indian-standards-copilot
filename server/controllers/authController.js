@@ -200,6 +200,7 @@ export const loginUser = async (req, res) => {
     try {
       user = await User.findOne({ email: lowEmail });
       if (user && (await user.matchPassword(password))) {
+        const isDemo = Boolean(user.isDemo || lowEmail.includes('@anveshak.demo') || String(user._id).startsWith('user_demo_'));
         return res.json({
           _id: user._id,
           name: user.name,
@@ -208,6 +209,7 @@ export const loginUser = async (req, res) => {
           organization: user.organization || user.organizationName,
           accountType: user.accountType || roleToType[user.role] || 'procurement_officer',
           role: user.role,
+          isDemo,
           token: generateToken(user)
         });
       }
