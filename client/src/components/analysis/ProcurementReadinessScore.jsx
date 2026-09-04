@@ -24,11 +24,11 @@ export const ProcurementReadinessScore = ({ readiness }) => {
   ];
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-sm my-6 space-y-6">
+    <div className="bg-white rounded-lg border border-slate-200 p-5 sm:p-6 shadow-2xs my-6 space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-extrabold uppercase tracking-wider bg-gov-100 text-gov-800 px-2 py-0.5 rounded border border-gov-200">
+            <span className="text-[10px] font-bold uppercase tracking-wider bg-gov-50 text-gov-800 px-2 py-0.5 rounded border border-gov-200">
               Procurement Readiness Index
             </span>
             <span className="text-xs text-slate-500 font-medium">Pre-Bid Quality Assurance</span>
@@ -43,12 +43,12 @@ export const ProcurementReadinessScore = ({ readiness }) => {
         </div>
 
         {/* Big Score Widget */}
-        <div className="flex items-center gap-3 bg-slate-50 p-3 rounded-2xl border border-slate-200 self-start sm:self-auto">
-          <div className="text-3xl font-black text-gov-800 font-outfit">
-            {score}<span className="text-base text-slate-400 font-medium">/100</span>
+        <div className="flex items-center gap-3 bg-slate-50 p-3 rounded-lg border border-slate-200 self-start sm:self-auto">
+          <div className="text-3xl font-bold text-gov-900 font-mono tracking-tight">
+            {score}<span className="text-base text-slate-400 font-medium font-sans">/100</span>
           </div>
           <div>
-            <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-gov-600 text-white block text-center">
+            <span className="text-xs font-bold px-2 py-0.5 rounded bg-gov-700 text-white block text-center">
               {safeReadiness.statusLabel || 'Readiness Evaluated'}
             </span>
             <span className="text-[10px] text-slate-500 mt-0.5 block">
@@ -61,19 +61,19 @@ export const ProcurementReadinessScore = ({ readiness }) => {
       {/* Breakdown Metrics Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {metrics.map((m, idx) => (
-          <div key={idx} className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 space-y-2">
+          <div key={idx} className="p-3 rounded-md bg-slate-50 border border-slate-200/90 space-y-2">
             <div className="flex justify-between items-center text-xs">
               <span className="font-bold text-slate-900">{m.label}</span>
-              <span className={`font-black ${m.value >= 80 ? 'text-emerald-700' : m.value >= 65 ? 'text-amber-700' : 'text-rose-700'}`}>
+              <span className={`font-mono font-bold ${m.value >= 80 ? 'text-emerald-700' : m.value >= 65 ? 'text-amber-700' : 'text-rose-700'}`}>
                 {m.value}%
               </span>
             </div>
 
             {/* Progress bar */}
-            <div className="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
+            <div className="w-full h-1.5 bg-slate-200 rounded overflow-hidden">
               <div
-                className={`h-full rounded-full transition-all duration-500 ${
-                  m.value >= 80 ? 'bg-emerald-500' : m.value >= 65 ? 'bg-amber-500' : 'bg-rose-500'
+                className={`h-full rounded transition-all duration-500 ${
+                  m.value >= 80 ? 'bg-emerald-600' : m.value >= 65 ? 'bg-amber-500' : 'bg-rose-600'
                 }`}
                 style={{ width: `${m.value}%` }}
               />

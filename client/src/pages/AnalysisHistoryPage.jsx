@@ -8,7 +8,7 @@ import {
   Download,
   Eye,
   Calendar,
-  Sparkles,
+  Plus,
   Layers,
   ArrowRight,
   AlertTriangle
@@ -143,7 +143,7 @@ export const AnalysisHistoryPage = () => {
         <Button
           size="sm"
           variant="primary"
-          icon={Sparkles}
+          icon={Plus}
           onClick={() => navigate('/analysis/new')}
         >
           {t('newAnalysis', 'New Analysis')}
@@ -152,16 +152,16 @@ export const AnalysisHistoryPage = () => {
 
       {/* Filter and Search Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center gap-3 justify-between">
-        {/* Status Filter Pills */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
+        {/* Status Filter Tabs */}
+        <div className="flex items-center gap-1 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
           {statusOptions.map((st) => (
             <button
               key={st}
               type="button"
               onClick={() => setStatusFilter(st)}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
+              className={`px-3 py-1.5 rounded-md text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
                 statusFilter === st
-                  ? 'bg-gov-700 text-white shadow-xs'
+                  ? 'bg-gov-700 text-white shadow-2xs'
                   : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
               }`}
             >
@@ -177,14 +177,14 @@ export const AnalysisHistoryPage = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder={t('Search history by product name, category, or specification...')}
-            className="w-full pl-10 pr-4 py-2 text-xs rounded-xl border border-slate-300 bg-white focus:ring-2 focus:ring-gov-500 focus:outline-none"
+            className="w-full pl-10 pr-4 py-2 text-xs rounded-md border border-slate-300 bg-white focus:ring-2 focus:ring-gov-500 focus:outline-none"
           />
           <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
         </div>
       </div>
 
       {/* Table (Desktop) & Cards (Mobile) */}
-      <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+      <div className="bg-white rounded-lg border border-slate-200 overflow-hidden shadow-2xs">
         {filteredHistory.length > 0 ? (
           <>
             {/* Desktop Table View */}
@@ -364,7 +364,7 @@ export const AnalysisHistoryPage = () => {
         size="sm"
       >
         <div className="space-y-4 pt-1">
-          <div className="flex items-start gap-3 p-3 bg-rose-50 border border-rose-200 rounded-xl text-rose-900 text-xs">
+          <div className="flex items-start gap-3 p-3 bg-rose-50 border border-rose-200 rounded-md text-rose-900 text-xs">
             <AlertTriangle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
             <div>
               <p className="font-bold">{t('Are you sure you want to delete this analysis?')}</p>

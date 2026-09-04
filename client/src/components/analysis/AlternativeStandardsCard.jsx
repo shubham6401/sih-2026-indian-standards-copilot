@@ -24,10 +24,10 @@ export const AlternativeStandardsCard = ({
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-xs my-6 space-y-5">
+    <div className="bg-white rounded-lg border border-slate-200 p-5 sm:p-6 shadow-2xs my-6 space-y-5">
       <div className="pb-4 border-b border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="text-[10px] font-extrabold uppercase tracking-wider bg-gov-100 text-gov-800 px-2 py-0.5 rounded border border-gov-200">
+          <span className="text-[10px] font-bold uppercase tracking-wider bg-gov-50 text-gov-800 px-2 py-0.5 rounded border border-gov-200">
             Ambiguity & Boundary Reasoning
           </span>
           <span className="text-xs text-slate-500 font-medium">Multi-Standard Disambiguation</span>
@@ -44,18 +44,18 @@ export const AlternativeStandardsCard = ({
       <div className="space-y-4">
         {/* Primary Standards */}
         {primaryStandards.slice(0, 1).map((prim, idx) => (
-          <div key={idx} className="p-4 rounded-xl bg-gov-50/70 border-2 border-gov-500/80 space-y-2">
+          <div key={idx} className="p-4 rounded-md bg-gov-50/60 border border-gov-300 space-y-2">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-extrabold uppercase bg-gov-600 text-white px-2 py-0.5 rounded shadow-2xs">
+                <span className="text-[10px] font-bold uppercase bg-gov-700 text-white px-2 py-0.5 rounded">
                   PRIMARY RECOMMENDATION
                 </span>
-                <span className="font-bold text-sm text-slate-900">{prim.standardNumber}</span>
+                <span className="font-bold text-sm text-gov-950 font-mono">{prim.standardNumber}</span>
               </div>
               <ScoreIndicator score={prim.relevanceScore || 94} label="Primary Match" size="sm" />
             </div>
             <p className="text-xs font-semibold text-slate-800">{prim.title}</p>
-            <p className="text-xs text-slate-600 italic">
+            <p className="text-xs text-slate-600">
               <strong>Core Fit: </strong> {prim.whyRecommended}
             </p>
           </div>
@@ -71,14 +71,14 @@ export const AlternativeStandardsCard = ({
             {altsList.map((alt, idx) => (
               <div
                 key={idx}
-                className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs space-y-2 hover:border-slate-300 transition-all"
+                className="p-4 rounded-md bg-slate-50 border border-slate-200 text-xs space-y-2 hover:border-slate-300 transition-all"
               >
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <div className="flex items-center gap-2">
                     <span className="text-[10px] font-bold uppercase bg-slate-200 text-slate-700 px-2 py-0.5 rounded">
                       ALTERNATIVE MATCH
                     </span>
-                    <span className="font-bold text-slate-900">{alt.standardNumber}</span>
+                    <span className="font-bold text-slate-900 font-mono">{alt.standardNumber}</span>
                   </div>
                   <ScoreIndicator score={alt.relevanceScore || 78} label="Alternative" size="sm" />
                 </div>

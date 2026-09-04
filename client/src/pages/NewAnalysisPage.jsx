@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
-  Sparkles,
   ArrowRight,
   FileText,
-  HelpCircle,
-  Zap,
   RotateCcw,
-  Languages,
-  CheckCircle2,
   AlertTriangle,
-  Mic
+  Layers
 } from 'lucide-react';
 import { Button } from '../components/common/Button';
 import { LoadingState } from '../components/common/LoadingState';
@@ -26,7 +21,7 @@ export const NewAnalysisPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { setCurrentAnalysis, showToast } = useAnalysis();
-  const { lang, setLang, t } = useLanguage();
+  const { lang, t } = useLanguage();
 
   const [formData, setFormData] = useState({
     productName: '',
@@ -98,14 +93,13 @@ export const NewAnalysisPage = () => {
 
   const executeAnalysis = async (customData = null) => {
     const dataToSubmit = customData || formData;
-    if (!dataToSubmit.rawInput.trim() && !dataToSubmit.productName.trim()) {
-      setError(t('errSpecOrNameRequired', 'Please provide a product name or technical specification requirement.'));
+    if (!dataToSubmit.productName || !dataToSubmit.rawInput) {
+      setError(t('errFillRequired', 'Please fill in all mandatory fields (Item Title and Technical Specification).'));
       return;
     }
 
-    setError('');
-    setAmbiguityData(null);
     setAnalyzing(true);
+    setError('');
 
     try {
       const result = await api.createAnalysis({
@@ -117,7 +111,6 @@ export const NewAnalysisPage = () => {
         language: lang
       });
 
-      // Handle Ambiguity / Missing Information (Scenario 3)
       if (result.requiresClarification) {
         setAmbiguityData({
           clarificationMessage: result.clarificationMessage,
@@ -241,17 +234,19 @@ export const NewAnalysisPage = () => {
   }
 
   return (
-    <div className="space-y-6 max-w-5xl mx-auto animate-fade-in pb-12">
+    <div className="space-y-5 max-w-5xl mx-auto animate-fade-in pb-12">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-bold uppercase tracking-wider text-gov-600 bg-gov-50 px-2.5 py-0.5 rounded border border-gov-200">
-              {t('nationalCopilot', 'Procurement Standards Copilot')}
+            <span className="text-[10px] font-bold uppercase tracking-wider text-gov-800 bg-gov-50 px-2 py-0.2 rounded border border-gov-200">
+              {t('nationalCopilot', 'Procurement Standards Workstation')}
             </span>
-            <span className="text-xs text-slate-500 font-medium">{lang === 'hi' ? 'द्विभाषी एनएलपी • अस्पष्टता आसूचना' : 'Bilingual NLP • Ambiguity Intelligence'}</span>
+            <span className="text-xs text-slate-500 font-medium">
+              {lang === 'hi' ? 'द्विभाषी एनएलपी • अस्पष्टता आसूचना' : 'Bilingual NLP • Ambiguity Intelligence'}
+            </span>
           </div>
-          <h1 className="text-2xl font-black text-slate-900 font-outfit tracking-tight">
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
             {t('newAnalysisHeaderTitle', 'Analyze Procurement Specification')}
           </h1>
           <p className="text-xs text-slate-500 mt-0.5">
@@ -259,20 +254,20 @@ export const NewAnalysisPage = () => {
           </p>
         </div>
 
-        <div className="flex items-center gap-2.5 shrink-0">
+        <div className="flex items-center gap-2 shrink-0">
           <VoiceInput onTranscript={handleVoiceTranscript} />
           <LanguageToggle />
         </div>
       </div>
 
-      {/* SIH Evaluator One-Click Scenario Switcher */}
+      {/* SIH Evaluator Benchmark Scenario Switcher */}
       <DemoScenarioSelector
         activeScenario={activeScenarioId}
         onSelectScenario={handleScenarioSelect}
         onRunScenario={handleRunScenario}
       />
 
-      {/* Ambiguity Clarification Modal Dialog (When Missing Info Detected) */}
+      {/* Ambiguity Clarification Modal Dialog */}
       {ambiguityData && (
         <ClarificationDialog
           ambiguityDetails={ambiguityData}
@@ -282,9 +277,9 @@ export const NewAnalysisPage = () => {
       )}
 
       {/* Main Analysis Form */}
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8">
-        <div className="flex items-center justify-between pb-4 border-b border-slate-100 mb-5">
-          <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider">
+      <div className="bg-white rounded-lg border border-slate-200 shadow-2xs p-5 sm:p-6">
+        <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
             {lang === 'hi' ? 'तकनीकी विनिर्देश पैरामीटर' : 'Technical Specification Parameters'}
           </h3>
           <button
@@ -297,7 +292,7 @@ export const NewAnalysisPage = () => {
         </div>
 
         {error && (
-          <div className="mb-5 p-4 bg-rose-50 border border-rose-200 text-rose-900 text-xs rounded-xl flex items-start gap-2.5">
+          <div className="mb-4 p-3 bg-rose-50 border border-rose-200 text-rose-900 text-xs rounded-md flex items-start gap-2">
             <AlertTriangle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
             <div className="flex-1">
               <span className="font-bold block">{lang === 'hi' ? 'विश्लेषण सूचना:' : 'Analysis Notice:'}</span>
@@ -306,12 +301,12 @@ export const NewAnalysisPage = () => {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-4">
           {/* Row 1: Product Name & Category */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             <div>
-              <label className="block text-xs font-bold text-slate-800 mb-1.5">
-                {t('productName')} <span className="text-rose-500">*</span>
+              <label className="block text-xs font-bold text-slate-800 mb-1">
+                {t('productName')} <span className="text-rose-600">*</span>
               </label>
               <input
                 type="text"
@@ -319,13 +314,13 @@ export const NewAnalysisPage = () => {
                 name="productName"
                 value={formData.productName}
                 onChange={(e) => setFormData({ ...formData, productName: e.target.value })}
-                className="w-full px-3.5 py-2 text-xs rounded-xl border border-slate-300 focus:ring-2 focus:ring-gov-500 focus:outline-none"
+                className="w-full px-3 py-1.5 text-xs rounded-md border border-slate-300 focus:ring-1 focus:ring-gov-700 focus:border-gov-700 focus:outline-none"
                 placeholder={lang === 'hi' ? 'उदा. 100W आउटडोर एलईडी स्ट्रीट लाइट' : 'e.g. 100W Outdoor LED Street Light'}
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-800 mb-1.5">
+              <label className="block text-xs font-bold text-slate-800 mb-1">
                 {t('category')}
               </label>
               <select
@@ -333,7 +328,7 @@ export const NewAnalysisPage = () => {
                 name="productCategory"
                 value={formData.productCategory}
                 onChange={(e) => setFormData({ ...formData, productCategory: e.target.value })}
-                className="w-full px-3.5 py-2 text-xs rounded-xl border border-slate-300 bg-white focus:ring-2 focus:ring-gov-500 focus:outline-none"
+                className="w-full px-3 py-1.5 text-xs rounded-md border border-slate-300 bg-white focus:ring-1 focus:ring-gov-700 focus:border-gov-700 focus:outline-none"
               >
                 <option value="LED Lighting">{lang === 'hi' ? 'एलईडी लाइटिंग और ल्यूमिनेयर' : 'LED Lighting & Luminaires'}</option>
                 <option value="Cement & Building Materials">{lang === 'hi' ? 'सीमेंट, कंक्रीट और निर्माण सामग्री' : 'Cement, Concrete & Building Materials'}</option>
@@ -351,9 +346,9 @@ export const NewAnalysisPage = () => {
 
           {/* Row 2: Specification / Requirement Textarea */}
           <div>
-            <div className="flex items-center justify-between mb-1.5">
+            <div className="flex items-center justify-between mb-1">
               <label className="block text-xs font-bold text-slate-800">
-                {t('specification')} <span className="text-rose-500">*</span>
+                {t('specification')} <span className="text-rose-600">*</span>
               </label>
               <span className="text-[11px] text-slate-400">{lang === 'hi' ? 'सरल भाषा, विनिर्देश या धाराएं' : 'Natural language, specs, or clauses'}</span>
             </div>
@@ -364,55 +359,56 @@ export const NewAnalysisPage = () => {
               name="rawInput"
               value={formData.rawInput}
               onChange={(e) => setFormData({ ...formData, rawInput: e.target.value })}
-              className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-300 focus:ring-2 focus:ring-gov-500 focus:outline-none leading-relaxed"
+              className="w-full px-3 py-2 text-xs rounded-md border border-slate-300 focus:ring-1 focus:ring-gov-700 focus:border-gov-700 focus:outline-none leading-relaxed font-sans"
               placeholder={t('specPlaceholder')}
             />
           </div>
 
           {/* Row 3: Quantity & Additional Notes */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             <div>
-              <label className="block text-xs font-bold text-slate-800 mb-1.5">
+              <label className="block text-xs font-bold text-slate-800 mb-1">
                 {t('quantity')}
               </label>
               <input
                 type="text"
                 value={formData.quantity}
                 onChange={(e) => setFormData({ ...formData, quantity: e.target.value })}
-                className="w-full px-3.5 py-2 text-xs rounded-xl border border-slate-300 focus:ring-2 focus:ring-gov-500 focus:outline-none"
-                placeholder={lang === 'hi' ? 'उदा. 500 इकाइयां / 1000 मीट्रिक टन' : 'e.g. 500 Units / 1000 Metric Tonnes'}
+                className="w-full px-3 py-1.5 text-xs rounded-md border border-slate-300 focus:ring-1 focus:ring-gov-700 focus:border-gov-700 focus:outline-none"
+                placeholder={lang === 'hi' ? 'उदा. 5,000 यूनिट्स' : 'e.g. 5,000 units'}
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-800 mb-1.5">
-                {t('additionalReqs')}
+              <label className="block text-xs font-bold text-slate-800 mb-1">
+                {lang === 'hi' ? 'अतिरिक्त विनिर्देश / डिलीवरी शर्तें' : 'Additional Environmental / Delivery Notes'}
               </label>
               <input
                 type="text"
                 value={formData.additionalRequirements}
                 onChange={(e) => setFormData({ ...formData, additionalRequirements: e.target.value })}
-                className="w-full px-3.5 py-2 text-xs rounded-xl border border-slate-300 focus:ring-2 focus:ring-gov-500 focus:outline-none"
-                placeholder={lang === 'hi' ? 'उदा. अनिवार्य 10kV सर्ज रक्षक, BIS स्कीम I' : 'e.g. Mandatory 10kV surge protector, BIS Scheme I'}
+                className="w-full px-3 py-1.5 text-xs rounded-md border border-slate-300 focus:ring-1 focus:ring-gov-700 focus:border-gov-700 focus:outline-none"
+                placeholder={lang === 'hi' ? 'उदा. तटीय वातावरण, उच्च आर्द्रता (IP66 आवश्यक)' : 'e.g. Coastal installation, surge protection 10kV'}
               />
             </div>
           </div>
 
           {/* Submit Action */}
-          <div className="pt-4 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div className="text-[11px] text-slate-500 flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-              <span>{lang === 'hi' ? 'पूर्ण मानक क्रॉस-रेफरेंसिंग, QCO जांच और कमी का पता लगाना' : 'Full normative cross-referencing, QCO checks & gap detection'}</span>
-            </div>
+          <div className="pt-2 flex items-center justify-between gap-3">
+            <p className="text-[11px] text-slate-500 hidden sm:block">
+              {lang === 'hi'
+                ? 'सिस्टम बीआईएस मानकों, संशोधन गजटों और अनिवार्य QCOs से मिलान करेगा।'
+                : 'Engine will audit against Bureau of Indian Standards, active amendments, and mandatory QCOs.'}
+            </p>
 
             <Button
               type="submit"
-              size="lg"
               variant="primary"
-              className="w-full sm:w-auto font-bold"
-              icon={Sparkles}
+              size="md"
+              icon={ArrowRight}
+              className="w-full sm:w-auto"
             >
-              {t('analyzeBtn', 'Analyze Specification')}
+              {t('analyzeButton', 'Run Standards Compliance Audit')}
             </Button>
           </div>
         </form>

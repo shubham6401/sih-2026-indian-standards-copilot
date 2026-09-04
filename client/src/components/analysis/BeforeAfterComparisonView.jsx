@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Columns, CheckCircle2, ArrowRight, Sparkles, PlusCircle, RefreshCw, FileText } from 'lucide-react';
+import { Columns, CheckCircle2, ArrowRight, PlusCircle, RefreshCw, FileText, ShieldCheck } from 'lucide-react';
 import { Badge } from '../common/Badge';
 import { formatSpecificationText } from '../../utils/formatSpecification';
 
@@ -24,12 +24,13 @@ export const BeforeAfterComparisonView = ({
   const formattedSpec = useMemo(() => {
     return formatSpecificationText(improvedSpecification) || 'Specification schedule generated.';
   }, [improvedSpecification]);
+
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-sm my-6 space-y-6">
+    <div className="bg-white rounded-lg border border-slate-200 p-5 sm:p-6 shadow-2xs my-6 space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-slate-100">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-extrabold uppercase tracking-wider bg-gov-100 text-gov-800 px-2 py-0.5 rounded border border-gov-200">
+            <span className="text-[10px] font-bold uppercase tracking-wider bg-gov-50 text-gov-800 px-2 py-0.5 rounded border border-gov-200">
               Procurement Transformation View
             </span>
             <span className="text-xs text-slate-500 font-medium">Before vs. After Specification Analysis</span>
@@ -46,19 +47,19 @@ export const BeforeAfterComparisonView = ({
 
       {/* Changes Highlight Bar */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-        <div className="p-3 bg-emerald-50 rounded-xl border border-emerald-200 text-emerald-900 flex items-center gap-2.5">
+        <div className="p-3 bg-emerald-50 rounded-md border border-emerald-200 text-emerald-900 flex items-center gap-2.5">
           <PlusCircle className="w-4 h-4 text-emerald-600 shrink-0" />
           <span>
             <strong>Added Standards: </strong> Core & testing norms linked
           </span>
         </div>
-        <div className="p-3 bg-blue-50 rounded-xl border border-blue-200 text-gov-900 flex items-center gap-2.5">
+        <div className="p-3 bg-blue-50 rounded-md border border-blue-200 text-gov-900 flex items-center gap-2.5">
           <RefreshCw className="w-4 h-4 text-gov-600 shrink-0" />
           <span>
             <strong>Version Updated: </strong> {outdated.length > 0 ? `${outdated.length} citations modernized` : 'Latest editions verified'}
           </span>
         </div>
-        <div className="p-3 bg-amber-50 rounded-xl border border-amber-200 text-amber-900 flex items-center gap-2.5">
+        <div className="p-3 bg-amber-50 rounded-md border border-amber-200 text-amber-900 flex items-center gap-2.5">
           <CheckCircle2 className="w-4 h-4 text-amber-600 shrink-0" />
           <span>
             <strong>Gaps Resolved: </strong> {gaps.length} technical clauses added
@@ -69,7 +70,7 @@ export const BeforeAfterComparisonView = ({
       {/* Split Comparison Columns */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Left Column: Original Tender */}
-        <div className="bg-slate-50 rounded-2xl border border-slate-200 p-5 flex flex-col justify-between">
+        <div className="bg-slate-50 rounded-lg border border-slate-200 p-5 flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between pb-3 border-b border-slate-200 mb-3">
               <span className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
@@ -81,12 +82,12 @@ export const BeforeAfterComparisonView = ({
               </Badge>
             </div>
 
-            <div className="p-4 bg-white rounded-xl border border-slate-200 text-xs text-slate-700 leading-relaxed font-mono whitespace-pre-wrap min-h-[220px]">
+            <div className="p-4 bg-white rounded-md border border-slate-200 text-xs text-slate-700 leading-relaxed font-mono whitespace-pre-wrap min-h-[220px]">
               {formattedRaw}
             </div>
 
             {/* Identified Flaws Summary */}
-            <div className="mt-4 p-3 bg-rose-50 rounded-xl border border-rose-200 text-xs text-rose-900 space-y-1">
+            <div className="mt-4 p-3 bg-rose-50 rounded-md border border-rose-200 text-xs text-rose-900 space-y-1">
               <span className="font-bold block text-[11px] uppercase tracking-wider text-rose-800">
                 Identified Weaknesses in Original:
               </span>
@@ -99,25 +100,25 @@ export const BeforeAfterComparisonView = ({
           </div>
         </div>
 
-        {/* Right Column: AI-Improved Specification */}
-        <div className="bg-gradient-to-br from-gov-50/70 to-blue-50/40 rounded-2xl border-2 border-gov-500/80 p-5 flex flex-col justify-between shadow-sm">
+        {/* Right Column: Upgraded Specification */}
+        <div className="bg-gov-50/30 rounded-lg border border-gov-300 p-5 flex flex-col justify-between shadow-2xs">
           <div>
             <div className="flex items-center justify-between pb-3 border-b border-gov-200 mb-3">
               <span className="text-xs font-bold text-gov-900 uppercase tracking-wider flex items-center gap-1.5">
-                <Sparkles className="w-4 h-4 text-amber-500" />
-                <span>AI-Improved Specification Schedule</span>
+                <CheckCircle2 className="w-4 h-4 text-gov-700" />
+                <span>Upgraded Specification Schedule</span>
               </span>
               <Badge variant="success" size="xs">
                 Tender Ready & GFR Aligned
               </Badge>
             </div>
 
-            <div className="p-4 bg-white rounded-xl border border-gov-200 text-xs text-slate-800 leading-relaxed font-mono whitespace-pre-wrap min-h-[220px] max-h-[380px] overflow-y-auto">
+            <div className="p-4 bg-white rounded-md border border-gov-200 text-xs text-slate-800 leading-relaxed font-mono whitespace-pre-wrap min-h-[220px] max-h-[380px] overflow-y-auto">
               {formattedSpec}
             </div>
 
             {/* Improvements Added */}
-            <div className="mt-4 p-3 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-emerald-950 space-y-1">
+            <div className="mt-4 p-3 bg-emerald-50 rounded-md border border-emerald-200 text-xs text-emerald-950 space-y-1">
               <span className="font-bold block text-[11px] uppercase tracking-wider text-emerald-800">
                 Upgrades Incorporated:
               </span>

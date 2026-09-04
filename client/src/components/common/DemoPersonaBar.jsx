@@ -7,7 +7,7 @@ import {
   CheckCircle2,
   Loader2,
   ArrowRight,
-  Sparkles
+  Sliders
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useAnalysis } from '../../context/AnalysisContext';
@@ -18,7 +18,7 @@ const PERSONA_ICONS = {
   [ROLE_KEYS.PROCUREMENT_OFFICER]: Shield,
   [ROLE_KEYS.GOVERNMENT_DEPARTMENT]: Building2,
   [ROLE_KEYS.PSU]: Zap,
-  [ROLE_KEYS.ADMIN]: Sparkles
+  [ROLE_KEYS.ADMIN]: Sliders
 };
 
 export const DemoPersonaBar = ({ className = '', title, compact = false }) => {
@@ -53,21 +53,21 @@ export const DemoPersonaBar = ({ className = '', title, compact = false }) => {
 
   return (
     <div
-      className={`bg-white rounded-2xl border border-slate-200/90 p-4 sm:p-5 shadow-2xs transition-all ${className}`}
+      className={`bg-white rounded-lg border border-slate-200 p-3.5 sm:p-4 shadow-2xs ${className}`}
       data-testid="demo-persona-bar"
     >
       {/* Header Info */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 mb-3.5 border-b border-slate-100">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2.5 mb-3 border-b border-slate-100">
         <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-lg bg-gov-100 text-gov-800 flex items-center justify-center shrink-0">
-            <Users className="w-3.5 h-3.5" />
+          <div className="w-5 h-5 rounded bg-gov-100 text-gov-800 flex items-center justify-center shrink-0">
+            <Users className="w-3 h-3" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="text-xs sm:text-sm font-bold text-slate-900 font-outfit uppercase tracking-wider">
+              <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
                 {displayTitle}
               </h3>
-              <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200">
+              <span className="text-[10px] font-bold uppercase px-1.5 py-0.2 rounded bg-amber-50 text-amber-800 border border-amber-200">
                 {t('accountPerRole', '1 Account Per Role')}
               </span>
             </div>
@@ -77,14 +77,14 @@ export const DemoPersonaBar = ({ className = '', title, compact = false }) => {
           </div>
         </div>
 
-        <div className="hidden md:flex items-center gap-2 text-[11px] text-slate-500 font-medium shrink-0">
-          <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+        <div className="hidden md:flex items-center gap-2 text-[11px] text-slate-600 font-medium shrink-0">
+          <span className="inline-block w-2 h-2 rounded-full bg-emerald-600" />
           <span>{t('liveRoleIsolationActive', 'Live Role Isolation Active')}</span>
         </div>
       </div>
 
       {/* 4 Demo Account Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
         {DEMO_PERSONAS.map((persona) => {
           const active = isPersonaActive(persona);
           const isSwitchingThis = switchingEmail === persona.email;
@@ -97,35 +97,35 @@ export const DemoPersonaBar = ({ className = '', title, compact = false }) => {
               disabled={isSwitchingThis || switchingEmail !== null}
               onClick={() => handleSwitch(persona)}
               data-testid={`quick-switch-${persona.roleKey}`}
-              className={`text-left p-3 sm:p-3.5 rounded-xl border transition-all relative flex flex-col justify-between group ${
+              className={`text-left p-3 rounded-md border transition-colors relative flex flex-col justify-between group ${
                 active
-                  ? 'bg-gov-50/70 border-gov-500 ring-2 ring-gov-500/20 shadow-xs'
-                  : 'bg-slate-50/60 hover:bg-white border-slate-200 hover:border-gov-300 hover:shadow-xs cursor-pointer'
-              } ${isSwitchingThis ? 'opacity-80' : ''}`}
+                  ? 'bg-gov-50/80 border-gov-600 ring-1 ring-gov-600/30'
+                  : 'bg-slate-50/60 hover:bg-white border-slate-200 hover:border-gov-400 cursor-pointer'
+              } ${isSwitchingThis ? 'opacity-70' : ''}`}
             >
               <div>
                 {/* Top Role Badge + Reports Count */}
-                <div className="flex items-center justify-between gap-1.5 mb-2">
+                <div className="flex items-center justify-between gap-1.5 mb-1.5">
                   <div className="flex items-center gap-1.5 min-w-0">
                     <div
-                      className={`w-5 h-5 rounded-md flex items-center justify-center shrink-0 ${
-                        active ? 'bg-gov-700 text-white' : 'bg-slate-200/80 text-slate-700 group-hover:bg-gov-100 group-hover:text-gov-800'
+                      className={`w-4 h-4 rounded flex items-center justify-center shrink-0 ${
+                        active ? 'bg-gov-700 text-white' : 'bg-slate-200 text-slate-700 group-hover:bg-gov-100 group-hover:text-gov-800'
                       }`}
                     >
-                      <RoleIcon className="w-3 h-3" />
+                      <RoleIcon className="w-2.5 h-2.5" />
                     </div>
-                    <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-700 truncate">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-800 truncate">
                       {t(persona.role)}
                     </span>
                   </div>
 
-                  <span className="text-[10px] font-bold font-mono px-1.5 py-0.5 rounded bg-white border border-slate-200 text-gov-800 shrink-0">
+                  <span className="text-[10px] font-bold font-mono px-1 py-0.2 rounded bg-white border border-slate-200 text-gov-800 shrink-0">
                     {persona.roleKey === ROLE_KEYS.ADMIN ? `128 ${t('reports', 'Reports')}` : `32 ${t('reports', 'Reports')}`}
                   </span>
                 </div>
 
                 {/* Persona Name */}
-                <p className="text-xs font-bold text-slate-900 truncate leading-tight">
+                <p className="text-xs font-bold text-slate-900 truncate leading-snug">
                   {persona.name}
                 </p>
 
@@ -136,7 +136,7 @@ export const DemoPersonaBar = ({ className = '', title, compact = false }) => {
               </div>
 
               {/* Bottom State / Action Bar */}
-              <div className="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between text-[10px]">
+              <div className="mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-between text-[10px]">
                 {active ? (
                   <span className="inline-flex items-center gap-1 font-bold text-emerald-700">
                     <CheckCircle2 className="w-3 h-3 text-emerald-600 shrink-0" />
@@ -165,3 +165,4 @@ export const DemoPersonaBar = ({ className = '', title, compact = false }) => {
     </div>
   );
 };
+

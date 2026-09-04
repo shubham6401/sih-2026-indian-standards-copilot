@@ -71,7 +71,7 @@ export const LoginPage = () => {
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
-        <div className="w-12 h-12 rounded-2xl bg-gov-700 text-white flex items-center justify-center mx-auto shadow-md">
+        <div className="w-12 h-12 rounded-lg bg-gov-700 text-white flex items-center justify-center mx-auto shadow-xs border border-gov-800">
           <Shield className="w-6 h-6 text-amber-400" />
         </div>
         <h2 className="mt-4 text-2xl font-black text-slate-900 tracking-tight font-outfit">
@@ -83,16 +83,16 @@ export const LoginPage = () => {
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md px-4">
-        <div className="bg-white py-8 px-6 shadow-md rounded-2xl border border-slate-200 sm:px-10">
+        <div className="bg-white py-8 px-6 shadow-2xs rounded-lg border border-slate-200 sm:px-10">
           {successMsg && (
-            <div className="mb-4 p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs rounded-xl flex items-center gap-2">
+            <div className="mb-4 p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs rounded-md flex items-center gap-2">
               <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-600" />
               <span>{successMsg}</span>
             </div>
           )}
 
           {error && (
-            <div className="mb-4 p-3 bg-rose-50 border border-rose-200 text-rose-800 text-xs rounded-xl flex items-center gap-2">
+            <div className="mb-4 p-3 bg-rose-50 border border-rose-200 text-rose-800 text-xs rounded-md flex items-center gap-2">
               <AlertCircle className="w-4 h-4 shrink-0" />
               <span>{error}</span>
             </div>
@@ -110,7 +110,7 @@ export const LoginPage = () => {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-9 pr-3 py-2 text-xs rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-gov-500"
+                  className="w-full pl-9 pr-3 py-2 text-xs rounded-md border border-slate-300 focus:outline-none focus:ring-2 focus:ring-gov-500"
                   placeholder="officer@department.gov.in"
                 />
                 <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
@@ -136,7 +136,7 @@ export const LoginPage = () => {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-9 pr-9 py-2 text-xs rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-gov-500"
+                  className="w-full pl-9 pr-9 py-2 text-xs rounded-md border border-slate-300 focus:outline-none focus:ring-2 focus:ring-gov-500"
                   placeholder="••••••••"
                 />
                 <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
@@ -166,10 +166,10 @@ export const LoginPage = () => {
           <div className="mt-8 pt-6 border-t border-slate-200">
             <div className="flex items-center justify-between mb-3">
               <div>
-                <span className="text-[10px] font-black uppercase tracking-wider text-gov-800 bg-gov-100 px-2 py-0.5 rounded border border-gov-200">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-gov-800 bg-gov-50 px-2 py-0.5 rounded border border-gov-200">
                   {t('accountPerRole', 'SIH 2026 Evaluation • 1 Account Per Role')}
                 </span>
-                <h3 className="text-xs font-black text-slate-900 mt-1 uppercase tracking-wider font-outfit">
+                <h3 className="text-xs font-bold text-slate-900 mt-1 uppercase tracking-wider font-outfit">
                   {t('demoAccountsTitle', `Role-Based Demo Accounts (${DEMO_PERSONAS.length} Roles)`)}
                 </h3>
               </div>
@@ -182,7 +182,7 @@ export const LoginPage = () => {
               {DEMO_PERSONAS.map((persona) => (
                 <div
                   key={persona.email}
-                  className="p-3 rounded-xl bg-slate-50/90 hover:bg-slate-100/90 border border-slate-200/90 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 hover:border-gov-300"
+                  className="p-3 rounded-md bg-slate-50 hover:bg-slate-100/90 border border-slate-200 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 hover:border-gov-300"
                 >
                   <div className="min-w-0">
                     <div className="flex items-center gap-2">

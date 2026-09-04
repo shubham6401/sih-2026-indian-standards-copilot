@@ -46,7 +46,7 @@ export const ROLE_CONFIG = {
     dashboardSubtitle: 'Analyze procurement specifications, verify applicable Indian Standards, and eliminate compliance gaps.',
     dashboardSubtitleKey: 'procurementDashboardSubtitle',
     primaryActions: [
-      { label: 'New AI Analysis', labelKey: 'newAnalysis', path: '/analysis/new', icon: Sparkles, variant: 'primary' },
+      { label: 'New AI Analysis', labelKey: 'newAnalysis', path: '/analysis/new', icon: FileText, variant: 'primary' },
       { label: 'Upload Tender', labelKey: 'tenderUpload', path: '/tender/upload', icon: UploadCloud, variant: 'secondary' }
     ],
     metricCards: [
@@ -67,7 +67,7 @@ export const ROLE_CONFIG = {
         title: 'Procurement Operations',
         titleKey: 'Procurement Operations',
         items: [
-          { label: 'New AI Analysis', labelKey: 'newAnalysis', path: '/analysis/new', icon: Sparkles, highlight: true },
+          { label: 'New AI Analysis', labelKey: 'newAnalysis', path: '/analysis/new', icon: FileText, highlight: true },
           { label: 'Upload Tender', labelKey: 'tenderUpload', path: '/tender/upload', icon: UploadCloud },
           { label: 'My Analysis History', labelKey: 'My Analysis History', path: '/history', icon: History }
         ]
@@ -128,7 +128,7 @@ export const ROLE_CONFIG = {
         titleKey: 'Department Procurement',
         items: [
           { label: 'Analyze Tender Specification', labelKey: 'Analyze Tender Specification', path: '/tender/upload', icon: UploadCloud, highlight: true },
-          { label: 'New AI Analysis', labelKey: 'newAnalysis', path: '/analysis/new', icon: Sparkles },
+          { label: 'New AI Analysis', labelKey: 'newAnalysis', path: '/analysis/new', icon: FileText },
           { label: 'Department Analyses', labelKey: 'departmentAnalyses', path: '/history', icon: History }
         ]
       },
@@ -165,7 +165,7 @@ export const ROLE_CONFIG = {
     dashboardSubtitle: 'High-value technical procurement compliance, specialized equipment verification, and tender risk audits.',
     dashboardSubtitleKey: 'psuDashboardSubtitle',
     primaryActions: [
-      { label: 'New Procurement Review', labelKey: 'New Procurement Review', path: '/analysis/new', icon: Sparkles, variant: 'primary' },
+      { label: 'New Procurement Review', labelKey: 'New Procurement Review', path: '/analysis/new', icon: FileText, variant: 'primary' },
       { label: 'Upload Specification', labelKey: 'Upload Specification', path: '/tender/upload', icon: UploadCloud, variant: 'secondary' }
     ],
     metricCards: [
@@ -186,7 +186,7 @@ export const ROLE_CONFIG = {
         title: 'Technical Procurement',
         titleKey: 'Technical Procurement',
         items: [
-          { label: 'New Technical Analysis', labelKey: 'New Technical Analysis', path: '/analysis/new', icon: Sparkles, highlight: true },
+          { label: 'New Technical Analysis', labelKey: 'New Technical Analysis', path: '/analysis/new', icon: FileText, highlight: true },
           { label: 'Upload Tender Package', labelKey: 'Upload Tender Package', path: '/tender/upload', icon: UploadCloud },
           { label: 'Active PSU Reviews', labelKey: 'Active PSU Reviews', path: '/history', icon: History }
         ]

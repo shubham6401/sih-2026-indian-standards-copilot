@@ -1,31 +1,33 @@
 import React from 'react';
-import { Shield, ExternalLink, Award, FileCheck } from 'lucide-react';
+import { Shield, ExternalLink } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 
 export const Footer = () => {
-  const { lang, t } = useLanguage();
+  const { t } = useLanguage();
 
   return (
     <footer className="bg-slate-900 text-slate-400 text-xs mt-16 border-t border-slate-800 no-print">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-          {/* Col 1 */}
+          {/* Col 1: Institutional Identity */}
           <div className="md:col-span-1">
-            <div className="flex items-center gap-2 text-white font-bold text-base mb-2 font-outfit">
-              <Shield className="w-5 h-5 text-amber-400" />
-              <span>BIS Standards AI</span>
+            <div className="flex items-center gap-2 text-white font-bold text-base mb-2">
+              <div className="w-6 h-6 rounded bg-gov-700 flex items-center justify-center text-white">
+                <Shield className="w-3.5 h-3.5 text-amber-400" />
+              </div>
+              <span className="uppercase tracking-wider font-extrabold">ANVESHAK</span>
             </div>
             <p className="text-slate-400 text-xs leading-relaxed">
-              {t('heroSubtitle', 'Intelligent recommendation engine aligning public procurement specifications with Bureau of Indian Standards (BIS) and statutory Quality Control Orders.')}
+              {t('heroSubtitle', 'National procurement compliance platform aligning tender specifications with Bureau of Indian Standards (BIS) norms and statutory Quality Control Orders.')}
             </p>
           </div>
 
-          {/* Col 2 */}
+          {/* Col 2: Official Portals */}
           <div>
             <h5 className="text-white font-bold text-xs uppercase tracking-wider mb-3">
               {t('Official Indian Standards Portals')}
             </h5>
-            <ul className="space-y-2 text-xs">
+            <ul className="space-y-1.5 text-xs">
               <li>
                 <a
                   href="https://www.bis.gov.in"
@@ -38,7 +40,7 @@ export const Footer = () => {
               </li>
               <li>
                 <a
-                  href="https://www.bis.gov.in"
+                  href="https://www.services.bis.gov.in"
                   target="_blank"
                   rel="noreferrer"
                   className="hover:text-white inline-flex items-center gap-1 transition-colors"
@@ -69,12 +71,12 @@ export const Footer = () => {
             </ul>
           </div>
 
-          {/* Col 3 */}
+          {/* Col 3: Benchmark Sectors */}
           <div>
             <h5 className="text-white font-bold text-xs uppercase tracking-wider mb-3">
               {t('Procurement Sectors')}
             </h5>
-            <ul className="space-y-2 text-xs">
+            <ul className="space-y-1.5 text-xs">
               <li>{t('Electrical & LED Lighting')}</li>
               <li>{t('Civil Engineering & Cement')}</li>
               <li>{t('TMT Steel & Structural Steel')}</li>
@@ -84,12 +86,12 @@ export const Footer = () => {
             </ul>
           </div>
 
-          {/* Col 4 */}
+          {/* Col 4: Institutional Disclaimer */}
           <div>
             <h5 className="text-white font-bold text-xs uppercase tracking-wider mb-3">
-              {t('Responsible AI Statement')}
+              {t('Institutional Verification')}
             </h5>
-            <div className="bg-slate-800/80 p-3 rounded-lg border border-slate-700/80 text-[11px] leading-relaxed text-slate-300">
+            <div className="bg-slate-800/90 p-3 rounded border border-slate-700/80 text-[11px] leading-relaxed text-slate-300">
               <p>
                 {t('responsibleAiNotice', 'Decision-support software. Standard applicability, active revisions, and mandatory certification status must be independently validated prior to tender publication.')}
               </p>
@@ -98,11 +100,11 @@ export const Footer = () => {
         </div>
 
         <div className="pt-6 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 text-slate-500 text-[11px]">
-          <p>© {new Date().getFullYear()} {t('appTitle', 'AI-Powered Indian Standards Recommendation Engine')}. {t('For Government & Enterprise Procurement.')}</p>
-          <div className="flex items-center gap-4">
+          <p>© {new Date().getFullYear()} ANVESHAK • Indian Standards & Procurement Compliance Platform. {t('For Government & Enterprise Procurement.')}</p>
+          <div className="flex items-center gap-3">
             <span>{t('Built for Public Procurement Officers')}</span>
             <span>•</span>
-            <span className="text-amber-400">{t('Make in India Compliant')}</span>
+            <span className="text-amber-400 font-semibold">{t('Make in India Compliant')}</span>
           </div>
         </div>
       </div>

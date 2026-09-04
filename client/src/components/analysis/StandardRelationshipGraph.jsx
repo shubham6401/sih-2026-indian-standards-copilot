@@ -28,7 +28,7 @@ export const StandardRelationshipGraph = ({
   );
 
   return (
-    <div className="bg-gradient-to-br from-slate-50 to-blue-50/30 rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-sm my-6">
+    <div className="bg-white rounded-lg border border-slate-200 p-5 sm:p-6 shadow-2xs my-6">
       <div className="flex items-center justify-between mb-5">
         <div>
           <h4 className="text-base font-bold text-slate-900 flex items-center gap-2">
@@ -43,11 +43,11 @@ export const StandardRelationshipGraph = ({
 
       <div className="flex flex-col lg:flex-row items-center gap-6 justify-center">
         {/* Node 1: Primary Standard */}
-        <div className="w-full lg:w-72 bg-white border-2 border-gov-600 rounded-2xl p-4 shadow-md text-center relative shrink-0">
-          <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gov-600 text-white text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow-xs">
+        <div className="w-full lg:w-72 bg-slate-50 border border-gov-500 rounded-lg p-4 shadow-xs text-center relative shrink-0">
+          <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gov-700 text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded shadow-2xs">
             Primary Specification
           </div>
-          <p className="text-sm font-black text-gov-800 mt-1 font-outfit truncate">
+          <p className="text-sm font-bold text-gov-950 mt-1 font-mono truncate">
             {primary.standardNumber}
           </p>
           <p className="text-xs font-semibold text-slate-700 mt-1 line-clamp-2">
@@ -62,7 +62,7 @@ export const StandardRelationshipGraph = ({
             <button
               type="button"
               onClick={() => onSelectStandard(primary)}
-              className="mt-3 text-[11px] font-bold text-gov-600 hover:text-gov-800 underline cursor-pointer"
+              className="mt-3 text-[11px] font-bold text-gov-700 hover:text-gov-900 underline cursor-pointer"
             >
               View Scope Details
             </button>
@@ -71,31 +71,31 @@ export const StandardRelationshipGraph = ({
 
         {/* Arrow connector */}
         <div className="hidden lg:flex items-center text-gov-400">
-          <ArrowRight className="w-6 h-6 stroke-[3]" />
+          <ArrowRight className="w-5 h-5 stroke-[2]" />
         </div>
         <div className="lg:hidden text-gov-400">
-          <ArrowDown className="w-6 h-6 stroke-[3]" />
+          <ArrowDown className="w-5 h-5 stroke-[2]" />
         </div>
 
         {/* Group of Child Branches */}
-        <div className="flex-1 w-full grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="flex-1 w-full grid grid-cols-1 sm:grid-cols-2 gap-3">
           {/* Branch 1: Testing & Verification */}
-          <div className="bg-white border border-emerald-200 rounded-xl p-3.5 shadow-xs">
+          <div className="bg-slate-50/70 border border-emerald-300 rounded-md p-3.5">
             <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-800 mb-2">
               <CheckCircle2 className="w-4 h-4 text-emerald-600" />
               <span>Testing & Verification Standards</span>
             </div>
             {testing.length > 0 ? (
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 {testing.slice(0, 2).map((std, i) => (
                   <div
                     key={i}
                     onClick={() => onSelectStandard && onSelectStandard(std)}
-                    className="p-2 rounded-lg bg-emerald-50/60 border border-emerald-100 hover:bg-emerald-100/60 cursor-pointer transition-colors"
+                    className="p-2 rounded-md bg-white border border-emerald-200 hover:border-emerald-300 cursor-pointer transition-colors"
                   >
                     <div className="flex justify-between items-center text-xs">
-                      <span className="font-bold text-slate-900">{std.standardNumber}</span>
-                      <span className="text-[10px] font-semibold text-emerald-700">
+                      <span className="font-bold text-slate-900 font-mono">{std.standardNumber}</span>
+                      <span className="text-[10px] font-semibold text-emerald-700 font-mono">
                         {std.relevanceScore || 85}%
                       </span>
                     </div>
@@ -109,22 +109,22 @@ export const StandardRelationshipGraph = ({
           </div>
 
           {/* Branch 2: Safety & Environmental Norms */}
-          <div className="bg-white border border-amber-200 rounded-xl p-3.5 shadow-xs">
+          <div className="bg-slate-50/70 border border-amber-300 rounded-md p-3.5">
             <div className="flex items-center gap-1.5 text-xs font-bold text-amber-900 mb-2">
               <Shield className="w-4 h-4 text-amber-600" />
               <span>Safety & Protection Norms</span>
             </div>
             {safety.length > 0 ? (
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 {safety.slice(0, 2).map((std, i) => (
                   <div
                     key={i}
                     onClick={() => onSelectStandard && onSelectStandard(std)}
-                    className="p-2 rounded-lg bg-amber-50/60 border border-amber-100 hover:bg-amber-100/60 cursor-pointer transition-colors"
+                    className="p-2 rounded-md bg-white border border-amber-200 hover:border-amber-300 cursor-pointer transition-colors"
                   >
                     <div className="flex justify-between items-center text-xs">
-                      <span className="font-bold text-slate-900">{std.standardNumber}</span>
-                      <span className="text-[10px] font-semibold text-amber-700">
+                      <span className="font-bold text-slate-900 font-mono">{std.standardNumber}</span>
+                      <span className="text-[10px] font-semibold text-amber-700 font-mono">
                         {std.relevanceScore || 88}%
                       </span>
                     </div>
@@ -139,7 +139,7 @@ export const StandardRelationshipGraph = ({
 
           {/* Branch 3: Normative References & Materials */}
           {otherAllied.length > 0 && (
-            <div className="sm:col-span-2 bg-white border border-indigo-200 rounded-xl p-3.5 shadow-xs">
+            <div className="sm:col-span-2 bg-slate-50/70 border border-indigo-300 rounded-md p-3.5">
               <div className="flex items-center gap-1.5 text-xs font-bold text-indigo-900 mb-2">
                 <FileCode className="w-4 h-4 text-indigo-600" />
                 <span>Normative & Sub-Assembly References</span>
@@ -149,11 +149,11 @@ export const StandardRelationshipGraph = ({
                   <div
                     key={i}
                     onClick={() => onSelectStandard && onSelectStandard(std)}
-                    className="p-2 rounded-lg bg-indigo-50/60 border border-indigo-100 hover:bg-indigo-100/60 cursor-pointer transition-colors"
+                    className="p-2 rounded-md bg-white border border-indigo-200 hover:border-indigo-300 cursor-pointer transition-colors"
                   >
                     <div className="flex justify-between items-center text-xs">
-                      <span className="font-bold text-slate-900">{std.standardNumber}</span>
-                      <span className="text-[10px] font-semibold text-indigo-700">
+                      <span className="font-bold text-slate-900 font-mono">{std.standardNumber}</span>
+                      <span className="text-[10px] font-semibold text-indigo-700 font-mono">
                         {std.relevanceScore || 82}%
                       </span>
                     </div>

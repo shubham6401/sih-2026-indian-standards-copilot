@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Bookmark, BookmarkCheck, ExternalLink, ShieldAlert, CheckCircle2, ChevronRight, Sparkles, Loader2 } from 'lucide-react';
+import { Bookmark, BookmarkCheck, ExternalLink, ShieldAlert, CheckCircle2, ChevronRight, Award, Layers, Loader2 } from 'lucide-react';
 import { Badge } from '../common/Badge';
 import { ScoreIndicator } from '../common/ScoreIndicator';
 import { useAnalysis } from '../../context/AnalysisContext';
@@ -44,19 +44,19 @@ export const StandardCard = ({
 
   return (
     <div
-      className={`rounded-2xl border transition-all duration-200 p-5 relative bg-white flex flex-col justify-between ${
+      className={`rounded-lg border transition-all duration-150 p-4 sm:p-5 relative bg-white flex flex-col justify-between ${
         isPrimary
-          ? 'border-gov-200/90 shadow-md hover:shadow-lg ring-1 ring-gov-500/10'
-          : 'border-slate-200 shadow-xs hover:shadow-md'
+          ? 'border-gov-300 shadow-xs ring-1 ring-gov-500/10'
+          : 'border-slate-200 shadow-2xs hover:shadow-xs hover:border-slate-300'
       }`}
     >
       <div>
         {/* Top Badges & Save Button */}
         <div className="flex items-start justify-between gap-3 mb-3">
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex flex-wrap items-center gap-1.5">
             {isPrimary && (
-              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-gov-600 text-white flex items-center gap-1 shadow-2xs">
-                <Sparkles className="w-3 h-3 text-amber-300" /> Primary Standard
+              <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-gov-700 text-white flex items-center gap-1">
+                <Award className="w-3 h-3 text-amber-300" /> Primary Standard
               </span>
             )}
             {relationshipType && (
@@ -72,7 +72,7 @@ export const StandardCard = ({
             </Badge>
             {safeStd.edition && (
               <span className="text-[11px] text-slate-500 font-medium">
-                Edition: {safeStd.edition}
+                Ed: {safeStd.edition}
               </span>
             )}
           </div>
@@ -87,7 +87,7 @@ export const StandardCard = ({
               }}
               title={isSaved ? 'Remove from saved standards' : 'Save standard to repository'}
               aria-label={isSaved ? `Remove standard ${stdNumber}` : `Save standard ${stdNumber}`}
-              className={`p-1.5 rounded-lg border transition-all cursor-pointer ${
+              className={`p-1.5 rounded-md border transition-all cursor-pointer ${
                 isSaved
                   ? 'bg-amber-50 text-amber-600 border-amber-300 font-bold'
                   : 'bg-slate-50 text-slate-400 hover:text-slate-700 hover:bg-slate-100 border-slate-200'
@@ -101,7 +101,7 @@ export const StandardCard = ({
         {/* Main IS Standard Number & Title */}
         <div className="mb-3">
           <div className="flex items-baseline justify-between gap-2">
-            <h4 className="text-base sm:text-lg font-bold text-slate-900 font-outfit">
+            <h4 className="text-base font-bold text-gov-950 font-mono tracking-tight">
               {stdNumber}
             </h4>
             <ScoreIndicator
@@ -110,20 +110,20 @@ export const StandardCard = ({
               size="sm"
             />
           </div>
-          <p className="text-xs sm:text-sm font-semibold text-slate-700 mt-1 line-clamp-2">
+          <p className="text-xs font-semibold text-slate-700 mt-1 line-clamp-2">
             {safeStd.title || stdNumber}
           </p>
         </div>
 
         {/* Why Recommended Explanation */}
         {safeStd.whyRecommended && (
-          <div className="bg-slate-50 rounded-xl p-3 border border-slate-100 mb-4 text-xs">
+          <div className="bg-slate-50 rounded-md p-3 border border-slate-200/80 mb-3 text-xs">
             <div className="flex items-center gap-1 font-bold text-slate-800 mb-1 text-[11px]">
               <span className="w-1.5 h-1.5 rounded-full bg-gov-600" />
-              <span>Why Recommended?</span>
+              <span>Why Recommended:</span>
             </div>
-            <p className="text-slate-600 leading-relaxed italic">
-              "{safeStd.whyRecommended}"
+            <p className="text-slate-600 leading-relaxed text-[11px]">
+              {safeStd.whyRecommended}
             </p>
           </div>
         )}

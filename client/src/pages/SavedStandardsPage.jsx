@@ -6,7 +6,6 @@ import {
   Trash2,
   ExternalLink,
   ChevronRight,
-  Sparkles,
   Tag,
   Compass,
   FileText
@@ -90,9 +89,9 @@ export const SavedStandardsPage = () => {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder={t('Filter saved standards by number, title, or procurement notes...')}
-          className="w-full pl-10 pr-4 py-2.5 text-xs rounded-xl border border-slate-300 bg-white focus:ring-2 focus:ring-gov-500 focus:outline-none"
+          className="w-full pl-10 pr-4 py-2 text-xs rounded-md border border-slate-300 bg-white focus:ring-2 focus:ring-gov-500 focus:outline-none"
         />
-        <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
+        <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
       </div>
 
       {/* Grid of Saved Cards */}
@@ -101,7 +100,7 @@ export const SavedStandardsPage = () => {
           {filtered.map((std, idx) => (
             <div
               key={idx}
-              className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
+              className="bg-white rounded-lg border border-slate-200 p-4 sm:p-5 shadow-2xs hover:shadow-xs hover:border-slate-300 transition-all flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-start justify-between gap-3 mb-2">
@@ -116,14 +115,14 @@ export const SavedStandardsPage = () => {
                   <button
                     type="button"
                     onClick={() => toggleSaveStandard(std)}
-                    className="p-1.5 text-rose-500 hover:text-rose-700 hover:bg-rose-50 rounded-lg transition-colors"
+                    className="p-1.5 text-rose-500 hover:text-rose-700 hover:bg-rose-50 rounded-md transition-colors cursor-pointer"
                     title={t('Remove from bookmarks')}
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
                 </div>
 
-                <h3 className="text-base font-bold text-slate-900 font-outfit">
+                <h3 className="text-base font-bold text-gov-950 font-mono tracking-tight">
                   {std.standardNumber}
                 </h3>
                 <p className="text-xs font-semibold text-slate-700 mt-1 line-clamp-2">
@@ -131,7 +130,7 @@ export const SavedStandardsPage = () => {
                 </p>
 
                 {std.notes && (
-                  <div className="mt-3 p-2.5 bg-amber-50/60 rounded-xl border border-amber-100 text-xs text-amber-950">
+                  <div className="mt-3 p-2.5 bg-amber-50/60 rounded-md border border-amber-100 text-xs text-amber-950">
                     <span className="font-bold block text-[10px] uppercase tracking-wider text-amber-800">
                       {t('Procurement Indent Note:')}
                     </span>
@@ -159,7 +158,7 @@ export const SavedStandardsPage = () => {
           ))}
         </div>
       ) : (
-        <div className="py-14 text-center bg-white rounded-2xl border border-slate-200 space-y-3">
+        <div className="py-14 text-center bg-white rounded-lg border border-slate-200 space-y-3 shadow-2xs">
           <BookmarkCheck className="w-10 h-10 text-slate-300 mx-auto" />
           <h3 className="text-sm font-bold text-slate-800">{t('No Saved Standards in Library')}</h3>
           <p className="text-xs text-slate-400 max-w-sm mx-auto">

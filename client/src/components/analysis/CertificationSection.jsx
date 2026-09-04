@@ -55,11 +55,11 @@ export const CertificationSection = ({ certifications = [], standards = [] }) =>
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-sm my-6">
+    <div className="bg-white rounded-lg border border-slate-200 p-5 sm:p-6 shadow-2xs my-6">
       <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-5 pb-4 border-b border-slate-100">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-extrabold uppercase tracking-wider bg-amber-100 text-amber-900 px-2 py-0.5 rounded border border-amber-200">
+            <span className="text-[10px] font-bold uppercase tracking-wider bg-amber-50 text-amber-900 px-2 py-0.5 rounded border border-amber-200">
               Statutory Compliance
             </span>
             <span className="text-xs text-slate-500 font-medium">Quality Control Orders (QCO) & BIS Licensing</span>
@@ -76,7 +76,7 @@ export const CertificationSection = ({ certifications = [], standards = [] }) =>
           href="https://www.bis.gov.in"
           target="_blank"
           rel="noreferrer"
-          className="text-xs text-gov-700 hover:text-gov-900 font-bold inline-flex items-center gap-1.5 shrink-0 bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-xl transition-colors"
+          className="text-xs text-gov-700 hover:text-gov-900 font-bold inline-flex items-center gap-1.5 shrink-0 bg-slate-50 hover:bg-slate-100 border border-slate-200 px-3 py-1.5 rounded-md transition-colors"
         >
           <span>Verify License on BIS Portal</span>
           <ExternalLink className="w-3.5 h-3.5" />

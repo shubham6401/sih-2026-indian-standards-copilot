@@ -8,7 +8,7 @@ import {
   X,
   ExternalLink,
   ChevronDown,
-  Sparkles,
+  Plus,
   Database
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
@@ -98,20 +98,24 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
 
   return (
     <>
-      <header className="sticky top-0 z-30 bg-white border-b border-slate-200/90 shadow-2xs">
-        {/* Top Government Micro-Banner */}
-        <div className="bg-gov-900 text-white text-[11px] px-3 sm:px-4 py-1 border-b border-gov-800">
+      <header className="sticky top-0 z-30 bg-white border-b border-slate-200">
+        {/* Top Institutional Micro-Banner */}
+        <div className="bg-gov-900 text-white text-[11px] px-3 sm:px-6 py-1 border-b border-gov-800">
           <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
             <div className="flex items-center gap-2 truncate">
-              <span className="font-semibold text-amber-400 shrink-0">{t('nationalCopilot', 'National Procurement Copilot')}</span>
-              <span className="hidden sm:inline text-slate-400">|</span>
-              <span className="hidden sm:inline text-slate-300 truncate">{t('bisAligned', 'Bureau of Indian Standards (BIS) Aligned')}</span>
+              <span className="font-bold text-amber-400 shrink-0 uppercase tracking-wider text-[10px]">
+                {t('nationalCopilot', 'National Procurement Standards Platform')}
+              </span>
+              <span className="hidden sm:inline text-slate-500">|</span>
+              <span className="hidden sm:inline text-slate-300 truncate text-[10px]">
+                {t('bisAligned', 'Bureau of Indian Standards (BIS) Aligned • SIH 2026')}
+              </span>
             </div>
             <div className="flex items-center gap-2 sm:gap-3 shrink-0 text-[10px]">
               <button
                 type="button"
                 onClick={() => setShowKbModal(true)}
-                className="hidden sm:inline-flex text-amber-300 hover:text-white items-center gap-1 font-bold transition-colors cursor-pointer"
+                className="hidden sm:inline-flex text-amber-300 hover:text-white items-center gap-1 font-semibold transition-colors cursor-pointer"
                 title={t('knowledgeBase', 'Knowledge Base')}
               >
                 <Database className="w-2.5 h-2.5" />
@@ -132,13 +136,13 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
         </div>
 
         {/* Main Application Header */}
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2 sm:gap-4">
-          {/* Left: Universal 3-line Hamburger Menu Button + Brand Logo */}
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-14 sm:h-15 flex items-center justify-between gap-2 sm:gap-4">
+          {/* Left: Universal Navigation Menu Toggle + Institutional Brand */}
           <div className="flex items-center gap-2 sm:gap-3 min-w-0">
             <button
               type="button"
               onClick={onToggleSidebar}
-              className="p-2 -ml-1 text-slate-700 hover:text-gov-800 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-gov-500"
+              className="p-1.5 -ml-1 text-slate-700 hover:text-gov-800 hover:bg-slate-100 rounded-md transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-gov-600"
               aria-label={isSidebarOpen ? "Close navigation menu" : "Open navigation menu"}
               title={isSidebarOpen ? "Close navigation menu" : "Open navigation menu"}
             >
@@ -146,26 +150,26 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
             </button>
 
             <Link to="/dashboard" className="flex items-center gap-2 sm:gap-2.5 group min-w-0">
-              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-gov-600 to-gov-800 flex items-center justify-center text-white shadow-xs shrink-0 group-hover:scale-105 transition-transform">
-                <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
+              <div className="w-8 h-8 rounded-md bg-gov-800 flex items-center justify-center text-white shrink-0">
+                <Shield className="w-4 h-4 text-amber-400" />
               </div>
               <div className="min-w-0">
                 <div className="flex items-center gap-1.5">
-                  <span className="font-extrabold text-slate-900 text-sm sm:text-base lg:text-lg tracking-tight font-outfit truncate">
-                    BIS Copilot
+                  <span className="font-extrabold text-slate-950 text-sm sm:text-base tracking-tight font-sans uppercase">
+                    ANVESHAK
                   </span>
-                  <span className="text-[10px] font-bold uppercase tracking-wider bg-gov-50 text-gov-700 border border-gov-200 px-1.5 py-0.5 rounded shrink-0 hidden xs:inline-block">
+                  <span className="text-[9px] font-bold uppercase tracking-wider bg-gov-50 text-gov-800 border border-gov-200 px-1 py-0.2 rounded shrink-0 hidden xs:inline-block">
                     SIH 2026
                   </span>
                 </div>
-                <p className="text-[10px] text-slate-500 font-medium -mt-1 hidden md:block truncate">
-                  {t('appTitle', 'AI Procurement Intelligence & Gap Analysis Engine')}
+                <p className="text-[10px] text-slate-500 font-medium -mt-0.5 hidden md:block truncate">
+                  {t('brandSubtitle', 'Indian Standards & Procurement Compliance')}
                 </p>
               </div>
             </Link>
           </div>
 
-          {/* Center: Interactive Search Field (Desktop Only, hidden on mobile) */}
+          {/* Center: Interactive Search Field (Desktop Only) */}
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -183,21 +187,21 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
               value={navSearch}
               onChange={(e) => setNavSearch(e.target.value)}
               placeholder={t('navSearchPlaceholder', 'Search Indian Standards (IS 10322, Cement, Pumps)...')}
-              className="w-full pl-9 pr-8 py-2 bg-slate-100/90 focus:bg-white border border-slate-200 focus:border-gov-500 rounded-xl text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-gov-500/20 transition-all"
+              className="w-full pl-8 pr-8 py-1.5 bg-slate-50 focus:bg-white border border-slate-300 focus:border-gov-600 rounded-md text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-gov-600 transition-colors"
             />
-            <Search className="w-4 h-4 text-slate-400 absolute left-3 pointer-events-none" />
-            <kbd className="hidden lg:inline-block absolute right-2.5 px-1.5 py-0.5 text-[10px] font-mono bg-white border border-slate-300 rounded shadow-2xs text-slate-500 pointer-events-none">
+            <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 pointer-events-none" />
+            <kbd className="hidden lg:inline-block absolute right-2 px-1 py-0.2 text-[9px] font-mono bg-white border border-slate-300 rounded shadow-2xs text-slate-500 pointer-events-none">
               ↵
             </kbd>
           </form>
 
           {/* Right: Actions, Notifications & Profile */}
-          <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
+          <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
             <Link
               to="/analysis/new"
-              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gov-600 hover:bg-gov-700 text-white text-xs font-semibold shadow-xs transition-all"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-gov-700 hover:bg-gov-800 active:bg-gov-900 text-white text-xs font-semibold shadow-xs transition-colors"
             >
-              <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+              <Plus className="w-3.5 h-3.5" />
               <span>{t('newAnalysis', 'New Analysis')}</span>
             </Link>
 
@@ -209,27 +213,27 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                   setShowNotifications(prev => !prev);
                   setShowProfileMenu(false);
                 }}
-                className="p-2 text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-colors relative cursor-pointer"
+                className="p-1.5 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-md transition-colors relative cursor-pointer"
                 title={t('procurementAlerts', 'Procurement notifications')}
                 aria-label={t('procurementAlerts', 'Procurement notifications')}
               >
                 <Bell className="w-4 h-4" />
                 {unreadCount > 0 && (
-                  <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-rose-500 rounded-full ring-2 ring-white animate-pulse" />
+                  <span className="absolute top-1 right-1 w-2 h-2 bg-rose-600 rounded-full" />
                 )}
               </button>
 
               {showNotifications && (
-                <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-white rounded-2xl shadow-2xl border border-slate-200 p-3.5 z-50 animate-fade-in">
-                  <div className="flex items-center justify-between pb-2.5 border-b border-slate-100">
+                <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-white rounded-lg shadow-xl border border-slate-200 p-3 z-50">
+                  <div className="flex items-center justify-between pb-2 border-b border-slate-100">
                     <div className="flex items-center gap-2">
                       <h4 className="text-xs font-bold text-slate-900">{t('procurementAlerts', 'Procurement Alerts')}</h4>
                       {unreadCount > 0 ? (
-                        <span className="text-[10px] bg-gov-100 text-gov-800 px-2 py-0.5 rounded-full font-bold">
+                        <span className="text-[10px] bg-gov-100 text-gov-800 px-1.5 py-0.2 rounded font-bold">
                           {unreadCount} {t('alertsCountNew', 'New')}
                         </span>
                       ) : (
-                        <span className="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full font-bold">
+                        <span className="text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.2 rounded font-semibold">
                           {t('allCaughtUp', 'All caught up')}
                         </span>
                       )}
@@ -245,7 +249,7 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                     )}
                   </div>
 
-                  <div className="py-2 space-y-2 max-h-72 overflow-y-auto">
+                  <div className="py-2 space-y-1.5 max-h-72 overflow-y-auto">
                     {notifications.length === 0 ? (
                       <div className="text-center py-6 text-slate-400 text-xs">
                         {t('noAlerts', 'No active procurement alerts')}
@@ -255,16 +259,16 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                         <div
                           key={n.id}
                           onClick={() => handleNotificationClick(n)}
-                          className={`p-2.5 rounded-xl border transition-all cursor-pointer flex items-start justify-between gap-2 group ${
+                          className={`p-2 rounded-md border transition-colors cursor-pointer flex items-start justify-between gap-2 group ${
                             n.unread
-                              ? 'bg-gov-50/50 hover:bg-gov-50 border-gov-200/80 shadow-2xs'
-                              : 'bg-slate-50/60 hover:bg-slate-100/80 border-slate-100'
+                              ? 'bg-gov-50/60 hover:bg-gov-50 border-gov-200'
+                              : 'bg-slate-50/60 hover:bg-slate-100 border-slate-100'
                           }`}
                         >
                           <div className="min-w-0 flex-1">
-                            <div className="flex items-center gap-1.5 mb-1">
-                              {n.unread && <span className="w-1.5 h-1.5 rounded-full bg-gov-600 shrink-0" />}
-                              <span className="text-[10px] font-extrabold uppercase tracking-wider text-gov-700 bg-white border border-gov-200 px-1.5 py-0.2 rounded">
+                            <div className="flex items-center gap-1.5 mb-0.5">
+                              {n.unread && <span className="w-1.5 h-1.5 rounded-full bg-gov-700 shrink-0" />}
+                              <span className="text-[9px] font-bold uppercase tracking-wider text-gov-800 bg-white border border-gov-200 px-1 py-0.2 rounded">
                                 {n.category}
                               </span>
                               <span className="text-[10px] text-slate-400 font-medium ml-auto">
@@ -281,10 +285,10 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                           <button
                             type="button"
                             onClick={(e) => handleDismissNotification(e, n.id)}
-                            className="p-1 text-slate-300 hover:text-slate-600 hover:bg-slate-200/60 rounded-md transition-colors cursor-pointer shrink-0 mt-0.5"
+                            className="p-1 text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 rounded transition-colors cursor-pointer shrink-0 mt-0.5"
                             title={t('dismissAlert', 'Dismiss alert')}
                           >
-                            <X className="w-3.5 h-3.5" />
+                            <X className="w-3 h-3" />
                           </button>
                         </div>
                       ))
@@ -307,17 +311,17 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                     setShowProfileMenu(prev => !prev);
                     setShowNotifications(false);
                   }}
-                  className="flex items-center gap-1.5 sm:gap-2 p-1 sm:p-1.5 sm:pl-2 rounded-xl border border-slate-200 hover:bg-slate-50 transition-colors cursor-pointer"
+                  className="flex items-center gap-1.5 sm:gap-2 p-1 sm:p-1.5 sm:pl-2 rounded-md border border-slate-200 hover:bg-slate-50 transition-colors cursor-pointer"
                   title="User profile and role switcher"
                   aria-label="User profile and role switcher"
                 >
-                  <div className="w-7 h-7 rounded-lg bg-gov-100 text-gov-800 flex items-center justify-center font-bold text-xs shrink-0">
+                  <div className="w-6 h-6 rounded bg-gov-100 text-gov-800 flex items-center justify-center font-bold text-xs shrink-0">
                     {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
                   </div>
                   <div className="hidden sm:block text-left pr-1">
                     <div className="flex items-center gap-1.5">
                       <p className="text-xs font-bold text-slate-900 leading-tight truncate max-w-[110px]">{user.name}</p>
-                      <span className="text-[9px] font-extrabold uppercase tracking-wider px-1.5 py-0.2 rounded bg-gov-100 text-gov-800 shrink-0">
+                      <span className="text-[9px] font-bold uppercase tracking-wider px-1 py-0.2 rounded bg-gov-100 text-gov-800 shrink-0">
                         {t(currentRoleConfig.badgeTitle)}
                       </span>
                     </div>
@@ -329,13 +333,13 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                 <div className="flex items-center gap-2">
                   <Link
                     to="/login"
-                    className="px-3 py-1.5 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-50 text-xs font-semibold transition-colors"
+                    className="px-3 py-1.5 rounded-md border border-slate-300 text-slate-700 hover:bg-slate-50 text-xs font-semibold transition-colors"
                   >
                     {t('signIn', 'Sign In')}
                   </Link>
                   <Link
                     to="/register"
-                    className="px-3 py-1.5 rounded-xl bg-gov-700 hover:bg-gov-800 text-white text-xs font-bold transition-all shadow-xs"
+                    className="px-3 py-1.5 rounded-md bg-gov-700 hover:bg-gov-800 text-white text-xs font-bold transition-colors shadow-xs"
                   >
                     {t('register', 'Register')}
                   </Link>
@@ -345,12 +349,12 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
               {showProfileMenu && user && (
                 <div
                   data-testid="profile-dropdown-menu"
-                  className="absolute right-0 mt-2 w-72 bg-white rounded-2xl shadow-2xl border border-slate-200 py-1.5 z-50 animate-fade-in divide-y divide-slate-100"
+                  className="absolute right-0 mt-2 w-72 bg-white rounded-lg shadow-xl border border-slate-200 py-1.5 z-50 divide-y divide-slate-100"
                 >
-                  <div className="px-4 py-2.5">
+                  <div className="px-3.5 py-2">
                     <div className="flex items-center justify-between gap-1 mb-0.5">
                       <p className="text-xs font-bold text-slate-900 truncate">{user.name}</p>
-                      <span className="text-[9px] font-extrabold uppercase px-1.5 py-0.2 rounded bg-gov-50 text-gov-700 border border-gov-200 shrink-0">
+                      <span className="text-[9px] font-bold uppercase px-1.5 py-0.2 rounded bg-gov-50 text-gov-700 border border-gov-200 shrink-0">
                         {t(currentRoleConfig.roleKey || currentRoleConfig.displayName)}
                       </span>
                     </div>
@@ -359,8 +363,8 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                   </div>
 
                   {/* One-Click Demo Role Switcher */}
-                  <div className="p-2 bg-slate-50/70">
-                    <p className="text-[9px] font-extrabold uppercase tracking-wider text-slate-400 px-2 mb-1.5">
+                  <div className="p-2 bg-slate-50">
+                    <p className="text-[9px] font-bold uppercase tracking-wider text-slate-500 px-1 mb-1.5">
                       {t('switchDemoPersona', 'Switch Demo Stakeholder Persona')}
                     </p>
                     <div className="space-y-1 text-xs">
@@ -383,17 +387,17 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                                 console.error('Persona switch error:', err);
                               }
                             }}
-                            className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-between transition-colors cursor-pointer ${
+                            className={`w-full text-left px-2 py-1 rounded text-xs font-medium flex items-center justify-between transition-colors cursor-pointer ${
                               isActive
                                 ? 'bg-gov-100 text-gov-900 font-bold'
-                                : 'hover:bg-slate-200/60 text-slate-700'
+                                : 'hover:bg-slate-200/70 text-slate-700'
                             }`}
                           >
                             <div className="truncate pr-2">
                               <span className="block font-bold truncate">{persona.name}</span>
                               <span className="block text-[10px] text-slate-500 truncate">{persona.organization} (32 {t('reports', 'Reports')})</span>
                             </div>
-                            {isActive && <span className="text-[10px] text-gov-700 font-extrabold shrink-0">{t('active', 'Active')}</span>}
+                            {isActive && <span className="text-[9px] text-gov-800 font-bold uppercase shrink-0">{t('active', 'Active')}</span>}
                           </button>
                         );
                       })}
@@ -404,7 +408,7 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                     <Link
                       to="/dashboard"
                       onClick={() => setShowProfileMenu(false)}
-                      className="block px-4 py-2 text-xs text-slate-700 hover:bg-slate-50 font-medium"
+                      className="block px-3.5 py-1.5 text-xs text-slate-700 hover:bg-slate-50 font-medium"
                     >
                       {t('dashboard', 'Dashboard Overview')}
                     </Link>
@@ -412,7 +416,7 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                       <Link
                         to="/admin/users"
                         onClick={() => setShowProfileMenu(false)}
-                        className="block px-4 py-2 text-xs text-gov-700 hover:bg-gov-50 font-bold"
+                        className="block px-3.5 py-1.5 text-xs text-gov-800 hover:bg-gov-50 font-bold"
                       >
                         {t('User Directory')} (Admin)
                       </Link>
@@ -420,20 +424,20 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                     <Link
                       to="/history"
                       onClick={() => setShowProfileMenu(false)}
-                      className="block px-4 py-2 text-xs text-slate-700 hover:bg-slate-50 font-medium"
+                      className="block px-3.5 py-1.5 text-xs text-slate-700 hover:bg-slate-50 font-medium"
                     >
                       {t('analysisHistory', 'Analysis History')}
                     </Link>
                     <Link
                       to="/settings"
                       onClick={() => setShowProfileMenu(false)}
-                      className="block px-4 py-2 text-xs text-slate-700 hover:bg-slate-50 font-medium"
+                      className="block px-3.5 py-1.5 text-xs text-slate-700 hover:bg-slate-50 font-medium"
                     >
                       {t('settings', 'Settings')}
                     </Link>
                   </div>
 
-                  <div className="p-1.5">
+                  <div className="p-1">
                     <button
                       type="button"
                       onClick={() => {
@@ -441,7 +445,7 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                         logout();
                         navigate('/login');
                       }}
-                      className="w-full text-left px-3 py-1.5 text-xs text-rose-600 hover:bg-rose-50 rounded-lg font-semibold flex items-center gap-1.5 cursor-pointer"
+                      className="w-full text-left px-3 py-1.5 text-xs text-rose-600 hover:bg-rose-50 rounded font-semibold flex items-center gap-1.5 cursor-pointer"
                     >
                       <span>{t('logout', 'Sign Out')}</span>
                     </button>

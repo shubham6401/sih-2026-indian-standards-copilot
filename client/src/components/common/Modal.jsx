@@ -36,26 +36,27 @@ export const Modal = ({ isOpen, onClose, title, children, size = 'lg' }) => {
       className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 overflow-y-auto bg-slate-900/60 backdrop-blur-xs animate-fade-in"
     >
       <div
-        className={`relative w-[calc(100%-1rem)] sm:w-full ${sizeClasses[size] || sizeClasses.lg} bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden my-auto max-h-[85vh] flex flex-col`}
+        className={`relative w-[calc(100%-1rem)] sm:w-full ${sizeClasses[size] || sizeClasses.lg} bg-white rounded-lg shadow-xl border border-slate-300 overflow-hidden my-auto max-h-[88vh] flex flex-col`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-slate-200 bg-slate-50/90 shrink-0">
-          <h3 className="text-base font-bold text-slate-900 truncate pr-3">{title}</h3>
+        <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 bg-slate-50 shrink-0">
+          <h3 className="text-sm font-bold text-slate-900 truncate pr-3">{title}</h3>
           <button
             type="button"
             onClick={onClose}
             aria-label={t('close', 'Close')}
             title={t('close', 'Close')}
-            className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 rounded-lg transition-colors cursor-pointer"
+            className="p-1 text-slate-400 hover:text-slate-700 hover:bg-slate-200/70 rounded transition-colors cursor-pointer"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Content */}
-        <div className="p-5 sm:p-6 overflow-y-auto flex-1">{children}</div>
+        <div className="p-5 overflow-y-auto flex-1">{children}</div>
       </div>
     </div>
   );
 };
+

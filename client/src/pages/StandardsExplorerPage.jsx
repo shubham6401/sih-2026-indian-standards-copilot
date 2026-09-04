@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import {
   Search,
@@ -6,7 +6,8 @@ import {
   Bookmark,
   BookmarkCheck,
   ChevronRight,
-  RotateCcw
+  RotateCcw,
+  BookOpen
 } from 'lucide-react';
 import { Button } from '../components/common/Button';
 import { Badge } from '../components/common/Badge';
@@ -108,7 +109,7 @@ export const StandardsExplorerPage = () => {
       setStandards(data.standards || []);
       setTotalCount(data.total || 0);
     } catch (e) {
-      console.warn('Failed to load standards:', e.message);
+      console.warn('Search standards fallback check');
     } finally {
       setLoading(false);
     }
@@ -118,31 +119,47 @@ export const StandardsExplorerPage = () => {
     fetchStandardsForUrl();
   }, [fetchStandardsForUrl]);
 
-  // Debounced URL updates when typing or selecting filters (300ms)
-  const isInitialMount = useRef(true);
+  // Push debounced search query to URL params
   useEffect(() => {
-    if (isInitialMount.current) {
-      isInitialMount.current = false;
-      return;
-    }
-
-    const timer = setTimeout(() => {
-      const nextParams = new URLSearchParams();
-      if (searchQuery.trim()) nextParams.set('q', searchQuery.trim());
-      if (filters.category && filters.category !== 'All') nextParams.set('category', filters.category);
-      if (filters.industry && filters.industry !== 'All') nextParams.set('industry', filters.industry);
-      if (filters.status && filters.status !== 'All') nextParams.set('status', filters.status);
-      if (filters.year && filters.year !== 'All') nextParams.set('year', filters.year);
-      if (filters.certification && filters.certification !== 'All') nextParams.set('certification', filters.certification);
-
-      // Only update if searchParams actually differ to avoid infinite re-renders
-      if (nextParams.toString() !== searchParams.toString()) {
-        setSearchParams(nextParams, { replace: true });
+    const handler = setTimeout(() => {
+      if (searchQuery !== urlQ) {
+        const next = new URLSearchParams(searchParams);
+        if (searchQuery.trim()) {
+          next.set('q', searchQuery.trim());
+        } else {
+          next.delete('q');
+        }
+        setSearchParams(next, { replace: true });
       }
-    }, 300);
+    }, 280);
 
-    return () => clearTimeout(timer);
-  }, [searchQuery, filters, searchParams, setSearchParams]);
+    return () => clearTimeout(handler);
+  }, [searchQuery, urlQ, searchParams, setSearchParams]);
+
+  // Push dropdown filter changes directly to URL
+  useEffect(() => {
+    const next = new URLSearchParams(searchParams);
+    let changed = false;
+
+    Object.entries(filters).forEach(([key, val]) => {
+      const currentVal = searchParams.get(key) || 'All';
+      if (val && val !== 'All') {
+        if (currentVal !== val) {
+          next.set(key, val);
+          changed = true;
+        }
+      } else {
+        if (searchParams.has(key)) {
+          next.delete(key);
+          changed = true;
+        }
+      }
+    });
+
+    if (changed) {
+      setSearchParams(next, { replace: true });
+    }
+  }, [filters, searchParams, setSearchParams]);
 
   const handleResetFilters = () => {
     setSearchQuery('');
@@ -156,45 +173,46 @@ export const StandardsExplorerPage = () => {
     setSearchParams(new URLSearchParams(), { replace: true });
   };
 
-  const handleOpenStandard = (std) => {
-    const stdId = std.standardNumber || std._id || std.id;
-    if (openingId) return;
-    setOpeningId(stdId);
-    setSelectedStandard(std);
-    setIsModalOpen(true);
-    setTimeout(() => setOpeningId(null), 250);
+  const handleOpenStandard = async (std) => {
+    const targetId = std.standardNumber || std._id || std.id;
+    setOpeningId(targetId);
+    try {
+      const fullStd = await api.getStandardDetails(targetId);
+      setSelectedStandard(fullStd || std);
+    } catch {
+      setSelectedStandard(std);
+    } finally {
+      setOpeningId(null);
+      setIsModalOpen(true);
+    }
   };
 
   return (
-    <div className="space-y-6 animate-fade-in pb-12">
+    <div className="space-y-5 animate-fade-in pb-12">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-bold uppercase tracking-wider text-gov-600 bg-gov-50 px-2.5 py-0.5 rounded border border-gov-200">
-              {t('standardsCorpus', 'Standards Corpus')}
+            <span className="text-[10px] font-bold uppercase tracking-wider text-gov-800 bg-gov-50 px-2 py-0.2 rounded border border-gov-200">
+              {t('standardsRepository', 'Standards Catalog')}
             </span>
             <span className="text-xs text-slate-500 font-medium">
-              {t('bisRepoSubtitle', 'Bureau of Indian Standards Repository')}
+              {totalCount > 0 ? `${totalCount} ${t('indexedStandards', 'Indexed Indian Standards')}` : t('bisGazetteCorpus', 'BIS Gazette Corpus')}
             </span>
           </div>
-          <h1 className="text-2xl font-black text-slate-900 font-outfit tracking-tight">
-            {t('explorerTitle', 'Indian Standards Explorer')}
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+            {t('standardsExplorer', 'Indian Standards Explorer')}
           </h1>
-          <p className="text-xs text-slate-500 mt-1 max-w-2xl">
-            {t('explorerSubtitle', 'Browse, search, and verify national standard specifications (IS), mandatory Quality Control Orders (QCOs), testing protocols, and certification schemes.')}
+          <p className="text-xs text-slate-500 mt-0.5">
+            {t('standardsExplorerSubtitle', 'Search and inspect verified BIS standards, Quality Control Orders (QCO), normative references, and amendments.')}
           </p>
-        </div>
-
-        <div className="text-xs font-semibold text-slate-600 bg-slate-100 px-3 py-1.5 rounded-xl self-start sm:self-auto shrink-0">
-          {totalCount} {t('standardsIndexed', 'Standards Indexed')}
         </div>
       </div>
 
-      {/* Search and Filters Bar */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 shadow-xs space-y-4">
-        {/* Search input with Voice Recognition (SPA, no page reload) */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+      {/* Search & Filter Bar */}
+      <div className="bg-white rounded-lg border border-slate-200 p-4 shadow-2xs space-y-3">
+        {/* Main Search Input */}
+        <div className="flex items-center gap-2">
           <div className="relative flex-1">
             <input
               type="text"
@@ -206,14 +224,14 @@ export const StandardsExplorerPage = () => {
                 }
               }}
               placeholder={t('searchStandardsPlaceholder', 'Search by IS number, title, keyword (e.g. IS 10322, LED street light, 53 grade cement, TMT, IP65, PPE)...')}
-              className="w-full pl-10 pr-16 py-2.5 text-xs rounded-xl border border-slate-300 focus:ring-2 focus:ring-gov-500/20 focus:border-gov-500 focus:outline-none transition-all"
+              className="w-full pl-8 pr-14 py-2 text-xs rounded-md border border-slate-300 focus:ring-1 focus:ring-gov-700 focus:border-gov-700 focus:outline-none"
             />
-            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3 pointer-events-none" />
+            <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5 pointer-events-none" />
             {searchQuery && (
               <button
                 type="button"
                 onClick={() => setSearchQuery('')}
-                className="absolute right-3 top-2.5 text-xs text-slate-400 hover:text-slate-600 font-bold px-1.5 py-0.5 rounded hover:bg-slate-100 cursor-pointer"
+                className="absolute right-2.5 top-2 text-xs text-slate-400 hover:text-slate-600 font-bold px-1.5 py-0.2 rounded hover:bg-slate-100 cursor-pointer"
               >
                 {t('clear', 'Clear')}
               </button>
@@ -226,14 +244,14 @@ export const StandardsExplorerPage = () => {
         </div>
 
         {/* Filter Facets Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 text-xs">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 text-xs">
           {/* Category Filter */}
           <div>
-            <label className="block text-[11px] font-bold text-slate-700 mb-1">{t('categoryLabel', 'Category')}</label>
+            <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-600 mb-1">{t('categoryLabel', 'Category')}</label>
             <select
               value={filters.category}
               onChange={(e) => setFilters({ ...filters, category: e.target.value })}
-              className="w-full p-2 text-xs rounded-lg border border-slate-300 bg-white focus:ring-2 focus:ring-gov-500/20 focus:border-gov-500"
+              className="w-full p-1.5 text-xs rounded-md border border-slate-300 bg-white focus:ring-1 focus:ring-gov-700"
             >
               <option value="All">{t('allCategories', 'All Categories')}</option>
               {filterFacets.categories.map((c, i) => (
@@ -246,11 +264,11 @@ export const StandardsExplorerPage = () => {
 
           {/* Industry Sector */}
           <div>
-            <label className="block text-[11px] font-bold text-slate-700 mb-1">{t('industryLabel', 'Industry')}</label>
+            <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-600 mb-1">{t('industryLabel', 'Industry')}</label>
             <select
               value={filters.industry}
               onChange={(e) => setFilters({ ...filters, industry: e.target.value })}
-              className="w-full p-2 text-xs rounded-lg border border-slate-300 bg-white focus:ring-2 focus:ring-gov-500/20 focus:border-gov-500"
+              className="w-full p-1.5 text-xs rounded-md border border-slate-300 bg-white focus:ring-1 focus:ring-gov-700"
             >
               <option value="All">{t('allIndustries', 'All Industries')}</option>
               {filterFacets.industries.map((ind, i) => (
@@ -263,11 +281,11 @@ export const StandardsExplorerPage = () => {
 
           {/* Status */}
           <div>
-            <label className="block text-[11px] font-bold text-slate-700 mb-1">{t('statusLabel', 'Status')}</label>
+            <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-600 mb-1">{t('statusLabel', 'Status')}</label>
             <select
               value={filters.status}
               onChange={(e) => setFilters({ ...filters, status: e.target.value })}
-              className="w-full p-2 text-xs rounded-lg border border-slate-300 bg-white focus:ring-2 focus:ring-gov-500/20 focus:border-gov-500"
+              className="w-full p-1.5 text-xs rounded-md border border-slate-300 bg-white focus:ring-1 focus:ring-gov-700"
             >
               <option value="All">{t('allStatuses', 'All Statuses')}</option>
               {filterFacets.statuses.map((st, i) => (
@@ -280,11 +298,11 @@ export const StandardsExplorerPage = () => {
 
           {/* Certification Scheme */}
           <div>
-            <label className="block text-[11px] font-bold text-slate-700 mb-1">{t('certLabel', 'Certification')}</label>
+            <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-600 mb-1">{t('certLabel', 'Certification')}</label>
             <select
               value={filters.certification}
               onChange={(e) => setFilters({ ...filters, certification: e.target.value })}
-              className="w-full p-2 text-xs rounded-lg border border-slate-300 bg-white focus:ring-2 focus:ring-gov-500/20 focus:border-gov-500"
+              className="w-full p-1.5 text-xs rounded-md border border-slate-300 bg-white focus:ring-1 focus:ring-gov-700"
             >
               <option value="All">{t('allCertifications', 'All Mandates')}</option>
               <option value="Mandatory">{lang === 'hi' ? 'अनिवार्य QCO' : 'Mandatory QCO'}</option>
@@ -298,7 +316,7 @@ export const StandardsExplorerPage = () => {
             <button
               type="button"
               onClick={handleResetFilters}
-              className="w-full p-2 text-xs rounded-lg border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-600 font-semibold flex items-center justify-center gap-1 transition-colors cursor-pointer"
+              className="w-full p-1.5 text-xs rounded-md border border-slate-300 bg-slate-50 hover:bg-slate-100 text-slate-700 font-semibold flex items-center justify-center gap-1 transition-colors cursor-pointer"
             >
               <RotateCcw className="w-3 h-3" /> {t('resetFilters', 'Reset All')}
             </button>
@@ -306,30 +324,30 @@ export const StandardsExplorerPage = () => {
         </div>
       </div>
 
-      {/* Results List */}
+      {/* Results Grid */}
       {loading ? (
-        <div className="py-16 text-center space-y-3">
-          <div className="w-10 h-10 border-4 border-gov-600 border-t-transparent rounded-full animate-spin mx-auto" />
+        <div className="py-16 text-center space-y-2.5">
+          <div className="w-8 h-8 border-3 border-gov-700 border-t-transparent rounded-full animate-spin mx-auto" />
           <p className="text-xs text-slate-500 font-semibold">
             {lang === 'hi' ? 'भारतीय मानक डेटाबेस फ़िल्टर किया जा रहा है...' : 'Filtering Indian Standards Database...'}
           </p>
         </div>
       ) : standards.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {standards.map((std, idx) => {
             const isSaved = savedStandardNumbers.has(std.standardNumber);
             return (
               <div
                 key={std.standardNumber || idx}
-                className="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-xs hover:shadow-md hover:border-slate-300 transition-all flex flex-col justify-between"
+                className="bg-white rounded-md border border-slate-200 p-4 shadow-2xs hover:border-gov-400 transition-colors flex flex-col justify-between"
               >
                 <div>
-                  <div className="flex items-start justify-between gap-3 mb-2.5">
+                  <div className="flex items-start justify-between gap-2 mb-2">
                     <div className="flex flex-wrap items-center gap-1.5">
                       <Badge variant="primary" size="xs">
                         {std.category}
                       </Badge>
-                      <Badge variant={std.status === 'Current' ? 'success' : 'warning'} size="xs">
+                      <Badge variant={std.status === 'Current' ? 'current' : 'warning'} size="xs">
                         {std.status}
                       </Badge>
                       {std.certification?.isMandatory && (
@@ -341,7 +359,7 @@ export const StandardsExplorerPage = () => {
                     <button
                       type="button"
                       onClick={() => toggleSaveStandard(std)}
-                      className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
+                      className={`p-1 rounded transition-colors cursor-pointer ${
                         isSaved
                           ? 'text-amber-600 bg-amber-50 hover:bg-amber-100'
                           : 'text-slate-400 hover:text-slate-600 hover:bg-slate-50'
@@ -353,26 +371,26 @@ export const StandardsExplorerPage = () => {
                     </button>
                   </div>
 
-                  <h3 className="text-sm font-bold text-slate-900 font-outfit leading-snug">
+                  <h3 className="text-xs font-bold font-mono text-gov-900 leading-snug">
                     {std.standardNumber}
                   </h3>
-                  <h4 className="text-xs font-semibold text-slate-700 mt-1 leading-snug">
+                  <h4 className="text-xs font-semibold text-slate-800 mt-1 leading-snug">
                     {std.title}
                   </h4>
 
-                  <p className="text-xs text-slate-500 mt-2 line-clamp-3 leading-relaxed">
+                  <p className="text-xs text-slate-500 mt-1.5 line-clamp-3 leading-relaxed">
                     {std.scope}
                   </p>
                 </div>
 
-                <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                  <div className="text-[11px] text-slate-500">
+                <div className="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs">
+                  <div className="text-[11px] text-slate-500 font-mono">
                     {t('yearLabel', 'Year')}: <span className="font-semibold text-slate-700">{std.publicationYear}</span> • {lang === 'hi' ? 'संस्करण:' : 'Edition:'} <span className="font-semibold text-slate-700">{std.edition || (lang === 'hi' ? 'वर्तमान' : 'Current')}</span>
                   </div>
                   <Button
                     size="xs"
                     variant="ghost"
-                    className="text-gov-700 font-bold"
+                    className="text-gov-800 font-bold"
                     disabled={openingId === (std.standardNumber || std._id || std.id)}
                     icon={openingId === (std.standardNumber || std._id || std.id) ? undefined : ChevronRight}
                     onClick={() => handleOpenStandard(std)}
@@ -385,9 +403,9 @@ export const StandardsExplorerPage = () => {
           })}
         </div>
       ) : (
-        <div className="py-14 text-center bg-white rounded-2xl border border-slate-200 space-y-3 p-6">
-          <Compass className="w-10 h-10 text-slate-400 mx-auto" />
-          <h3 className="text-sm font-bold text-slate-800">{t('noStandardsMatch', 'No Matching Indian Standards Found')}</h3>
+        <div className="py-12 text-center bg-white rounded-lg border border-slate-200 space-y-2.5 p-6">
+          <Compass className="w-8 h-8 text-slate-400 mx-auto" />
+          <h3 className="text-xs font-bold text-slate-800 uppercase tracking-wider">{t('noStandardsMatch', 'No Matching Indian Standards Found')}</h3>
           <p className="text-xs text-slate-500 max-w-sm mx-auto">
             {t('tryRefiningFilters', 'Try clearing some filters or searching with a broader product keyword.')}
           </p>

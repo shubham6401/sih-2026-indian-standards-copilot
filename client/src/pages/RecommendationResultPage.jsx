@@ -6,7 +6,8 @@ import {
   Download,
   CheckCircle2,
   AlertTriangle,
-  Sparkles,
+  BookOpen,
+  Plus,
   Award,
   Layers,
   ChevronRight,
@@ -226,6 +227,19 @@ export const RecommendationResultPage = () => {
     }
   };
 
+  const analysisDate = useMemo(() => {
+    if (!analysis?.createdAt) return 'Current';
+    return new Date(analysis.createdAt).toLocaleDateString('en-IN', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric'
+    });
+  }, [analysis?.createdAt]);
+
+  const safeImprovedSpecification = useMemo(() => {
+    return formatSpecificationText(analysis?.improvedSpecification);
+  }, [analysis?.improvedSpecification]);
+
   // Loading Skeleton State
   if (loading) {
     return (
@@ -242,8 +256,8 @@ export const RecommendationResultPage = () => {
   // Error / Report Not Found State
   if (error || !analysis) {
     return (
-      <div className="p-8 sm:p-10 text-center bg-white rounded-2xl border border-slate-200 shadow-sm space-y-4 max-w-md mx-auto my-12">
-        <div className="w-12 h-12 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center mx-auto">
+      <div className="p-8 sm:p-10 text-center bg-white rounded-lg border border-slate-200 shadow-2xs space-y-4 max-w-md mx-auto my-12">
+        <div className="w-12 h-12 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center mx-auto border border-amber-200">
           <AlertTriangle className="w-6 h-6" />
         </div>
         <h3 className="text-lg font-bold text-slate-900">Report Not Found</h3>
@@ -262,15 +276,6 @@ export const RecommendationResultPage = () => {
     );
   }
 
-  const analysisDate = useMemo(() => {
-    if (!analysis?.createdAt) return 'Current';
-    return new Date(analysis.createdAt).toLocaleDateString('en-IN', {
-      day: '2-digit',
-      month: 'short',
-      year: 'numeric'
-    });
-  }, [analysis?.createdAt]);
-
   const primaryList = analysis.primaryStandards || [];
   const relatedList = analysis.relatedStandards || [];
   const gapsList = analysis.tenderGaps || [];
@@ -285,10 +290,6 @@ export const RecommendationResultPage = () => {
     ? JSON.stringify(analysis.productCategory)
     : String(analysis.productCategory || 'General');
 
-  const safeImprovedSpecification = useMemo(() => {
-    return formatSpecificationText(analysis.improvedSpecification);
-  }, [analysis.improvedSpecification]);
-
   const safeExplanation = typeof analysis.explanation === 'object'
     ? (analysis.explanation?.summary || JSON.stringify(analysis.explanation))
     : (analysis.explanation || 'Analyzed against Bureau of Indian Standards database with high confidence alignment.');
@@ -300,7 +301,7 @@ export const RecommendationResultPage = () => {
 
   // 7 Clean Tabs per Requirements 22-29
   const tabItems = [
-    { id: 'overview', label: t('tabOverview', 'Overview'), icon: Sparkles },
+    { id: 'overview', label: t('tabOverview', 'Overview'), icon: BookOpen },
     { id: 'standards', label: t('tabStandards', 'Standards'), icon: Layers, count: primaryList.length },
     { id: 'relationships', label: t('tabRelationships', 'Relationships'), icon: Network },
     { id: 'gaps', label: t('tabGaps', 'Gap Analysis'), icon: ShieldAlert, count: gapsList.length },
@@ -347,7 +348,7 @@ export const RecommendationResultPage = () => {
           <Button
             size="xs"
             variant="primary"
-            icon={Sparkles}
+            icon={Plus}
             onClick={() => navigate('/analysis/new')}
           >
             {t('newAnalysis', 'New Analysis')}
@@ -356,7 +357,7 @@ export const RecommendationResultPage = () => {
       </div>
 
       {/* Clean Dossier Header Banner */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-xs">
+      <div className="bg-white rounded-lg border border-slate-200 p-5 sm:p-6 shadow-2xs">
         <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
           <div className="space-y-2">
             <div className="flex flex-wrap items-center gap-2">
@@ -399,7 +400,7 @@ export const RecommendationResultPage = () => {
       </div>
 
       {/* 7 Clean Navigation Tabs */}
-      <div role="tablist" aria-label="Procurement dossier sections" className="flex flex-wrap gap-1.5 p-1 bg-slate-100 rounded-xl border border-slate-200 text-xs font-semibold overflow-x-auto">
+      <div role="tablist" aria-label="Procurement dossier sections" className="flex flex-wrap gap-1 p-1 bg-slate-100 rounded-lg border border-slate-200 text-xs font-semibold overflow-x-auto">
         {tabItems.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -412,7 +413,7 @@ export const RecommendationResultPage = () => {
               data-testid={`dossier-tab-${tab.id}`}
               data-tab-name={tab.id}
               onClick={() => handleTabChange(tab.id)}
-              className={`px-3 py-2 rounded-lg transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap ${
+              className={`px-3 py-1.5 rounded-md transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap ${
                 isActive
                   ? 'bg-gov-700 text-white shadow-2xs font-bold'
                   : 'text-slate-600 hover:text-slate-900 hover:bg-white'
@@ -421,7 +422,7 @@ export const RecommendationResultPage = () => {
               <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-amber-300' : 'text-slate-400'}`} />
               <span>{tab.label}</span>
               {typeof tab.count === 'number' && (
-                <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
+                <span className={`text-[10px] px-1.5 py-0.2 rounded font-bold ${
                   isActive ? 'bg-gov-900 text-white' : 'bg-slate-200 text-slate-700'
                 }`}>
                   {tab.count}
@@ -442,9 +443,9 @@ export const RecommendationResultPage = () => {
           />
 
           {/* Primary Recommendation Banner */}
-          <div className="p-5 rounded-2xl bg-gov-50/70 border border-gov-200 text-xs space-y-2">
+          <div className="p-4 rounded-lg bg-gov-50/60 border border-gov-200 text-xs space-y-2">
             <div className="flex items-center gap-2 font-bold text-gov-900 text-sm">
-              <Sparkles className="w-4 h-4 text-amber-500" />
+              <FileText className="w-4 h-4 text-gov-700" />
               <span>Primary Recommendation Summary</span>
             </div>
             <p className="text-slate-700 leading-relaxed">
@@ -453,7 +454,7 @@ export const RecommendationResultPage = () => {
           </div>
 
           {/* Top Risks Summary */}
-          <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs space-y-3">
+          <div className="bg-white rounded-lg border border-slate-200 p-5 shadow-2xs space-y-3">
             <div className="flex items-center justify-between">
               <h3 className="text-sm font-bold text-slate-900 font-outfit flex items-center gap-2">
                 <ShieldAlert className="w-4 h-4 text-rose-600" />
@@ -465,9 +466,9 @@ export const RecommendationResultPage = () => {
             </div>
 
             {gapsList.length > 0 ? (
-              <div className="space-y-2.5">
+              <div className="space-y-2">
                 {gapsList.slice(0, 3).map((gap, idx) => (
-                  <div key={idx} className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs space-y-1">
+                  <div key={idx} className="p-3 bg-slate-50 rounded-md border border-slate-200 text-xs space-y-1">
                     <div className="flex items-center justify-between">
                       <span className="font-bold text-slate-900">{gap?.title || gap?.category || (typeof gap === 'string' ? gap : 'Compliance Gap')}</span>
                       <Badge variant={gap?.severity === 'HIGH' ? 'mandate' : 'warning'} size="xs">
@@ -515,7 +516,7 @@ export const RecommendationResultPage = () => {
           </div>
 
           {/* Quick Next Actions Bar */}
-          <div className="p-4 bg-slate-100 rounded-2xl flex flex-wrap items-center justify-between gap-3 text-xs">
+          <div className="p-4 bg-slate-50 rounded-lg border border-slate-200 flex flex-wrap items-center justify-between gap-3 text-xs">
             <span className="text-slate-600 font-medium">
               Ready to incorporate into your tender documents?
             </span>
@@ -599,7 +600,7 @@ export const RecommendationResultPage = () => {
       {/* TAB 3: RELATIONSHIPS */}
       {activeTab === 'relationships' && (
         <div className="space-y-6 animate-fade-in">
-          <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs space-y-4">
+          <div className="bg-white rounded-lg border border-slate-200 p-5 shadow-2xs space-y-4">
             <div>
               <h3 className="text-base font-bold text-slate-900 font-outfit">
                 Standards Dependency & Hierarchy Graph
@@ -624,16 +625,16 @@ export const RecommendationResultPage = () => {
         <div className="space-y-6 animate-fade-in">
           {/* Risk Summary Counters */}
           <div className="grid grid-cols-3 gap-3">
-            <div className="p-4 rounded-xl bg-rose-50 border border-rose-200 text-center">
-              <span className="text-2xl font-black text-rose-700 block">{highGaps.length}</span>
+            <div className="p-4 rounded-lg bg-rose-50 border border-rose-200 text-center">
+              <span className="text-2xl font-black text-rose-700 block font-mono">{highGaps.length}</span>
               <span className="text-xs font-bold text-rose-800 uppercase tracking-wider">High Risk</span>
             </div>
-            <div className="p-4 rounded-xl bg-amber-50 border border-amber-200 text-center">
-              <span className="text-2xl font-black text-amber-700 block">{medGaps.length}</span>
+            <div className="p-4 rounded-lg bg-amber-50 border border-amber-200 text-center">
+              <span className="text-2xl font-black text-amber-700 block font-mono">{medGaps.length}</span>
               <span className="text-xs font-bold text-amber-800 uppercase tracking-wider">Medium Risk</span>
             </div>
-            <div className="p-4 rounded-xl bg-slate-100 border border-slate-200 text-center">
-              <span className="text-2xl font-black text-slate-700 block">{lowGaps.length}</span>
+            <div className="p-4 rounded-lg bg-slate-50 border border-slate-200 text-center">
+              <span className="text-2xl font-black text-slate-700 block font-mono">{lowGaps.length}</span>
               <span className="text-xs font-bold text-slate-700 uppercase tracking-wider">Low Risk</span>
             </div>
           </div>
@@ -661,7 +662,7 @@ export const RecommendationResultPage = () => {
       {activeTab === 'specification' && (
         <div className="space-y-6 animate-fade-in">
           {/* Action Toolbar */}
-          <div className="flex flex-wrap items-center justify-between gap-3 p-4 bg-white rounded-2xl border border-slate-200 shadow-xs">
+          <div className="flex flex-wrap items-center justify-between gap-3 p-4 bg-white rounded-lg border border-slate-200 shadow-2xs">
             <div>
               <h3 className="text-sm font-bold text-slate-900">AI Improved Specification Schedule</h3>
               <p className="text-xs text-slate-500">GFR-compliant clause schedule with integrated BIS norms</p>
@@ -707,7 +708,7 @@ export const RecommendationResultPage = () => {
       {activeTab === 'report' && (
         <div className="space-y-6 animate-fade-in">
           {/* Report Summary Card with Direct Action Controls */}
-          <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-4">
+          <div className="bg-white rounded-lg border border-slate-200 p-5 sm:p-6 shadow-2xs space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
               <div>
                 <span className="text-[10px] font-mono font-bold bg-slate-100 text-slate-700 px-2 py-0.5 rounded border border-slate-200">

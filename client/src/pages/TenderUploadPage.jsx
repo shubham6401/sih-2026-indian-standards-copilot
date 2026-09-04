@@ -9,7 +9,6 @@ import {
   ArrowRight,
   FileCheck,
   X,
-  Sparkles,
   Layers
 } from 'lucide-react';
 import { Button } from '../components/common/Button';
@@ -156,7 +155,6 @@ export const TenderUploadPage = () => {
     setError('');
     setCurrentStage(1);
 
-    // Progressive stage simulation while uploading & server processes
     const stageTimer = setInterval(() => {
       setCurrentStage((prev) => (prev < 4 ? prev + 1 : prev));
     }, 700);
@@ -189,18 +187,18 @@ export const TenderUploadPage = () => {
   };
 
   return (
-    <div className="space-y-6 max-w-4xl mx-auto animate-fade-in">
+    <div className="space-y-5 max-w-4xl mx-auto animate-fade-in pb-12">
       {/* Header */}
-      <div className="pb-4 border-b border-slate-200">
+      <div className="pb-3 border-b border-slate-200">
         <div className="flex items-center gap-2 mb-1">
-          <span className="text-xs font-bold uppercase tracking-wider text-gov-600 bg-gov-50 px-2.5 py-0.5 rounded border border-gov-200">
+          <span className="text-[10px] font-bold uppercase tracking-wider text-gov-800 bg-gov-50 px-2 py-0.2 rounded border border-gov-200">
             {lang === 'hi' ? 'दस्तावेज़ अंतर्ग्रहण पाइपलाइन' : 'Document Ingestion Pipeline'}
           </span>
           <span className="text-xs text-slate-500 font-medium">
             {lang === 'hi' ? 'पीडीएफ विनिर्देश ओसीआर और खंड निष्कर्षण' : 'PDF Specification OCR & Clause Extractor'}
           </span>
         </div>
-        <h1 className="text-2xl font-black text-slate-900 font-outfit tracking-tight">
+        <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
           {t('uploadTenderHeaderTitle', 'Upload Tender / Specification PDF')}
         </h1>
         <p className="text-xs text-slate-500 mt-0.5">
@@ -209,7 +207,7 @@ export const TenderUploadPage = () => {
       </div>
 
       {error && (
-        <div className="p-4 bg-rose-50 border border-rose-200 text-rose-900 text-xs rounded-xl flex items-start gap-2.5">
+        <div className="p-3 bg-rose-50 border border-rose-200 text-rose-900 text-xs rounded-md flex items-start gap-2">
           <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
           <div>
             <span className="font-bold block">{lang === 'hi' ? 'दस्तावेज़ सूचना:' : 'Document Notice:'}</span>
@@ -219,7 +217,7 @@ export const TenderUploadPage = () => {
       )}
 
       {/* Main Upload Box */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm">
+      <div className="bg-white rounded-lg border border-slate-200 p-5 sm:p-6 shadow-2xs">
         {!file ? (
           <div
             onDragEnter={handleDrag}
@@ -227,10 +225,10 @@ export const TenderUploadPage = () => {
             onDragOver={handleDrag}
             onDrop={handleDrop}
             onClick={() => fileInputRef.current?.click()}
-            className={`border-2 border-dashed rounded-2xl p-10 sm:p-14 text-center cursor-pointer transition-all duration-200 ${
+            className={`border-2 border-dashed rounded-lg p-8 sm:p-12 text-center cursor-pointer transition-colors ${
               dragActive
-                ? 'border-gov-500 bg-gov-50/60 scale-[1.01]'
-                : 'border-slate-300 hover:border-gov-400 hover:bg-slate-50/50'
+                ? 'border-gov-600 bg-gov-50/70'
+                : 'border-slate-300 hover:border-gov-600 hover:bg-slate-50/60'
             }`}
           >
             <input
@@ -241,35 +239,35 @@ export const TenderUploadPage = () => {
               onChange={handleFileChange}
             />
 
-            <div className="w-16 h-16 rounded-2xl bg-gov-50 text-gov-700 flex items-center justify-center mx-auto mb-4">
-              <UploadCloud className="w-8 h-8 text-gov-600" />
+            <div className="w-12 h-12 rounded bg-gov-50 text-gov-800 flex items-center justify-center mx-auto mb-3 border border-gov-200">
+              <UploadCloud className="w-6 h-6 text-gov-700" />
             </div>
 
-            <h3 className="text-base sm:text-lg font-bold text-slate-900 font-outfit">
+            <h3 className="text-sm sm:text-base font-bold text-slate-900">
               {lang === 'hi' ? 'निविदा पीडीएफ यहां खींचें और छोड़ें' : 'Drag & Drop Tender PDF'}
             </h3>
-            <p className="text-xs text-slate-500 mt-1 mb-4">
-              {lang === 'hi' ? 'या अपने कंप्यूटर से' : 'or'} <span className="text-gov-600 font-bold underline">{lang === 'hi' ? 'फ़ाइलें ब्राउज़ करें' : 'Browse files'}</span> {lang === 'hi' ? '' : 'from your computer'}
+            <p className="text-xs text-slate-500 mt-1 mb-3">
+              {lang === 'hi' ? 'या अपने कंप्यूटर से' : 'or'} <span className="text-gov-700 font-bold underline">{lang === 'hi' ? 'फ़ाइलें ब्राउज़ करें' : 'Browse files'}</span> {lang === 'hi' ? '' : 'from your computer'}
             </p>
 
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 text-slate-600 text-[11px] font-semibold">
+            <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded border border-slate-200 bg-slate-100 text-slate-600 text-[10px] font-semibold">
               <span>{lang === 'hi' ? '25 MB तक का पीडीएफ प्रारूप' : 'PDF format up to 25 MB'}</span>
               <span>•</span>
               <span>{lang === 'hi' ? 'पाठ-खोजने योग्य दस्तावेज़' : 'Text-searchable documents'}</span>
             </div>
           </div>
         ) : (
-          <div className="space-y-6">
-            {/* Selected File Card */}
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-3">
-              <div className="flex items-center gap-3 min-w-0">
-                <div className="w-10 h-10 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center shrink-0 border border-rose-100">
-                  <FileText className="w-6 h-6" />
+          <div className="space-y-4">
+            {/* Selected File Row */}
+            <div className="p-3.5 rounded-md bg-slate-50 border border-slate-200 flex items-center justify-between gap-3">
+              <div className="flex items-center gap-2.5 min-w-0">
+                <div className="w-8 h-8 rounded bg-rose-50 text-rose-700 flex items-center justify-center shrink-0 border border-rose-200">
+                  <FileText className="w-4 h-4" />
                 </div>
                 <div className="min-w-0">
                   <h4 className="text-xs font-bold text-slate-900 truncate">{file.name}</h4>
-                  <p className="text-[11px] text-slate-500">
-                    {(file.size / (1024 * 1024)).toFixed(2)} MB • {lang === 'hi' ? 'एआई निष्कर्षण के लिए तैयार' : 'Ready for AI extraction'}
+                  <p className="text-[11px] text-slate-500 font-mono">
+                    {(file.size / (1024 * 1024)).toFixed(2)} MB • {lang === 'hi' ? 'विश्लेषण के लिए तैयार' : 'Ready for standards extraction'}
                   </p>
                 </div>
               </div>
@@ -278,11 +276,11 @@ export const TenderUploadPage = () => {
                 <button
                   type="button"
                   onClick={() => setFile(null)}
-                  className="p-1 text-slate-400 hover:text-slate-700 rounded-lg cursor-pointer"
+                  className="p-1 text-slate-400 hover:text-slate-700 rounded transition-colors cursor-pointer"
                   title={t('clear', 'Clear')}
                   aria-label={t('clear', 'Clear')}
                 >
-                  <X className="w-5 h-5" />
+                  <X className="w-4 h-4" />
                 </button>
               )}
             </div>
@@ -297,25 +295,25 @@ export const TenderUploadPage = () => {
                 disabled={uploading}
                 value={tenderTitle}
                 onChange={(e) => setTenderTitle(e.target.value)}
-                className="w-full px-3.5 py-2 text-xs rounded-xl border border-slate-300 focus:ring-2 focus:ring-gov-500 focus:outline-none"
+                className="w-full px-3 py-1.5 text-xs rounded-md border border-slate-300 focus:ring-1 focus:ring-gov-700 focus:border-gov-700 focus:outline-none"
                 placeholder={lang === 'hi' ? 'उदा. नगर निगम स्ट्रीट लाइटिंग निविदा 2026' : 'e.g. Municipal Street Lighting Tender 2026'}
               />
             </div>
 
             {/* Progress Pipeline Visualization */}
             {uploading && (
-              <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+              <div className="p-4 rounded-md bg-slate-50 border border-slate-200 space-y-2.5">
                 <div className="flex items-center justify-between pb-2 border-b border-slate-200">
-                  <h4 className="text-xs font-bold text-slate-900 flex items-center gap-2">
-                    <Loader2 className="w-4 h-4 text-gov-600 animate-spin" />
+                  <h4 className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+                    <Loader2 className="w-3.5 h-3.5 text-gov-700 animate-spin" />
                     <span>{lang === 'hi' ? 'दस्तावेज़ विश्लेषण प्रगति पर है' : 'Document Analysis in Progress'}</span>
                   </h4>
-                  <span className="text-[11px] font-bold text-gov-700">
+                  <span className="text-[11px] font-bold font-mono text-gov-800">
                     {lang === 'hi' ? `चरण ${currentStage} / ${stages.length}` : `Step ${currentStage} of ${stages.length}`}
                   </span>
                 </div>
 
-                <div className="space-y-2.5 pt-1">
+                <div className="space-y-1.5 pt-1">
                   {stages.map((stage, idx) => {
                     const stepNum = idx + 1;
                     const isDone = currentStage > stepNum;
@@ -324,20 +322,20 @@ export const TenderUploadPage = () => {
                     return (
                       <div
                         key={idx}
-                        className={`flex items-center gap-3 text-xs ${
+                        className={`flex items-center gap-2.5 text-xs ${
                           isDone
-                            ? 'text-emerald-700 font-semibold'
+                            ? 'text-emerald-800 font-semibold'
                             : isCurrent
-                            ? 'text-gov-700 font-bold'
+                            ? 'text-gov-800 font-bold'
                             : 'text-slate-400 opacity-60'
                         }`}
                       >
                         {isDone ? (
-                          <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                         ) : isCurrent ? (
-                          <Loader2 className="w-4 h-4 text-gov-600 animate-spin shrink-0" />
+                          <Loader2 className="w-3.5 h-3.5 text-gov-700 animate-spin shrink-0" />
                         ) : (
-                          <div className="w-4 h-4 rounded-full border border-slate-300 shrink-0 text-center text-[10px] leading-3.5 font-bold">
+                          <div className="w-3.5 h-3.5 rounded-full border border-slate-300 shrink-0 text-center text-[9px] leading-3 font-bold">
                             {stepNum}
                           </div>
                         )}
@@ -354,16 +352,16 @@ export const TenderUploadPage = () => {
               </div>
             )}
 
-            {/* CTA Button */}
+            {/* CTA Buttons */}
             {!uploading && (
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
+              <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-slate-100">
                 <Button variant="secondary" size="md" onClick={() => setFile(null)}>
                   {lang === 'hi' ? 'अलग फ़ाइल चुनें' : 'Choose Different File'}
                 </Button>
                 <Button
                   variant="primary"
                   size="md"
-                  icon={Sparkles}
+                  icon={ArrowRight}
                   onClick={handleUploadAndAnalyze}
                 >
                   {t('analyzeTenderBtn', 'Analyze Tender Document')}
@@ -374,16 +372,16 @@ export const TenderUploadPage = () => {
         )}
       </div>
 
-      {/* 1-Click Preloaded Sample Tenders for Testing & Evaluators */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-4">
-        <div className="flex items-center justify-between">
+      {/* 1-Click Preloaded Sample Tenders for Testing */}
+      <div className="bg-white rounded-lg border border-slate-200 p-4 sm:p-5 shadow-2xs space-y-3">
+        <div className="flex items-center justify-between pb-2 border-b border-slate-100">
           <div>
-            <h3 className="text-sm font-bold text-slate-900 font-outfit flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-amber-500" />
-              <span>{lang === 'hi' ? 'त्वरित मूल्यांकन के लिए प्रीलोडेड नमूना निविदाएं' : 'Preloaded Sample Tenders for Instant Evaluation'}</span>
+            <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
+              <FileCheck className="w-3.5 h-3.5 text-gov-700" />
+              <span>{lang === 'hi' ? 'त्वरित मूल्यांकन के लिए प्रीलोडेड नमूना निविदाएं' : 'Preloaded Benchmark Tenders for Evaluation'}</span>
             </h3>
-            <p className="text-xs text-slate-500 mt-0.5">
-              {lang === 'hi' ? 'बाहरी फ़ाइलों को अपलोड किए बिना प्रामाणिक सरकारी निविदा दस्तावेजों का परीक्षण करें।' : 'Test authentic government tender documents without needing to upload external files.'}
+            <p className="text-[11px] text-slate-500 mt-0.5">
+              {lang === 'hi' ? 'बाहरी फ़ाइलों को अपलोड किए बिना प्रामाणिक सरकारी निविदा दस्तावेजों का परीक्षण करें।' : 'Test authentic public procurement tender documents without uploading external files.'}
             </p>
           </div>
           <Badge variant="primary" size="xs">
@@ -391,14 +389,14 @@ export const TenderUploadPage = () => {
           </Badge>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {SAMPLE_TENDERS.map((sample) => (
             <div
               key={sample.id}
-              className="p-4 rounded-xl bg-slate-50 border border-slate-200/80 hover:border-slate-300 transition-all flex flex-col justify-between"
+              className="p-3.5 rounded-md border border-slate-200 bg-slate-50 flex flex-col justify-between"
             >
               <div>
-                <div className="flex items-center justify-between gap-2 mb-2">
+                <div className="flex items-center justify-between gap-2 mb-1.5">
                   <Badge variant="neutral" size="xs">
                     {sample.category}
                   </Badge>
@@ -407,15 +405,15 @@ export const TenderUploadPage = () => {
                 <h4 className="text-xs font-bold text-slate-900 leading-snug mb-1">
                   {sample.title}
                 </h4>
-                <p className="text-[11px] text-slate-600 leading-relaxed mb-3">
+                <p className="text-[11px] text-slate-600 leading-relaxed mb-2">
                   {sample.scope}
                 </p>
-                <div className="p-2 bg-white rounded-lg border border-slate-200 text-[10px] text-slate-500 mb-4">
-                  Target IS: <span className="font-semibold text-slate-700">{sample.standardsTarget}</span>
+                <div className="p-2 bg-white rounded border border-slate-200 text-[10px] text-slate-600 mb-3 font-mono">
+                  Target: <span className="font-bold text-gov-900">{sample.standardsTarget}</span>
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 pt-2 border-t border-slate-200/60">
+              <div className="flex items-center gap-2 pt-2 border-t border-slate-200">
                 <Button
                   size="xs"
                   variant="secondary"
@@ -423,7 +421,7 @@ export const TenderUploadPage = () => {
                   disabled={uploading}
                   onClick={() => handleLoadSampleTender(sample, false)}
                 >
-                  {lang === 'hi' ? 'ड्रॉपज़ोन में लोड करें' : 'Load into Dropzone'}
+                  {lang === 'hi' ? 'ड्रॉपज़ोन में लोड करें' : 'Load to Dropzone'}
                 </Button>
                 <Button
                   size="xs"
@@ -433,7 +431,7 @@ export const TenderUploadPage = () => {
                   data-testid={`analyze-sample-${sample.id}`}
                   onClick={() => handleLoadSampleTender(sample, true)}
                 >
-                  {lang === 'hi' ? 'नमूना निविदा का विश्लेषण करें' : 'Analyze Sample Tender'} <ArrowRight className="w-3 h-3 ml-1" />
+                  {lang === 'hi' ? 'विश्लेषण करें' : 'Audit Tender'} <ArrowRight className="w-3 h-3 ml-1" />
                 </Button>
               </div>
             </div>
@@ -441,15 +439,15 @@ export const TenderUploadPage = () => {
         </div>
       </div>
 
-      {/* Info notice */}
-      <div className="p-4 bg-slate-100/70 rounded-2xl border border-slate-200 text-xs text-slate-600 leading-relaxed">
-        <h5 className="font-bold text-slate-800 mb-1">
+      {/* Info Notice */}
+      <div className="p-3.5 bg-slate-100 rounded-md border border-slate-200 text-[11px] text-slate-600 leading-relaxed">
+        <h5 className="font-bold text-slate-800 mb-0.5">
           {lang === 'hi' ? 'समर्थित दस्तावेज़ प्रारूप और गोपनीयता सूचना' : 'Supported Document Formats & Privacy Notice'}
         </h5>
         <p>
           {lang === 'hi'
-            ? 'इंजन मानक पाठ-आधारित पीडीएफ निविदा नोटिस, एनआईटी (निविदा आमंत्रण सूचना), बीओक्यू अनुसूचियों और तकनीकी आवश्यकता अनुलग्नकों को संसाधित करता है। अपलोड किए गए दस्तावेजों को स्थानीय रूप से मेमोरी में पार्स किया जाता है और किसी भी अनधिकृत तृतीय पक्ष के साथ साझा नहीं किया जाता है।'
-            : 'The engine processes standard text-based PDF tender notices, NIT (Notice Inviting Tender), BOQ schedules, and technical requirement attachments. Uploaded documents are parsed locally in-memory to extract technical parameters and are not shared with unauthorized third parties.'}
+            ? 'इंजन मानक पाठ-आधारित पीडीएफ निविदा नोटिस, एनआईटी (निविदा आमंत्रण सूचना), बीओक्यू अनुसूचियों और तकनीकी आवश्यकता अनुलग्नकों को संसाधित करता है।'
+            : 'Engine processes standard text-based PDF tender notices, NIT (Notice Inviting Tender), BOQ schedules, and technical requirement schedules. Uploaded documents are parsed locally in-memory and validated against official BIS Gazette notifications.'}
         </p>
       </div>
     </div>

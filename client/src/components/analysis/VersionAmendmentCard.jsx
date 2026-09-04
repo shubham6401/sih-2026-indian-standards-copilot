@@ -6,7 +6,7 @@ export const VersionAmendmentCard = ({ standards = [] }) => {
   if (!standards || standards.length === 0) return null;
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-sm my-6">
+    <div className="bg-white rounded-lg border border-slate-200 p-5 sm:p-6 shadow-2xs my-6">
       <div className="flex items-center justify-between mb-4">
         <div>
           <h4 className="text-base font-bold text-slate-900 flex items-center gap-2">
@@ -23,10 +23,10 @@ export const VersionAmendmentCard = ({ standards = [] }) => {
         {standards.map((rawStd, idx) => {
           const std = typeof rawStd === 'string' ? { standardNumber: rawStd, status: 'Current' } : (rawStd || {});
           return (
-          <div key={idx} className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80">
+          <div key={idx} className="p-4 rounded-md bg-slate-50 border border-slate-200/90">
             <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
               <div className="flex items-center gap-2">
-                <span className="font-bold text-sm text-slate-900">{std.standardNumber || 'IS Standard'}</span>
+                <span className="font-bold text-sm text-gov-950 font-mono">{std.standardNumber || 'IS Standard'}</span>
                 <Badge variant={std.status === 'Current' ? 'success' : 'warning'} size="xs">
                   {std.status || 'Current'}
                 </Badge>

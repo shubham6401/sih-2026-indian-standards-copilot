@@ -8,11 +8,11 @@ export const TenderGapAnalysisCard = ({ gaps, outdated }) => {
   const allIssuesCount = safeGaps.length + safeOutdated.length;
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-sm my-6 space-y-5">
+    <div className="bg-white rounded-lg border border-slate-200 p-5 sm:p-6 shadow-2xs my-6 space-y-5">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-slate-100">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-extrabold uppercase tracking-wider bg-rose-100 text-rose-800 px-2 py-0.5 rounded border border-rose-200">
+            <span className="text-[10px] font-bold uppercase tracking-wider bg-rose-50 text-rose-800 px-2 py-0.5 rounded border border-rose-200">
               Tender Gap Analysis
             </span>
             <span className="text-xs text-slate-500 font-medium">Pre-Tender Vulnerability Inspection</span>
@@ -27,7 +27,7 @@ export const TenderGapAnalysisCard = ({ gaps, outdated }) => {
         </div>
 
         <div className="flex items-center gap-2 self-start sm:self-auto">
-          <span className="text-xs font-bold px-3 py-1 rounded-xl bg-amber-50 text-amber-900 border border-amber-200">
+          <span className="text-xs font-bold px-2.5 py-1 rounded-md bg-amber-50 text-amber-900 border border-amber-200">
             {allIssuesCount} Items Require Review
           </span>
         </div>
@@ -42,12 +42,12 @@ export const TenderGapAnalysisCard = ({ gaps, outdated }) => {
           </h4>
 
           {safeOutdated.map((item, idx) => (
-            <div key={idx} className="p-4 rounded-xl bg-rose-50/70 border border-rose-200 text-xs space-y-2">
+            <div key={idx} className="p-4 rounded-md bg-rose-50/70 border border-rose-200 text-xs space-y-2">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
-                  <span className="line-through text-slate-500 font-bold">{item.oldNumber} ({item.citedYear})</span>
+                  <span className="line-through text-slate-500 font-bold font-mono">{item.oldNumber} ({item.citedYear})</span>
                   <ArrowRight className="w-3.5 h-3.5 text-rose-600" />
-                  <span className="text-emerald-800 font-black bg-emerald-100 px-2 py-0.5 rounded">
+                  <span className="text-emerald-800 font-bold font-mono bg-emerald-100 px-2 py-0.5 rounded border border-emerald-300">
                     {item.currentNumber} ({item.currentYear})
                   </span>
                 </div>
@@ -56,7 +56,7 @@ export const TenderGapAnalysisCard = ({ gaps, outdated }) => {
                 </Badge>
               </div>
               <p className="text-slate-700 leading-relaxed">{item.reason}</p>
-              <div className="p-2.5 bg-white rounded-lg border border-rose-200 font-medium text-slate-800 flex items-start gap-2">
+              <div className="p-2.5 bg-white rounded-md border border-rose-200 font-medium text-slate-800 flex items-start gap-2">
                 <Wrench className="w-3.5 h-3.5 text-gov-600 shrink-0 mt-0.5" />
                 <span>
                   <strong>Recommended Tender Action:</strong> {item.action}
@@ -77,7 +77,7 @@ export const TenderGapAnalysisCard = ({ gaps, outdated }) => {
         {safeGaps.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {safeGaps.map((gap, idx) => (
-              <div key={idx} className="p-4 rounded-xl bg-slate-50 border border-slate-200/90 text-xs space-y-2 flex flex-col justify-between">
+              <div key={idx} className="p-3.5 rounded-md bg-slate-50 border border-slate-200 text-xs space-y-2 flex flex-col justify-between">
                 <div>
                   <div className="flex items-start justify-between gap-2 mb-1.5">
                     <span className="font-bold text-slate-900">{gap.title}</span>
@@ -90,14 +90,14 @@ export const TenderGapAnalysisCard = ({ gaps, outdated }) => {
                   </p>
                 </div>
 
-                <div className="p-2 bg-amber-50 rounded-lg border border-amber-200 text-amber-950 text-[11px] mt-2">
+                <div className="p-2 bg-amber-50 rounded border border-amber-200 text-amber-950 text-[11px] mt-2">
                   <strong>Fix:</strong> {gap.remedy}
                 </div>
               </div>
             ))}
           </div>
         ) : (
-          <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center gap-2">
+          <div className="p-4 rounded-md bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 text-emerald-600" />
             <span>All essential testing, certification, and environmental clauses were identified in the tender.</span>
           </div>
