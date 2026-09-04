@@ -29,6 +29,27 @@ export const TenderUploadPage = () => {
   const [currentStage, setCurrentStage] = useState(0);
   const [error, setError] = useState('');
 
+  const SAMPLE_TENDERS = [
+    {
+      id: 'led-street-lighting',
+      title: 'CPWD Smart City LED Street Lighting Tender NIT-2026',
+      fileName: 'CPWD_Smart_City_LED_Street_Lighting_Tender_NIT_2026.pdf',
+      url: '/sample_tenders/sample_led_street_light_tender.pdf',
+      category: 'LED Lighting',
+      scope: '100W energy efficient LED Street Lights with IP66 waterproof housing, surge protection, and IS 10322 compliance.',
+      standardsTarget: 'IS 10322 (Part 5/Sec 3), IS 15885, IS 16107'
+    },
+    {
+      id: 'substation-power-transformer',
+      title: 'NTPC 11kV Power Distribution Transformer Tender NIT-2026',
+      fileName: 'NTPC_11kV_Power_Distribution_Transformer_NIT_2026.pdf',
+      url: '/sample_tenders/sample_power_transformer_tender.pdf',
+      category: 'Electrical Equipment',
+      scope: 'Outdoor oil-immersed distribution transformers complying with BIS Scheme I mandate and BEE 5-Star efficiency.',
+      standardsTarget: 'IS 1180 (Part 1): 2014, IS 2026, CEA Guidelines'
+    }
+  ];
+
   const stages = [
     { label: 'Document uploaded', detail: 'PDF file size and structure verified' },
     { label: 'Text & clauses extracted', detail: 'Technical specification sections parsed' },
@@ -36,6 +57,50 @@ export const TenderUploadPage = () => {
     { label: 'Standards matching & ranking', detail: 'Querying BIS Indian Standards knowledge base' },
     { label: 'Report generation', detail: 'Compiling QCO mandates and compliance report' }
   ];
+
+  const handleLoadSampleTender = async (sample, autoAnalyze = false) => {
+    setError('');
+    try {
+      const response = await fetch(sample.url);
+      if (!response.ok) throw new Error('Could not load sample file');
+      const blob = await response.blob();
+      const sampleFile = new File([blob], sample.fileName, { type: 'application/pdf' });
+      setFile(sampleFile);
+      setTenderTitle(sample.title);
+      showToast(`Loaded preset: ${sample.title}`);
+
+      if (autoAnalyze) {
+        setUploading(true);
+        setCurrentStage(1);
+        const stageTimer = setInterval(() => {
+          setCurrentStage((prev) => (prev < 4 ? prev + 1 : prev));
+        }, 700);
+
+        const formData = new FormData();
+        formData.append('document', sampleFile);
+        formData.append('tenderTitle', sample.title);
+
+        const result = await api.uploadTenderPdf(formData);
+        clearInterval(stageTimer);
+        setCurrentStage(5);
+
+        if (!result.success) {
+          setError(result.message || 'Could not map sufficient standards from this document.');
+          setUploading(false);
+          return;
+        }
+
+        setCurrentAnalysis(result.analysis);
+        showToast('Tender document analyzed and standards mapped successfully!');
+        setTimeout(() => {
+          navigate(`/analysis/result/${result.analysis._id}`);
+        }, 500);
+      }
+    } catch (err) {
+      setError('Failed to load sample tender PDF: ' + err.message);
+      setUploading(false);
+    }
+  };
 
   const handleDrag = (e) => {
     e.preventDefault();
@@ -301,6 +366,73 @@ export const TenderUploadPage = () => {
             )}
           </div>
         )}
+      </div>
+
+      {/* 1-Click Preloaded Sample Tenders for Testing & Evaluators */}
+      <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <h3 className="text-sm font-bold text-slate-900 font-outfit flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-amber-500" />
+              <span>Preloaded Sample Tenders for Instant Evaluation</span>
+            </h3>
+            <p className="text-xs text-slate-500 mt-0.5">
+              Test authentic government tender documents without needing to upload external files.
+            </p>
+          </div>
+          <Badge variant="primary" size="xs">
+            1-Click Preload
+          </Badge>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {SAMPLE_TENDERS.map((sample) => (
+            <div
+              key={sample.id}
+              className="p-4 rounded-xl bg-slate-50 border border-slate-200/80 hover:border-slate-300 transition-all flex flex-col justify-between"
+            >
+              <div>
+                <div className="flex items-center justify-between gap-2 mb-2">
+                  <Badge variant="neutral" size="xs">
+                    {sample.category}
+                  </Badge>
+                  <span className="text-[10px] text-slate-500 font-mono">PDF Notice</span>
+                </div>
+                <h4 className="text-xs font-bold text-slate-900 leading-snug mb-1">
+                  {sample.title}
+                </h4>
+                <p className="text-[11px] text-slate-600 leading-relaxed mb-3">
+                  {sample.scope}
+                </p>
+                <div className="p-2 bg-white rounded-lg border border-slate-200 text-[10px] text-slate-500 mb-4">
+                  Target IS: <span className="font-semibold text-slate-700">{sample.standardsTarget}</span>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2 pt-2 border-t border-slate-200/60">
+                <Button
+                  size="xs"
+                  variant="secondary"
+                  className="flex-1"
+                  disabled={uploading}
+                  onClick={() => handleLoadSampleTender(sample, false)}
+                >
+                  Load into Dropzone
+                </Button>
+                <Button
+                  size="xs"
+                  variant="primary"
+                  className="flex-1 font-bold"
+                  disabled={uploading}
+                  data-testid={`analyze-sample-${sample.id}`}
+                  onClick={() => handleLoadSampleTender(sample, true)}
+                >
+                  Analyze Sample Tender <ArrowRight className="w-3 h-3 ml-1" />
+                </Button>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Info notice */}

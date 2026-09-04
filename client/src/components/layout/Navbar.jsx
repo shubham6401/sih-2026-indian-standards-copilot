@@ -301,13 +301,17 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
               {user ? (
                 <button
                   type="button"
+                  id="user-profile-menu-button"
+                  data-testid="profile-menu-button"
+                  aria-haspopup="true"
+                  aria-expanded={showProfileMenu}
                   onClick={() => {
                     setShowProfileMenu(prev => !prev);
                     setShowNotifications(false);
                   }}
                   className="flex items-center gap-1.5 sm:gap-2 p-1 sm:p-1.5 sm:pl-2 rounded-xl border border-slate-200 hover:bg-slate-50 transition-colors cursor-pointer"
-                  title="User profile menu"
-                  aria-label="User profile menu"
+                  title="User profile and role switcher"
+                  aria-label="User profile and role switcher"
                 >
                   <div className="w-7 h-7 rounded-lg bg-gov-100 text-gov-800 flex items-center justify-center font-bold text-xs shrink-0">
                     {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
@@ -341,7 +345,10 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
               )}
 
               {showProfileMenu && user && (
-                <div className="absolute right-0 mt-2 w-72 bg-white rounded-2xl shadow-2xl border border-slate-200 py-1.5 z-50 animate-fade-in divide-y divide-slate-100">
+                <div
+                  data-testid="profile-dropdown-menu"
+                  className="absolute right-0 mt-2 w-72 bg-white rounded-2xl shadow-2xl border border-slate-200 py-1.5 z-50 animate-fade-in divide-y divide-slate-100"
+                >
                   <div className="px-4 py-2.5">
                     <div className="flex items-center justify-between gap-1 mb-0.5">
                       <p className="text-xs font-bold text-slate-900 truncate">{user.name}</p>
@@ -361,6 +368,7 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                     <div className="space-y-1 text-xs">
                       <button
                         type="button"
+                        data-testid="switch-role-procurement"
                         onClick={() => {
                           switchRole('Procurement Officer');
                           setShowProfileMenu(false);
@@ -377,6 +385,7 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                       </button>
                       <button
                         type="button"
+                        data-testid="switch-role-dept"
                         onClick={() => {
                           switchRole('Government Department');
                           setShowProfileMenu(false);
@@ -393,6 +402,7 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                       </button>
                       <button
                         type="button"
+                        data-testid="switch-role-psu"
                         onClick={() => {
                           switchRole('PSU');
                           setShowProfileMenu(false);
@@ -409,6 +419,7 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                       </button>
                       <button
                         type="button"
+                        data-testid="switch-role-admin"
                         onClick={() => {
                           switchRole('Organization/Admin');
                           setShowProfileMenu(false);

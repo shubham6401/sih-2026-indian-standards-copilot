@@ -6,7 +6,7 @@ import { normalizeRole, ROLE_CONFIG } from '../../config/roleConfig';
 import { Button } from './Button';
 
 export const RoleProtectedRoute = ({ allowedRoles = [], children }) => {
-  const { user, isAuthenticated } = useAuth();
+  const { user, isAuthenticated, switchRole } = useAuth();
   const navigate = useNavigate();
 
   if (!isAuthenticated || !user) {
@@ -44,7 +44,7 @@ export const RoleProtectedRoute = ({ allowedRoles = [], children }) => {
           </ul>
         </div>
 
-        <div className="pt-2 flex items-center justify-center gap-3">
+        <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
           <Button
             size="sm"
             variant="secondary"
@@ -55,11 +55,19 @@ export const RoleProtectedRoute = ({ allowedRoles = [], children }) => {
           </Button>
           <Button
             size="sm"
-            variant="primary"
+            variant="secondary"
             icon={Home}
             onClick={() => navigate('/dashboard')}
           >
             Return to Dashboard
+          </Button>
+          <Button
+            size="sm"
+            variant="primary"
+            data-testid="switch-to-admin-btn"
+            onClick={() => switchRole('Organization/Admin')}
+          >
+            Switch to Admin Persona
           </Button>
         </div>
       </div>

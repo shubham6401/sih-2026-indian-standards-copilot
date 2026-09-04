@@ -382,7 +382,7 @@ export const RecommendationResultPage = () => {
       </div>
 
       {/* 7 Clean Navigation Tabs */}
-      <div className="flex flex-wrap gap-1.5 p-1 bg-slate-100 rounded-xl border border-slate-200 text-xs font-semibold overflow-x-auto">
+      <div role="tablist" aria-label="Procurement dossier sections" className="flex flex-wrap gap-1.5 p-1 bg-slate-100 rounded-xl border border-slate-200 text-xs font-semibold overflow-x-auto">
         {tabItems.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -390,6 +390,10 @@ export const RecommendationResultPage = () => {
             <button
               key={tab.id}
               type="button"
+              role="tab"
+              aria-selected={isActive}
+              data-testid={`dossier-tab-${tab.id}`}
+              data-tab-name={tab.id}
               onClick={() => handleTabChange(tab.id)}
               className={`px-3 py-2 rounded-lg transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap ${
                 isActive

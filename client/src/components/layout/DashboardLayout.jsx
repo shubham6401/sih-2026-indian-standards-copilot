@@ -25,10 +25,6 @@ export const DashboardLayout = () => {
     );
   }
 
-  if (!isAuthenticated && !user) {
-    return <Navigate to="/login" replace />;
-  }
-
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col overflow-x-hidden">
       <ScrollToTop />

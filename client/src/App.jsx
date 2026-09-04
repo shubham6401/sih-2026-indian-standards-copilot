@@ -27,6 +27,7 @@ import { AdminStandardsPage } from './pages/AdminStandardsPage';
 import { AdminAuditLogsPage } from './pages/AdminAuditLogsPage';
 import { AdminDemoManagementPage } from './pages/AdminDemoManagementPage';
 import { RoleProtectedRoute } from './components/common/RoleProtectedRoute';
+import { ProtectedRoute } from './components/common/ProtectedRoute';
 
 import { ErrorBoundary } from './components/common/ErrorBoundary';
 
@@ -44,22 +45,25 @@ export function App() {
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/forgot-password" element={<ForgotPasswordPage />} />
 
-              {/* Protected Dashboard & Operations Layout */}
+              {/* Portal Workspace Layout */}
               <Route element={<DashboardLayout />}>
-                <Route path="/dashboard" element={<DashboardPage />} />
-                <Route path="/analysis/new" element={<NewAnalysisPage />} />
-                <Route path="/tender/upload" element={<TenderUploadPage />} />
+                {/* Protected Workspaces */}
+                <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
+                <Route path="/analysis/new" element={<ProtectedRoute><NewAnalysisPage /></ProtectedRoute>} />
+                <Route path="/tender/upload" element={<ProtectedRoute><TenderUploadPage /></ProtectedRoute>} />
+                <Route path="/history" element={<ProtectedRoute><AnalysisHistoryPage /></ProtectedRoute>} />
+                <Route path="/saved" element={<ProtectedRoute><SavedStandardsPage /></ProtectedRoute>} />
+                <Route path="/reports" element={<ProtectedRoute><ReportsPage /></ProtectedRoute>} />
+                <Route path="/settings" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
+
+                {/* Public Technical Exploration & Dossiers */}
+                <Route path="/explorer" element={<StandardsExplorerPage />} />
+                <Route path="/standards/:id" element={<StandardDetailsPage />} />
                 <Route path="/analysis/result/:id" element={<RecommendationResultPage />} />
                 <Route path="/analysis/:id" element={<RecommendationResultPage />} />
                 <Route path="/reports/:id" element={<RecommendationResultPage />} />
-                <Route path="/explorer" element={<StandardsExplorerPage />} />
-                <Route path="/standards/:id" element={<StandardDetailsPage />} />
-                <Route path="/history" element={<AnalysisHistoryPage />} />
-                <Route path="/saved" element={<SavedStandardsPage />} />
-                <Route path="/reports" element={<ReportsPage />} />
                 <Route path="/architecture" element={<ArchitecturePage />} />
                 <Route path="/evaluator-faq" element={<EvaluatorQuestionsPage />} />
-                <Route path="/settings" element={<SettingsPage />} />
 
                 {/* Role-Protected Admin Routes */}
                 <Route
