@@ -33,7 +33,7 @@ export const Sidebar = ({ isOpen, onClose }) => {
     };
   }, [isOpen, onClose]);
 
-  const userRoleKey = normalizeRole(user?.role);
+  const userRoleKey = normalizeRole(user?.accountType || user?.role);
   const currentRoleConfig = ROLE_CONFIG[userRoleKey] || ROLE_CONFIG.procurement_officer;
   const navSections = currentRoleConfig.navSections || [];
 

@@ -1,12 +1,13 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { api } from '../services/api';
+import { useAuth } from './AuthContext';
 
 const AnalysisContext = createContext();
 
-const LOCAL_STORAGE_HISTORY_KEY = 'is_analysis_history';
-const LOCAL_STORAGE_SAVED_KEY = 'is_saved_standards';
+const getHistoryKey = (userId) => `is_analysis_history_${userId || 'anonymous'}`;
+const getSavedKey = (userId) => `is_saved_standards_${userId || 'anonymous'}`;
 
-// Initial starter history items so dashboard has realistic data on first load
+// Reference starter history items for demo accounts
 export const INITIAL_DEMO_HISTORY = [
   {
     _id: 'po_analysis_01',
@@ -98,31 +99,33 @@ export const INITIAL_DEMO_HISTORY = [
     confidenceScore: 89,
     confidenceLabel: 'Highly Relevant',
     primaryStandards: [
-      { standardNumber: 'IS 269: 2015', title: 'Ordinary Portland Cement - Specification (33, 43 and 53 Grade)', relevanceScore: 92, edition: '6th Revision', status: 'Current' }
+      { standardNumber: 'IS 269: 2015', title: 'Ordinary Portland Cement - Specification', relevanceScore: 96, edition: '6th Revision', status: 'Current' }
     ],
     relatedStandards: [
-      { standardNumber: 'IS 456: 2000', title: 'Plain and Reinforced Concrete Code of Practice', relationshipType: 'Installation Standard', relevanceScore: 85 }
+      { standardNumber: 'IS 4031 (Part 6): 1988', title: 'Methods of Physical Tests for Hydraulic Cement', relationshipType: 'Testing Standard', relevanceScore: 89 }
     ],
-    tenderGaps: [],
+    tenderGaps: [
+      { category: 'Outdated Reference', severity: 'HIGH', title: 'Superseded Standard Cited', description: 'IS 12269 is superseded by IS 269:2015.', remedy: 'Revise reference to IS 269:2015.' }
+    ],
     certifications: [
       {
         type: 'BIS ISI Product Certification (Scheme I)',
         status: 'Applicable',
         standardNumber: 'IS 269: 2015',
-        authority: 'DPIIT / Ministry of Commerce & Industry',
-        mandateReason: 'Covered under mandatory Cement (Quality Control) Order, 2003. No cement can be manufactured, stored, sold, or procured in India without active ISI mark.',
-        verificationNote: 'Verify active 7-digit CML Number on official e-BIS portal (manakonline.in).'
+        authority: 'DPIIT, Ministry of Commerce & Industry',
+        mandateReason: 'Statutory Cement (Quality Control) Order requires mandatory BIS ISI certification.',
+        verificationNote: 'Verify ISI mark and license validity on manakonline.in.'
       }
     ],
-    procurementReadiness: { totalScore: 88, statusLabel: 'Tender Ready', actionCount: 0 },
+    procurementReadiness: { totalScore: 85, statusLabel: 'Tender Ready', actionCount: 1 },
     createdAt: new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString()
   },
   {
-    _id: 'po_analysis_13',
-    demoKey: 'po_analysis_13',
-    productName: 'Industrial Safety Helmet (Hard Hat)',
-    productCategory: 'Personal Protective Equipment',
-    rawInput: 'Industrial safety helmet for construction site workers with 2200V electrical proof test and impact resistance.',
+    _id: 'po_analysis_14',
+    demoKey: 'po_analysis_14',
+    productName: 'Industrial Safety Helmets (Non-Metallic)',
+    productCategory: 'PPE & Safety Equipment',
+    rawInput: 'High-density polyethylene non-metallic industrial safety helmets for construction sites with chin strap and shock absorption.',
     inputType: 'specification',
     confidenceScore: 94,
     confidenceLabel: 'Highly Relevant',
@@ -147,40 +150,14 @@ export const INITIAL_DEMO_HISTORY = [
 ];
 
 export const AnalysisProvider = ({ children }) => {
-  const [currentAnalysis, setCurrentAnalysisState] = useState(() => {
-    try {
-      const stored = localStorage.getItem('is_current_analysis');
-      return stored ? JSON.parse(stored) : null;
-    } catch {
-      return null;
-    }
-  });
+  const { user } = useAuth();
+  const userId = user?._id ? String(user._id) : null;
+  const isDemo = Boolean(user?.isDemo);
 
-  const [history, setHistory] = useState(() => {
-    try {
-      const stored = localStorage.getItem(LOCAL_STORAGE_HISTORY_KEY);
-      if (stored) {
-        const parsed = JSON.parse(stored);
-        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
-      }
-      return INITIAL_DEMO_HISTORY;
-    } catch {
-      return INITIAL_DEMO_HISTORY;
-    }
-  });
-
-  const [savedStandards, setSavedStandards] = useState(() => {
-    try {
-      const stored = localStorage.getItem(LOCAL_STORAGE_SAVED_KEY);
-      return stored ? JSON.parse(stored) : [];
-    } catch {
-      return [];
-    }
-  });
-
-  const [savedStandardNumbers, setSavedStandardNumbers] = useState(
-    new Set((savedStandards || []).map(s => s.standardNumber))
-  );
+  const [currentAnalysis, setCurrentAnalysisState] = useState(null);
+  const [history, setHistory] = useState([]);
+  const [savedStandards, setSavedStandards] = useState([]);
+  const [savedStandardNumbers, setSavedStandardNumbers] = useState(new Set());
   const [loading, setLoading] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
 
@@ -189,9 +166,25 @@ export const AnalysisProvider = ({ children }) => {
     setTimeout(() => setToastMessage(null), 4000);
   };
 
-  // Enhanced setCurrentAnalysis that automatically prepends to history and syncs to localStorage
+  const resetAnalysisState = () => {
+    setCurrentAnalysisState(null);
+    setHistory([]);
+    setSavedStandards([]);
+    setSavedStandardNumbers(new Set());
+    try {
+      localStorage.removeItem('is_current_analysis');
+    } catch (e) {}
+  };
+
   const setCurrentAnalysis = (analysis) => {
-    if (!analysis) return;
+    if (!analysis) {
+      setCurrentAnalysisState(null);
+      try {
+        localStorage.removeItem('is_current_analysis');
+      } catch (e) {}
+      return;
+    }
+
     setCurrentAnalysisState(analysis);
     try {
       localStorage.setItem('is_current_analysis', JSON.stringify(analysis));
@@ -199,106 +192,114 @@ export const AnalysisProvider = ({ children }) => {
 
     // Add / Prepend to history
     setHistory(prev => {
-      const filtered = prev.filter(item => String(item._id) !== String(analysis._id));
+      const filtered = prev.filter(item => String(item._id || item.id) !== String(analysis._id || analysis.id));
       const updated = [analysis, ...filtered];
-      try {
-        localStorage.setItem(LOCAL_STORAGE_HISTORY_KEY, JSON.stringify(updated));
-      } catch (e) {}
+      if (userId) {
+        try {
+          localStorage.setItem(getHistoryKey(userId), JSON.stringify(updated));
+        } catch (e) {}
+      }
       return updated;
     });
   };
 
-  let isFetchingHistory = false;
   const loadHistory = async (force = false) => {
+    if (!userId && !isDemo) {
+      setHistory([]);
+      return;
+    }
+
     try {
-      // 1. Load from localStorage immediately if history is empty
-      let localItems = [];
-      const stored = localStorage.getItem(LOCAL_STORAGE_HISTORY_KEY);
-      if (stored) {
-        try {
-          localItems = JSON.parse(stored);
-        } catch (e) {}
-      }
-
-      if (localItems.length > 0 && history.length === 0) {
-        setHistory(localItems);
-      }
-
-      // If we already have items and not forcing, skip duplicate network call
-      if (!force && history.length > 0 && !isFetchingHistory) {
-        return;
-      }
-
-      isFetchingHistory = true;
-
-      // 2. Fetch from backend API
       let remoteItems = [];
       try {
         remoteItems = await api.getAnalyses();
-      } catch (e) {}
-
-      // 3. Merge unique items by _id
-      const idMap = new Map();
-      (localItems || []).forEach(item => {
-        if (item && (item._id || item.id)) idMap.set(String(item._id || item.id), item);
-      });
-      (remoteItems || []).forEach(item => {
-        if (item && (item._id || item.id)) idMap.set(String(item._id || item.id), item);
-      });
-
-      if (idMap.size === 0) {
-        INITIAL_DEMO_HISTORY.forEach(item => idMap.set(String(item._id || item.id), item));
+      } catch (e) {
+        console.warn('[AnalysisContext] Failed to fetch analyses from backend:', e.message);
       }
+
+      const idMap = new Map();
+      (remoteItems || []).forEach(item => {
+        if (item && (item._id || item.id)) {
+          idMap.set(String(item._id || item.id), item);
+        }
+      });
 
       const merged = Array.from(idMap.values()).sort(
         (a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0)
       );
 
       setHistory(merged);
-      try {
-        localStorage.setItem(LOCAL_STORAGE_HISTORY_KEY, JSON.stringify(merged));
-      } catch (e) {}
+      if (userId) {
+        try {
+          localStorage.setItem(getHistoryKey(userId), JSON.stringify(merged));
+        } catch (e) {}
+      }
     } catch (e) {
       console.warn('Failed to load history:', e.message);
-    } finally {
-      isFetchingHistory = false;
     }
   };
 
   const loadSaved = async () => {
-    try {
-      let localSaved = [];
-      const stored = localStorage.getItem(LOCAL_STORAGE_SAVED_KEY);
-      if (stored) {
-        try {
-          localSaved = JSON.parse(stored);
-        } catch (e) {}
-      }
+    if (!userId && !isDemo) {
+      setSavedStandards([]);
+      setSavedStandardNumbers(new Set());
+      return;
+    }
 
+    try {
       let remoteSaved = [];
       try {
         remoteSaved = await api.getSavedStandards();
       } catch (e) {}
 
       const numMap = new Map();
-      (localSaved || []).forEach(s => numMap.set(s.standardNumber, s));
-      (remoteSaved || []).forEach(s => numMap.set(s.standardNumber, s));
+      (remoteSaved || []).forEach(s => {
+        if (s && s.standardNumber) numMap.set(s.standardNumber, s);
+      });
 
       const merged = Array.from(numMap.values());
       setSavedStandards(merged);
       setSavedStandardNumbers(new Set(merged.map(s => s.standardNumber)));
-      try {
-        localStorage.setItem(LOCAL_STORAGE_SAVED_KEY, JSON.stringify(merged));
-      } catch (e) {}
+      if (userId) {
+        try {
+          localStorage.setItem(getSavedKey(userId), JSON.stringify(merged));
+        } catch (e) {}
+      }
     } catch (e) {
       console.warn('Failed to load saved standards:', e.message);
     }
   };
 
+  // Synchronize when authenticated user changes or logs out
   useEffect(() => {
-    loadHistory();
-    loadSaved();
-  }, []);
+    resetAnalysisState();
+
+    if (user && userId) {
+      // 1. Try loading cached user history from user-scoped key
+      try {
+        const cachedHistory = localStorage.getItem(getHistoryKey(userId));
+        if (cachedHistory) {
+          const parsed = JSON.parse(cachedHistory);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            setHistory(parsed);
+          }
+        }
+
+        const cachedSaved = localStorage.getItem(getSavedKey(userId));
+        if (cachedSaved) {
+          const parsedSaved = JSON.parse(cachedSaved);
+          if (Array.isArray(parsedSaved)) {
+            setSavedStandards(parsedSaved);
+            setSavedStandardNumbers(new Set(parsedSaved.map(s => s.standardNumber)));
+          }
+        }
+      } catch (e) {}
+
+      // 2. Fetch fresh user records from backend
+      loadHistory(true);
+      loadSaved();
+    }
+  }, [userId]);
 
   const toggleSaveStandard = async (standard) => {
     const stdNum = standard.standardNumber || standard;
@@ -306,9 +307,11 @@ export const AnalysisProvider = ({ children }) => {
       // Remove
       setSavedStandards(prev => {
         const next = prev.filter(s => s.standardNumber !== stdNum);
-        try {
-          localStorage.setItem(LOCAL_STORAGE_SAVED_KEY, JSON.stringify(next));
-        } catch (e) {}
+        if (userId) {
+          try {
+            localStorage.setItem(getSavedKey(userId), JSON.stringify(next));
+          } catch (e) {}
+        }
         return next;
       });
       setSavedStandardNumbers(prev => {
@@ -335,9 +338,11 @@ export const AnalysisProvider = ({ children }) => {
 
       setSavedStandards(prev => {
         const next = [newRecord, ...prev];
-        try {
-          localStorage.setItem(LOCAL_STORAGE_SAVED_KEY, JSON.stringify(next));
-        } catch (e) {}
+        if (userId) {
+          try {
+            localStorage.setItem(getSavedKey(userId), JSON.stringify(next));
+          } catch (e) {}
+        }
         return next;
       });
       setSavedStandardNumbers(prev => new Set([...prev, stdNum]));
@@ -363,9 +368,11 @@ export const AnalysisProvider = ({ children }) => {
 
       setHistory(prev => {
         const next = prev.filter(item => String(item._id || item.id) !== String(id));
-        try {
-          localStorage.setItem(LOCAL_STORAGE_HISTORY_KEY, JSON.stringify(next));
-        } catch (e) {}
+        if (userId) {
+          try {
+            localStorage.setItem(getHistoryKey(userId), JSON.stringify(next));
+          } catch (e) {}
+        }
         return next;
       });
 
@@ -394,6 +401,7 @@ export const AnalysisProvider = ({ children }) => {
         savedStandardNumbers,
         toggleSaveStandard,
         loadSaved,
+        resetAnalysisState,
         loading,
         setLoading,
         toastMessage,

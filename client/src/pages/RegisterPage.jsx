@@ -71,7 +71,8 @@ export const RegisterPage = () => {
   const currentAccountType = accountTypes.find(t => t.value === formData.accountType) || accountTypes[0];
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
     setError('');
   };
 
@@ -255,6 +256,8 @@ export const RegisterPage = () => {
                   return (
                     <div
                       key={t.value}
+                      id={`account-type-${t.value}`}
+                      data-account-type={t.value}
                       onClick={() => handleAccountTypeSelect(t.value)}
                       className={`p-3 rounded-xl border transition-all cursor-pointer flex flex-col justify-between ${
                         isSelected

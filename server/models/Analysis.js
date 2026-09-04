@@ -25,10 +25,22 @@ const recommendedStandardSchema = new mongoose.Schema({
 
 const analysisSchema = new mongoose.Schema({
   userId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.Mixed,
     ref: 'User',
     required: false,
     index: true,
+  },
+  userEmail: {
+    type: String,
+    trim: true,
+    index: true,
+    default: ''
+  },
+  accountType: {
+    type: String,
+    enum: ['procurement_officer', 'government_department', 'psu', 'organization_admin', 'Procurement Officer', 'Government Department', 'PSU', 'Organization/Admin'],
+    default: 'procurement_officer',
+    index: true
   },
   inputType: {
     type: String,

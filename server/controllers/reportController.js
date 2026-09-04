@@ -1,5 +1,6 @@
 import { Analysis } from '../models/Analysis.js';
 import { memoryAnalyses } from './analysisController.js';
+import { normalizeRoleKey } from '../middleware/authMiddleware.js';
 
 export const getReportData = async (req, res) => {
   try {
@@ -11,7 +12,9 @@ export const getReportData = async (req, res) => {
         analysis = await Analysis.findById(id);
       }
       if (!analysis) {
-        analysis = await Analysis.findOne({ demoKey: id });
+        analysis = await Analysis.findOne({
+          $or: [{ _id: id }, { demoKey: id }]
+        });
       }
     } catch (e) {
       // Fallback
@@ -23,6 +26,23 @@ export const getReportData = async (req, res) => {
 
     if (!analysis) {
       return res.status(404).json({ message: 'Report data not found for ID: ' + id });
+    }
+
+    // Check authorization for real non-demo records
+    if (!analysis.isDemo && !analysis.demoKey) {
+      if (!req.user) {
+        return res.status(401).json({ message: 'Authentication required to access this report.' });
+      }
+
+      const userId = String(req.user._id);
+      const isOwner = analysis.userId && String(analysis.userId) === userId;
+      const userOrg = (req.user.organizationName || req.user.organization || '').trim();
+      const userRoleKey = normalizeRoleKey(req.user.role || req.user.accountType);
+      const isOrgMember = userOrg && analysis.organization === userOrg && userRoleKey !== 'procurement_officer';
+
+      if (!isOwner && !isOrgMember && userRoleKey !== 'admin') {
+        return res.status(403).json({ message: 'Access denied: You do not have permission to view this report.' });
+      }
     }
 
     // Build formal 12-section procurement report payload
@@ -60,11 +80,39 @@ export const getReportData = async (req, res) => {
 export const deleteReport = async (req, res) => {
   try {
     const { id } = req.params;
+    const user = req.user;
+    if (!user) {
+      return res.status(401).json({ message: 'Authentication required.' });
+    }
+
+    let existing = null;
+    try {
+      existing = await Analysis.findById(id);
+    } catch (e) {}
+    if (!existing) {
+      existing = memoryAnalyses.find(a => String(a._id) === String(id) || a.demoKey === id);
+    }
+
+    if (existing && !existing.isDemo && !existing.demoKey) {
+      const isOwner = existing.userId && String(existing.userId) === String(user._id);
+      const userRoleKey = normalizeRoleKey(user.role || user.accountType);
+      const userOrg = (user.organizationName || user.organization || '').trim();
+      const isOrgAdmin = userRoleKey === 'admin' || (existing.organization === userOrg && userRoleKey !== 'procurement_officer');
+
+      if (!isOwner && !isOrgAdmin) {
+        return res.status(403).json({ message: 'Access denied: You cannot delete this report.' });
+      }
+    }
+
     try {
       await Analysis.findByIdAndDelete(id);
-    } catch (e) {
-      // Ignore
+    } catch (e) {}
+
+    const idx = memoryAnalyses.findIndex(a => String(a._id) === String(id) || a.demoKey === id);
+    if (idx !== -1) {
+      memoryAnalyses.splice(idx, 1);
     }
+
     return res.json({ success: true, message: 'Report deleted successfully' });
   } catch (error) {
     return res.status(500).json({ message: 'Error deleting report: ' + error.message });

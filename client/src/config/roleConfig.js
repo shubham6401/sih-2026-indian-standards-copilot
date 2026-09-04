@@ -27,8 +27,8 @@ export const ROLE_KEYS = {
 
 export const normalizeRole = (role = '') => {
   const r = String(role).trim().toLowerCase();
-  if (r.includes('admin') || r.includes('organization/admin')) return ROLE_KEYS.ADMIN;
-  if (r.includes('department') || r.includes('government department')) return ROLE_KEYS.GOVERNMENT_DEPARTMENT;
+  if (r.includes('admin') || r === 'organization_admin' || r === 'admin') return ROLE_KEYS.ADMIN;
+  if (r.includes('department') || r === 'government_department') return ROLE_KEYS.GOVERNMENT_DEPARTMENT;
   if (r.includes('psu') || r.includes('public sector')) return ROLE_KEYS.PSU;
   return ROLE_KEYS.PROCUREMENT_OFFICER;
 };

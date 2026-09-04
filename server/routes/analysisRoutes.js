@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.post('/', optionalAuth, createAnalysis);
 router.get('/', optionalAuth, getAnalyses);
-router.get('/:id', getAnalysisById);
+router.get('/:id', optionalAuth, getAnalysisById);
 router.delete('/:id', optionalAuth, deleteAnalysis);
 
 export default router;

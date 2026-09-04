@@ -54,6 +54,10 @@ export const uploadAndAnalyzeDocument = async (req, res) => {
     // Step 4: Save Analysis Record
     const analysisData = {
       userId: req.user?._id || null,
+      userEmail: req.user?.email || '',
+      organization: req.user?.organizationName || req.user?.organization || '',
+      accountType: req.user?.accountType || 'procurement_officer',
+      isDemo: Boolean(req.user?.isDemo),
       inputType: 'tender_pdf',
       productName: inferredProductName,
       productCategory: aiResult.primaryStandards[0]?.category || 'General Procurement',

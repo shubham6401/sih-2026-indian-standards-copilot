@@ -30,7 +30,7 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
   const [showKbModal, setShowKbModal] = useState(false);
   const [navSearch, setNavSearch] = useState('');
 
-  const userRoleKey = normalizeRole(user?.role);
+  const userRoleKey = normalizeRole(user?.accountType || user?.role);
   const currentRoleConfig = ROLE_CONFIG[userRoleKey] || ROLE_CONFIG.procurement_officer;
   const [notifications, setNotifications] = useState([
     {

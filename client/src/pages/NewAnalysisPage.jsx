@@ -315,6 +315,8 @@ export const NewAnalysisPage = () => {
               </label>
               <input
                 type="text"
+                id="productName"
+                name="productName"
                 value={formData.productName}
                 onChange={(e) => setFormData({ ...formData, productName: e.target.value })}
                 className="w-full px-3.5 py-2 text-xs rounded-xl border border-slate-300 focus:ring-2 focus:ring-gov-500 focus:outline-none"
@@ -327,6 +329,8 @@ export const NewAnalysisPage = () => {
                 {t('category')}
               </label>
               <select
+                id="productCategory"
+                name="productCategory"
                 value={formData.productCategory}
                 onChange={(e) => setFormData({ ...formData, productCategory: e.target.value })}
                 className="w-full px-3.5 py-2 text-xs rounded-xl border border-slate-300 bg-white focus:ring-2 focus:ring-gov-500 focus:outline-none"
@@ -356,6 +360,8 @@ export const NewAnalysisPage = () => {
             <textarea
               rows={5}
               required
+              id="rawInput"
+              name="rawInput"
               value={formData.rawInput}
               onChange={(e) => setFormData({ ...formData, rawInput: e.target.value })}
               className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-300 focus:ring-2 focus:ring-gov-500 focus:outline-none leading-relaxed"

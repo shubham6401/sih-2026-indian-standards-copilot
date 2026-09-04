@@ -46,20 +46,25 @@ export const saveStandard = async (req, res) => {
 
 export const getSavedStandards = async (req, res) => {
   try {
+    const user = req.user;
+    if (!user) {
+      return res.json([]);
+    }
+
+    const userId = user._id;
     let list = [];
+
     try {
-      const userId = req.user?._id;
-      const query = userId ? { $or: [{ userId }, { userId: null }] } : {};
-      list = await SavedStandard.find(query).sort({ createdAt: -1 });
+      list = await SavedStandard.find({ userId }).sort({ createdAt: -1 });
     } catch (e) {
-      list = memorySavedStandards;
+      list = [];
     }
 
-    if (list.length === 0 && memorySavedStandards.length > 0) {
-      list = memorySavedStandards;
+    if (!list || list.length === 0) {
+      list = memorySavedStandards.filter(s => String(s.userId) === String(userId));
     }
 
-    return res.json(list);
+    return res.json(list || []);
   } catch (error) {
     return res.status(500).json({ message: 'Error retrieving saved standards: ' + error.message });
   }

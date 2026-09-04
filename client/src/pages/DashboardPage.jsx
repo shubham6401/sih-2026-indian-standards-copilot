@@ -47,7 +47,7 @@ export const DashboardPage = () => {
   const [adminUsers, setAdminUsers] = useState([]);
   const [loadingAdmin, setLoadingAdmin] = useState(false);
 
-  const userRoleKey = normalizeRole(user?.role);
+  const userRoleKey = normalizeRole(user?.accountType || user?.role);
   const currentRoleConfig = ROLE_CONFIG[userRoleKey] || ROLE_CONFIG.procurement_officer;
 
   useEffect(() => {

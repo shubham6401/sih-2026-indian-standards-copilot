@@ -3,16 +3,9 @@ const API_BASE = '/api';
 // Helper to get auth header
 const getAuthHeaders = () => {
   const token = localStorage.getItem('is_auth_token');
-  let user = null;
-  try {
-    user = JSON.parse(localStorage.getItem('is_auth_user') || 'null');
-  } catch (e) {}
-
   return {
     'Content-Type': 'application/json',
-    ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    ...(user?.role ? { 'x-user-role': user.role } : {}),
-    ...(user?.email ? { 'x-user-email': user.email } : {})
+    ...(token ? { Authorization: `Bearer ${token}` } : {})
   };
 };
 
@@ -84,7 +77,9 @@ export const api = {
   },
 
   getAnalysisById: async (id) => {
-    const res = await fetch(`${API_BASE}/analysis/${id}`);
+    const res = await fetch(`${API_BASE}/analysis/${id}`, {
+      headers: getAuthHeaders()
+    });
     const data = await res.json();
     if (!res.ok) throw new Error(data.message || 'Failed to load analysis report');
     return data;
@@ -176,7 +171,9 @@ export const api = {
 
   // Reports
   getReportData: async (id) => {
-    const res = await fetch(`${API_BASE}/reports/${id}`);
+    const res = await fetch(`${API_BASE}/reports/${id}`, {
+      headers: getAuthHeaders()
+    });
     const data = await res.json();
     if (!res.ok) throw new Error(data.message || 'Failed to fetch report');
     return data;
